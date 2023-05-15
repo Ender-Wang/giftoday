@@ -5,7 +5,7 @@ const User = require("./TestUser.js");
 const app = express();
 
 mongoose
-  .connect("mongodb://localhost:27017/testDB")
+  .connect("mongodb://127.0.0.1:27017/testDB")
   .then(() => {
     console.log("Connected to DB");
     run();
