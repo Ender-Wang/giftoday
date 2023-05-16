@@ -11,10 +11,10 @@ jobs:
     steps:
     - name: Check if PR is updated to the master branch
       run: |
-        git fetch origin master
-        git diff --name-only origin/master...HEAD > changes.txt
+        git fetch origin pull/${{ github.event.pull_request.number }}/merge
+        git diff --name-only FETCH_HEAD...HEAD > changes.txt
         if [ -s changes.txt ]; then
-          echo "::error file=changes.txt::This PR is not updated to the master branch. Please pull from master branch before making a PR."
+          echo "::error file=changes.txt::This PR is not updated to the master branch."
           exit 1
         else
           echo "This PR is updated to the master branch."
