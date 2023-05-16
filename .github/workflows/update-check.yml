@@ -2,20 +2,25 @@ name: Update Check
 
 on:
   pull_request:
-    types: [synchronize, opened, reopened]
+    branches:
+      - master
+    types:
+      - opened
+      - synchronize
+      - reopened
 
 jobs:
   update-check:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check if PR is updated to the master branch
-      run: |
-        git fetch origin pull/${{ github.event.pull_request.number }}/merge
-        git diff --name-only FETCH_HEAD...HEAD > changes.txt
-        if [ -s changes.txt ]; then
-          echo "::error file=changes.txt::This PR is not updated to the master branch."
-          exit 1
-        else
-          echo "This PR is updated to the master branch."
-        fi
+      - name: Check if PR is updated to the master branch
+        run: |
+          git fetch origin pull/${{ github.event.pull_request.number }}/merge
+          git diff --name-only FETCH_HEAD...HEAD > changes.txt
+          if [ -s changes.txt ]; then
+            echo "::error file=changes.txt::This PR is not updated to the master branch."
+            exit 1
+          else
+            echo "This PR is updated to the master branch."
+          fi
