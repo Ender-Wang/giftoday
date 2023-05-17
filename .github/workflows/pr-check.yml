@@ -19,11 +19,9 @@ jobs:
       - name: Compare PR branch with master
         id: check_branch
         run: |
-          PR_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-          echo "PR branch is : $PR_BRANCH"
-          git checkout -B master origin/master
-          git merge-base --is-ancestor origin/master "$PR_BRANCH"
-          echo ::set-output name=is_behind_master::$?
+          echo "PR branch: ${{ github.head_ref }}"
+          echo "PR branch status: $(git rev-list --count origin/master..origin/${{ github.head_ref }})"
+          exit $(git rev-list --count origin/master..origin/${{ github.head_ref }})
 
       - name: Fail if PR is not up to date with master
         id: fail_check
