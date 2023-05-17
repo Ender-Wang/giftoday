@@ -20,7 +20,10 @@ jobs:
 
       - name: Install dependencies (Frontend)
         working-directory: ./frontend
-        run: cd frontend && npm ci
+        run: |
+          cd frontend
+          pwd
+          npm ci
 
       - name: Check if PR is updated to master (Frontend)
         working-directory: ./frontend
@@ -33,7 +36,10 @@ jobs:
 
       - name: Install dependencies (Backend)
         working-directory: ./backend
-        run: cd backend && npm ci
+        run: |
+          cd backend
+          pwd
+          npm ci
 
       - name: Check if PR is updated to master (Backend)
         working-directory: ./backend
