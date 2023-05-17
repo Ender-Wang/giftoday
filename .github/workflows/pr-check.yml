@@ -1,23 +1,42 @@
-name: PR Update Check
+name: Check PR Status
 
 on:
   pull_request:
-    types:
-      - opened
-      - synchronize
+    branches:
+      - master
 
 jobs:
-  check_update:
+  check_pr_status:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Check merge state
-        id: merge_state
-        run: echo "::set-output name=state::$(gh pr view ${{ github.event.pull_request.number }} --json state -q '.state')"
+      - name: Fetch all branches
+        run: git fetch --all
 
-      - name: Notify user if PR is not up to date
-        if: ${{ steps.merge_state.outputs.state != 'clean' }}
-        run: echo "The pull request is not up to date with the master branch. Please synchronize your branch."
+      - name: Compare PR branch with master
+        id: check_branch
+        run: |
+          PR_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+          git checkout -B master origin/master
+          git merge-base --is-ancestor origin/master "$PR_BRANCH"
+          echo ::set-output name=is_behind_master::$?
+
+      - name: Set PR status as not up to date
+        if: steps.check_branch.outputs.is_behind_master != '0'
+        run: |
+          TOKEN="${{ secrets.GITHUB_TOKEN }}"
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          API_URL="https://api.github.com/repos/${{ github.repository }}/pulls/${PR_NUMBER}"
+
+          curl -X POST \
+            -H "Authorization: Bearer $TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -d '{"state": "error", "description": "This pull request is not up to date with the master branch."}' \
+            "$API_URL/reviews"
+
+      - name: Fail if PR is not up to date with master
+        if: steps.check_branch.outputs.is_behind_master != '0'
+        run: exit 1
