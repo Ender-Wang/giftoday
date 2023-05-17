@@ -1,4 +1,4 @@
-name: Check PR Status
+name: Check PR Up to Date
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  check_pr_status:
+  check_pr_up_to_date:
     runs-on: ubuntu-latest
 
     steps:
