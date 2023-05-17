@@ -19,11 +19,11 @@ jobs:
           node-version: 14
 
       - name: Install dependencies (frontend)
-        working-directory: frontend
+        working-directory: ./frontend
         run: npm ci
 
       - name: Install dependencies (backend)
-        working-directory: backend
+        working-directory: ./backend
         run: npm ci
 
       - name: Check if PR is updated to master
