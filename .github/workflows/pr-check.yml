@@ -1,0 +1,23 @@
+name: PR Update Check
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  check_update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Check merge state
+        id: merge_state
+        run: echo "::set-output name=state::$(gh pr view ${{ github.event.pull_request.number }} --json state -q '.state')"
+
+      - name: Notify user if PR is not up to date
+        if: ${{ steps.merge_state.outputs.state != 'clean' }}
+        run: echo "The pull request is not up to date with the master branch. Please synchronize your branch."
