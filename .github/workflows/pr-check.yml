@@ -20,7 +20,7 @@ jobs:
         id: check_branch
         run: |
           echo "PR branch: ${{ github.head_ref }}"
-          echo "PR branch status: $(git rev-list --count origin/master..origin/${{ github.head_ref }})"
+          echo "PR branch status: $(git rev-list --count origin/${{ github.head_ref }}..origin/master)"
           exit $(git rev-list --count origin/master..origin/${{ github.head_ref }})
 
       - name: Fail if PR is not up to date with master
