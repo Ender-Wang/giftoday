@@ -1,0 +1,31 @@
+name: Check PR Up to Date
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  check_pr_up_to_date:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Fetch all branches
+        run: git fetch --all
+
+      - name: Compare PR branch with master
+        id: check_branch
+        run: |
+          echo "PR branch name: ${{ github.head_ref }}"
+          echo "Branch ${{ github.head_ref }} is $(git rev-list --count origin/${{ github.head_ref }}..origin/master) commit(s) behind the master"
+          behind_counts=$(git rev-list --count origin/${{ github.head_ref }}..origin/master)
+          echo "Behind counts: $behind_counts"
+          if [ $behind_counts -gt 0 ]; then
+            echo "PR branch is behind master"
+            exit 10
+          else
+            echo "PR branch is up to date with master"
+          fi
