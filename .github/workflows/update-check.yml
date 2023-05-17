@@ -21,8 +21,9 @@ jobs:
       - name: Install dependencies (Frontend)
         working-directory: ./frontend
         run: |
-          cd frontend
-          pwd
+          # cd frontend
+          echo $PWD
+          echo "current in where?"
           npm ci
 
       - name: Check if PR is updated to master (Frontend)
