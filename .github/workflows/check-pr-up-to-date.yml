@@ -13,8 +13,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # - name: Fetch all branches
-      #   run: git fetch --all
+      - name: Fetch all branches
+        run: git fetch --all
 
       - name: Compare PR branch with master
         id: check_branch
