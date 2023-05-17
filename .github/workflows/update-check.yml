@@ -1,52 +1,23 @@
-name: Update Check
+name: PR Update Check
 
 on:
   pull_request:
-    branches:
-      - master
+    types:
+      - opened
+      - synchronize
 
 jobs:
-  test_pull_request:
+  check_update:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14
+      - name: Check merge state
+        id: merge_state
+        run: echo "::set-output name=state::$(gh pr view ${{ github.event.pull_request.number }} --json state -q '.state')"
 
-      - name: Install dependencies (Frontend)
-        working-directory: ./frontend
-        run: |
-          # cd frontend
-          echo $PWD
-          echo "current in where?"
-          npm ci
-
-      - name: Check if PR is updated to master (Frontend)
-        working-directory: ./frontend
-        env:
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          REPO_OWNER: ${{ github.repository_owner }}
-          REPO_NAME: ${{ github.repository }}
-        run: |
-          npm run test-pr
-
-      - name: Install dependencies (Backend)
-        working-directory: ./backend
-        run: |
-          cd backend
-          pwd
-          npm ci
-
-      - name: Check if PR is updated to master (Backend)
-        working-directory: ./backend
-        env:
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          REPO_OWNER: ${{ github.repository_owner }}
-          REPO_NAME: ${{ github.repository }}
-        run: |
-          npm run test-pr
+      - name: Notify user if PR is not up to date
+        if: ${{ steps.merge_state.outputs.state != 'clean' }}
+        run: echo "The pull request is not up to date with the master branch. Please synchronize your branch."
