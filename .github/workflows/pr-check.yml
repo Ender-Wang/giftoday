@@ -20,9 +20,8 @@ jobs:
         id: check_branch
         run: |
           echo "PR branch name: ${{ github.head_ref }}"
-          COMMIT_COUNT=$(git rev-list --count origin/${{ github.head_ref }}..origin/master)
+          echo "Branch ${{ github.head_ref}} is $(git rev-list --count origin/${{ github.head_ref }}..origin/master) behind the master"
           if: $(git rev-list --count origin/${{ github.head_ref }}..origin/master) != '0'
-            echo "$(git rev-list --count origin/${{ github.head_ref }}..origin/master)"
             exit 2
           fi
           exit 0
