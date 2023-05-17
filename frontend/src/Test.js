@@ -13,7 +13,7 @@ export default function Test() {
 
   return (
     <div className="text-6xl text-red-200">
-      Giftoday
+      {/* Giftoday */}
       <div>
         {data.map((item) => (
           <div key={item.name}>{item.name}</div>
