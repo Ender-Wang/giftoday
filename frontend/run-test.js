@@ -3,7 +3,7 @@ const { Octokit } = require("@octokit/rest");
 async function runTests() {
   const octokit = new Octokit();
 
-  // Get the pull request number from the environment variables
+  
   const pullRequestNumber = process.env.PR_NUMBER;
 
   // Fetch the pull request details
