@@ -19,13 +19,10 @@ jobs:
       - name: Compare PR branch with master
         id: check_branch
         run: |
-          echo "PR branch: ${{ github.head_ref }}"
-          echo "PR branch status: $(git rev-list --count origin/${{ github.head_ref }}..origin/master)"
-          exit $(git rev-list --count origin/master..origin/${{ github.head_ref }})
-
-      - name: Fail if PR is not up to date with master
-        id: fail_check
-        if: steps.check_branch.outputs.is_behind_master != '0'
-        run: |
-          echo "PR branch status $steps.check_branch.outputs.is_behind_master"
-          exit 1
+          echo "PR branch name: ${{ github.head_ref }}"
+          COMMIT_COUNT=$(git rev-list --count origin/${{ github.head_ref }}..origin/master)
+          if: $(git rev-list --count origin/${{ github.head_ref }}..origin/master) != '0'
+            echo "$(git rev-list --count origin/${{ github.head_ref }}..origin/master)"
+            exit 2
+          fi
+          exit 0
