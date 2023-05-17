@@ -4,23 +4,27 @@ on:
   pull_request:
     branches:
       - master
-    types:
-      - opened
-      - synchronize
-      - reopened
 
 jobs:
-  update-check:
+  test_pull_request:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check if PR is updated to the master branch
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check if PR is updated to master
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO_OWNER: ${{ github.repository_owner }}
+          REPO_NAME: ${{ github.repository }}
         run: |
-          git fetch origin pull/${{ github.event.pull_request.number }}/merge
-          git diff --name-only FETCH_HEAD...HEAD > changes.txt
-          if [ -s changes.txt ]; then
-            echo "::error file=changes.txt::This PR is not updated to the master branch."
-            exit 1
-          else
-            echo "This PR is updated to the master branch."
-          fi
+          npm run test-pr
