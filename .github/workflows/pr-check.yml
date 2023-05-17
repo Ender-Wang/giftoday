@@ -20,6 +20,7 @@ jobs:
         id: check_branch
         run: |
           PR_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+          echo "PR branch is : $PR_BRANCH"
           git checkout -B master origin/master
           git merge-base --is-ancestor origin/master "$PR_BRANCH"
           echo ::set-output name=is_behind_master::$?
@@ -27,17 +28,6 @@ jobs:
       - name: Fail if PR is not up to date with master
         id: fail_check
         if: steps.check_branch.outputs.is_behind_master != '0'
-        run: exit 1
-
-  final_check:
-    needs: check_pr_status
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check if previous step failed
-        id: check_failure
-        run: echo "Previous step failed"
-
-      - name: Fail if PR is not up to date with master
-        if: needs.check_pr_status.result != 'success' || needs.check_pr_status.outputs.fail_check == 'failure'
-        run: exit 1
+        run: |
+          echo "PR branch status $steps.check_branch.outputs.is_behind_master"
+          exit 1
