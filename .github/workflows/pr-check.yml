@@ -24,7 +24,7 @@ jobs:
 
       - name: Check if PR branch is behind master
         run: |
-          if: $(git rev-list --count origin/${{ github.head_ref }}..origin/master) > 0
-          echo 10
+          if [[ $(git rev-list --count origin/${{ github.head_ref }}..origin/master) -gt 0 ]]; then
+            echo 10
           fi
           echo 1
