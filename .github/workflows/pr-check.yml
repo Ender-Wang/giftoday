@@ -21,10 +21,9 @@ jobs:
         run: |
           echo "PR branch name: ${{ github.head_ref }}"
           echo "Branch ${{ github.head_ref }} is $(git rev-list --count origin/${{ github.head_ref }}..origin/master) commit(s) behind the master"
-
-      - name: Check if PR branch is behind master
-        run: |
-          if [[ $(git rev-list --count origin/${{ github.head_ref }}..origin/master) -gt 0 ]]; then
-            echo 10
-          fi
+          behind_counts=$(git rev-list --count origin/${{ github.head_ref }}..origin/master)
+          echo "Behind counts: $behind_counts"
+          if: $behind_counts > 0
+          echo 10
+          if
           echo 1
