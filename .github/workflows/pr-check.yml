@@ -24,19 +24,20 @@ jobs:
           git merge-base --is-ancestor origin/master "$PR_BRANCH"
           echo ::set-output name=is_behind_master::$?
 
-      - name: Set PR status as not up to date
+      - name: Fail if PR is not up to date with master
+        id: fail_check
         if: steps.check_branch.outputs.is_behind_master != '0'
-        run: |
-          TOKEN="${{ secrets.GITHUB_TOKEN }}"
-          PR_NUMBER="${{ github.event.pull_request.number }}"
-          API_URL="https://api.github.com/repos/${{ github.repository }}/pulls/${PR_NUMBER}"
+        run: exit 1
 
-          curl -X POST \
-            -H "Authorization: Bearer $TOKEN" \
-            -H "Accept: application/vnd.github.v3+json" \
-            -d '{"state": "error", "description": "This pull request is not up to date with the master branch."}' \
-            "$API_URL/reviews"
+  final_check:
+    needs: check_pr_status
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check if previous step failed
+        id: check_failure
+        run: echo "Previous step failed"
 
       - name: Fail if PR is not up to date with master
-        if: steps.check_branch.outputs.is_behind_master != '0'
+        if: needs.check_pr_status.result != 'success' || needs.check_pr_status.outputs.fail_check == 'failure'
         run: exit 1
