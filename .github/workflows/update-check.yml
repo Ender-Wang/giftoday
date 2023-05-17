@@ -18,15 +18,25 @@ jobs:
         with:
           node-version: 14
 
-      - name: Install dependencies (frontend)
+      - name: Install dependencies (Frontend)
         working-directory: ./frontend
         run: npm ci
 
-      - name: Install dependencies (backend)
+      - name: Check if PR is updated to master (Frontend)
+        working-directory: ./frontend
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO_OWNER: ${{ github.repository_owner }}
+          REPO_NAME: ${{ github.repository }}
+        run: |
+          npm run test-pr
+
+      - name: Install dependencies (Backend)
         working-directory: ./backend
         run: npm ci
 
-      - name: Check if PR is updated to master
+      - name: Check if PR is updated to master (Backend)
+        working-directory: ./backend
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           REPO_OWNER: ${{ github.repository_owner }}
