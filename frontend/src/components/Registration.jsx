@@ -112,7 +112,7 @@ export default function Registration() {
       },
     };
     const errors = validateForm(data);
-    if (Object.keys(errors).length == 0) {
+    if (Object.keys(errors).length === 0) {
       setName("");
       setEmail("");
       setPassword("");
@@ -123,7 +123,7 @@ export default function Registration() {
     } else {
       setFormErrors(errors);
     }
-    if (Object.keys(errors).length == 0) {
+    if (Object.keys(errors).length === 0) {
       fetch("http://localhost:4000/user/registration", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
