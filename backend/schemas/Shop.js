@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const Holiday = new Schema({
+const Shop = new Schema({
   id: { type: Number, unique: true },
   name: String,
-  date: Date,
+  description: String,
+  price: Number,
   tag: String,
 });
 
-module.exports = mongoose.model("Holiday", Holiday);
+module.exports = mongoose.model("Shop", Shop);
