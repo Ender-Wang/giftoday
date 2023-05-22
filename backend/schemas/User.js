@@ -57,7 +57,7 @@ const User = new Schema({
   premium: Boolean,
   card: { type: [Card], default: [] },
   message: { type: [Message], default: [] },
-  cart: { type: [Cart], default: [] },
+  cart: { type: Cart, default: null },
   order: { type: [Order], default: [] },
   address: { type: [Address], default: [] },
 });
