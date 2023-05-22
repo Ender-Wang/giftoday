@@ -112,31 +112,41 @@ export default function Registration() {
       },
     };
     const errors = validateForm(data);
-    if (Object.keys(errors).length === 0) {
-      setName("");
-      setEmail("");
-      setPassword("");
-      setPostalCode("");
-      setStreet("");
-      setCity("");
-      setFormErrors({});
-    } else {
-      setFormErrors(errors);
-    }
+    setFormErrors(errors);
+
     if (Object.keys(errors).length === 0) {
       fetch("http://localhost:4000/user/registration", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
-      }).then((res) => {
-        console.log(res.body);
-        if (res.ok) {
-          alert("Registration successful!");
-          window.location.href = "/login";
-        } else {
+      })
+        .then((res) => {
+          if (res.ok) {
+            alert("Registration successful!");
+            setName("");
+            setEmail("");
+            setPassword("");
+            setPostalCode("");
+            setStreet("");
+            setCity("");
+            setFormErrors({});
+            window.location.href = "/login";
+          } else {
+            // Check if the email is already registered
+            if (res.status === 409) {
+              setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                email: "Email already registered!",
+              }));
+            } else {
+              alert("Registration failed!");
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
           alert("Registration failed!");
-        }
-      });
+        });
     }
   };
 
@@ -182,7 +192,13 @@ export default function Registration() {
           {/* Email input */}
           <div className="mb-4">
             <label htmlFor="email" className="block font-bold mb-2">
-              Email Address
+              Email Address{" "}
+              {formErrors.email && (
+                <span className="text-red-500 text-sm">
+                  {" *"}
+                  {formErrors.email}
+                </span>
+              )}
             </label>
             <input
               type="email"
