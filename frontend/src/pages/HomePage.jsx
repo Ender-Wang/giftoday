@@ -1,32 +1,30 @@
-import React from 'react';
+import React from "react";
+import MessageBoard from "../components/MessageBoard";
 // import {Outlet} from "react-router-dom";
 // import NavBar from '../components/NavBar';
 
-
 const HomePage = () => {
   const titleStyle = {
-    fontSize: '32px', 
-    color: 'black',
-    textAlign: 'center',
+    fontSize: "32px",
+    color: "black",
+    textAlign: "center",
   };
 
   const containerStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    height: '100vh', 
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    height: "100vh",
   };
 
-  return(
+  return (
     <>
-    
-    <div style={containerStyle}>
-      <h1 style={titleStyle}>Landing Page</h1>
-    </div>
-    
+      <div style={containerStyle}>
+        <h1 style={titleStyle}>Landing Page</h1>
+        <MessageBoard />
+      </div>
     </>
-  )
+  );
+};
 
-}
-    
-export  default HomePage;
+export default HomePage;
