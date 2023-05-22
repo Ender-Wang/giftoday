@@ -1,32 +1,15 @@
-import React from 'react';
-// import {Outlet} from "react-router-dom";
-// import NavBar from '../components/NavBar';
+import React from "react";
 
-
-const HomePage = () => {
-  const titleStyle = {
-    fontSize: '32px', 
-    color: 'black',
-    textAlign: 'center',
-  };
-
-  const containerStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    height: '100vh', 
-  };
-
-  return(
-    <>
-    
-    <div style={containerStyle}>
-      <h1 style={titleStyle}>Landing Page</h1>
+export default function HomePage() {
+  const userID = localStorage.getItem("userID");
+  const loggedInDate = localStorage.getItem("loggedInDate");
+  return (
+    <div>
+      <div>HomePage</div>
+      {userID
+        ? "User " + userID + " logged in at " + loggedInDate
+        : "No user logged in"}
+      <div></div>
     </div>
-    
-    </>
-  )
-
+  );
 }
-    
-export  default HomePage;
