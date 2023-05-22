@@ -36,14 +36,6 @@ module.exports = {
           100: "#E14363",
         },
       },
-      // =======
-      //     extend: {},
-      //     colors:{
-      //       background: '#FFEFDB',
-      //       lightButton: '#FEC8D8',
-      //       normalButton: '#D291BC',
-      //       darkButton: '#892455'
-      // >>>>>>> Stashed changes
     },
   },
   plugins: [],
