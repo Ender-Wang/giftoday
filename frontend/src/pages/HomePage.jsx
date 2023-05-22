@@ -1,6 +1,6 @@
 import React from 'react';
-import {Outlet} from "react-router-dom";
-import NavBar from '../components/NavBar';
+// import {Outlet} from "react-router-dom";
+// import NavBar from '../components/NavBar';
 
 
 const HomePage = () => {
@@ -19,8 +19,7 @@ const HomePage = () => {
 
   return(
     <>
-    <NavBar></NavBar>
-    <Outlet></Outlet>
+    
     <div style={containerStyle}>
       <h1 style={titleStyle}>Landing Page</h1>
     </div>

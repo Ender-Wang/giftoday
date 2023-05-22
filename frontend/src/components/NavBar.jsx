@@ -1,41 +1,53 @@
-import { useState } from "react";
-import {Link} from 'react-router-dom';
-import {FiX, FiAlignJustify} from "react-icons/fi";
+import React from "react";
+import { Link } from "react-router-dom";
+import logo from "../images/logo.png";
+import filter from "../images/filter.png";
 
-const NavBar = () => {
-    const [currentState, setCurrentState] = useState(false);
-    const toggleHandler = () => {
-        setCurrentState(!currentState)
-    }
+const Navbar = () => {
+  return (
+    <nav className="w-full h-16 fffff flex justify-between items-center">
+      <div className="ml-4">
+        <Link to="/" className="text-white text-xl font-bold">
+          <img src={logo} alt="My Website Logo" className="h-8" />
+        </Link>
+      </div>
 
-    return(
-      <>
-        <nav className={`w-64 min-h-screen bg-gray-900 flex justify-center items-center fixed top-0 left-0 transition ease-in-out duration-300 ${currentState ? "translate-x-0" : "-translate-x-3/4"}`}>
-            {currentState ?(
-                <div className="absolute top-4 right-4 cursor-pointer">
-                    <FiX size={"2.5rem"} color="white" onClick={toggleHandler}/>
-                </div> 
-            ) : (
-                <div className="absolute top-4 right-4 cursor-pointer">
-                    <FiAlignJustify size={"2.5rem"} color="white" onClick={toggleHandler}/>
-                </div>
-            )}
+      <div className="flex items-center">
+        <div className="flex mr-4 border-2 rounded-md">
+          <div className="flex search-container ">
+            <input
+              type="text"
+              placeholder="Search"
+              className="px-2 py-1 text-white bg-gray-600 rounded-md"
+            />
+            <img
+              src={filter}
+              alt="Search Icon"
+              className="flex search-icon rounded-md"
+              style={{ marginLeft: "-34px",width: '30px', height: '30px'  }}
+            />
+          </div>
+        </div>
 
-            <ul>
-                <li className="text-white font-bold mb-4">
-                    <Link to={"/registrationpage"}>
-                        Registration
-                    </Link>
-                </li>
-                <li className="text-white font-bold mb-4">
-                    <Link to={"/loginpage"}>
-                        Login
-                    </Link> 
-                </li>
-            </ul>
-        </nav>
-      </>
-    )
-}
-    
-export  default NavBar;
+        <div className="mr-4 border-2 rounded-md">
+          <Link
+            to="/loginpage"
+            className="text-white font-bold border-2 rounded-md bg-pink-500"
+          >
+            Login
+          </Link>
+        </div>
+        <div className="mr-4 border-2 rounded-md">
+          <Link
+            to="/registrationpage"
+            className="text-white font-bold border-2 rounded-md bg-pink-500"
+          >
+            Registration
+          </Link>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
