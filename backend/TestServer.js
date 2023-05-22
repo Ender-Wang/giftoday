@@ -1,8 +1,12 @@
 //Test server js file
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const User = require("./TestUser.js");
 const app = express();
+
+//allow cross origin requests
+app.use(cors());
 
 mongoose
   .connect("mongodb://127.0.0.1:27017/testDB")

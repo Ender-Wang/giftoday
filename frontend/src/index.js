@@ -5,6 +5,8 @@ import "./index.css";
 import App from "./App";
 // import NavBar from './components/NavBar';
 import {BrowserRouter} from "react-router-dom";
+import Test from "./Test";
+import RegistrationPage from "./pages/RegistrationPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -12,5 +14,7 @@ root.render(
     <BrowserRouter>
       <App />
     </BrowserRouter> 
+    <Test />
+    <RegistrationPage />
   </React.StrictMode>
 );
