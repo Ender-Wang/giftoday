@@ -24,14 +24,14 @@ const Navbar = () => {
               src={filter}
               alt="Search Icon"
               className="flex search-icon rounded-md"
-              style={{ marginLeft: "-34px",width: '30px', height: '30px'  }}
+              style={{ marginLeft: "-34px", width: "30px", height: "30px" }}
             />
           </div>
         </div>
 
         <div className="mr-4 border-2 rounded-md">
           <Link
-            to="/loginpage"
+            to="/login"
             className="text-white font-bold border-2 rounded-md bg-pink-500"
           >
             Login
@@ -39,7 +39,7 @@ const Navbar = () => {
         </div>
         <div className="mr-4 border-2 rounded-md">
           <Link
-            to="/registrationpage"
+            to="/registration"
             className="text-white font-bold border-2 rounded-md bg-pink-500"
           >
             Registration
