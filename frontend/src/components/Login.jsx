@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import sideImg from "../images/wallpaper-tetiana-shadrina.jpg";
+import { setUserID, setLoggedInDate } from "../states/GlobalState";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -70,12 +71,8 @@ export default function Login() {
         })
         .then((data) => {
           const { userID } = data;
-          const loggedInDate = new Date();
-          localStorage.setItem("userID", userID);
-          localStorage.setItem(
-            "loggedInDate",
-            loggedInDate.toLocaleDateString("en-GB")
-          );
+          setUserID(userID);
+          setLoggedInDate();
           window.location.href = "/";
         })
         .catch((error) => {
