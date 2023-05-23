@@ -55,6 +55,7 @@ const Navbar = () => {
             <div
               className="dropdown-menu border-2 rounded-md"
               style={{
+                backgroundColor: "#ffffff",
                 position: "absolute",
                 top: "110%",
                 left: 90,
