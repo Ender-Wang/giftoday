@@ -1,32 +1,15 @@
-import React from 'react';
-// import {Outlet} from "react-router-dom";
-// import NavBar from '../components/NavBar';
+import React from "react";
+import MessageBoard from "../components/MessageBoard";
+import { getUserID, getLoggedInDate } from "../states/GlobalState";
 
-
-const HomePage = () => {
-  const titleStyle = {
-    fontSize: '32px', 
-    color: 'black',
-    textAlign: 'center',
-  };
-
-  const containerStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    height: '100vh', 
-  };
-
-  return(
-    <>
-    
-    <div style={containerStyle}>
-      <h1 style={titleStyle}>Landing Page</h1>
+export default function HomePage() {
+  return (
+    <div>
+      <div>HomePage</div>
+      {getUserID()
+        ? "User #" + getUserID() + " logged in at " + getLoggedInDate()
+        : "No user logged in"}
+      <MessageBoard />
     </div>
-    
-    </>
-  )
-
+  );
 }
-    
-export  default HomePage;
