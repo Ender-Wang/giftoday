@@ -18,17 +18,25 @@ const Navbar = () => {
             <input
               type="text"
               placeholder="Search"
-              className="px-2 py-1 text-white bg-gray-600 rounded-md"
+              className="px-2 py-1 text-black bg-white rounded-md"
             />
             <img
               src={filter}
               alt="Search Icon"
               className="flex search-icon rounded-md"
-              style={{ marginLeft: "-34px", width: "30px", height: "30px" }}
+              style={{ marginLeft: "-30px", width: "30px", height: "30px" }}
             />
           </div>
         </div>
 
+        <div className="mr-4 border-2 rounded-md">
+          <Link
+            to="/premium-benefits"
+            className="text-yellow-500 font-bold border-2 rounded-md bg-purple-500"
+          >
+            Join Premium
+          </Link>
+        </div>
         <div className="mr-4 border-2 rounded-md">
           <Link
             to="/login"
