@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 import { CheckIcon } from "@heroicons/react/20/solid";
 
 const tiers = [
@@ -123,4 +121,3 @@ export default function Example() {
     </div>
   );
 }
->>>>>>> Stashed changes
