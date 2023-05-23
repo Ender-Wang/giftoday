@@ -14,7 +14,7 @@ const Navbar = () => {
 
       <div className="flex items-center">
         <div className="flex mr-4 border-2 rounded-md">
-          <div className="flex search-container ">
+          <div className="flex search-container">
             <input
               type="text"
               placeholder="Search"
@@ -29,26 +29,35 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="mr-4 border-2 rounded-md">
+        <div
+          className="mr-4 py-1 border-2 rounded-md"
+          style={{ backgroundColor: "#5D487F" }}
+        >
           <Link
             to="/premium-benefits"
-            className="text-yellow-500 font-bold border-2 rounded-md bg-purple-500"
+            className="text-yellow-500 font-bold rounded-md mr-2 ml-2"
           >
             Join Premium
           </Link>
         </div>
-        <div className="mr-4 border-2 rounded-md">
+        <div
+          className="mr-4 py-1 border-2 rounded-md"
+          style={{ backgroundColor: "#892455" }}
+        >
           <Link
             to="/login"
-            className="text-white font-bold border-2 rounded-md bg-pink-500"
+            className="text-white font-bold  rounded-md mr-2 ml-2"
           >
             Login
           </Link>
         </div>
-        <div className="mr-4 border-2 rounded-md">
+        <div
+          className="mr-4 py-1 border-2 rounded-md"
+          style={{ backgroundColor: "#892455" }}
+        >
           <Link
             to="/registration"
-            className="text-white font-bold border-2 rounded-md bg-pink-500"
+            className="text-white font-bold  rounded-md mr-2 ml-2"
           >
             Registration
           </Link>
