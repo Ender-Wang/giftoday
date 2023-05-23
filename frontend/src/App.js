@@ -12,10 +12,10 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/registration" element={<RegistrationPage />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/homepage" element={<HomePage />} />
-        <Route path="/registrationpage" element={<RegistrationPage />} />
-        <Route path="/loginpage" element={<LoginPage />} />
-        <Route path="/premiumbenefitspage" element={<PremiumBenefitsPage />} />
+        <Route path="/premium-benefits" element={<PremiumBenefitsPage />} />
         <Route path="*" element={<p>There's nothing here!</p>} />
       </Routes>
     </div>

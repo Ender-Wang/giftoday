@@ -65,32 +65,75 @@ app.get("/user/:userID/address", (req, res) => {});
 //Post APIs
 //Registration
 app.post("/user/registration", (req, res) => {
-  UserDB.countDocuments().then((count) => {
-    let userID = count + 100;
-    req.body.id = userID;
+  const { email } = req.body;
 
-    var { id, name, email, password, address } = req.body;
-    var newUser = new UserDB({
-      id,
-      name,
-      email,
-      password,
-      address,
-    });
+  UserDB.findOne({ email }) // Check if email already exists in the database
+    .then((existingUser) => {
+      if (existingUser) {
+        // If email exists, send a response indicating that the email is already registered
+        return res.status(409).json({ error: "Email already registered" });
+      }
 
-    newUser
-      .save()
-      .then((user) => {
-        console.log("Registration successful with user: ", user);
-        return res.json(user);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .catch((err) => {
-        console.log(err);
+      // Generate a new user ID
+      UserDB.countDocuments().then((count) => {
+        let userID = count + 1;
+        req.body.id = userID;
+
+        var { id, name, password, address } = req.body;
+        var newUser = new UserDB({
+          id,
+          name,
+          email,
+          password,
+          address,
+        });
+
+        newUser
+          .save()
+          .then((user) => {
+            console.log("Registration successful with user: ", user);
+            return res.json(user);
+          })
+          .catch((err) => {
+            console.log(err);
+            return res.status(500).json({ error: "Internal server error" });
+          });
       });
-  });
+    })
+    .catch((err) => {
+      console.log(err);
+      return res.status(500).json({ error: "Internal server error" });
+    });
+});
+
+//Login
+app.post("/user/login", (req, res) => {
+  const { email, password } = req.body;
+
+  UserDB.findOne({ email }) // Find the user by email
+    .then((user) => {
+      if (!user) {
+        // If user is not found, send a response indicating that the email is not registered
+        return res.status(404).json({ error: "Email not found!" });
+      }
+
+      if (user.password !== password) {
+        // If password is incorrect, send a response indicating that the password is wrong
+        return res.status(401).json({ error: "Wrong password!" });
+      }
+
+      // Authentication successful
+      console.log("Login successful for user: ", user);
+      const response = {
+        userID: user.id,
+      };
+      console.log("User Id from the backend: ", response.userID);
+      return res.json(response);
+    })
+    .catch((err) => {
+      console.log(err);
+      return res.status(500).json({ error: "Internal server error" });
+    });
 });
 
 //TODO: Post user Card info with user id: [id, number, cvv, expMonth, expYear]
