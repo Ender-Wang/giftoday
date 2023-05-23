@@ -14,9 +14,12 @@ const Navbar = () => {
     setShowDropdown(false);
   };
 
-  const handleClick = () => {
-    setShowDropdown(!showDropdown);
+  const handleClick = (text) => {
+    setSearchText(text);
   };
+
+  const [searchText, setSearchText] = useState("");
+
   return (
     <nav className="w-full h-16 fffff flex justify-between items-center">
       <div className="ml-4">
@@ -36,13 +39,15 @@ const Navbar = () => {
               type="text"
               placeholder="Search"
               className="px-2 py-1 text-black bg-white rounded-md"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
             />
             <img
               src={filter}
               alt="Search Icon"
               className="flex search-icon rounded-md"
               style={{ marginLeft: "-30px", width: "30px", height: "30px" }}
-              onClick={handleClick}
+              onClick={() => handleClick(searchText)}
               onMouseEnter={handleMouseEnter}
             />
           </div>
@@ -57,25 +62,44 @@ const Navbar = () => {
                 zIndex: 999,
               }}
             >
-              <ul
-                className="dropdown-menu-list"
-                style={{ fontSize: "14px", lineHeight: "1.5" }}
-              >
+              <ul className="dropdown-menu-list" style={{ fontSize: "14px" }}>
                 <li
                   className="dropdown-menu-item"
-                  style={{ wordWrap: "break-word" }}
+                  style={{
+                    wordWrap: "break-word",
+                    lineHeight: "1",
+                    marginTop: "0.5em",
+                    marginLeft: "0.5em",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleClick("household")}
                 >
                   household
                 </li>
                 <li
                   className="dropdown-menu-item"
-                  style={{ wordWrap: "break-word" }}
+                  style={{
+                    wordWrap: "break-word",
+                    lineHeight: "1",
+                    marginTop: "0.5em",
+                    marginLeft: "0.5em",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleClick("game")}
                 >
                   game
                 </li>
                 <li
                   className="dropdown-menu-item"
-                  style={{ wordWrap: "break-word" }}
+                  style={{
+                    wordWrap: "break-word",
+                    lineHeight: "1",
+                    marginTop: "0.5em",
+                    marginLeft: "0.5em",
+                    marginBottom: "0.5em",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleClick("electronic product")}
                 >
                   electronic product
                 </li>
