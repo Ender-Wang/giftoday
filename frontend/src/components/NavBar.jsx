@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../images/logo.png";
 import filter from "../images/filter.png";
 
 const Navbar = () => {
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const handleMouseEnter = () => {
+    setShowDropdown(true);
+  };
+
+  const handleMouseLeave = () => {
+    setShowDropdown(false);
+  };
+
+  const handleClick = () => {
+    setShowDropdown(!showDropdown);
+  };
   return (
     <nav className="w-full h-16 fffff flex justify-between items-center">
       <div className="ml-4">
@@ -13,7 +26,11 @@ const Navbar = () => {
       </div>
 
       <div className="flex items-center">
-        <div className="flex mr-4 border-2 rounded-md">
+        <div
+          className="flex mr-4 border-2 rounded-md"
+          style={{ position: "relative" }}
+          onMouseLeave={handleMouseLeave}
+        >
           <div className="flex search-container">
             <input
               type="text"
@@ -25,8 +42,46 @@ const Navbar = () => {
               alt="Search Icon"
               className="flex search-icon rounded-md"
               style={{ marginLeft: "-30px", width: "30px", height: "30px" }}
+              onClick={handleClick}
+              onMouseEnter={handleMouseEnter}
             />
           </div>
+          {showDropdown && (
+            <div
+              className="dropdown-menu border-2 rounded-md"
+              style={{
+                position: "absolute",
+                top: "110%",
+                left: 90,
+                right: 0,
+                zIndex: 999,
+              }}
+            >
+              <ul
+                className="dropdown-menu-list"
+                style={{ fontSize: "14px", lineHeight: "1.5" }}
+              >
+                <li
+                  className="dropdown-menu-item"
+                  style={{ wordWrap: "break-word" }}
+                >
+                  household
+                </li>
+                <li
+                  className="dropdown-menu-item"
+                  style={{ wordWrap: "break-word" }}
+                >
+                  game
+                </li>
+                <li
+                  className="dropdown-menu-item"
+                  style={{ wordWrap: "break-word" }}
+                >
+                  electronic product
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
 
         <div
