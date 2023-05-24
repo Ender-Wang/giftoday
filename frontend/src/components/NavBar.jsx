@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../images/logo.png";
 import filter from "../images/filter.png";
+import { FaUser } from "react-icons/fa";
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -140,6 +141,15 @@ const Navbar = () => {
             className="text-white font-bold  rounded-md mr-2 ml-2"
           >
             Registration
+          </Link>
+        </div>
+
+        <div className="mr-4 py-1 rounded-md">
+          <Link
+            to="/profile"
+            className="text-white font-bold rounded-md mr-2 ml-2"
+          >
+            <FaUser size={24} color="#892455" />
           </Link>
         </div>
       </div>
