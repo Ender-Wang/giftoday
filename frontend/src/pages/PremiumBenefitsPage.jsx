@@ -1,5 +1,5 @@
 import PremiumBenefits from "../components/PremiumBenefits";
 
-export default function RegistrationPage() {
+export default function PremiumBenefitsPage() {
   return <PremiumBenefits />;
 }
