@@ -37,13 +37,41 @@ export default function UserInfo() {
               <p>Name: {user.name}</p>
               <p>Email: {user.email}</p>
               <p>password: {user.password}</p>
-              <p>Address:</p>
-              <ul>
+              <p>Address: </p>
+              {user.address
+                ? user.address.map((address) => (
+                    <>
+                      <div key={address.postalCode}>
+                        Postal Code: {address.postalCode}
+                      </div>
+
+                      <div key={address.street}>Street: {address.street}</div>
+
+                      <li key={address.city}>City: {address.city}</li>
+
+                      <li key={address.country}>Country: {address.country}</li>
+                    </>
+                  ))
+                : null}
+
+              {/* <ul>
+              <li key={address.postalCode}>
+                          Postal Code: {address.postalCode}
+                        </li>
+                        <li key={address.street}>
+                        Street: {address.street}
+                      </li>
+                      <li key={address.city}>
+                      City: {address.city}
+                    </li>
+                    <li key={address.country}>
+                    Country: {address.country}
+                  </li>
                 <li>Postal Code: {user.address.postalCode}</li>
                 <li>Street: {user.address.street}</li>
                 <li>City: {user.address.city}</li>
                 <li>Country: {user.address.country}</li>
-              </ul>
+              </ul> */}
             </div>
           ))}
         </div>
