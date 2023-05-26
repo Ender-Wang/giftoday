@@ -1,5 +1,4 @@
-// import React, { useState } from "react";
-import React from "react";
+import React, { useState } from "react";
 import { getUserID } from "../states/GlobalState";
 
 export default function Calendar({ selectedDay, onDayClick }) {
@@ -37,6 +36,11 @@ export default function Calendar({ selectedDay, onDayClick }) {
     onDayClick(nextMonth);
   };
 
+  const handleJumpToCurrentDay = () => {
+    const currentDay = new Date();
+    onDayClick(currentDay);
+  };
+
   //TODO: Fetch festival info from backend on selected day
   const fetchFestivalInfo = async (day, userID) => {
     userID = getUserID();
@@ -67,8 +71,8 @@ export default function Calendar({ selectedDay, onDayClick }) {
     selectedDay.getMonth(),
     1
   );
-  const startDayIndex = firstDayOfMonth.getDay(); //Returns 0-6, 0 is Sunday
 
+  const startDayIndex = firstDayOfMonth.getDay(); //Returns 0-6, 0 is Sunday
   const weeksInMonth = Math.ceil((daysInCurrentMonth + startDayIndex) / 7);
 
   function getDaysInMonth(month, year) {
@@ -165,21 +169,33 @@ export default function Calendar({ selectedDay, onDayClick }) {
   return (
     <div className="flex flex-col justify-center bg-orange-200 rounded-lg w-[300px]">
       {/* Calendar header */}
-      <div className="flex items-center mb-4 justify-center w-[300px]">
-        <button className="px-2 cursor-pointer" onClick={handlePreviousMonth}>
-          &lt;
-        </button>
-        <div className="cursor-default text-xl font-bold">
+      <div className="flex items-center mb-4 justify-between w-[300px]">
+        <div
+          className="cursor-default text-xl font-bold pl-2 pt-1"
+          onClick={handleJumpToCurrentDay}
+          title="Click to jump to current day"
+        >
           {selectedDay.toLocaleString("default", {
             month: "long",
             year: "numeric",
           })}
         </div>
-        <button className="px-2 cursor-pointer" onClick={handleNextMonth}>
-          &gt;
-        </button>
+        <div className="flex items-center pr-2 pt-1">
+          <button
+            className="px-2 cursor-pointer font-semibold text-lg"
+            onClick={handlePreviousMonth}
+          >
+            &lt;
+          </button>
+          <button
+            className="px-2 cursor-pointer font-semibold text-lg"
+            onClick={handleNextMonth}
+          >
+            &gt;
+          </button>
+        </div>
       </div>
-      <table className="w-[300px]">
+      <table className="w-[300px] transition-all duration-500 ease-in-out transform">
         {/* Calendar week header */}
         <thead>
           <tr>
