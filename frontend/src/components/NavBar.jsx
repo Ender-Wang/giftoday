@@ -6,6 +6,9 @@ import { FaUser } from "react-icons/fa";
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [searchText, setSearchText] = useState("");
 
   const handleMouseEnter = () => {
     setShowDropdown(true);
@@ -13,13 +16,21 @@ const Navbar = () => {
 
   const handleMouseLeave = () => {
     setShowDropdown(false);
+    setShowProfileMenu(false);
   };
 
   const handleClick = (text) => {
     setSearchText(text);
   };
 
-  const [searchText, setSearchText] = useState("");
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
+
+  const handleProfileClick = (e) => {
+    e.preventDefault();
+    setShowProfileMenu(!showProfileMenu);
+  };
 
   return (
     <nav className="w-full h-16 fffff flex justify-between items-center">
@@ -110,48 +121,109 @@ const Navbar = () => {
           )}
         </div>
 
-        <div
-          className="mr-4 py-1 border-2 rounded-md"
-          style={{ backgroundColor: "#5D487F" }}
-        >
-          <Link
-            to="/premium-benefits"
-            className="text-yellow-500 font-bold rounded-md mr-2 ml-2"
-          >
-            Join Premium
-          </Link>
-        </div>
-        <div
-          className="mr-4 py-1 border-2 rounded-md"
-          style={{ backgroundColor: "#892455" }}
-        >
-          <Link
-            to="/login"
-            className="text-white font-bold  rounded-md mr-2 ml-2"
-          >
-            Login
-          </Link>
-        </div>
-        <div
-          className="mr-4 py-1 border-2 rounded-md"
-          style={{ backgroundColor: "#892455" }}
-        >
-          <Link
-            to="/registration"
-            className="text-white font-bold  rounded-md mr-2 ml-2"
-          >
-            Registration
-          </Link>
-        </div>
+        {!isLoggedIn && ( // before login
+          <>
+            <div
+              className="mr-4 py-1 border-2 rounded-md"
+              style={{ backgroundColor: "#5D487F" }}
+            >
+              <Link
+                to="/premium-benefits"
+                className="text-yellow-500 font-bold rounded-md mr-2 ml-2"
+              >
+                Join Premium
+              </Link>
+            </div>
+            <div
+              className="mr-4 py-1 border-2 rounded-md"
+              style={{ backgroundColor: "#892455" }}
+            >
+              <Link
+                to="/login"
+                className="text-white font-bold  rounded-md mr-2 ml-2"
+              >
+                Login
+              </Link>
+            </div>
+            <div
+              className="mr-4 py-1 border-2 rounded-md"
+              style={{ backgroundColor: "#892455" }}
+            >
+              <Link
+                to="/registration"
+                className="text-white font-bold  rounded-md mr-2 ml-2"
+              >
+                Registration
+              </Link>
+            </div>
+          </>
+        )}
 
-        <div className="mr-4 py-1 rounded-md">
-          <Link
-            to="/profile"
-            className="text-white font-bold rounded-md mr-2 ml-2"
-          >
-            <FaUser size={24} color="#892455" />
-          </Link>
-        </div>
+        {isLoggedIn && ( // after login
+          <>
+            <div
+              className="mr-4 py-1 rounded-md"
+              onMouseLeave={handleMouseLeave}
+            >
+              <Link
+                to="#"
+                className="text-white font-bold rounded-md mr-2 ml-2"
+                onClick={handleProfileClick}
+              >
+                <FaUser size={24} color="#892455" />
+              </Link>
+              {showProfileMenu && (
+                <div
+                  className="dropdown-menu rounded-md"
+                  style={{
+                    backgroundColor: "#892455",
+                    position: "absolute",
+                    top: "5%",
+                    right: 5,
+                    zIndex: 999,
+                  }}
+                >
+                  <ul
+                    className="dropdown-menu-list"
+                    style={{ fontSize: "14px" }}
+                  >
+                    <li
+                      className="dropdown-menu-item"
+                      style={{
+                        wordWrap: "break-word",
+                        color: "#ffffff",
+                        fontWeight: "bold",
+                        lineHeight: "1",
+                        marginTop: "0.5em",
+                        marginLeft: "0.5em",
+                        marginRight: "0.5em",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <Link to="/profile">Profile</Link>
+                    </li>
+                    <li
+                      className="dropdown-menu-item"
+                      style={{
+                        wordWrap: "break-word",
+                        color: "#ffffff",
+                        fontWeight: "bold",
+                        lineHeight: "1",
+                        marginTop: "0.5em",
+                        marginLeft: "0.5em",
+                        marginRight: "0.5em",
+                        marginBottom: "0.5em",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <button onClick={handleLogout}>Logout</button>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+          </>
+        )}
       </div>
     </nav>
   );
