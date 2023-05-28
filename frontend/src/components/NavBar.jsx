@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../images/logo.png";
 import filter from "../images/filter.png";
 import { FaUser } from "react-icons/fa";
@@ -9,6 +9,8 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [searchText, setSearchText] = useState("");
+
+  const navigate = useNavigate();
 
   const handleMouseEnter = () => {
     setShowDropdown(true);
@@ -25,6 +27,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    navigate("/");
   };
 
   const handleProfileClick = (e) => {
@@ -121,19 +124,8 @@ const Navbar = () => {
           )}
         </div>
 
-        {!isLoggedIn && ( // before login
+        {!isLoggedIn && (
           <>
-            <div
-              className="mr-4 py-1 border-2 rounded-md"
-              style={{ backgroundColor: "#5D487F" }}
-            >
-              <Link
-                to="/premium-benefits"
-                className="text-yellow-500 font-bold rounded-md mr-2 ml-2"
-              >
-                Join Premium
-              </Link>
-            </div>
             <div
               className="mr-4 py-1 border-2 rounded-md"
               style={{ backgroundColor: "#892455" }}
@@ -159,8 +151,19 @@ const Navbar = () => {
           </>
         )}
 
-        {isLoggedIn && ( // after login
+        {isLoggedIn && (
           <>
+            <div
+              className="mr-4 py-1 border-2 rounded-md"
+              style={{ backgroundColor: "#5D487F" }}
+            >
+              <Link
+                to="/premium-benefits"
+                className="text-yellow-500 font-bold rounded-md mr-2 ml-2"
+              >
+                Join Premium
+              </Link>
+            </div>
             <div
               className="mr-4 py-1 rounded-md"
               onMouseLeave={handleMouseLeave}
