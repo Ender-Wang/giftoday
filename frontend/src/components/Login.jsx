@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import sideImg from "../images/wallpaper-tetiana-shadrina.jpg";
 import { setUserID, setLoggedInDate } from "../states/GlobalState";
+import { AuthContext } from "./AuthContext";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [formErrors, setFormErrors] = useState({});
+  const { login } = useContext(AuthContext);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -73,6 +75,7 @@ export default function Login() {
           const { userID } = data;
           setUserID(userID);
           setLoggedInDate();
+          login();
           window.location.href = "/";
         })
         .catch((error) => {
