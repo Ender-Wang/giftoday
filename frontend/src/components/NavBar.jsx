@@ -1,16 +1,15 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import logo from "../images/logo.png";
 import filter from "../images/filter.png";
 import { FaUser } from "react-icons/fa";
+import { AuthContext } from "./AuthContext";
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const { isLoggedIn, logout } = useContext(AuthContext);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [searchText, setSearchText] = useState("");
-
-  const navigate = useNavigate();
 
   const handleMouseEnter = () => {
     setShowDropdown(true);
@@ -23,11 +22,6 @@ const Navbar = () => {
 
   const handleClick = (text) => {
     setSearchText(text);
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    navigate("/");
   };
 
   const handleProfileClick = (e) => {
@@ -219,7 +213,7 @@ const Navbar = () => {
                         cursor: "pointer",
                       }}
                     >
-                      <button onClick={handleLogout}>Logout</button>
+                      <button onClick={logout}>Logout</button>
                     </li>
                   </ul>
                 </div>

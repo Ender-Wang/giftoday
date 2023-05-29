@@ -6,10 +6,11 @@ import NavBar from "./components/NavBar";
 import RegistrationPage from "./pages/RegistrationPage";
 import PremiumBenefitsPage from "./pages/PremiumBenefitsPage";
 import ProfilePage from "./pages/ProfilePage";
+import { AuthProvider } from "./components/AuthContext";
 
 function App() {
   return (
-    <div>
+    <AuthProvider>
       <NavBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -20,7 +21,7 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="*" element={<p>There's nothing here!</p>} />
       </Routes>
-    </div>
+    </AuthProvider>
   );
 }
 
