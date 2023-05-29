@@ -23,7 +23,7 @@ mongoose
 
 async function run() {
   try {
-    await UserDB.deleteMany(); // Remove existing users before adding new ones
+    // await UserDB.deleteMany(); // Remove existing users before adding new ones
     // console.log(dummyUserData);
     // const createdUsers = await UserDB.create(dummyUserData);
     // console.log("Users created:", createdUsers);
@@ -140,7 +140,38 @@ app.post("/user/login", (req, res) => {
 app.post("/user/:userID/card", (req, res) => {});
 
 //TODO: Post user Message info with user id: [id, message, date]
-app.post("/user/:userID/message", (req, res) => {});
+app.put("/user/:userID/message", async (req, res) => {
+  const { userID } = req.params;
+  const { message } = req.body;
+  let uid = Number(userID);
+
+  // let messageID = 0;
+  // UserDB.findOne({ uid }).then((user) => {
+  //   messageID = user.message.length;
+  // });
+  //TODO: 1. set messageID to be unique (same mechanism as userID in registration)
+  //TODO: 2. set message Tag to be the one selected by the user
+  await UserDB.updateOne(
+    { id: uid },
+    {
+      $push: {
+        message: {
+          id: 2,
+          message: message,
+          date: new Date(),
+          tag: { id: 1, name: "message Tag" },
+        },
+      },
+    },
+    { new: true }
+  );
+
+  return res.status(200).json({
+    userID: uid,
+    userIDType: typeof uid,
+    message: message,
+  });
+});
 
 //TODO: Post user Cart info with user id: id, gift: [id, name, description, price, tag: [id, name]]
 app.post("/user/:userID/cart", (req, res) => {});
