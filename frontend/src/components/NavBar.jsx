@@ -39,8 +39,7 @@ const Navbar = () => {
 
       <div className="flex items-center">
         <div
-          className="flex mr-4 border-2 rounded-md"
-          style={{ position: "relative" }}
+          className="flex mr-4 border-2 rounded-md relative"
           onMouseLeave={handleMouseLeave}
         >
           <div className="flex search-container">
@@ -74,41 +73,19 @@ const Navbar = () => {
             >
               <ul className="dropdown-menu-list" style={{ fontSize: "14px" }}>
                 <li
-                  className="dropdown-menu-item"
-                  style={{
-                    wordWrap: "break-word",
-                    lineHeight: "1",
-                    marginTop: "0.5em",
-                    marginLeft: "0.5em",
-                    cursor: "pointer",
-                  }}
+                  className="dropdown-menu-item break-words leading-4 mt-2 ml-2 cursor-pointer"
                   onClick={() => handleClick("household")}
                 >
                   household
                 </li>
                 <li
-                  className="dropdown-menu-item"
-                  style={{
-                    wordWrap: "break-word",
-                    lineHeight: "1",
-                    marginTop: "0.5em",
-                    marginLeft: "0.5em",
-                    cursor: "pointer",
-                  }}
+                  className="dropdown-menu-item break-words leading-4 mt-2 ml-2 cursor-pointer"
                   onClick={() => handleClick("game")}
                 >
                   game
                 </li>
                 <li
-                  className="dropdown-menu-item"
-                  style={{
-                    wordWrap: "break-word",
-                    lineHeight: "1",
-                    marginTop: "0.5em",
-                    marginLeft: "0.5em",
-                    marginBottom: "0.5em",
-                    cursor: "pointer",
-                  }}
+                  className="dropdown-menu-item break-words leading-4 mt-2 ml-2 mb-2 cursor-pointer"
                   onClick={() => handleClick("electronic product")}
                 >
                   electronic product
@@ -184,35 +161,10 @@ const Navbar = () => {
                     className="dropdown-menu-list"
                     style={{ fontSize: "14px" }}
                   >
-                    <li
-                      className="dropdown-menu-item"
-                      style={{
-                        wordWrap: "break-word",
-                        color: "#ffffff",
-                        fontWeight: "bold",
-                        lineHeight: "1",
-                        marginTop: "0.5em",
-                        marginLeft: "0.5em",
-                        marginRight: "0.5em",
-                        cursor: "pointer",
-                      }}
-                    >
+                    <li className="dropdown-menu-item break-words text-white font-bold leading-1 mt-0.5 ml-0.5 mr-0.5 cursor-pointer">
                       <Link to="/profile">Profile</Link>
                     </li>
-                    <li
-                      className="dropdown-menu-item"
-                      style={{
-                        wordWrap: "break-word",
-                        color: "#ffffff",
-                        fontWeight: "bold",
-                        lineHeight: "1",
-                        marginTop: "0.5em",
-                        marginLeft: "0.5em",
-                        marginRight: "0.5em",
-                        marginBottom: "0.5em",
-                        cursor: "pointer",
-                      }}
-                    >
+                    <li className="dropdown-menu-item break-words text-white font-bold leading-1 mt-0.5 ml-0.5 mr-0.5 mb-0.5 cursor-pointer">
                       <button onClick={logout}>Logout</button>
                     </li>
                   </ul>
