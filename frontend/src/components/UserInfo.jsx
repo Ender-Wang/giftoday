@@ -26,7 +26,7 @@ export default function UserInfo() {
 
         if (data && data.length > 0) {
           // console.log(getUserID);
-          const user = data[1];
+          const user = data[0];
           setName(user.name);
           setEmail(user.email);
           setPassword(user.password);
@@ -159,7 +159,7 @@ export default function UserInfo() {
     setFormErrors(errors);
 
     if (Object.keys(errors).length === 0) {
-      fetch("http://localhost:4000/users", {
+      fetch("http://localhost:4000/users/UserInfo:0", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -183,7 +183,7 @@ export default function UserInfo() {
               }));
             } else {
               console.log(res.status);
-              // alert("update failed for reason 1!");
+              alert("update failed for reason 1!");
             }
           }
         })
@@ -224,13 +224,7 @@ export default function UserInfo() {
           {/* Email input */}
           <div className="mb-4">
             <label htmlFor="email" className="block font-bold mb-2">
-              Email Address{" "}
-              {/* {formErrors.email && (
-                <span className="text-red-500 text-sm">
-                  {" *"}
-                  {formErrors.email}
-                </span>
-              )} */}
+              Email Address:
             </label>
             <input
               type="email"
@@ -238,12 +232,9 @@ export default function UserInfo() {
               name="email"
               value={email}
               onChange={handleInputChange}
-              // className={`w-full border-b-2 border-themeColor p-2 outline-none ${
-              //   formErrors.email ? "border-red-500" : ""
-              // }`
               className="w-full border-b-2 border-themeColor p-2 outline-none"
               required
-              // placeholder={formErrors.email ? formErrors.email : ""}
+              //  can not be changed
             />
           </div>
 

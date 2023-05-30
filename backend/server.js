@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
+const { ObjectId } = require("mongoose");
+
 const UserDB = require("./schemas/User.js");
 // const dummyUserData = require("./dummyUserData.js");
 const app = express();
@@ -150,6 +152,31 @@ app.post("/user/:userID/order", (req, res) => {});
 
 //TODO: Post user Address info with user id: [id, fullName, postalCode, street, city, country]
 app.post("/user/:userID/address", (req, res) => {});
+
+//TODO: update the profile information of customer
+// 更新用户个人信息
+
+// app.put("/users/UserInfo:0", (req, res) => {
+//   const userId = 0;
+//   const { name, email, password, address } = req.body;
+
+//   UserDB.findOneAndUpdate(
+//     { _id: userId },
+//     { name, email, password, address },
+//     { new: true }
+//   )
+//     .then((updatedUser) => {
+//       if (!updatedUser) {
+//         return res.status(404).json({ error: "用户不存在" });
+//       }
+//       console.log("用户信息已更新: ", updatedUser);
+//       return res.json(updatedUser);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//       return res.status(500).json({ error: "内部服务器错误" });
+//     });
+// });
 
 //Delete API
 //TODO: Delete APIs
