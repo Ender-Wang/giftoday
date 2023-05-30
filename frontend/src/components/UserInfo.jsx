@@ -25,7 +25,8 @@ export default function UserInfo() {
         setUserInfo(data);
 
         if (data && data.length > 0) {
-          const user = data[0];
+          // console.log(getUserID);
+          const user = data[1];
           setName(user.name);
           setEmail(user.email);
           setPassword(user.password);
@@ -90,10 +91,10 @@ export default function UserInfo() {
         setName(value);
         setFormErrors((prevErrors) => ({ ...prevErrors, name: "" }));
         break;
-      case "email":
-        setEmail(value);
-        setFormErrors((prevErrors) => ({ ...prevErrors, email: "" }));
-        break;
+      // case "email":
+      //   setEmail(value);
+      //   setFormErrors((prevErrors) => ({ ...prevErrors, email: "" }));
+      //   break;
       case "password":
         setPassword(value);
         setFormErrors((prevErrors) => ({ ...prevErrors, password: "" }));
@@ -121,9 +122,9 @@ export default function UserInfo() {
     if (data.name.trim() === "") {
       errors.name = "Full Name is required!";
     }
-    if (data.email.trim() === "") {
-      errors.email = "Email Address is required!";
-    }
+    // if (data.email.trim() === "") {
+    //   errors.email = "Email Address is required!";
+    // }
     if (data.password.trim() === "") {
       errors.password = "Password is required!";
     }
@@ -224,12 +225,12 @@ export default function UserInfo() {
           <div className="mb-4">
             <label htmlFor="email" className="block font-bold mb-2">
               Email Address{" "}
-              {formErrors.email && (
+              {/* {formErrors.email && (
                 <span className="text-red-500 text-sm">
                   {" *"}
                   {formErrors.email}
                 </span>
-              )}
+              )} */}
             </label>
             <input
               type="email"
@@ -237,11 +238,12 @@ export default function UserInfo() {
               name="email"
               value={email}
               onChange={handleInputChange}
-              className={`w-full border-b-2 border-themeColor p-2 outline-none ${
-                formErrors.email ? "border-red-500" : ""
-              }`}
+              // className={`w-full border-b-2 border-themeColor p-2 outline-none ${
+              //   formErrors.email ? "border-red-500" : ""
+              // }`
+              className="w-full border-b-2 border-themeColor p-2 outline-none"
               required
-              placeholder={formErrors.email ? formErrors.email : ""}
+              // placeholder={formErrors.email ? formErrors.email : ""}
             />
           </div>
 
