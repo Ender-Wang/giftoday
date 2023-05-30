@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { getUserID, getLoggedInDate } from "../states/GlobalState";
 
 export default function UserInfo() {
   const [name, setName] = useState("");
@@ -153,17 +154,18 @@ export default function UserInfo() {
       },
     };
     const errors = validateForm(data);
+    console.log(data);
     setFormErrors(errors);
 
     if (Object.keys(errors).length === 0) {
-      fetch("http://localhost:4000/user/registration", {
-        method: "POST",
+      fetch("http://localhost:4000/users", {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       })
         .then((res) => {
           if (res.ok) {
-            alert("Registration successful!");
+            alert("update successful!");
             setName("");
             setEmail("");
             setPassword("");
@@ -172,15 +174,16 @@ export default function UserInfo() {
             setCity("");
             setFormErrors({});
           } else {
-            // // Check if the email is already registered
-            // if (res.status === 409) {
-            //   setFormErrors((prevErrors) => ({
-            //     ...prevErrors,
-            //     email: "Email already registered!",
-            //   }));
-            // } else {
-            //   alert("Registration failed!");
-            // }
+            // Check if the email is already registered
+            if (res.status === 409) {
+              setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                email: "Email already registered!",
+              }));
+            } else {
+              console.log(res.status);
+              // alert("update failed for reason 1!");
+            }
           }
         })
         .catch((error) => {
