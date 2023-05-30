@@ -4,6 +4,7 @@ import logo from "../images/logo.png";
 import filter from "../images/filter.png";
 import { FaUser } from "react-icons/fa";
 import { AuthContext } from "./AuthContext";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -133,6 +134,14 @@ const Navbar = () => {
                 className="text-yellow-500 font-bold rounded-md mr-2 ml-2"
               >
                 Join Premium
+              </Link>
+            </div>
+            <div className="mr-4 py-1 rounded-md">
+              <Link
+                to="/checkout"
+                className="rounded-md mr-1 ml-2"
+              >
+                <AiOutlineShoppingCart size={24} color="#000000"/>
               </Link>
             </div>
             <div
