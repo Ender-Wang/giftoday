@@ -1,10 +1,11 @@
 import { CheckIcon } from "@heroicons/react/20/solid";
+import { Link } from "react-router-dom";
 
 const tiers = [
   {
     name: "Normal User",
     id: "tier-normal",
-    href: "#",
+    href: "/",
     price: "€0",
     //description: "The perfect plan if you're just getting started with our product.",
     features: [
@@ -18,7 +19,7 @@ const tiers = [
   {
     name: "Premium user",
     id: "tier-premium",
-    href: "#",
+    href: "/checkout",
     price: "€60",
     //description: 'Dedicated support and infrastructure for your company.',
     features: [
@@ -42,7 +43,6 @@ export default function Example() {
       <div className="mx-auto mt-16 grid max-w-lg grid-cols-1 items-center gap-y-6 sm:mt-20 sm:gap-y-0 lg:max-w-4xl lg:grid-cols-2">
         {tiers.map((tier, tierIdx) => (
           <div
-            // the effect of premium user
             key={tier.id}
             className={classNames(
               tier.featured
@@ -57,7 +57,6 @@ export default function Example() {
             )}
           >
             <h3
-              //label of two choice
               id={tier.id}
               className={classNames(
                 tier.featured ? "text-black-400" : "text-black-600",
@@ -93,28 +92,24 @@ export default function Example() {
                     )}
                     aria-hidden="true"
                   />
-                  {/* <XMarkIcon
-                    className={classNames(tier.featured ? 'text-red-400' : 'text-red-600', 'h-6 w-5 flex-none')}
-                    aria-hidden="true"
-                  /> */}
                   {feature}
                 </li>
               ))}
             </ul>
 
-            <a
-              href={tier.href}
+            <Link
+              to={tier.href}
               aria-describedby={tier.id}
               className={classNames(
                 // if featured is true , the button will be higglighted
                 tier.featured
                   ? "bg-red-300 text-black shadow-sm hover:bg-red-400 focus-visible:outline-red-500"
-                  : "bg-gray-100 text-black shadow-sm hover:bg-gray-200 focus-visible:outline-gray-300", //'text-black-600 ring-1 ring-inset ring-gray-200 hover:ring-gray-300 focus-visible:outline-gray-600',
+                  : "bg-gray-100 text-black shadow-sm hover:bg-gray-200 focus-visible:outline-gray-300",
                 "mt-8 block rounded-md py-2.5 px-3.5 text-center text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 sm:mt-10"
               )}
             >
-              <button> {tier.button} </button>
-            </a>
+              <button>{tier.button}</button>
+            </Link>
           </div>
         ))}
       </div>
