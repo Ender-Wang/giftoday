@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getUserID, getLoggedInDate } from "../states/GlobalState";
 
 export default function UserInfo() {
+  const [id, setID] = useState(getUserID);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,7 +14,6 @@ export default function UserInfo() {
   const [formErrors, setFormErrors] = useState({});
 
   //get ready to fetch data from backend
-  const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -22,10 +22,7 @@ export default function UserInfo() {
     fetch("http://localhost:4000/users")
       .then((response) => response.json())
       .then((data) => {
-        setUserInfo(data);
-
         if (data && data.length > 0) {
-          // console.log(getUserID);
           const user = data[0];
           setName(user.name);
           setEmail(user.email);
@@ -141,9 +138,14 @@ export default function UserInfo() {
     return errors;
   };
 
+  const handleCancel = () => {
+    window.location.reload(); // reload current page
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = {
+      id: id,
       name: name,
       email: email,
       password: password,
@@ -159,38 +161,35 @@ export default function UserInfo() {
     setFormErrors(errors);
 
     if (Object.keys(errors).length === 0) {
-      fetch("http://localhost:4000/users/UserInfo:0", {
+      fetch("http://localhost:4000/user/userInfo", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
-      })
-        .then((res) => {
-          if (res.ok) {
-            alert("update successful!");
-            setName("");
-            setEmail("");
-            setPassword("");
-            setPostalCode("");
-            setStreet("");
-            setCity("");
-            setFormErrors({});
+      }).then((res) => {
+        if (res.ok) {
+          console.log(res.status);
+          alert("Update successfully");
+          setName("");
+          setEmail("");
+          setPassword("");
+          setPostalCode("");
+          setStreet("");
+          setCity("");
+          setFormErrors({});
+          // reload the user inforamtion pages
+          event.preventDefault();
+          window.location.href = "/UserInfo";
+        } else {
+          // Check if the email is already registered
+          if (res.status === 404) {
+            console.log(res.status);
+            alert("Not found th euser");
           } else {
-            // Check if the email is already registered
-            if (res.status === 409) {
-              setFormErrors((prevErrors) => ({
-                ...prevErrors,
-                email: "Email already registered!",
-              }));
-            } else {
-              console.log(res.status);
-              alert("update failed for reason 1!");
-            }
+            console.log(res.status);
+            alert("Update failed for reason of console!");
           }
-        })
-        .catch((error) => {
-          console.log(error);
-          alert("Update failed!");
-        });
+        }
+      });
     }
   };
 
@@ -354,6 +353,7 @@ export default function UserInfo() {
             <button
               type="cancel"
               className="flex col bg-themeColor-400 hover:bg-themeColor-200 text-white font-medium py-2 px-4 rounded transition-colors duration-600 ease-in-out"
+              onClick={handleCancel}
             >
               cancel
             </button>
@@ -368,22 +368,6 @@ export default function UserInfo() {
             </button>
           </div>
         </div>
-
-        {/* Login link */}
-        {/* <div className="mt-4 text-xs flex flex-row">
-          <div className="flex opacity-50">
-            *Already have an account? &nbsp;
-          </div>
-          <div className="flex">
-            <a
-              href="/login"
-              onClick={handleLogin}
-              className="text-themeColor-400"
-            >
-              Login
-            </a>
-          </div>
-        </div> */}
       </div>
     </div>
   );
