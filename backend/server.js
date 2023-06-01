@@ -154,9 +154,7 @@ app.post("/user/:userID/order", (req, res) => {});
 app.post("/user/:userID/address", (req, res) => {});
 
 //TODO: update the profile information of customer
-// 更新用户个人信息
-
-// 更新用户
+// update user information
 app.put("/user/userInfo", async (req, res) => {
   try {
     const { id, name, email, password, address } = req.body;
