@@ -2,6 +2,7 @@ const dailyGifts = [
   {
     id: 1,
     name: "Candle Set",
+    stock: 10,
     description: "A set of scented candles in various fragrances.",
     price: 20,
     tag: "home_decor",
@@ -9,6 +10,7 @@ const dailyGifts = [
   {
     id: 2,
     name: "Coffee Mug",
+    stock: 10,
     description: "A ceramic coffee mug with a unique design.",
     price: 10,
     tag: "kitchen",
@@ -16,6 +18,7 @@ const dailyGifts = [
   {
     id: 3,
     name: "Notebook",
+    stock: 10,
     description: "A high-quality notebook for jotting down thoughts and ideas.",
     price: 15,
     tag: "stationery",
@@ -23,6 +26,7 @@ const dailyGifts = [
   {
     id: 4,
     name: "Spa Gift Set",
+    stock: 10,
     description:
       "A collection of bath and body products for a luxurious spa experience.",
     price: 30,
@@ -31,6 +35,7 @@ const dailyGifts = [
   {
     id: 5,
     name: "Scented Soap",
+    stock: 10,
     description: "A bar of handmade soap with a delightful scent.",
     price: 8,
     tag: "beauty",
@@ -38,6 +43,7 @@ const dailyGifts = [
   {
     id: 6,
     name: "Pocket Watch",
+    stock: 10,
     description: "A classic pocket watch with an elegant design.",
     price: 50,
     tag: "accessories",
@@ -45,6 +51,7 @@ const dailyGifts = [
   {
     id: 7,
     name: "Cookbook",
+    stock: 10,
     description: "A cookbook featuring a variety of delicious recipes.",
     price: 25,
     tag: "books",
@@ -52,6 +59,7 @@ const dailyGifts = [
   {
     id: 8,
     name: "Gourmet Chocolate Box",
+    stock: 10,
     description: "An assortment of gourmet chocolates from around the world.",
     price: 40,
     tag: "food",
@@ -59,6 +67,7 @@ const dailyGifts = [
   {
     id: 9,
     name: "Scented Candle",
+    stock: 10,
     description: "A single scented candle in a decorative jar.",
     price: 12,
     tag: "home_decor",
@@ -66,6 +75,7 @@ const dailyGifts = [
   {
     id: 10,
     name: "Leather Wallet",
+    stock: 10,
     description:
       "A genuine leather wallet with multiple card slots and a coin pocket.",
     price: 45,
@@ -74,6 +84,7 @@ const dailyGifts = [
   {
     id: 11,
     name: "Potted Plant",
+    stock: 10,
     description: "A small potted plant to add some greenery to any space.",
     price: 18,
     tag: "home_decor",
@@ -81,6 +92,7 @@ const dailyGifts = [
   {
     id: 12,
     name: "Bluetooth Speaker",
+    stock: 10,
     description: "A portable Bluetooth speaker for enjoying music on the go.",
     price: 60,
     tag: "electronics",
@@ -88,6 +100,7 @@ const dailyGifts = [
   {
     id: 13,
     name: "Wine Bottle Opener Set",
+    stock: 10,
     description:
       "A set including a wine bottle opener, stopper, and foil cutter.",
     price: 35,
@@ -96,6 +109,7 @@ const dailyGifts = [
   {
     id: 14,
     name: "Travel Mug",
+    stock: 10,
     description: "An insulated travel mug to keep beverages hot or cold.",
     price: 20,
     tag: "kitchen",
@@ -103,6 +117,7 @@ const dailyGifts = [
   {
     id: 15,
     name: "Art Print",
+    stock: 10,
     description:
       "A framed art print featuring a beautiful painting or photograph.",
     price: 30,
@@ -118,6 +133,7 @@ const dailyGifts = [
   {
     id: 17,
     name: "Cooking Utensil Set",
+    stock: 10,
     description: "A set of essential cooking utensils for the kitchen.",
     price: 40,
     tag: "kitchen",
@@ -125,6 +141,7 @@ const dailyGifts = [
   {
     id: 18,
     name: "Fitness Tracker",
+    stock: 10,
     description:
       "A wearable fitness tracker to monitor daily activity and workouts.",
     price: 80,
@@ -133,6 +150,7 @@ const dailyGifts = [
   {
     id: 19,
     name: "Tea Sampler",
+    stock: 10,
     description: "A collection of different tea flavors for tea enthusiasts.",
     price: 15,
     tag: "food",
@@ -140,6 +158,7 @@ const dailyGifts = [
   {
     id: 20,
     name: "Sunglasses",
+    stock: 10,
     description:
       "A stylish pair of sunglasses to protect the eyes from the sun.",
     price: 35,
@@ -148,6 +167,7 @@ const dailyGifts = [
   {
     id: 21,
     name: "Gourmet Cheese Selection",
+    stock: 10,
     description: "A selection of gourmet cheeses from different regions.",
     price: 30,
     tag: "food",
@@ -155,6 +175,7 @@ const dailyGifts = [
   {
     id: 22,
     name: "Journal Set",
+    stock: 10,
     description: "A set of beautiful journals for writing and reflection.",
     price: 25,
     tag: "stationery",
@@ -162,6 +183,7 @@ const dailyGifts = [
   {
     id: 23,
     name: "Plant-Based Cookbook",
+    stock: 10,
     description: "A cookbook featuring delicious plant-based recipes.",
     price: 20,
     tag: "books",
@@ -169,6 +191,7 @@ const dailyGifts = [
   {
     id: 24,
     name: "Essential Oil Set",
+    stock: 10,
     description: "A set of essential oils for aromatherapy and relaxation.",
     price: 30,
     tag: "beauty",
@@ -176,6 +199,7 @@ const dailyGifts = [
   {
     id: 25,
     name: "Portable Power Bank",
+    stock: 10,
     description: "A portable power bank to charge devices on the go.",
     price: 50,
     tag: "electronics",
@@ -183,6 +207,7 @@ const dailyGifts = [
   {
     id: 26,
     name: "Coffee Beans Sampler",
+    stock: 10,
     description: "A sampler pack of different coffee bean varieties.",
     price: 15,
     tag: "food",
@@ -190,6 +215,7 @@ const dailyGifts = [
   {
     id: 27,
     name: "Wireless Earbuds",
+    stock: 10,
     description:
       "A pair of wireless earbuds for listening to music or taking calls.",
     price: 70,
@@ -198,6 +224,7 @@ const dailyGifts = [
   {
     id: 28,
     name: "Scented Bath Bombs",
+    stock: 10,
     description: "A set of scented bath bombs for a relaxing bath experience.",
     price: 20,
     tag: "beauty",
@@ -205,6 +232,7 @@ const dailyGifts = [
   {
     id: 29,
     name: "Pocket Knife",
+    stock: 10,
     description: "A versatile pocket knife with multiple tools.",
     price: 25,
     tag: "tools",
@@ -212,6 +240,7 @@ const dailyGifts = [
   {
     id: 30,
     name: "Yoga Mat",
+    stock: 10,
     description: "A high-quality yoga mat for practicing yoga or meditation.",
     price: 30,
     tag: "fitness",
@@ -219,6 +248,7 @@ const dailyGifts = [
   {
     id: 31,
     name: "Gourmet Chocolate Truffles",
+    stock: 10,
     description: "A box of decadent gourmet chocolate truffles.",
     price: 25,
     tag: "food",
@@ -226,6 +256,7 @@ const dailyGifts = [
   {
     id: 32,
     name: "Smartphone Stand",
+    stock: 10,
     description: "A portable smartphone stand for hands-free viewing.",
     price: 15,
     tag: "electronics",
@@ -233,6 +264,7 @@ const dailyGifts = [
   {
     id: 33,
     name: "Cooking Spice Set",
+    stock: 10,
     description: "A collection of premium cooking spices and herbs.",
     price: 20,
     tag: "kitchen",
@@ -240,6 +272,7 @@ const dailyGifts = [
   {
     id: 34,
     name: "Scented Hand Lotion",
+    stock: 10,
     description: "A moisturizing hand lotion with a pleasant scent.",
     price: 12,
     tag: "beauty",
@@ -247,6 +280,7 @@ const dailyGifts = [
   {
     id: 35,
     name: "Travel Pillow",
+    stock: 10,
     description: "A comfortable travel pillow for restful journeys.",
     price: 18,
     tag: "travel",
@@ -254,6 +288,7 @@ const dailyGifts = [
   {
     id: 36,
     name: "Wireless Bluetooth Headphones",
+    stock: 10,
     description:
       "A pair of wireless headphones for immersive audio experience.",
     price: 90,
@@ -262,6 +297,7 @@ const dailyGifts = [
   {
     id: 37,
     name: "Gourmet Tea Infuser",
+    stock: 10,
     description: "A stainless steel tea infuser for brewing loose-leaf tea.",
     price: 15,
     tag: "kitchen",
@@ -269,6 +305,7 @@ const dailyGifts = [
   {
     id: 38,
     name: "Adult Coloring Book",
+    stock: 10,
     description: "A coloring book with intricate designs for relaxation.",
     price: 12,
     tag: "books",
@@ -276,6 +313,7 @@ const dailyGifts = [
   {
     id: 39,
     name: "Yoga Block",
+    stock: 10,
     description:
       "A yoga block for providing support and stability in yoga poses.",
     price: 10,
@@ -284,6 +322,7 @@ const dailyGifts = [
   {
     id: 40,
     name: "Gourmet Olive Oil Set",
+    stock: 10,
     description:
       "A set of premium gourmet olive oils for culinary exploration.",
     price: 30,
@@ -292,6 +331,7 @@ const dailyGifts = [
   {
     id: 41,
     name: "Polaroid Camera",
+    stock: 10,
     description: "A vintage-style Polaroid camera for instant photo printing.",
     price: 80,
     tag: "electronics",
@@ -299,6 +339,7 @@ const dailyGifts = [
   {
     id: 42,
     name: "Indoor Herb Garden Kit",
+    stock: 10,
     description:
       "A kit for growing herbs indoors and adding freshness to meals.",
     price: 25,
@@ -307,6 +348,7 @@ const dailyGifts = [
   {
     id: 43,
     name: "Stainless Steel Water Bottle",
+    stock: 10,
     description: "A durable and eco-friendly stainless steel water bottle.",
     price: 20,
     tag: "kitchen",
@@ -314,6 +356,7 @@ const dailyGifts = [
   {
     id: 44,
     name: "Face Mask Variety Pack",
+    stock: 10,
     description: "A pack of assorted face masks for different skin needs.",
     price: 15,
     tag: "beauty",
@@ -321,6 +364,7 @@ const dailyGifts = [
   {
     id: 45,
     name: "Gourmet Popcorn Set",
+    stock: 10,
     description: "A set of gourmet popcorn flavors for movie nights.",
     price: 18,
     tag: "food",
@@ -328,6 +372,7 @@ const dailyGifts = [
   {
     id: 46,
     name: "Leather Journal",
+    stock: 10,
     description: "A handcrafted leather journal for writing or sketching.",
     price: 35,
     tag: "stationery",
@@ -335,6 +380,7 @@ const dailyGifts = [
   {
     id: 47,
     name: "Fitness Resistance Bands Set",
+    stock: 10,
     description: "A set of resistance bands for versatile workouts.",
     price: 25,
     tag: "fitness",
@@ -342,6 +388,7 @@ const dailyGifts = [
   {
     id: 48,
     name: "Bluetooth Shower Speaker",
+    stock: 10,
     description: "A waterproof speaker for listening to music in the shower.",
     price: 30,
     tag: "electronics",
@@ -349,6 +396,7 @@ const dailyGifts = [
   {
     id: 49,
     name: "Gourmet Hot Sauce Set",
+    stock: 10,
     description: "A set of artisanal hot sauces for adding a kick to dishes.",
     price: 20,
     tag: "food",
@@ -356,6 +404,7 @@ const dailyGifts = [
   {
     id: 50,
     name: "Aromatherapy Essential Oil Diffuser",
+    stock: 10,
     description:
       "An essential oil diffuser with soothing color-changing lights.",
     price: 40,
