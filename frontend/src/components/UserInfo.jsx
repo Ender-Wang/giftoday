@@ -37,6 +37,7 @@ export default function UserInfo() {
               <p>Name: {user.name}</p>
               <p>Email: {user.email}</p>
               <p>password: {user.password}</p>
+              <p>Premium: {user.premium}</p>
               <p>Address:</p>
               <ul>
                 <li>Postal Code: {user.address.postalCode}</li>

@@ -44,8 +44,35 @@ app.get("/users", (req, res) => {
 });
 
 //Get APIs
-//TODO: Get user General into: [id, name, email, password, premium]
-app.get("/user/:userID/info", (req, res) => {});
+// TODO: Get user General info: [id, name, email, password, premium]
+app.get("/user/:userID/info", (req, res) => {
+  const { userID } = req.params;
+
+  UserDB.findOne({ id: userID }) // Find the user by ID
+    .then((user) => {
+      if (!user) {
+        // If user is not found, send a response indicating that the user does not exist
+        return res.status(404).json({ error: "User not found!" });
+      }
+
+      const { id, name, email, password, premium } = user;
+      const userInfo = {
+        id,
+        name,
+        email,
+        password,
+        premium,
+      };
+
+      // Return the user info, including premium info
+      res.json(userInfo);
+    })
+    .catch((err) => {
+      console.log(err);
+      return res.status(500).json({ error: "Internal server error" });
+    });
+});
+
 
 //TODO: Get user Card info with user id: [id, number, cvv, expMonth, expYear]
 app.get("/user/:userID/card", (req, res) => {});
@@ -134,6 +161,19 @@ app.post("/user/login", (req, res) => {
       console.log(err);
       return res.status(500).json({ error: "Internal server error" });
     });
+});
+
+app.post('/users/:userId/premium', (req, res) => {
+  const { userId } = req.params;
+  const { premium } = req.body;
+
+  if (premium) {
+    console.log(`User ${userId} upgraded to premium.`);
+    res.status(200).json({ message: "Premium upgrade successful." });
+  } else {
+    console.log(`User ${userId} downgraded from premium.`);
+    res.status(200).json({ message: "Do not subscribe to premium." });
+  }
 });
 
 //TODO: Post user Card info with user id: [id, number, cvv, expMonth, expYear]
