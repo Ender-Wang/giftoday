@@ -141,16 +141,13 @@ const Navbar = () => {
               className="mr-4 py-1 border-2 rounded-md"
               style={{ backgroundColor: "#5D487F" }}
             >
-              <Link
-                to="/premium-benefits"
-                className="text-yellow-400 font-bold rounded-md flex items-center mr-2 ml-2"
-              >
+              <div className="text-yellow-400 font-bold rounded-md flex items-center mr-2 ml-2">
                 <AiTwotoneCrown
                   size={24}
                   style={{ color: "yellow", marginRight: "0.5rem" }}
                 />
                 Premium User
-              </Link>
+              </div>
             </div>
 
             <div className="mr-4 py-1 rounded-md">
