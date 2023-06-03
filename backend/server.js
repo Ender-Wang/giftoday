@@ -163,7 +163,7 @@ app.post("/user/login", (req, res) => {
     });
 });
 
-app.post('/users/:userId/premium', (req, res) => {
+app.put('/user/:userID/premium', (req, res) => {
   const { userId } = req.params;
   const { premium } = req.body;
 

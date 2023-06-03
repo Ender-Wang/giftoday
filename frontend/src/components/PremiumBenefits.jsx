@@ -41,8 +41,8 @@ export default function PremiumBenefit() {
   const handlePremiumUpgrade = (premium) => {
     setLoading(true);
 
-    fetch("http://localhost:4000/users/:userId/premium", {
-      method: "POST",
+    fetch("http://localhost:4000/user/:userID/premium", {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
