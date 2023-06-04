@@ -121,7 +121,7 @@ export default function MessageBoard() {
               <select
                 id="tag"
                 name="tag"
-                value={tags}
+                value={tag}
                 onChange={handleInputChange}
                 className={
                   "w-full border-b-2 border-themeColor p-2 outline-none "
