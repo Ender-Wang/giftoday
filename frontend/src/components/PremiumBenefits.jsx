@@ -1,6 +1,7 @@
 import { CheckIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getUserID } from "../states/GlobalState";
 
 const tiers = [
   {
@@ -37,11 +38,12 @@ function classNames(...classes) {
 export default function PremiumBenefit() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const userID = getUserID();
 
   const handlePremiumUpgrade = (premium) => {
     setLoading(true);
 
-    fetch("http://localhost:4000/user/:userID/premium", {
+    fetch(`http://localhost:4000/user/${userID}/premium`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
