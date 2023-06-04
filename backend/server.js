@@ -4,6 +4,10 @@ const cors = require("cors");
 
 const UserDB = require("./schemas/User.js");
 // const dummyUserData = require("./dummyUserData.js");
+const ShopItemDB = require("./schemas/ShopItem.js");
+// const {
+//   default: ShopItem,
+// } = require("../frontend/src/components/ShopItem.jsx");
 const app = express();
 
 //allow cross origin requests
@@ -23,7 +27,7 @@ mongoose
 
 async function run() {
   try {
-    await UserDB.deleteMany(); // Remove existing users before adding new ones
+    // await UserDB.deleteMany(); // Remove existing users before adding new ones
     // console.log(dummyUserData);
     // const createdUsers = await UserDB.create(dummyUserData);
     // console.log("Users created:", createdUsers);
@@ -31,7 +35,16 @@ async function run() {
     console.log("Error creating users:", error);
   }
 }
-
+async function run() {
+  try {
+    // await ShopItemDB.deleteMany(); // Remove existing users before adding new ones
+    // console.log(dummyUserData);
+    // const createdUsers = await UserDB.create(dummyUserData);
+    // console.log("Users created:", createdUsers);
+  } catch (error) {
+    console.log("Error creating users:", error);
+  }
+}
 //Demo: get all info from all users
 app.get("/users", (req, res) => {
   UserDB.find()
@@ -44,6 +57,18 @@ app.get("/users", (req, res) => {
 });
 
 //Get APIs
+
+//Get shopItem general into: [id, name, description, price, tag]
+app.get("/shopItems", async (req, res) => {
+  try {
+    const shopItems = await ShopItemDB.find();
+    res.json(shopItems);
+  } catch (error) {
+    console.error(error);
+    // res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 //TODO: Get user General into: [id, name, email, password, premium]
 app.get("/user/:userID/info", (req, res) => {});
 
@@ -51,7 +76,18 @@ app.get("/user/:userID/info", (req, res) => {});
 app.get("/user/:userID/card", (req, res) => {});
 
 //TODO: Get user Message info with user id: [id, message, date]
-app.get("/user/:userID/message", (req, res) => {});
+app.get("/user/:userID/message", async (req, res) => {
+  try {
+    const { userID } = req.params;
+    let id = Number(userID);
+    const user = await UserDB.findOne({ id });
+    const message = user.message;
+    console.log("message " + message);
+    return res.status(200).json(message);
+  } catch (error) {
+    return res.status(200).json({ message: error.message });
+  }
+});
 
 //TODO: Get user Cart info with user id: id, gift: [id, name, description, price, tag: [id, name]]
 app.get("/user/:userID/cart", (req, res) => {});
@@ -136,11 +172,83 @@ app.post("/user/login", (req, res) => {
     });
 });
 
+//Post shopItem with shop id: [id, name, description, price, tag]
+app.post("/shopItems", (req, res) => {
+  //
+
+  ShopItemDB.countDocuments()
+    .then((count) => {
+      let shopItemID = count + 1;
+      req.body.id = shopItemID;
+      var { id, name, stock, description, price, tag } = req.body;
+      var newShopItem = new ShopItemDB({
+        id,
+        name,
+        stock,
+        description,
+        price,
+        tag,
+      });
+
+      newShopItem
+        .save()
+        .then((item) => {
+          console.log("Successful with item: ", item);
+          const { _id, __v, ...responseItem } = item._doc; // Exclude _id and __v fields
+          return res.json(item);
+        })
+        .catch((err) => {
+          console.log(err);
+          return res.status(500).json({ error: "Internal server error" });
+        });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({ error: "Internal server error" });
+    });
+});
+// });
+
 //TODO: Post user Card info with user id: [id, number, cvv, expMonth, expYear]
 app.post("/user/:userID/card", (req, res) => {});
-
+//
 //TODO: Post user Message info with user id: [id, message, date]
-app.post("/user/:userID/message", (req, res) => {});
+app.put("/user/:userID/message", async (req, res) => {
+  try {
+    const { userID } = req.params;
+    let id = Number(userID);
+    const { message } = req.body;
+    console.log("message " + message);
+    console.log("userID " + id);
+    if (!message) {
+      throw new Error("Invalid message value");
+    }
+    // Retrieve the existing user data from the database
+    await UserDB.updateOne(
+      { id: id },
+      {
+        $push: {
+          message: {
+            id: 2,
+            message: message,
+            date: new Date(),
+            tag: { id: 1, name: "message Tag" },
+          },
+        },
+      },
+      { new: true }
+    );
+    // user.message = message;
+    // const updatedUser = await user.save();
+    return res.status(200).json({
+      message: message,
+      id: id,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: error.message });
+  }
+});
 
 //TODO: Post user Cart info with user id: id, gift: [id, name, description, price, tag: [id, name]]
 app.post("/user/:userID/cart", (req, res) => {});

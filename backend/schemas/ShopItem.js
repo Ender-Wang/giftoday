@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const Shop = new Schema({
+const ShopItem = new Schema({
+  // id: { type: Number, unique: true },
   id: Number,
   name: String,
   stock: Number,
@@ -10,4 +11,4 @@ const Shop = new Schema({
   tag: String,
 });
 
-module.exports = mongoose.model("Shop", Shop);
+module.exports = mongoose.model("ShopItem", ShopItem);
