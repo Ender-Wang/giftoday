@@ -37,7 +37,7 @@ async function run() {
 }
 async function run() {
   try {
-    // await ShopItemDB.deleteMany(); // Remove existing users before adding new ones
+    await ShopItemDB.deleteMany(); // Remove existing users before adding new ones
     // console.log(dummyUserData);
     // const createdUsers = await UserDB.create(dummyUserData);
     // console.log("Users created:", createdUsers);
@@ -174,14 +174,12 @@ app.post("/user/login", (req, res) => {
 
 //Post shopItem with shop id: [id, name, description, price, tag]
 app.post("/shopItems", (req, res) => {
-  //
-
   ShopItemDB.countDocuments()
     .then((count) => {
       let shopItemID = count + 1;
       req.body.id = shopItemID;
       var { id, name, stock, description, price, tag } = req.body;
-      var newShopItem = new ShopItemDB({
+      const newShopItem = new ShopItemDB({
         id,
         name,
         stock,
