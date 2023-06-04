@@ -4,6 +4,8 @@ import logo from "../images/logo.png";
 import filter from "../images/filter.png";
 import { FaUser } from "react-icons/fa";
 import { AuthContext } from "./AuthContext";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { AiTwotoneCrown } from "react-icons/ai";
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -39,8 +41,7 @@ const Navbar = () => {
 
       <div className="flex items-center">
         <div
-          className="flex mr-4 border-2 rounded-md"
-          style={{ position: "relative" }}
+          className="flex mr-4 border-2 rounded-md relative"
           onMouseLeave={handleMouseLeave}
         >
           <div className="flex search-container">
@@ -74,41 +75,19 @@ const Navbar = () => {
             >
               <ul className="dropdown-menu-list" style={{ fontSize: "14px" }}>
                 <li
-                  className="dropdown-menu-item"
-                  style={{
-                    wordWrap: "break-word",
-                    lineHeight: "1",
-                    marginTop: "0.5em",
-                    marginLeft: "0.5em",
-                    cursor: "pointer",
-                  }}
+                  className="dropdown-menu-item break-words leading-4 mt-2 ml-2 cursor-pointer"
                   onClick={() => handleClick("household")}
                 >
                   household
                 </li>
                 <li
-                  className="dropdown-menu-item"
-                  style={{
-                    wordWrap: "break-word",
-                    lineHeight: "1",
-                    marginTop: "0.5em",
-                    marginLeft: "0.5em",
-                    cursor: "pointer",
-                  }}
+                  className="dropdown-menu-item break-words leading-4 mt-2 ml-2 cursor-pointer"
                   onClick={() => handleClick("game")}
                 >
                   game
                 </li>
                 <li
-                  className="dropdown-menu-item"
-                  style={{
-                    wordWrap: "break-word",
-                    lineHeight: "1",
-                    marginTop: "0.5em",
-                    marginLeft: "0.5em",
-                    marginBottom: "0.5em",
-                    cursor: "pointer",
-                  }}
+                  className="dropdown-menu-item break-words leading-4 mt-2 ml-2 mb-2 cursor-pointer"
                   onClick={() => handleClick("electronic product")}
                 >
                   electronic product
@@ -159,6 +138,24 @@ const Navbar = () => {
               </Link>
             </div>
             <div
+              className="mr-4 py-1 border-2 rounded-md"
+              style={{ backgroundColor: "#5D487F" }}
+            >
+              <div className="text-yellow-400 font-bold rounded-md flex items-center mr-2 ml-2">
+                <AiTwotoneCrown
+                  size={24}
+                  style={{ color: "yellow", marginRight: "0.5rem" }}
+                />
+                Premium User
+              </div>
+            </div>
+
+            <div className="mr-4 py-1 rounded-md">
+              <Link to="/checkout" className="rounded-md mr-1 ml-2">
+                <AiOutlineShoppingCart size={24} color="#000000" />
+              </Link>
+            </div>
+            <div
               className="mr-4 py-1 rounded-md"
               onMouseLeave={handleMouseLeave}
             >
@@ -184,35 +181,10 @@ const Navbar = () => {
                     className="dropdown-menu-list"
                     style={{ fontSize: "14px" }}
                   >
-                    <li
-                      className="dropdown-menu-item"
-                      style={{
-                        wordWrap: "break-word",
-                        color: "#ffffff",
-                        fontWeight: "bold",
-                        lineHeight: "1",
-                        marginTop: "0.5em",
-                        marginLeft: "0.5em",
-                        marginRight: "0.5em",
-                        cursor: "pointer",
-                      }}
-                    >
+                    <li className="dropdown-menu-item break-words text-white font-bold leading-1 mt-0.5 ml-0.5 mr-0.5 cursor-pointer">
                       <Link to="/profile">Profile</Link>
                     </li>
-                    <li
-                      className="dropdown-menu-item"
-                      style={{
-                        wordWrap: "break-word",
-                        color: "#ffffff",
-                        fontWeight: "bold",
-                        lineHeight: "1",
-                        marginTop: "0.5em",
-                        marginLeft: "0.5em",
-                        marginRight: "0.5em",
-                        marginBottom: "0.5em",
-                        cursor: "pointer",
-                      }}
-                    >
+                    <li className="dropdown-menu-item break-words text-white font-bold leading-1 mt-0.5 ml-0.5 mr-0.5 mb-0.5 cursor-pointer">
                       <button onClick={logout}>Logout</button>
                     </li>
                   </ul>
