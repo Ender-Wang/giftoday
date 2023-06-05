@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { getUserID } from "../states/GlobalState";
+import { AuthContext } from "./AuthContext";
+import { useContext } from "react";
 
 export default function MessageBoard() {
   const [activeButton, setActiveButton] = useState("Button 2");
   const holidays = ["Youth", "Chrismas", "Valentien", "Spring Festival"];
-
+  const { isLoggedIn, logout } = useContext(AuthContext);
   const [preMessage, setPreMessage] = useState([]);
   const [preTag, setPreTag] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -84,7 +86,7 @@ export default function MessageBoard() {
   return (
     <div className="h-600 ">
       <div className=" h-1/3 absolute bottom-16 left-20 w-1/4  bg-background rounded-md">
-        {userID ? (
+        {isLoggedIn ? (
           <div>
             <div className="flex flex-row items-center justify-center mb-8 mt-8 ">
               <button
@@ -181,14 +183,28 @@ export default function MessageBoard() {
             </div>
           </div>
         ) : (
-          <div className="flex flex-row items-center justify-center mb-8 mt-8 ">
-            <button
-              type="button"
-              className="  py-1 px-5 rounded-lg bg-lightButton mr-4 hover:bg-normalButton  transform hover:scale-105"
-              onClick={() => handleButtonClick("Button 1")}
-            >
-              Festivals
-            </button>
+          <div>
+            <div className="flex flex-row items-center justify-center mb-8 mt-8 ">
+              <button
+                type="button"
+                className="  py-1 px-5 rounded-lg bg-lightButton mr-4 hover:bg-normalButton  transform hover:scale-105"
+                onClick={() => handleButtonClick("Button 1")}
+              >
+                Festivals
+              </button>
+            </div>
+            <div className="h-32 overflow-y-auto">
+              <div className="mb-4 ">
+                {holidays.map((item, index) => (
+                  <div
+                    className="w-4/5 mx-auto h-7 bg-gray-200 mb-4 rounded-sm hover:bg-gray-300  transform hover:scale-102"
+                    key={index}
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         )}
       </div>
