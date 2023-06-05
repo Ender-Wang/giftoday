@@ -6,6 +6,7 @@ const ShopItem = new Schema({
   id: Number,
   name: String,
   stock: Number,
+  picture: String,
   description: String,
   price: Number,
   tag: String,

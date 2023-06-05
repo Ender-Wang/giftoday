@@ -33,6 +33,7 @@ export default function ShopItem() {
               key={item.id}
               className="border h-64 shadow-md rounded-lg transform hover:scale-105"
             >
+              <img src={item.picture} alt="Product" />
               <div>{item.name}</div>
               <div>{item.description}</div>
               <div>{item.price}</div>

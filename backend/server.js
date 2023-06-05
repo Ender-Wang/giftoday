@@ -27,7 +27,7 @@ mongoose
 
 async function run() {
   try {
-    // await UserDB.deleteMany(); // Remove existing users before adding new ones
+    await UserDB.deleteMany(); // Remove existing users before adding new ones
     // console.log(dummyUserData);
     // const createdUsers = await UserDB.create(dummyUserData);
     // console.log("Users created:", createdUsers);
@@ -37,7 +37,7 @@ async function run() {
 }
 async function run() {
   try {
-    await ShopItemDB.deleteMany(); // Remove existing users before adding new ones
+    // await ShopItemDB.deleteMany(); // Remove existing users before adding new ones
     // console.log(dummyUserData);
     // const createdUsers = await UserDB.create(dummyUserData);
     // console.log("Users created:", createdUsers);
@@ -178,11 +178,12 @@ app.post("/shopItems", (req, res) => {
     .then((count) => {
       let shopItemID = count + 1;
       req.body.id = shopItemID;
-      var { id, name, stock, description, price, tag } = req.body;
+      var { id, name, stock, picture, description, price, tag } = req.body;
       const newShopItem = new ShopItemDB({
         id,
         name,
         stock,
+        picture,
         description,
         price,
         tag,
@@ -247,6 +248,16 @@ app.put("/user/:userID/message", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+// app.delete("/usesr/:userID/message", async (req, res)=>{
+//   try{
+//     const { userID } = req.params;
+//     let id = Number(userID);
+//     const user = await UserDB.findOne({ id });
+// }catch(error) {
+//   return res.status(200).json({ message: error.message });
+
+// }})
 
 //TODO: Post user Cart info with user id: id, gift: [id, name, description, price, tag: [id, name]]
 app.post("/user/:userID/cart", (req, res) => {});

@@ -1,8 +1,12 @@
+import candle_set from "./src/images/Candle Set.jpg";
+import coffee_mug from "./src/images/Coffee Mug.jpg";
+import notebook from "./src/images/Notebook.jpg";
 const dailyGifts = [
   {
     id: 1,
     name: "Candle Set",
     stock: 10,
+    picture: "../images/Candle Set.jpg",
     description: "A set of scented candles in various fragrances.",
     price: 20,
     tag: "home_decor",
@@ -11,6 +15,7 @@ const dailyGifts = [
     id: 2,
     name: "Coffee Mug",
     stock: 10,
+    picture: coffee_mug,
     description: "A ceramic coffee mug with a unique design.",
     price: 10,
     tag: "kitchen",
@@ -19,6 +24,7 @@ const dailyGifts = [
     id: 3,
     name: "Notebook",
     stock: 10,
+    picture: notebook,
     description: "A high-quality notebook for jotting down thoughts and ideas.",
     price: 15,
     tag: "stationery",
