@@ -52,11 +52,7 @@ export default function PremiumBenefit() {
     })
       .then((response) => {
         if (response.ok) {
-          if (premium) {
-            navigate("/checkout");
-          } else {
-            navigate("/");
-          }
+          navigate("/profile");
         } else {
           console.log("Premium upgrade failed");
         }
