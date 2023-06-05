@@ -16,14 +16,15 @@ export default function MessageBoard() {
 
   const tags = ["parents", "friends", " colleagues"];
 
-  const handleButtonClick = (content) => {
-    setActiveButton(content);
-  };
-
+  //when open the page, preMessages will be shown
   useEffect(() => {
     fetchData();
   }, []);
-
+  //Show messages or festivals
+  const handleButtonClick = (content) => {
+    setActiveButton(content);
+  };
+  //fetch messages from mongodb
   const fetchData = () => {
     fetch("http://localhost:4000/user/" + userID + "/message", {
       method: "GET",
@@ -38,6 +39,7 @@ export default function MessageBoard() {
         console.log(error);
       });
   };
+  //If newMessage is entered or tag is selected
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     switch (name) {
@@ -53,7 +55,7 @@ export default function MessageBoard() {
         break;
     }
   };
-
+  // Save new message and post it into postman
   const handleSaveButton = async () => {
     const data = {
       message: newMessage,
@@ -87,6 +89,7 @@ export default function MessageBoard() {
     <div className="h-600 ">
       <div className=" h-1/3 absolute bottom-16 left-20 w-1/4  bg-background rounded-md">
         {isLoggedIn ? (
+          // Homepage after login
           <div>
             <div className="flex flex-row items-center justify-center mb-8 mt-8 ">
               <button
@@ -105,12 +108,13 @@ export default function MessageBoard() {
               </button>
             </div>
             <div>
+              {/* After pressing "Festivals" button */}
               {activeButton === "Button 1" && (
                 <div className="h-32 overflow-y-auto">
                   <div className="mb-4 ">
                     {holidays.map((item, index) => (
                       <div
-                        className="w-4/5 mx-auto h-7 bg-gray-200 mb-4 rounded-sm hover:bg-gray-300  transform hover:scale-102"
+                        className="w-4/5 mx-auto h-7 bg-message1 mb-4 rounded-sm hover:bg-message2  transform hover:scale-102"
                         key={index}
                       >
                         {item}
@@ -119,18 +123,19 @@ export default function MessageBoard() {
                   </div>
                 </div>
               )}
+              {/* After pressing "Records" button */}
               {activeButton === "Button 2" && (
                 <div className="h-32 overflow-y-auto">
                   <div>
                     <div className="mb-4 ">
                       {preMessage.map((item, index) => (
                         <div
-                          className="w-4/5 mx-auto h-7 bg-gray-200 mb-4 rounded-sm hover:bg-gray-150  transform hover:scale-102"
+                          className="w-4/5 mx-auto h-7 bg-message1 mb-4 rounded-sm hover:bg-message2  transform hover:scale-102"
                           key={index}
                         >
                           <div className="flex justify-between items-center">
                             <div>{item.message}</div>
-                            <div className=" text-center rounded-sm  bg-tag w-24">
+                            <div className=" text-center rounded-lg  bg-tag w-24">
                               Tag
                             </div>
                           </div>
@@ -138,25 +143,23 @@ export default function MessageBoard() {
                       ))}
                     </div>
                   </div>
-                  <div className="w-4/5 mx-auto h-7 bg-gray-200 mb-4 rounded-sm flex ">
+                  <div className="w-4/5 mx-auto h-7 bg-message1  rounded-sm flex ">
                     <input
                       type="text"
                       id="newMessage"
                       name="newMessage"
                       value={newMessage}
                       onChange={handleInputChange}
-                      className="w-full mx-auto h-7 bg-gray-200 mb-4"
+                      className="w-full mx-auto h-7 bg-message1 hover:bg-message2"
                     />
-
+                  </div>
+                  <div className="w-4/5 mx-auto h-7 bg-message1 hover:bg-message2 mb-4 rounded-sm flex ">
                     <select
                       id="tag"
                       name="tag"
                       value={newTag}
                       onChange={handleInputChange}
-                      className={
-                        "w-full border-b-2 border-themeColor p-2 outline-none "
-                      }
-                      required
+                      className=" w-full bg-message1  "
                     >
                       <option value="" disabled>
                         Select a tag
@@ -170,7 +173,7 @@ export default function MessageBoard() {
 
                     <button
                       type="button"
-                      className=" rounded-sm bg-gray-200 hover:bg-normalButton transform hover:scale-105"
+                      className=" rounded-sm bg-lightButton hover:bg-normalButton transform hover:scale-102"
                       onClick={() => {
                         handleSaveButton();
                       }}
@@ -183,6 +186,7 @@ export default function MessageBoard() {
             </div>
           </div>
         ) : (
+          // Homepage without login
           <div>
             <div className="flex flex-row items-center justify-center mb-8 mt-8 ">
               <button
@@ -197,7 +201,7 @@ export default function MessageBoard() {
               <div className="mb-4 ">
                 {holidays.map((item, index) => (
                   <div
-                    className="w-4/5 mx-auto h-7 bg-gray-200 mb-4 rounded-sm hover:bg-gray-300  transform hover:scale-102"
+                    className="w-4/5 mx-auto h-7 bg-message1 mb-4 rounded-sm hover:bg-message2  transform hover:scale-102"
                     key={index}
                   >
                     {item}
