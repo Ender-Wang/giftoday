@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
-const { ObjectId } = require("mongoose");
+// const { ObjectId } = require("mongoose");
 
 const UserDB = require("./schemas/User.js");
 // const dummyUserData = require("./dummyUserData.js");
@@ -29,7 +29,7 @@ mongoose
 
 async function run() {
   try {
-    await UserDB.deleteMany(); // Remove existing users before adding new ones
+    // await UserDB.deleteMany(); // Remove existing users before adding new ones
     // console.log(dummyUserData);
     // const createdUsers = await UserDB.create(dummyUserData);
     // console.log("Users created:", createdUsers);

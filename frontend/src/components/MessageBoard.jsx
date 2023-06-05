@@ -19,7 +19,7 @@ export default function MessageBoard() {
   //when open the page, preMessages will be shown
   useEffect(() => {
     fetchData();
-  });
+  }, []);
   //Show messages or festivals
   const handleButtonClick = (content) => {
     setActiveButton(content);
@@ -32,8 +32,12 @@ export default function MessageBoard() {
     })
       .then((response) => response.json())
       .then((responseData) => {
-        setPreMessage((prevMessages) => [...responseData]);
-        console.log(responseData);
+        if (Array.isArray(responseData)) {
+          setPreMessage((preMessage) => responseData);
+          console.log(responseData);
+        } else {
+          console.log("responseData is not an array:", responseData);
+        }
       })
       .catch((error) => {
         console.log(error);
