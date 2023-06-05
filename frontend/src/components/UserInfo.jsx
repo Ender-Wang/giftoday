@@ -23,7 +23,7 @@ export default function UserInfo() {
       .then((response) => response.json())
       .then((data) => {
         if (data && data.length > 0) {
-          const user = data;
+          const user = data[0];
           setName(user.name);
           setEmail(user.email);
           setPassword(user.password);
