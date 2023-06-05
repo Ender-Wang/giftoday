@@ -52,7 +52,8 @@ export default function PremiumBenefit() {
     })
       .then((response) => {
         if (response.ok) {
-          navigate("/profile");
+          navigate("/");
+          window.location.reload(); // reload current page
         } else {
           console.log("Premium upgrade failed");
         }
