@@ -57,7 +57,7 @@ const User = new Schema({
   name: String,
   email: String,
   password: String,
-  premium: Boolean,
+  premium: { type: Boolean, default: false },
   card: { type: [Card], default: [] },
   message: { type: [Message], default: [] },
   cart: { type: Cart, default: null },

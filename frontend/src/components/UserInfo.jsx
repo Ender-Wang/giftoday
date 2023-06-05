@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getUserID, getLoggedInDate } from "../states/GlobalState";
+import { getUserID } from "../states/GlobalState";
 
 export default function UserInfo() {
   const [id, setID] = useState(getUserID);
@@ -16,6 +16,7 @@ export default function UserInfo() {
   //get ready to fetch data from backend
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const userID = getUserID();
 
   useEffect(() => {
     // Fetch user information from the backend
@@ -39,10 +40,11 @@ export default function UserInfo() {
         setLoading(false);
       })
       .catch((error) => {
+        console.log("Error fetching user info:", error);
         setError(error);
         setLoading(false);
       });
-  }, []);
+  }, [userID]);
 
   if (loading) {
     return <p>Loading...</p>;

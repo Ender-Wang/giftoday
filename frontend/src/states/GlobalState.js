@@ -33,3 +33,13 @@ export async function setLoggedInDate() {
     return false;
   }
 }
+
+export async function removeUserID() {
+  try {
+    await localStorage.removeItem("userID");
+    return true;
+  } catch (err) {
+    console.log("Error removing userID:", err);
+    return false;
+  }
+}
