@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getUserID } from "../states/GlobalState";
 
 export default function UserInfo() {
-  const [id, setID] = useState(getUserID);
+  const [id] = useState(getUserID);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,7 +16,6 @@ export default function UserInfo() {
   //get ready to fetch data from backend
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const userID = getUserID();
 
   useEffect(() => {
     // Fetch user information from the backend
@@ -44,7 +43,7 @@ export default function UserInfo() {
         setError(error);
         setLoading(false);
       });
-  }, [userID]);
+  }, [id]);
 
   if (loading) {
     return <p>Loading...</p>;
