@@ -19,11 +19,11 @@ export default function UserInfo() {
 
   useEffect(() => {
     // Fetch user information from the backend
-    fetch("http://localhost:4000/users")
+    fetch(`http://localhost:4000/user/${id}/info`)
       .then((response) => response.json())
       .then((data) => {
         if (data && data.length > 0) {
-          const user = data[0];
+          const user = data;
           setName(user.name);
           setEmail(user.email);
           setPassword(user.password);
