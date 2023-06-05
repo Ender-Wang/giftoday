@@ -16,33 +16,28 @@ export default function MessageBoard() {
 
   const tags = ["parents", "friends", " colleagues"];
 
-  //when open the page, preMessages will be shown
-  useEffect(() => {
-    fetchData();
-  }, []);
   //Show messages or festivals
   const handleButtonClick = (content) => {
     setActiveButton(content);
   };
-  //fetch messages from mongodb
-  const fetchData = () => {
-    fetch("http://localhost:4000/user/" + userID + "/message", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((response) => response.json())
-      .then((responseData) => {
-        if (Array.isArray(responseData)) {
-          setPreMessage((preMessage) => responseData);
-          console.log(responseData);
-        } else {
-          console.log("responseData is not an array:", responseData);
-        }
+  useEffect(() => {
+    const fetchData = () => {
+      fetch("http://localhost:4000/user/" + userID + "/message", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
       })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+        .then((response) => response.json())
+        .then((responseData) => {
+          setPreMessage([...responseData]);
+          console.log(responseData);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    fetchData();
+  }, [preMessage, userID]);
   //If newMessage is entered or tag is selected
   const handleInputChange = (event) => {
     const { name, value } = event.target;
