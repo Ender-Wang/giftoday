@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { removeUserID } from "../states/GlobalState";
 
 export const AuthContext = createContext();
 
@@ -25,6 +26,8 @@ export const AuthProvider = ({ children }) => {
     setIsLoggedIn(false);
     // Remove login state from local storage
     localStorage.removeItem("isLoggedIn");
+    // Remove userID from global state
+    removeUserID();
     // Navigate to homepage after logout
     navigate("/");
   };

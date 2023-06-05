@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
+const { ObjectId } = require("mongoose");
+
 const UserDB = require("./schemas/User.js");
 // const dummyUserData = require("./dummyUserData.js");
 const ShopItemDB = require("./schemas/ShopItem.js");
@@ -69,8 +71,23 @@ app.get("/shopItems", async (req, res) => {
   }
 });
 
-//TODO: Get user General into: [id, name, email, password, premium]
-app.get("/user/:userID/info", (req, res) => {});
+// TODO: Get user General info: [id, name, email, password, premium]
+app.get("/user/:userID/info", (req, res) => {
+  const { userID } = req.params;
+
+  UserDB.findOne({ id: userID }) // Find the user by ID
+    .then((user) => {
+      if (user) {
+        res.json([user]); // Wrap user in an array
+      } else {
+        res.status(404).json({ error: "User not found" });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ error: "Internal server error" });
+    });
+});
 
 //TODO: Get user Card info with user id: [id, number, cvv, expMonth, expYear]
 app.get("/user/:userID/card", (req, res) => {});
@@ -208,6 +225,38 @@ app.post("/shopItems", (req, res) => {
 });
 // });
 
+app.put("/user/:userID/premium", async (req, res) => {
+  const { userID } = req.params;
+  const { premium } = req.body;
+
+  try {
+    const user = await UserDB.findOneAndUpdate(
+      { id: userID },
+      { premium },
+      { new: true }
+    );
+
+    if (user) {
+      if (premium) {
+        console.log(`User ${userID} upgraded to premium. Premium: ${premium}`);
+        res.status(200).json({ message: "Premium upgrade successful.", user });
+      } else {
+        console.log(
+          `User ${userID} downgraded from premium. Premium: ${premium}`
+        );
+        res.status(200).json({ message: "Do not subscribe to premium.", user });
+      }
+    } else {
+      res.status(404).json({ message: "User not found." });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "An error occurred while updating user premium status.",
+    });
+  }
+});
+
 //TODO: Post user Card info with user id: [id, number, cvv, expMonth, expYear]
 app.post("/user/:userID/card", (req, res) => {});
 //
@@ -268,6 +317,30 @@ app.post("/user/:userID/order", (req, res) => {});
 
 //TODO: Post user Address info with user id: [id, fullName, postalCode, street, city, country]
 app.post("/user/:userID/address", (req, res) => {});
+
+//TODO: update the profile information of customer
+// update user information
+app.put("/user/userInfo", async (req, res) => {
+  try {
+    const { id, name, email, password, address } = req.body;
+
+    const updatedUser = await UserDB.findOneAndUpdate(
+      { id },
+      { name, email, password, address },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "Not found user" });
+    }
+
+    console.log("User Information has been updated：", updatedUser);
+    return res.json(updatedUser);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "Errors in the server" });
+  }
+});
 
 //Delete API
 //TODO: Delete APIs
