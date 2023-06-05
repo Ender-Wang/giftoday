@@ -19,7 +19,7 @@ export default function MessageBoard() {
   //when open the page, preMessages will be shown
   useEffect(() => {
     fetchData();
-  }, []);
+  });
   //Show messages or festivals
   const handleButtonClick = (content) => {
     setActiveButton(content);
