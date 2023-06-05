@@ -1,5 +1,5 @@
 import UserInfo from "../components/UserInfo";
 
 export default function ProfilePage() {
-    return <UserInfo />;
-  }
+  return <UserInfo />;
+}
