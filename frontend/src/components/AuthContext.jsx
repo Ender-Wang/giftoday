@@ -30,6 +30,7 @@ export const AuthProvider = ({ children }) => {
     removeUserID();
     // Navigate to homepage after logout
     navigate("/");
+    window.location.reload(); // reload current page
   };
 
   return (
