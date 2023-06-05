@@ -47,7 +47,22 @@ app.get("/users", (req, res) => {
 
 //Get APIs
 //TODO: Get user General into: [id, name, email, password, premium]
-app.get("/user/:userID/info", (req, res) => {});
+app.get("/user/:userID/info", (req, res) => {
+  const { userID } = req.params;
+
+  UserDB.findOne({ id: userID }) // Find the user by ID
+    .then((user) => {
+      if (user) {
+        res.json([user]); // Wrap user in an array
+      } else {
+        res.status(404).json({ error: "User not found" });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ error: "Internal server error" });
+    });
+});
 
 //TODO: Get user Card info with user id: [id, number, cvv, expMonth, expYear]
 app.get("/user/:userID/card", (req, res) => {});
