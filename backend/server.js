@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
+const { ObjectId } = require("mongoose");
+
 const UserDB = require("./schemas/User.js");
 // const dummyUserData = require("./dummyUserData.js");
 const app = express();
@@ -23,7 +25,7 @@ mongoose
 
 async function run() {
   try {
-    await UserDB.deleteMany(); // Remove existing users before adding new ones
+    // await UserDB.deleteMany(); // Remove existing users before adding new ones
     // console.log(dummyUserData);
     // const createdUsers = await UserDB.create(dummyUserData);
     // console.log("Users created:", createdUsers);
@@ -177,11 +179,9 @@ app.put("/user/:userID/premium", async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({
-        message: "An error occurred while updating user premium status.",
-      });
+    res.status(500).json({
+      message: "An error occurred while updating user premium status.",
+    });
   }
 });
 
@@ -199,6 +199,30 @@ app.post("/user/:userID/order", (req, res) => {});
 
 //TODO: Post user Address info with user id: [id, fullName, postalCode, street, city, country]
 app.post("/user/:userID/address", (req, res) => {});
+
+//TODO: update the profile information of customer
+// update user information
+app.put("/user/userInfo", async (req, res) => {
+  try {
+    const { id, name, email, password, address } = req.body;
+
+    const updatedUser = await UserDB.findOneAndUpdate(
+      { id },
+      { name, email, password, address },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "Not found user" });
+    }
+
+    console.log("User Information has been updated：", updatedUser);
+    return res.json(updatedUser);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "Errors in the server" });
+  }
+});
 
 //Delete API
 //TODO: Delete APIs
