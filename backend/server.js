@@ -223,22 +223,23 @@ app.put("/user/:userID/message", async (req, res) => {
       throw new Error("Invalid message value");
     }
     // Retrieve the existing user data from the database
-    await UserDB.updateOne(
-      { id: id },
-      {
-        $push: {
-          message: {
-            id: 2,
-            message: message,
-            date: new Date(),
-            tag: { id: 1, name: "message Tag" },
-          },
-        },
-      },
-      { new: true }
-    );
-    // user.message = message;
-    // const updatedUser = await user.save();
+    const user = await UserDB.findOne({ id });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const newMessage = {
+      id: user.message.length + 1,
+      message: message,
+      date: new Date(),
+      tag: { id: 1, name: "message Tag" },
+    };
+
+    // Update the user data with the new message
+    user.message.push(newMessage);
+    await user.save();
+
     return res.status(200).json({
       message: message,
       id: id,
