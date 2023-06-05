@@ -10,7 +10,6 @@ export default function UserInfo() {
   const [street, setStreet] = useState("");
   const [city, setCity] = useState("");
   const [country] = useState("Germany");
-  const [premium, setPremium] = useState("");
 
   const [formErrors, setFormErrors] = useState({});
 
@@ -26,7 +25,6 @@ export default function UserInfo() {
       .then((data) => {
         if (data && data.length > 0) {
           const user = data[0];
-          setPremium(user.premium);
           setName(user.name);
           setEmail(user.email);
           setPassword(user.password);
@@ -233,7 +231,7 @@ export default function UserInfo() {
               type="email"
               id="email"
               name="email"
-              value={premium}
+              value={email}
               onChange={handleInputChange}
               className="w-full border-b-2 border-themeColor p-2 outline-none"
               required
