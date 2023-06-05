@@ -46,11 +46,7 @@ app.get("/users", (req, res) => {
 });
 
 //Get APIs
-<<<<<<< HEAD
-//TODO: Get user General into: [id, name, email, password, premium]
-=======
 // TODO: Get user General info: [id, name, email, password, premium]
->>>>>>> master
 app.get("/user/:userID/info", (req, res) => {
   const { userID } = req.params;
 
@@ -183,11 +179,9 @@ app.put("/user/:userID/premium", async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({
-        message: "An error occurred while updating user premium status.",
-      });
+    res.status(500).json({
+      message: "An error occurred while updating user premium status.",
+    });
   }
 });
 

@@ -19,12 +19,8 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/homepage" element={<HomePage />} />
         <Route path="/premium-benefits" element={<PremiumBenefitsPage />} />
-<<<<<<< HEAD
-        <Route path="/UserInfo" element={<ProfilePage />} />
-=======
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
->>>>>>> master
         <Route path="*" element={<p>There's nothing here!</p>} />
       </Routes>
     </AuthProvider>
