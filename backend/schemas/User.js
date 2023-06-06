@@ -40,7 +40,12 @@ const Message = new Schema({
 });
 
 const Cart = new Schema({
-  gift: [Gift],
+  id: Number,
+  name: String,
+  description: String,
+  price: Number,
+  quantity: Number,
+  tag: Tag,
 });
 
 const Order = new Schema({
@@ -60,7 +65,7 @@ const User = new Schema({
   premium: { type: Boolean, default: false },
   card: { type: [Card], default: [] },
   message: { type: [Message], default: [] },
-  cart: { type: Cart, default: null },
+  cart: { type: [Cart], default: [] },
   order: { type: [Order], default: [] },
   address: { type: [Address], default: [] },
 });
