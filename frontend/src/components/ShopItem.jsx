@@ -5,23 +5,26 @@ export default function ShopItem() {
   const [shopItems, setShopItems] = useState([]);
 
   useEffect(() => {
-    const fetchData = () => {
-      console.log("shopItems: " + shopItems);
-      fetch("http://localhost:4000/shopItems", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      })
-        .then((response) => response.json())
-        .then((responseData) => {
-          setShopItems(responseData);
-          console.log(responseData);
-        })
-        .catch((error) => {
-          console.log(error);
+    const fetchData = async () => {
+      // console.log("shopItems: " + shopItems);
+      try {
+        const response = await fetch("http://localhost:4000/shopItems", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
         });
+        if (response.ok) {
+          const responseData = await response.json();
+          setShopItems([...responseData]);
+          console.log(responseData);
+        } else {
+          console.log("Fetching data failed.");
+        }
+      } catch (error) {
+        console.log(error);
+      }
     };
     fetchData();
-  }, [shopItems]);
+  }, []);
 
   return (
     <div className="h-600 ">
