@@ -7,9 +7,9 @@ import { useContext } from "react";
 export default function MessageBoard() {
   const [activeButton, setActiveButton] = useState("Button 2");
   const holidays = ["Youth", "Chrismas", "Valentien", "Spring Festival"];
-  const { isLoggedIn, logout } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
   const [preMessage, setPreMessage] = useState([]);
-  const [preTag, setPreTag] = useState([]);
+  // const [preTag, setPreTag] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [newTag, setNewTag] = useState("");
   const userID = getUserID();
