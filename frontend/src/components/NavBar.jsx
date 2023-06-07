@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../images/logo.png";
 import filter from "../images/filter.png";
@@ -6,12 +6,44 @@ import { FaUser } from "react-icons/fa";
 import { AuthContext } from "./AuthContext";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { AiTwotoneCrown } from "react-icons/ai";
+import { getUserID } from "../states/GlobalState";
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const { isLoggedIn, logout } = useContext(AuthContext);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [searchText, setSearchText] = useState("");
+  const [premium, setPremium] = useState("");
+  const [id] = useState(getUserID);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // Fetch user information from the backend
+    fetch(`http://localhost:4000/user/${id}/info`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data && data.length > 0) {
+          const user = data[0];
+          setPremium(user.premium);
+        }
+
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log("Error fetching user info:", error);
+        setError(error);
+        setLoading(false);
+      });
+  }, [id]);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error occurred: {error.message}</p>;
+  }
 
   const handleMouseEnter = () => {
     setShowDropdown(true);
@@ -126,29 +158,35 @@ const Navbar = () => {
 
         {isLoggedIn && (
           <>
-            <div
-              className="mr-4 py-1 border-2 rounded-md"
-              style={{ backgroundColor: "#5D487F" }}
-            >
-              <Link
-                to="/premium-benefits"
-                className="text-yellow-500 font-bold rounded-md mr-2 ml-2"
+            {premium ? (
+              <div
+                className="mr-4 py-1 border-2 rounded-md"
+                style={{ backgroundColor: "#5D487F" }}
               >
-                Join Premium
-              </Link>
-            </div>
-            <div
-              className="mr-4 py-1 border-2 rounded-md"
-              style={{ backgroundColor: "#5D487F" }}
-            >
-              <div className="text-yellow-400 font-bold rounded-md flex items-center mr-2 ml-2">
-                <AiTwotoneCrown
-                  size={24}
-                  style={{ color: "yellow", marginRight: "0.5rem" }}
-                />
-                Premium User
+                <Link
+                  to="/premium-benefits"
+                  className="text-yellow-400 font-bold rounded-md flex items-center mr-2 ml-2"
+                >
+                  <AiTwotoneCrown
+                    size={24}
+                    style={{ color: "yellow", marginRight: "0.5rem" }}
+                  />
+                  Premium User
+                </Link>
               </div>
-            </div>
+            ) : (
+              <div
+                className="mr-4 py-1 border-2 rounded-md"
+                style={{ backgroundColor: "#5D487F" }}
+              >
+                <Link
+                  to="/premium-benefits"
+                  className="text-yellow-500 font-bold rounded-md mr-2 ml-2"
+                >
+                  Join Premium
+                </Link>
+              </div>
+            )}
 
             <div className="mr-4 py-1 rounded-md">
               <Link to="/checkout" className="rounded-md mr-1 ml-2">

@@ -7,9 +7,9 @@ import { useContext } from "react";
 export default function MessageBoard() {
   const [activeButton, setActiveButton] = useState("Button 2");
   const holidays = ["Youth", "Chrismas", "Valentien", "Spring Festival"];
-  const { isLoggedIn, logout } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
   const [preMessage, setPreMessage] = useState([]);
-  const [preTag, setPreTag] = useState([]);
+  // const [preTag, setPreTag] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [newTag, setNewTag] = useState("");
   const userID = getUserID();
@@ -21,23 +21,30 @@ export default function MessageBoard() {
     setActiveButton(content);
   };
   useEffect(() => {
-    const fetchData = () => {
-      fetch("http://localhost:4000/user/" + userID + "/message", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      })
-        .then((response) => response.json())
-        .then((responseData) => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:4000/user/" + userID + "/message",
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        if (response.ok) {
+          const responseData = await response.json();
           setPreMessage([...responseData]);
           console.log(responseData);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        } else {
+          console.log("Fetching data failed.");
+        }
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     fetchData();
-  }, [preMessage, userID]);
+  }, [userID]);
+
   //If newMessage is entered or tag is selected
   const handleInputChange = (event) => {
     const { name, value } = event.target;
