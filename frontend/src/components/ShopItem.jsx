@@ -26,6 +26,14 @@ export default function ShopItem() {
     fetchData();
   }, []);
 
+  const loadImage = async (picture) => {
+    try {
+      const image = await import(`${picture}`);
+      return image.default;
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="h-600 ">
       <div className=" h-3/4 absolute bottom-16 right-20 w-3/5 border overflow-y-auto ">
@@ -35,7 +43,10 @@ export default function ShopItem() {
               key={item.id}
               className="border h-64 shadow-md rounded-lg transform hover:scale-105"
             >
-              <img src={item.picture} alt="Product" />
+              <div>
+                <img src={loadImage(item.picture)} alt="Product" />
+              </div>
+
               <div>{item.name}</div>
               <div>{item.description}</div>
               <div>{item.price}</div>

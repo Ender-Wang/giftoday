@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { getUserID } from "../states/GlobalState";
 import { AuthContext } from "./AuthContext";
 import { useContext } from "react";
+import { AiFillEdit } from "react-icons/ai";
 
 export default function MessageBoard() {
   const [activeButton, setActiveButton] = useState("Button 2");
@@ -13,6 +14,7 @@ export default function MessageBoard() {
   const [newMessage, setNewMessage] = useState("");
   const [newTag, setNewTag] = useState("");
   const userID = getUserID();
+  const [showInput, setShowInput] = useState(false);
 
   const tags = ["parents", "friends", " colleagues"];
 
@@ -80,6 +82,7 @@ export default function MessageBoard() {
         const result = await response.json();
         alert("successful!");
         setNewMessage("");
+        setShowInput(false);
 
         setPreMessage(preMessage.concat(result));
       } else {
@@ -97,6 +100,7 @@ export default function MessageBoard() {
         {isLoggedIn ? (
           // Homepage after login
           <div>
+            {/* header */}
             <div className="flex flex-row items-center justify-center mb-8 mt-8 ">
               <button
                 type="button"
@@ -113,6 +117,7 @@ export default function MessageBoard() {
                 Records
               </button>
             </div>
+            {/* body */}
             <div>
               {/* After pressing "Festivals" button */}
               {activeButton === "Button 1" && (
@@ -131,62 +136,76 @@ export default function MessageBoard() {
               )}
               {/* After pressing "Records" button */}
               {activeButton === "Button 2" && (
-                <div className="h-32 overflow-y-auto">
-                  <div>
-                    <div className="mb-4 ">
-                      {preMessage.map((item, index) => (
-                        <div
-                          className="w-4/5 mx-auto h-7 bg-message1 mb-4 rounded-sm hover:bg-message2  transform hover:scale-102"
-                          key={index}
-                        >
-                          <div className="flex justify-between items-center">
-                            <div>{item.message}</div>
-                            <div className=" text-center rounded-lg  bg-tag w-24">
-                              Tag
+                <div>
+                  <div className="h-32 overflow-y-auto">
+                    <div>
+                      <div className="mb-4 ">
+                        {preMessage.map((item, index) => (
+                          <div
+                            className="w-4/5 mx-auto h-7 bg-message1 mb-4 rounded-sm hover:bg-message2  transform hover:scale-102"
+                            key={index}
+                          >
+                            <div className="flex justify-between items-center">
+                              <div>{item.message}</div>
+                              <div className=" text-center rounded-lg  bg-tag w-24">
+                                Tag
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
                   </div>
-                  <div className="w-4/5 mx-auto h-7 bg-message1  rounded-sm flex ">
-                    <input
-                      type="text"
-                      id="newMessage"
-                      name="newMessage"
-                      value={newMessage}
-                      onChange={handleInputChange}
-                      className="w-full mx-auto h-7 bg-message1 hover:bg-message2"
-                    />
-                  </div>
-                  <div className="w-4/5 mx-auto h-7 bg-message1 hover:bg-message2 mb-4 rounded-sm flex ">
-                    <select
-                      id="tag"
-                      name="tag"
-                      value={newTag}
-                      onChange={handleInputChange}
-                      className=" w-full bg-message1  "
+                  {!showInput && (
+                    <div
+                      className="w-4/5 mx-auto h-7 bg-message1 rounded-sm flex"
+                      onClick={() => setShowInput(true)}
                     >
-                      <option value="" disabled>
-                        Select a tag
-                      </option>
-                      {tags.map((tag) => (
-                        <option key={tag} value={tag}>
-                          {tag}
-                        </option>
-                      ))}
-                    </select>
+                      <AiFillEdit />
+                    </div>
+                  )}
+                  {showInput && (
+                    <div>
+                      <div className="w-4/5 mx-auto h-7 bg-message1  rounded-sm flex ">
+                        <input
+                          type="text"
+                          id="newMessage"
+                          name="newMessage"
+                          value={newMessage}
+                          onChange={handleInputChange}
+                          className="w-full mx-auto h-7 bg-message1 hover:bg-message2"
+                        />
+                      </div>
+                      <div className="w-4/5 mx-auto h-7 bg-message1 hover:bg-message2 mb-4 rounded-sm flex ">
+                        <select
+                          id="tag"
+                          name="tag"
+                          value={newTag}
+                          onChange={handleInputChange}
+                          className=" w-full bg-message1  "
+                        >
+                          <option value="" disabled>
+                            Select a tag
+                          </option>
+                          {tags.map((tag) => (
+                            <option key={tag} value={tag}>
+                              {tag}
+                            </option>
+                          ))}
+                        </select>
 
-                    <button
-                      type="button"
-                      className=" rounded-sm bg-lightButton hover:bg-normalButton transform hover:scale-102"
-                      onClick={() => {
-                        handleSaveButton();
-                      }}
-                    >
-                      save
-                    </button>
-                  </div>
+                        <button
+                          type="button"
+                          className=" rounded-sm bg-lightButton hover:bg-normalButton transform hover:scale-102"
+                          onClick={() => {
+                            handleSaveButton();
+                          }}
+                        >
+                          save
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

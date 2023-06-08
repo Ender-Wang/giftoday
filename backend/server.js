@@ -30,7 +30,7 @@ mongoose
 async function run() {
   try {
     // await UserDB.deleteMany(); // Remove existing users before adding new ones
-    // await ShopItemDB.deleteMany(); // Remove existing ShopItems before adding new ones
+    await ShopItemDB.deleteMany(); // Remove existing ShopItems before adding new ones
     // console.log(dummyUserData);
     // const createdUsers = await UserDB.create(dummyUserData);
     // console.log("Users created:", createdUsers);
