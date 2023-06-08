@@ -43,6 +43,7 @@ async function populateShopItemDB() {
   try {
     const count = await ShopItemDB.countDocuments();
     if (count > 0) {
+      // await ShopItemDB.deleteMany();
       console.log("ShopItemDB already populated");
     } else {
       for (const item in shopItems) {
