@@ -15,7 +15,6 @@ export default function ShopItem() {
         if (response.ok) {
           const responseData = await response.json();
           setShopItems([...responseData]);
-          console.log(responseData);
         } else {
           console.log("Fetching data failed.");
         }
@@ -36,17 +35,21 @@ export default function ShopItem() {
   };
   return (
     <div className="h-600 ">
-      <div className=" h-3/4 absolute bottom-16 right-20 w-3/5 border overflow-y-auto ">
-        <div className="grid grid-cols-3 gap-20 grid-rows-2  ">
+      <div className=" absolute bottom-16 right-20 h-3/4 w-3/5 overflow-y-auto border ">
+        <div className="grid grid-cols-3 grid-rows-2 gap-20  ">
           {shopItems.map((item) => (
             <div
               key={item.id}
-              className="border h-64 shadow-md rounded-lg transform hover:scale-105"
+              className="h-64 transform rounded-lg border shadow-md hover:scale-105"
             >
-              <div>
-                <img src={loadImage(item.picture)} alt="Product" />
-              </div>
-
+              <img
+                src={
+                  "https://github.com/Ender-Wang/giftoday/blob/master/frontend/src/images/shopItems/" +
+                  item.image +
+                  "?raw=true"
+                }
+                alt={item.name}
+              />
               <div>{item.name}</div>
               <div>{item.description}</div>
               <div>{item.price}</div>
