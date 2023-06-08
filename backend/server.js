@@ -2,14 +2,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
-// const { ObjectId } = require("mongoose");
-
 const UserDB = require("./schemas/User.js");
-// const dummyUserData = require("./dummyUserData.js");
 const ShopItemDB = require("./schemas/ShopItem.js");
-// const {
-//   default: ShopItem,
-// } = require("../frontend/src/components/ShopItem.jsx");
+
+//import ShopData from "./ShopData.json";
+const shopItems = require("./ShopData.json");
+
 const app = express();
 
 //allow cross origin requests
@@ -22,6 +20,7 @@ mongoose
   .then(() => {
     console.log("Connected to DB");
     run();
+    populateShopItemDB();
   })
   .catch((err) => {
     console.log(err);
@@ -39,6 +38,32 @@ async function run() {
   }
 }
 
+//Populate ShopItemDB with ShopData.json
+async function populateShopItemDB() {
+  try {
+    const count = await ShopItemDB.countDocuments();
+    if (count > 0) {
+      console.log("ShopItemDB already populated");
+    } else {
+      for (const item in shopItems) {
+        const shopItem = new ShopItemDB({
+          id: shopItems[item].id,
+          name: shopItems[item].name,
+          image: shopItems[item].image,
+          stock: shopItems[item].stock,
+          description: shopItems[item].description,
+          price: shopItems[item].price,
+          tag: shopItems[item].tag,
+        });
+        await shopItem.save();
+      }
+      console.log("ShopItemDB populated with " + shopItems.length + " items");
+    }
+  } catch (error) {
+    console.log("Error populating ShopItemDB:", error);
+  }
+}
+
 //Demo: get all info from all users
 app.get("/users", (req, res) => {
   UserDB.find()
@@ -50,9 +75,9 @@ app.get("/users", (req, res) => {
     });
 });
 
-//Get APIs
+//<---------------------- GET ---------------------->
 
-//Get shopItem general into: [id, name, description, price, tag]
+//Get all shopItems
 app.get("/shopItems", async (req, res) => {
   try {
     const shopItems = await ShopItemDB.find();
@@ -60,6 +85,22 @@ app.get("/shopItems", async (req, res) => {
   } catch (error) {
     console.error(error);
     // res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+//Get shopItem by id
+app.get("/shopItem/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const shopItem = await ShopItemDB.findOne({ id });
+    res.json(shopItem);
+  } catch (error) {
+    if (error.status === 404) {
+      return res.status(404).json({ error: "ShopItem not found" });
+    } else {
+      console.error(error);
+      res.status(500).json({ error: "Internal server error" });
+    }
   }
 });
 
@@ -124,7 +165,7 @@ app.get("/user/:userID/order", (req, res) => {});
 //TODO: Get user Address info with user id: [id, fullName, postalCode, street, city, country]
 app.get("/user/:userID/address", (req, res) => {});
 
-//Post APIs
+//<---------------------- POST ---------------------->
 //Registration
 app.post("/user/registration", (req, res) => {
   const { email } = req.body;
@@ -198,42 +239,7 @@ app.post("/user/login", (req, res) => {
     });
 });
 
-//Post shopItem with shop id: [id, name, description, price, tag]
-app.post("/shopItems", (req, res) => {
-  ShopItemDB.countDocuments()
-    .then((count) => {
-      let shopItemID = count + 1;
-      req.body.id = shopItemID;
-      var { id, name, stock, picture, description, price, tag } = req.body;
-      const newShopItem = new ShopItemDB({
-        id,
-        name,
-        stock,
-        picture,
-        description,
-        price,
-        tag,
-      });
-
-      newShopItem
-        .save()
-        .then((item) => {
-          console.log("Successful with item: ", item);
-          const { _id, __v, ...responseItem } = item._doc; // Exclude _id and __v fields
-          return res.json(item);
-        })
-        .catch((err) => {
-          console.log(err);
-          return res.status(500).json({ error: "Internal server error" });
-        });
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(500).json({ error: "Internal server error" });
-    });
-});
-// });
-
+//<---------------------- PUT ---------------------->
 //Set premium status
 app.put("/user/:userID/premium", async (req, res) => {
   const { userID } = req.params;
@@ -308,16 +314,6 @@ app.put("/user/:userID/message", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-
-// app.delete("/usesr/:userID/message", async (req, res)=>{
-//   try{
-//     const { userID } = req.params;
-//     let id = Number(userID);
-//     const user = await UserDB.findOne({ id });
-// }catch(error) {
-//   return res.status(200).json({ message: error.message });
-
-// }})
 
 //Add Gift to user Cart
 app.put("/user/:userID/cart", async (req, res) => {
@@ -396,7 +392,17 @@ app.put("/user/userInfo", async (req, res) => {
   }
 });
 
-//TODO: Delete APIs
+//<---------------------- DELETE ---------------------->
+//Delete user message
+// app.delete("/usesr/:userID/message", async (req, res)=>{
+//   try{
+//     const { userID } = req.params;
+//     let id = Number(userID);
+//     const user = await UserDB.findOne({ id });
+// }catch(error) {
+//   return res.status(200).json({ message: error.message });
+
+// }})
 
 //Expose API to port 4000
 const port = 4000;
