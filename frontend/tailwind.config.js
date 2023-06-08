@@ -5,6 +5,10 @@ module.exports = {
     // <<<<<<< Updated upstream
     extend: {
       colors: {
+        //not highlighted message
+        message1: "#D9D9D9",
+        message2: "#D2C2CD",
+
         //yellow
         background: "#FFEFDB",
         //light yellow

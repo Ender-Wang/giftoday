@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import MessageBoard from "../components/MessageBoard";
-import { getUserID, getLoggedInDate } from "../states/GlobalState";
 import Calendar from "../components/Calendar";
+import ShopItem from "../components/ShopItem";
 
 export default function HomePage() {
   //Default selected day is today
@@ -12,12 +12,9 @@ export default function HomePage() {
 
   return (
     <div>
-      <div>HomePage</div>
-      {getUserID()
-        ? "User #" + getUserID() + " logged in at " + getLoggedInDate()
-        : "No user logged in"}
       <Calendar selectedDay={selectedDay} onDayClick={handleDayClick} />
       <MessageBoard />
+      <ShopItem />
     </div>
   );
 }

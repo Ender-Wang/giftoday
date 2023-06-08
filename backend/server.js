@@ -3,7 +3,11 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const UserDB = require("./schemas/User.js");
-// const dummyUserData = require("./dummyUserData.js");
+const ShopItemDB = require("./schemas/ShopItem.js");
+
+//import ShopData from "./ShopData.json";
+const shopItems = require("./ShopData.json");
+
 const app = express();
 
 //allow cross origin requests
@@ -16,6 +20,7 @@ mongoose
   .then(() => {
     console.log("Connected to DB");
     run();
+    populateShopItemDB();
   })
   .catch((err) => {
     console.log(err);
@@ -24,11 +29,39 @@ mongoose
 async function run() {
   try {
     // await UserDB.deleteMany(); // Remove existing users before adding new ones
+    // await ShopItemDB.deleteMany(); // Remove existing ShopItems before adding new ones
     // console.log(dummyUserData);
     // const createdUsers = await UserDB.create(dummyUserData);
     // console.log("Users created:", createdUsers);
   } catch (error) {
     console.log("Error creating users:", error);
+  }
+}
+
+//Populate ShopItemDB with ShopData.json
+async function populateShopItemDB() {
+  try {
+    const count = await ShopItemDB.countDocuments();
+    if (count > 0) {
+      // await ShopItemDB.deleteMany();
+      console.log("ShopItemDB already populated");
+    } else {
+      for (const item in shopItems) {
+        const shopItem = new ShopItemDB({
+          id: shopItems[item].id,
+          name: shopItems[item].name,
+          image: shopItems[item].image,
+          stock: shopItems[item].stock,
+          description: shopItems[item].description,
+          price: shopItems[item].price,
+          tag: shopItems[item].tag,
+        });
+        await shopItem.save();
+      }
+      console.log("ShopItemDB populated with " + shopItems.length + " items");
+    }
+  } catch (error) {
+    console.log("Error populating ShopItemDB:", error);
   }
 }
 
@@ -43,18 +76,89 @@ app.get("/users", (req, res) => {
     });
 });
 
-//Get APIs
-//TODO: Get user General into: [id, name, email, password, premium]
-app.get("/user/:userID/info", (req, res) => {});
+//<---------------------- GET ---------------------->
+
+//Get all shopItems
+app.get("/shopItems", async (req, res) => {
+  try {
+    const shopItems = await ShopItemDB.find();
+    res.json(shopItems);
+  } catch (error) {
+    console.error(error);
+    // res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+//Get shopItem by id
+app.get("/shopItem/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const shopItem = await ShopItemDB.findOne({ id });
+    res.json(shopItem);
+  } catch (error) {
+    if (error.status === 404) {
+      return res.status(404).json({ error: "ShopItem not found" });
+    } else {
+      console.error(error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
+});
+
+// Get user General info: [id, name, email, password, premium]
+app.get("/user/:userID/info", (req, res) => {
+  const { userID } = req.params;
+
+  UserDB.findOne({ id: userID }) // Find the user by ID
+    .then((user) => {
+      if (user) {
+        res.json([user]); // Wrap user in an array
+      } else {
+        res.status(404).json({ error: "User not found" });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ error: "Internal server error" });
+    });
+});
 
 //TODO: Get user Card info with user id: [id, number, cvv, expMonth, expYear]
 app.get("/user/:userID/card", (req, res) => {});
 
-//TODO: Get user Message info with user id: [id, message, date]
-app.get("/user/:userID/message", (req, res) => {});
+//Get user Message info with user id: [id, message, date]
+app.get("/user/:userID/message", async (req, res) => {
+  try {
+    const { userID } = req.params;
+    let id = Number(userID);
+    const user = await UserDB.findOne({ id });
+    const message = user.message;
+    console.log("message " + message);
+    return res.status(200).json(message);
+  } catch (error) {
+    return res.status(200).json({ message: error.message });
+  }
+});
 
-//TODO: Get user Cart info with user id: id, gift: [id, name, description, price, tag: [id, name]]
-app.get("/user/:userID/cart", (req, res) => {});
+//Get user Cart info with user id
+app.get("/user/:userID/cart", async (req, res) => {
+  try {
+    const { userID } = req.params;
+    const uid = Number(userID);
+    // Retrieve the existing user data from the database
+    const user = await UserDB.findOne({ id: uid });
+    if (!user) {
+      throw new Error("User not found");
+    }
+    // Return the user's cart
+    return res.status(200).json({
+      cart: user.cart,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: error.message });
+  }
+});
 
 //TODO: Get user Order info with user id: id, gift: [id, name, description, price, tag: [id, name]], card: [id, number, cvv, expMonth, expYear], address: [id, fullName, postalCode, street, city, country], shippingDate
 app.get("/user/:userID/order", (req, res) => {});
@@ -62,7 +166,7 @@ app.get("/user/:userID/order", (req, res) => {});
 //TODO: Get user Address info with user id: [id, fullName, postalCode, street, city, country]
 app.get("/user/:userID/address", (req, res) => {});
 
-//Post APIs
+//<---------------------- POST ---------------------->
 //Registration
 app.post("/user/registration", (req, res) => {
   const { email } = req.body;
@@ -136,54 +240,170 @@ app.post("/user/login", (req, res) => {
     });
 });
 
-//TODO: Post user Card info with user id: [id, number, cvv, expMonth, expYear]
-app.post("/user/:userID/card", (req, res) => {});
-
-//TODO: Post user Message info with user id: [id, message, date]
-app.put("/user/:userID/message", async (req, res) => {
+//<---------------------- PUT ---------------------->
+//Set premium status
+app.put("/user/:userID/premium", async (req, res) => {
   const { userID } = req.params;
-  const { message } = req.body;
-  let uid = Number(userID);
+  const { premium } = req.body;
 
-  // let messageID = 0;
-  // UserDB.findOne({ uid }).then((user) => {
-  //   messageID = user.message.length;
-  // });
-  //TODO: 1. set messageID to be unique (same mechanism as userID in registration)
-  //TODO: 2. set message Tag to be the one selected by the user
-  await UserDB.updateOne(
-    { id: uid },
-    {
-      $push: {
-        message: {
-          id: 2,
-          message: message,
-          date: new Date(),
-          tag: { id: 1, name: "message Tag" },
-        },
-      },
-    },
-    { new: true }
-  );
+  try {
+    const user = await UserDB.findOneAndUpdate(
+      { id: userID },
+      { premium },
+      { new: true }
+    );
 
-  return res.status(200).json({
-    userID: uid,
-    userIDType: typeof uid,
-    message: message,
-  });
+    if (user) {
+      if (premium) {
+        console.log(`User ${userID} upgraded to premium. Premium: ${premium}`);
+        res.status(200).json({ message: "Premium upgrade successful.", user });
+      } else {
+        console.log(
+          `User ${userID} downgraded from premium. Premium: ${premium}`
+        );
+        res.status(200).json({ message: "Do not subscribe to premium.", user });
+      }
+    } else {
+      res.status(404).json({ message: "User not found." });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "An error occurred while updating user premium status.",
+    });
+  }
 });
 
-//TODO: Post user Cart info with user id: id, gift: [id, name, description, price, tag: [id, name]]
-app.post("/user/:userID/cart", (req, res) => {});
+//TODO: Post user Card info with user id: [id, number, cvv, expMonth, expYear]
+app.put("/user/:userID/card", (req, res) => {});
+
+//Add user Message info with user id: [id, message, date]
+app.put("/user/:userID/message", async (req, res) => {
+  try {
+    const { userID } = req.params;
+    let id = Number(userID);
+    const { message } = req.body;
+    console.log("message " + message);
+    console.log("userID " + id);
+    if (!message) {
+      throw new Error("Invalid message value");
+    }
+    // Retrieve the existing user data from the database
+    const user = await UserDB.findOne({ id });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const newMessage = {
+      id: user.message.length + 1,
+      message: message,
+      date: new Date(),
+      tag: { id: 1, name: "message Tag" },
+    };
+
+    // Update the user data with the new message
+    user.message.push(newMessage);
+    await user.save();
+
+    return res.status(200).json({
+      message: message,
+      id: id,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: error.message });
+  }
+});
+
+//Add Gift to user Cart
+app.put("/user/:userID/cart", async (req, res) => {
+  try {
+    const { userID } = req.params;
+    const uid = Number(userID);
+    const { id, name, description, price, quantity, tag } = req.body;
+    console.log("UserID: " + uid);
+    if (!name) {
+      throw new Error("Invalid gift value");
+    }
+
+    // Retrieve the existing user data from the database
+    const user = await UserDB.findOne({ id: uid });
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // Check if the gift already exists in the cart
+    const existingGiftIndex = user.cart.findIndex((gift) => gift.id === id);
+    if (existingGiftIndex !== -1) {
+      // If the gift already exists, increase the quantity by one
+      user.cart[existingGiftIndex].quantity += 1;
+    } else {
+      // If the gift doesn't exist, add it as a new gift to the cart
+      const newGift = {
+        id: id,
+        name: name,
+        description: description,
+        price: price,
+        quantity: quantity,
+        tag: tag,
+      };
+      user.cart.push(newGift);
+    }
+
+    // TODO: Reduce Gift stock by 1 if the gift is added to the cart
+
+    // Update the user data with the modified cart
+    await user.save();
+    return res.status(200).json({
+      message: "Gift added to cart of user with userID " + uid,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: error.message });
+  }
+});
 
 //TODO: Post user Order info with user id: id, gift: [id, name, description, price, tag: [id, name]], card: [id, number, cvv, expMonth, expYear], address: [id, fullName, postalCode, street, city, country], shippingDate
-app.post("/user/:userID/order", (req, res) => {});
+app.put("/user/:userID/order", (req, res) => {});
 
 //TODO: Post user Address info with user id: [id, fullName, postalCode, street, city, country]
-app.post("/user/:userID/address", (req, res) => {});
+app.put("/user/:userID/address", (req, res) => {});
 
-//Delete API
-//TODO: Delete APIs
+//Update the profile information of customer
+app.put("/user/userInfo", async (req, res) => {
+  try {
+    const { id, name, email, password, address } = req.body;
+
+    const updatedUser = await UserDB.findOneAndUpdate(
+      { id },
+      { name, email, password, address },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "Not found user" });
+    }
+
+    console.log("User Information has been updated：", updatedUser);
+    return res.json(updatedUser);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "Errors in the server" });
+  }
+});
+
+//<---------------------- DELETE ---------------------->
+//Delete user message
+// app.delete("/usesr/:userID/message", async (req, res)=>{
+//   try{
+//     const { userID } = req.params;
+//     let id = Number(userID);
+//     const user = await UserDB.findOne({ id });
+// }catch(error) {
+//   return res.status(200).json({ message: error.message });
+
+// }})
 
 //Expose API to port 4000
 const port = 4000;

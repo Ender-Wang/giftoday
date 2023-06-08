@@ -6,6 +6,7 @@ import NavBar from "./components/NavBar";
 import RegistrationPage from "./pages/RegistrationPage";
 import PremiumBenefitsPage from "./pages/PremiumBenefitsPage";
 import ProfilePage from "./pages/ProfilePage";
+import CheckoutPage from "./pages/CheckoutPage";
 import { AuthProvider } from "./components/AuthContext";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/homepage" element={<HomePage />} />
         <Route path="/premium-benefits" element={<PremiumBenefitsPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="*" element={<p>There's nothing here!</p>} />
       </Routes>
     </AuthProvider>
