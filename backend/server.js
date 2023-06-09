@@ -29,7 +29,7 @@ mongoose
 async function run() {
   try {
     // await UserDB.deleteMany(); // Remove existing users before adding new ones
-    await ShopItemDB.deleteMany(); // Remove existing ShopItems before adding new ones
+    // await ShopItemDB.deleteMany(); // Remove existing ShopItems before adding new ones
     // console.log(dummyUserData);
     // const createdUsers = await UserDB.create(dummyUserData);
     // console.log("Users created:", createdUsers);
@@ -43,23 +43,22 @@ async function populateShopItemDB() {
   try {
     const count = await ShopItemDB.countDocuments();
     if (count > 0) {
-      // await ShopItemDB.deleteMany();
+      await ShopItemDB.deleteMany();
       console.log("ShopItemDB already populated");
-    } else {
-      for (const item in shopItems) {
-        const shopItem = new ShopItemDB({
-          id: shopItems[item].id,
-          name: shopItems[item].name,
-          image: shopItems[item].image,
-          stock: shopItems[item].stock,
-          description: shopItems[item].description,
-          price: shopItems[item].price,
-          tag: shopItems[item].tag,
-        });
-        await shopItem.save();
-      }
-      console.log("ShopItemDB populated with " + shopItems.length + " items");
     }
+    for (const item in shopItems) {
+      const shopItem = new ShopItemDB({
+        id: shopItems[item].id,
+        name: shopItems[item].name,
+        image: shopItems[item].image,
+        stock: shopItems[item].stock,
+        description: shopItems[item].description,
+        price: shopItems[item].price,
+        tag: shopItems[item].tag,
+      });
+      await shopItem.save();
+    }
+    console.log("ShopItemDB populated with " + shopItems.length + " items");
   } catch (error) {
     console.log("Error populating ShopItemDB:", error);
   }

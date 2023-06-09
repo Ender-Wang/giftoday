@@ -25,34 +25,29 @@ export default function ShopItem() {
     fetchData();
   }, []);
 
-  const loadImage = async (picture) => {
-    try {
-      const image = await import(`${picture}`);
-      return image.default;
-    } catch (error) {
-      console.log(error);
-    }
-  };
   return (
     <div className="h-600 ">
-      <div className=" absolute bottom-16 right-20 h-3/4 w-3/5 overflow-y-auto border ">
-        <div className="grid grid-cols-3 grid-rows-2 gap-20  ">
+      <div className=" absolute bottom-16 right-20 h-3/4 w-3/5 overflow-y-auto ">
+        <div className="grid grid-cols-3 grid-rows-2 gap-16 p-10  ">
           {shopItems.map((item) => (
             <div
               key={item.id}
-              className="h-64 transform rounded-lg border shadow-md hover:scale-105"
+              className="h-64  transform rounded-xl shadow-xl hover:scale-110"
             >
-              <img
-                src={
-                  "https://github.com/Ender-Wang/giftoday/blob/master/frontend/src/images/shopItems/" +
-                  item.image +
-                  "?raw=true"
-                }
-                alt={item.name}
-              />
+              <div className="pl-4 pr-4">
+                <img
+                  src={
+                    "https://github.com/Ender-Wang/giftoday/blob/master/frontend/src/images/shopItems/" +
+                    item.image +
+                    "?raw=true"
+                  }
+                  className="h-full w-full object-cover"
+                  style={{ aspectRatio: "1/1" }}
+                  alt={item.name}
+                />
+              </div>
               <div>{item.name}</div>
-              <div>{item.description}</div>
-              <div>{item.price}</div>
+              <div> € {item.price}</div>
             </div>
           ))}
         </div>
