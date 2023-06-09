@@ -37,7 +37,7 @@ export default function ShopItem() {
               <div className="pl-4 pr-4">
                 <img
                   src={
-                    "https://github.com/Ender-Wang/giftoday/blob/master/frontend/src/images/shopItems/" +
+                    "https://github.com/Ender-Wang/giftoday/blob/message-board/frontend/src/images/shopItems/" +
                     item.image +
                     "?raw=true"
                   }
