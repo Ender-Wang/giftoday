@@ -92,11 +92,7 @@ export default function Calendar({ selectedDay, onDayClick }) {
       daysArray.push({ day: i, month: selectedDay.getMonth() });
     }
     //Fill in the days with the days from next month after the last day of this month
-    for (
-      let i = 1;
-      i <= 7 * weeksInMonth - (daysInCurrentMonth + startDayIndex);
-      i++
-    ) {
+    for (let i = 1; i <= 42 - (daysInCurrentMonth + startDayIndex); i++) {
       daysArray.push({ day: i, month: selectedDay.getMonth() + 1 });
     }
     return daysArray;
@@ -106,7 +102,8 @@ export default function Calendar({ selectedDay, onDayClick }) {
     const daysArray = generateDaysArray();
     const calendarGrid = [];
 
-    for (let week = 0; week < weeksInMonth; week++) {
+    // Render the days in the week row, default to 6 weeks -> fixed 42 days -> fixed calendar grid size
+    for (let week = 0; week < 6; week++) {
       const weekRow = [];
       for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
         const dayObj = daysArray[week * 7 + dayIndex];
@@ -167,11 +164,11 @@ export default function Calendar({ selectedDay, onDayClick }) {
   };
 
   return (
-    <div className="flex flex-col justify-center bg-orange-200 rounded-lg w-[300px]">
+    <div className="flex w-[300px] flex-col justify-center rounded-lg bg-orange-200">
       {/* Calendar header */}
-      <div className="flex items-center mb-4 justify-between w-[300px]">
+      <div className="mb-4 flex w-[300px] items-center justify-between">
         <div
-          className="cursor-default text-xl font-bold pl-2 pt-1"
+          className="cursor-default pl-2 pt-1 text-xl font-bold"
           onClick={handleJumpToCurrentDay}
           title="Click to jump to current day"
         >
@@ -182,25 +179,25 @@ export default function Calendar({ selectedDay, onDayClick }) {
         </div>
         <div className="flex items-center pr-2 pt-1">
           <button
-            className="px-2 cursor-pointer font-semibold text-lg"
+            className="cursor-pointer px-2 text-lg font-semibold"
             onClick={handlePreviousMonth}
           >
             &lt;
           </button>
           <button
-            className="px-2 cursor-pointer font-semibold text-lg"
+            className="cursor-pointer px-2 text-lg font-semibold"
             onClick={handleNextMonth}
           >
             &gt;
           </button>
         </div>
       </div>
-      <table className="w-[300px] transition-all duration-500 ease-in-out transform">
+      <table className="w-[300px] transform transition-all duration-500 ease-in-out">
         {/* Calendar week header */}
         <thead>
           <tr>
             {daysInWeek.map((day) => (
-              <th key={day} className="cursor-default text-center py-2">
+              <th key={day} className="cursor-default py-2 text-center">
                 {day}
               </th>
             ))}
