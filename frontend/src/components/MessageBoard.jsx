@@ -3,7 +3,8 @@ import { useEffect } from "react";
 import { getUserID } from "../states/GlobalState";
 import { AuthContext } from "./AuthContext";
 import { useContext } from "react";
-import { AiFillEdit } from "react-icons/ai";
+import { AiOutlineEdit } from "react-icons/ai";
+import { AiOutlineClose } from "react-icons/ai";
 
 export default function MessageBoard() {
   const [activeButton, setActiveButton] = useState("Button 2");
@@ -100,6 +101,7 @@ export default function MessageBoard() {
         {isLoggedIn ? (
           // Homepage after login
           <div>
+            {/* header */}
             <div className="mb-8 mt-8 flex flex-row items-center justify-center ">
               <button
                 type="button"
@@ -138,6 +140,58 @@ export default function MessageBoard() {
                 <div>
                   <div className="h-32 overflow-y-auto">
                     <div>
+                      {/* input box */}
+                      {showInput && (
+                        <div>
+                          <div className="mx-auto mb-4 flex h-7  w-4/5 rounded-sm bg-message1 ">
+                            <input
+                              type="text"
+                              id="newMessage"
+                              name="newMessage"
+                              value={newMessage}
+                              onChange={handleInputChange}
+                              className="mx-auto h-7 w-full bg-message1 hover:bg-message2"
+                            />
+
+                            <select
+                              id="tag"
+                              name="tag"
+                              value={newTag}
+                              onChange={handleInputChange}
+                              className=" bg-message1 text-lightFontColor "
+                            >
+                              <option
+                                value=""
+                                className="text-lightFontColor"
+                                disabled
+                              >
+                                Select a tag
+                              </option>
+                              {tags.map((tag) => (
+                                <option
+                                  className="text-lightFontColor"
+                                  key={tag}
+                                  value={tag}
+                                >
+                                  {tag}
+                                </option>
+                              ))}
+                            </select>
+
+                            <button
+                              type="button"
+                              className=" hover:scale-102 transform rounded-sm bg-lightButton hover:bg-normalButton"
+                              onClick={() => {
+                                handleSaveButton();
+                              }}
+                            >
+                              save
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    <div>
                       <div className="mb-4 ">
                         {preMessage.map((item, index) => (
                           <div
@@ -157,52 +211,10 @@ export default function MessageBoard() {
                   </div>
                   {!showInput && (
                     <div
-                      className="mx-auto flex h-7 w-4/5 rounded-sm bg-message1"
+                      className=" button-4 absolute right-2 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-lightPlusButton"
                       onClick={() => setShowInput(true)}
                     >
-                      <AiFillEdit />
-                    </div>
-                  )}
-                  {showInput && (
-                    <div>
-                      <div className="mx-auto flex h-7 w-4/5  rounded-sm bg-message1 ">
-                        <input
-                          type="text"
-                          id="newMessage"
-                          name="newMessage"
-                          value={newMessage}
-                          onChange={handleInputChange}
-                          className="mx-auto h-7 w-full bg-message1 hover:bg-message2"
-                        />
-                      </div>
-                      <div className="mx-auto mb-4 flex h-7 w-4/5 rounded-sm bg-message1 hover:bg-message2 ">
-                        <select
-                          id="tag"
-                          name="tag"
-                          value={newTag}
-                          onChange={handleInputChange}
-                          className=" w-full bg-message1  "
-                        >
-                          <option value="" disabled>
-                            Select a tag
-                          </option>
-                          {tags.map((tag) => (
-                            <option key={tag} value={tag}>
-                              {tag}
-                            </option>
-                          ))}
-                        </select>
-
-                        <button
-                          type="button"
-                          className=" hover:scale-102 transform rounded-sm bg-lightButton hover:bg-normalButton"
-                          onClick={() => {
-                            handleSaveButton();
-                          }}
-                        >
-                          save
-                        </button>
-                      </div>
+                      <AiOutlineEdit className="text-2xl text-white" />
                     </div>
                   )}
                 </div>
