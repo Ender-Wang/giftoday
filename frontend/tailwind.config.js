@@ -33,6 +33,10 @@ module.exports = {
         //new price for premium
         price: "#F68900",
 
+        //text color
+        lightFontColor: "#66676D",
+        orangeFontColor: "#F68900",
+
         themeColor: {
           400: "#810910",
           300: "#A11D2B",
