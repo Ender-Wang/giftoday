@@ -35,7 +35,7 @@ export default function MessageBoard() {
         if (response.ok) {
           const responseData = await response.json();
           setPreMessage([...responseData]);
-          console.log(responseData);
+          // console.log(responseData);
         } else {
           console.log("Fetching data failed.");
         }
@@ -96,22 +96,21 @@ export default function MessageBoard() {
 
   return (
     <div className="h-600 ">
-      <div className=" h-1/3 absolute bottom-16 left-20 w-1/4  bg-background rounded-md">
+      <div className=" absolute bottom-16 left-20 h-1/3 w-1/4  rounded-md bg-background">
         {isLoggedIn ? (
           // Homepage after login
           <div>
-            {/* header */}
-            <div className="flex flex-row items-center justify-center mb-8 mt-8 ">
+            <div className="mb-8 mt-8 flex flex-row items-center justify-center ">
               <button
                 type="button"
-                className="  py-1 px-5 rounded-lg bg-lightButton mr-4 hover:bg-normalButton  transform hover:scale-105"
+                className="  mr-4 transform rounded-lg bg-lightButton px-5 py-1  hover:scale-105 hover:bg-normalButton"
                 onClick={() => handleButtonClick("Button 1")}
               >
                 Festivals
               </button>
               <button
                 type="button"
-                className=" py-1 px-5 rounded-lg bg-lightButton hover:bg-normalButton transform hover:scale-105"
+                className=" transform rounded-lg bg-lightButton px-5 py-1 hover:scale-105 hover:bg-normalButton"
                 onClick={() => handleButtonClick("Button 2")}
               >
                 Records
@@ -125,7 +124,7 @@ export default function MessageBoard() {
                   <div className="mb-4 ">
                     {holidays.map((item, index) => (
                       <div
-                        className="w-4/5 mx-auto h-7 bg-message1 mb-4 rounded-sm hover:bg-message2  transform hover:scale-102"
+                        className="hover:scale-102 mx-auto mb-4 h-7 w-4/5 transform rounded-sm  bg-message1 hover:bg-message2"
                         key={index}
                       >
                         {item}
@@ -142,12 +141,12 @@ export default function MessageBoard() {
                       <div className="mb-4 ">
                         {preMessage.map((item, index) => (
                           <div
-                            className="w-4/5 mx-auto h-7 bg-message1 mb-4 rounded-sm hover:bg-message2  transform hover:scale-102"
+                            className="hover:scale-102 mx-auto mb-4 h-7 w-4/5 transform rounded-sm  bg-message1 hover:bg-message2"
                             key={index}
                           >
-                            <div className="flex justify-between items-center">
+                            <div className="flex items-center justify-between">
                               <div>{item.message}</div>
-                              <div className=" text-center rounded-lg  bg-tag w-24">
+                              <div className=" w-24 rounded-lg  bg-tag text-center">
                                 Tag
                               </div>
                             </div>
@@ -158,7 +157,7 @@ export default function MessageBoard() {
                   </div>
                   {!showInput && (
                     <div
-                      className="w-4/5 mx-auto h-7 bg-message1 rounded-sm flex"
+                      className="mx-auto flex h-7 w-4/5 rounded-sm bg-message1"
                       onClick={() => setShowInput(true)}
                     >
                       <AiFillEdit />
@@ -166,17 +165,17 @@ export default function MessageBoard() {
                   )}
                   {showInput && (
                     <div>
-                      <div className="w-4/5 mx-auto h-7 bg-message1  rounded-sm flex ">
+                      <div className="mx-auto flex h-7 w-4/5  rounded-sm bg-message1 ">
                         <input
                           type="text"
                           id="newMessage"
                           name="newMessage"
                           value={newMessage}
                           onChange={handleInputChange}
-                          className="w-full mx-auto h-7 bg-message1 hover:bg-message2"
+                          className="mx-auto h-7 w-full bg-message1 hover:bg-message2"
                         />
                       </div>
-                      <div className="w-4/5 mx-auto h-7 bg-message1 hover:bg-message2 mb-4 rounded-sm flex ">
+                      <div className="mx-auto mb-4 flex h-7 w-4/5 rounded-sm bg-message1 hover:bg-message2 ">
                         <select
                           id="tag"
                           name="tag"
@@ -196,7 +195,7 @@ export default function MessageBoard() {
 
                         <button
                           type="button"
-                          className=" rounded-sm bg-lightButton hover:bg-normalButton transform hover:scale-102"
+                          className=" hover:scale-102 transform rounded-sm bg-lightButton hover:bg-normalButton"
                           onClick={() => {
                             handleSaveButton();
                           }}
@@ -213,10 +212,10 @@ export default function MessageBoard() {
         ) : (
           // Homepage without login
           <div>
-            <div className="flex flex-row items-center justify-center mb-8 mt-8 ">
+            <div className="mb-8 mt-8 flex flex-row items-center justify-center ">
               <button
                 type="button"
-                className="  py-1 px-5 rounded-lg bg-lightButton mr-4 hover:bg-normalButton  transform hover:scale-105"
+                className="  mr-4 transform rounded-lg bg-lightButton px-5 py-1  hover:scale-105 hover:bg-normalButton"
                 onClick={() => handleButtonClick("Button 1")}
               >
                 Festivals
@@ -226,7 +225,7 @@ export default function MessageBoard() {
               <div className="mb-4 ">
                 {holidays.map((item, index) => (
                   <div
-                    className="w-4/5 mx-auto h-7 bg-message1 mb-4 rounded-sm hover:bg-message2  transform hover:scale-102"
+                    className="hover:scale-102 mx-auto mb-4 h-7 w-4/5 transform rounded-sm  bg-message1 hover:bg-message2"
                     key={index}
                   >
                     {item}
