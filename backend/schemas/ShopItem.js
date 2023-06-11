@@ -2,11 +2,10 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const ShopItem = new Schema({
-  // id: { type: Number, unique: true },
   id: Number,
   name: String,
+  image: String,
   stock: Number,
-  picture: String,
   description: String,
   price: Number,
   tag: String,
