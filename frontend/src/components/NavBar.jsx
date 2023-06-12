@@ -64,7 +64,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="w-full h-16 fffff flex justify-between items-center">
+    <nav className="w-full h-16 fffff flex justify-between items-center shadow-lg mb-8">
       <div className="ml-4">
         <Link to="/" className="text-white text-xl font-bold">
           <img src={logo} alt="My Website Logo" className="h-8" />
