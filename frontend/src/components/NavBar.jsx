@@ -188,11 +188,44 @@ const Navbar = () => {
               </div>
             )}
 
-            <div className="mr-4 py-1 rounded-md">
-              <Link to="/checkout" className="rounded-md mr-1 ml-2">
-                <AiOutlineShoppingCart size={24} color="#000000" />
+            <div
+              className="mr-4 py-2.5 rounded-md"
+              style={{
+                border: "1px solid SteelBlue ",
+                width: "50px",
+                height: "50px",
+                borderRadius: "80%",
+                position: "relative",
+              }}
+            >
+              <Link to="/checkout" className="rounded-md">
+                <AiOutlineShoppingCart
+                  size={30}
+                  color="#4682B4"
+                  style={{ marginLeft: "6.5px" }}
+                />
               </Link>
+              <div
+                className="rounded-circle d-flex justify-content-center align-items-center"
+                style={{
+                  borderRadius: "80%",
+                  backgroundColor: "FireBrick ",
+                  color: "white",
+                  width: "1.5rem",
+                  height: "1.5rem",
+                  position: "absolute",
+                  bottom: 0,
+                  right: 0,
+                  transform: "translate(25%, 25%)",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                3
+              </div>
             </div>
+
             <div
               className="mr-4 py-1 rounded-md"
               onMouseLeave={handleMouseLeave}
