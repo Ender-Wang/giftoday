@@ -15,7 +15,7 @@ export default function MessageBoard() {
   const [newMessage, setNewMessage] = useState("");
   const [newTag, setNewTag] = useState("");
   const userID = getUserID();
-  const [showInput, setShowInput] = useState(false);
+  // const [showInput, setShowInput] = useState(false);
 
   const tags = ["parents", "friends", " colleagues"];
 
@@ -23,6 +23,7 @@ export default function MessageBoard() {
   const handleButtonClick = (content) => {
     setActiveButton(content);
   };
+  const deleteMessage = (event) => {};
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -56,7 +57,7 @@ export default function MessageBoard() {
         setNewMessage(value);
         // setFormErrors((prevErrors) => ({ ...prevErrors, name: "" }));
         break;
-      case "tag":
+      case "newTag":
         setNewTag(value);
         // setFormErrors((prevErrors) => ({ ...prevErrors, email: "" }));
         break;
@@ -68,6 +69,10 @@ export default function MessageBoard() {
   const handleSaveButton = async () => {
     const data = {
       message: newMessage,
+      tag: {
+        id: 1,
+        name: newTag === "" ? "general" : newTag,
+      },
     };
     try {
       const response = await fetch(
@@ -83,8 +88,6 @@ export default function MessageBoard() {
         const result = await response.json();
         alert("successful!");
         setNewMessage("");
-        setShowInput(false);
-
         setPreMessage(preMessage.concat(result));
       } else {
         alert("Set Record failed!");
@@ -102,7 +105,7 @@ export default function MessageBoard() {
           // Homepage after login
           <div>
             {/* header */}
-            <div className="mb-8 mt-8 flex flex-row items-center justify-center ">
+            <div className="mb-6 mt-8 flex flex-row items-center justify-center ">
               <button
                 type="button"
                 className="  mr-4 transform rounded-lg bg-lightButton px-5 py-1  hover:scale-105 hover:bg-normalButton"
@@ -138,59 +141,58 @@ export default function MessageBoard() {
               {/* After pressing "Records" button */}
               {activeButton === "Button 2" && (
                 <div>
-                  <div className="h-32 overflow-y-auto">
+                  <div>
+                    {/* input box */}
                     <div>
-                      {/* input box */}
-                      {showInput && (
-                        <div>
-                          <div className="mx-auto mb-4 flex h-7  w-4/5 rounded-sm bg-message1 ">
-                            <input
-                              type="text"
-                              id="newMessage"
-                              name="newMessage"
-                              value={newMessage}
-                              onChange={handleInputChange}
-                              className="mx-auto h-7 w-full bg-message1 hover:bg-message2"
-                            />
+                      <div className="mx-auto mb-4 flex h-7  w-4/5 rounded-sm bg-message1 ">
+                        <input
+                          type="text"
+                          id="newMessage"
+                          name="newMessage"
+                          value={newMessage}
+                          onChange={handleInputChange}
+                          className="mx-auto h-7 w-full bg-message1 text-sm hover:bg-message2"
+                          placeholder="Add a new record..."
+                        />
 
-                            <select
-                              id="tag"
-                              name="tag"
-                              value={newTag}
-                              onChange={handleInputChange}
-                              className=" bg-message1 text-lightFontColor "
+                        <select
+                          id="newTag"
+                          name="newTag"
+                          value={newTag}
+                          onChange={handleInputChange}
+                          className=" bg-message1 text-lightFontColor "
+                        >
+                          <option
+                            value=""
+                            className="text-sm text-lightFontColor"
+                            disabled
+                          >
+                            Select a tag
+                          </option>
+                          {tags.map((tag) => (
+                            <option
+                              className="text-sm text-lightFontColor"
+                              key={tag}
+                              value={tag}
                             >
-                              <option
-                                value=""
-                                className="text-lightFontColor"
-                                disabled
-                              >
-                                Select a tag
-                              </option>
-                              {tags.map((tag) => (
-                                <option
-                                  className="text-lightFontColor"
-                                  key={tag}
-                                  value={tag}
-                                >
-                                  {tag}
-                                </option>
-                              ))}
-                            </select>
+                              {tag}
+                            </option>
+                          ))}
+                        </select>
 
-                            <button
-                              type="button"
-                              className=" hover:scale-102 transform rounded-sm bg-lightButton hover:bg-normalButton"
-                              onClick={() => {
-                                handleSaveButton();
-                              }}
-                            >
-                              save
-                            </button>
-                          </div>
-                        </div>
-                      )}
+                        <button
+                          type="button"
+                          className=" hover:scale-102 transform rounded-sm bg-lightButton hover:bg-normalButton"
+                          onClick={() => {
+                            handleSaveButton();
+                          }}
+                        >
+                          save
+                        </button>
+                      </div>
                     </div>
+                  </div>
+                  <div className="h-32 overflow-y-auto">
                     <div>
                       <div className="mb-4 ">
                         {preMessage.map((item, index) => (
@@ -200,23 +202,31 @@ export default function MessageBoard() {
                           >
                             <div className="flex items-center justify-between">
                               <div>{item.message}</div>
-                              <div className=" w-24 rounded-lg  bg-tag text-center">
-                                Tag
+                              <div className=" mr-6 w-24  rounded-xl bg-tag text-center">
+                                {item.tag && item.tag.name}
                               </div>
+                            </div>
+                            <div
+                              className="absolute right-0 top-0 rounded-full bg-lightPlusButton "
+                              onClick={deleteMessage}
+                            >
+                              {/* "False" icon */}
+                              <AiOutlineClose className="text-xs text-white" />
                             </div>
                           </div>
                         ))}
                       </div>
                     </div>
                   </div>
-                  {!showInput && (
+                  {/* write button */}
+                  {/* {!showInput && (
                     <div
                       className=" button-4 absolute right-2 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-lightPlusButton"
                       onClick={() => setShowInput(true)}
                     >
                       <AiOutlineEdit className="text-2xl text-white" />
                     </div>
-                  )}
+                  )} */}
                 </div>
               )}
             </div>
