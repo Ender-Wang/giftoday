@@ -62,7 +62,7 @@ export default function ShopItem() {
               className="h-64  transform rounded-xl shadow-xl hover:scale-110"
             >
               {/* product picture */}
-              <div className="pl-2 pr-2">
+              <div className="pl-4 pr-4">
                 <img
                   src={
                     "https://github.com/Ender-Wang/giftoday/blob/master/frontend/src/images/shopItems/" +
@@ -93,7 +93,7 @@ export default function ShopItem() {
                 )}
                 {isLoggedIn && (
                   <div
-                    className=" mr-2 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-normalPlusButton"
+                    className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-normalPlusButton"
                     onClick={setCart}
                   >
                     <AiOutlinePlus className="text-xl text-white" />
