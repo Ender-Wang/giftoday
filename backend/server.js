@@ -149,10 +149,15 @@ app.get("/user/:userID/message", async (req, res) => {
     let id = Number(userID);
     const user = await UserDB.findOne({ id });
     const message = user.message;
-    // console.log("message " + message);
+    console.log("message " + message);
     return res.status(200).json(message);
   } catch (error) {
-    return res.status(200).json({ message: error.message });
+    if (error.status === 404) {
+      return res.status(404).json({ error: "Messages not found" });
+    } else {
+      console.error(error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
   }
 });
 
@@ -176,7 +181,11 @@ app.get("/user/:userID/cart", async (req, res) => {
   }
 });
 
-//TODO: Get user Order info with user id: id, gift: [id, name, description, price, tag: [id, name]], card: [id, number, cvv, expMonth, expYear], address: [id, fullName, postalCode, street, city, country], shippingDate
+//TODO: Get user Order info with user id: id,
+//gift: [id, name, description, price, tag: [id, name]],
+//card: [id, number, cvv, expMonth, expYear],
+//address: [id, fullName, postalCode, street, city, country],
+//shippingDate
 app.get("/user/:userID/order", (req, res) => {});
 
 //TODO: Get user Address info with user id: [id, fullName, postalCode, street, city, country]
@@ -298,9 +307,8 @@ app.put("/user/:userID/message", async (req, res) => {
   try {
     const { userID } = req.params;
     let id = Number(userID);
-    const { message } = req.body;
-    console.log("message " + message);
-    console.log("userID " + id);
+    const { message, tag } = req.body;
+
     if (!message) {
       throw new Error("Invalid message value");
     }
@@ -310,12 +318,18 @@ app.put("/user/:userID/message", async (req, res) => {
     if (!user) {
       throw new Error("User not found");
     }
+    const messages = user.message;
+    // Find the maximum ID using reduce
+    const biggestID = messages.reduce(
+      (maxID, message) => (message.id > maxID ? message.id : maxID),
+      0
+    );
 
     const newMessage = {
-      id: user.message.length + 1,
+      id: biggestID + 1,
       message: message,
       date: new Date(),
-      tag: { id: 1, name: "message Tag" },
+      tag: tag,
     };
 
     // Update the user data with the new message
@@ -325,6 +339,7 @@ app.put("/user/:userID/message", async (req, res) => {
     return res.status(200).json({
       message: message,
       id: id,
+      tag: tag,
     });
   } catch (error) {
     console.log(error.message);
@@ -380,7 +395,11 @@ app.put("/user/:userID/cart", async (req, res) => {
   }
 });
 
-//TODO: Post user Order info with user id: id, gift: [id, name, description, price, tag: [id, name]], card: [id, number, cvv, expMonth, expYear], address: [id, fullName, postalCode, street, city, country], shippingDate
+//TODO: Post user Order info with user id: id,
+//gift: [id, name, description, price, tag: [id, name]],
+//card: [id, number, cvv, expMonth, expYear],
+//address: [id, fullName, postalCode, street, city, country],
+//shippingDate
 app.put("/user/:userID/order", (req, res) => {});
 
 //TODO: Post user Address info with user id: [id, fullName, postalCode, street, city, country]
