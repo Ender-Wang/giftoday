@@ -20,7 +20,7 @@ mongoose
   .then(() => {
     console.log("Connected to DB");
     run();
-    // populateShopItemDB();
+    populateShopItemDB();
   })
   .catch((err) => {
     console.log(err);
@@ -183,7 +183,6 @@ app.get("/user/:userID/cart", async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
 //TODO: Get user Order info with user id: id, gift: [id, name, description, price, tag: [id, name]], card: [id, number, cvv, expMonth, expYear], address: [id, fullName, postalCode, street, city, country], shippingDate
 app.get("/user/:userID/order", async (req, res) => {
   try {
@@ -196,14 +195,11 @@ app.get("/user/:userID/order", async (req, res) => {
     return res.status(200).json({ message: error.message });
   }
 });
-=======
 //TODO: Get user Order info with user id: id,
 //gift: [id, name, description, price, tag: [id, name]],
 //card: [id, number, cvv, expMonth, expYear],
 //address: [id, fullName, postalCode, street, city, country],
 //shippingDate
-app.get("/user/:userID/order", (req, res) => {});
->>>>>>> master
 
 //TODO: Get user Address info with user id: [id, fullName, postalCode, street, city, country]
 app.get("/user/:userID/address", (req, res) => {});
@@ -412,7 +408,6 @@ app.put("/user/:userID/cart", async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
 //TODO: Post user Order info with user id: id, gift: [id, name, description, price, tag: [id, name]], card: [id, number, cvv, expMonth, expYear], address: [id, fullName, postalCode, street, city, country], shippingDate
 app.put("/user/:userID/order", async (req, res) => {
   try {
@@ -450,14 +445,12 @@ app.put("/user/:userID/order", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-=======
 //TODO: Post user Order info with user id: id,
 //gift: [id, name, description, price, tag: [id, name]],
 //card: [id, number, cvv, expMonth, expYear],
 //address: [id, fullName, postalCode, street, city, country],
 //shippingDate
 app.put("/user/:userID/order", (req, res) => {});
->>>>>>> master
 
 //TODO: Post user Address info with user id: [id, fullName, postalCode, street, city, country]
 app.put("/user/:userID/address", (req, res) => {});
