@@ -29,28 +29,30 @@ export default function ShopItem() {
         console.log(error);
       }
     };
-    const fetchPremium = async () => {
-      // console.log("shopItems: " + shopItems);
-      try {
-        const response = await fetch(
-          "http://localhost:4000/user/" + userID + "/premium",
-          {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-          }
-        );
-        if (response.ok) {
-          setPremium(response.json());
-        } else {
-          console.log("Fetching data failed.");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+
     fetchShopItems();
     fetchPremium();
-  }, []);
+  }, [userID]);
+
+  const fetchPremium = async () => {
+    // console.log("shopItems: " + shopItems);
+    try {
+      const response = await fetch(
+        "http://localhost:4000/user/" + userID + "/premium",
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      if (response.ok) {
+        setPremium(response);
+      } else {
+        console.log("Fetching data failed.");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="h-600 ">

@@ -20,7 +20,7 @@ mongoose
   .then(() => {
     console.log("Connected to DB");
     run();
-    populateShopItemDB();
+    // populateShopItemDB();
   })
   .catch((err) => {
     console.log(err);
@@ -125,11 +125,13 @@ app.get("/user/:userID/info", (req, res) => {
 // Get user General info: [id, name, email, password, premium]
 app.get("/user/:userID/premium", (req, res) => {
   const { userID } = req.params;
+  let id = Number(userID);
 
-  UserDB.findOne({ id: userID }) // Find the user by ID
+  UserDB.findOne({ id: id }) // Find the user by ID
     .then((user) => {
       if (user) {
-        res.json(user.premium); // Wrap user in an array
+        res.json(user.premium);
+        console.log(user.premium); // Wrap user in an array
       } else {
         res.status(404).json({ error: "User not found" });
       }
@@ -149,7 +151,7 @@ app.get("/user/:userID/message", async (req, res) => {
     let id = Number(userID);
     const user = await UserDB.findOne({ id });
     const message = user.message;
-    console.log("message " + message);
+    // console.log("message " + message);
     return res.status(200).json(message);
   } catch (error) {
     if (error.status === 404) {
@@ -429,16 +431,49 @@ app.put("/user/userInfo", async (req, res) => {
 });
 
 //<---------------------- DELETE ---------------------->
-//Delete user message
-// app.delete("/usesr/:userID/message", async (req, res)=>{
-//   try{
+// Delete user message
+// app.delete("/user/:userID/message/:messageID", async (req, res) => {
+//   try {
 //     const { userID } = req.params;
 //     let id = Number(userID);
+//     const { messageID } = req.params;
+//     let mID = Number(messageID);
 //     const user = await UserDB.findOne({ id });
-// }catch(error) {
-//   return res.status(200).json({ message: error.message });
+//     const messages = user.message;
+//     console.log(messages.findOne({ mID }));
+//     await messages.deleteOne({ mID });
+//   } catch (error) {
+//     if (error.status === 404) {
+//       return res.status(404).json({ error: "User not found" });
+//     } else {
+//       console.error(error);
+//       res.status(500).json({ error: "Internal server error" });
+//     }
+//   }
+// });
+app.delete("/user/:userID/message/:messageID", async (req, res) => {
+  try {
+    const { userID, messageID } = req.params;
+    const id = Number(userID);
+    const mID = Number(messageID);
 
-// }})
+    const user = await UserDB.findOne({ id: id });
+    if (!user) {
+      throw new Error("User not found");
+    }
+    const messages = user.message;
+    const messageIndex = messages.find({ id: mID });
+    console.log(messageIndex);
+    if (messageIndex === -1) {
+      throw new Error("Message not found");
+    }
+
+    res.status(200).json({ message: "Message deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 //Expose API to port 4000
 const port = 4000;
