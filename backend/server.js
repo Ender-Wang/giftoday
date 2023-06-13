@@ -119,7 +119,17 @@ app.get("/user/:userID/cart", async (req, res) => {
 });
 
 //TODO: Get user Order info with user id: id, gift: [id, name, description, price, tag: [id, name]], card: [id, number, cvv, expMonth, expYear], address: [id, fullName, postalCode, street, city, country], shippingDate
-app.get("/user/:userID/order", (req, res) => {});
+app.get("/user/:userID/order", async (req, res) => {
+  try {
+    const { userID } = req.params;
+    let id = Number(userID);
+    const user = await UserDB.findOne({ id });
+    const order = user.order;
+    return res.status(200).json(order);
+  } catch (error) {
+    return res.status(200).json({ message: error.message });
+  }
+});
 
 //TODO: Get user Address info with user id: [id, fullName, postalCode, street, city, country]
 app.get("/user/:userID/address", (req, res) => {});
@@ -368,7 +378,42 @@ app.put("/user/:userID/cart", async (req, res) => {
 });
 
 //TODO: Post user Order info with user id: id, gift: [id, name, description, price, tag: [id, name]], card: [id, number, cvv, expMonth, expYear], address: [id, fullName, postalCode, street, city, country], shippingDate
-app.put("/user/:userID/order", (req, res) => {});
+app.put("/user/:userID/order", async (req, res) => {
+  try {
+    const { userID } = req.params;
+    const { gift, card, address, shippingDate } = req.body;
+    console.log("userID " + userID);
+    // if (!order) {
+    //   throw new Error("There is no order");
+    // }
+    // Retrieve the existing user data from the database
+    const user = await UserDB.findOne({ id: userID });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const newOrder = {
+      id: userID + 1,
+      gift: gift,
+      card: card,
+      address: address,
+      shippingDate: shippingDate,
+    };
+
+    // Update the user data with the new message
+    user.order.push(newOrder);
+    await user.save();
+
+    return res.status(200).json({
+      order: newOrder,
+      id: userID,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: error.message });
+  }
+});
 
 //TODO: Post user Address info with user id: [id, fullName, postalCode, street, city, country]
 app.put("/user/:userID/address", (req, res) => {});
