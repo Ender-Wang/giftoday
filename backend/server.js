@@ -42,23 +42,24 @@ async function run() {
 async function populateShopItemDB() {
   try {
     const count = await ShopItemDB.countDocuments();
+    // await ShopItemDB.deleteMany(); //Dump all existing ShopItems
     if (count > 0) {
-      await ShopItemDB.deleteMany();
       console.log("ShopItemDB already populated");
+    } else {
+      for (const item in shopItems) {
+        const shopItem = new ShopItemDB({
+          id: shopItems[item].id,
+          name: shopItems[item].name,
+          image: shopItems[item].image,
+          stock: shopItems[item].stock,
+          description: shopItems[item].description,
+          price: shopItems[item].price,
+          tag: shopItems[item].tag,
+        });
+        await shopItem.save();
+      }
+      console.log("ShopItemDB populated with " + shopItems.length + " items");
     }
-    for (const item in shopItems) {
-      const shopItem = new ShopItemDB({
-        id: shopItems[item].id,
-        name: shopItems[item].name,
-        image: shopItems[item].image,
-        stock: shopItems[item].stock,
-        description: shopItems[item].description,
-        price: shopItems[item].price,
-        tag: shopItems[item].tag,
-      });
-      await shopItem.save();
-    }
-    console.log("ShopItemDB populated with " + shopItems.length + " items");
   } catch (error) {
     console.log("Error populating ShopItemDB:", error);
   }
