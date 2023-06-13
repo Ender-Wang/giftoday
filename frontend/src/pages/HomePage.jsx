@@ -13,7 +13,7 @@ export default function HomePage() {
   return (
     <div>
       <Calendar selectedDay={selectedDay} onDayClick={handleDayClick} />
-      <MessageBoard />
+      <MessageBoard selectedDay={selectedDay} />
       <ShopItem />
     </div>
   );

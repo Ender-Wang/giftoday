@@ -53,7 +53,7 @@ export default function Calendar({ selectedDay, onDayClick }) {
     // } catch (error) {
     //   console.error("Error fetching festival info:", error);
     // }
-    alert("User ID: " + userID + ", selected day: " + day);
+    // alert("User ID: " + userID + ", selected day: " + day);
   };
 
   const daysInWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];

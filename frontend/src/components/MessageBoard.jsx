@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { AiOutlineClose } from "react-icons/ai";
 
-export default function MessageBoard() {
+export default function MessageBoard({ selectedDay }) {
   const [activeButton, setActiveButton] = useState("Button 2");
   const holidays = ["Youth", "Chrismas", "Valentien", "Spring Festival"];
   const { isLoggedIn } = useContext(AuthContext);
