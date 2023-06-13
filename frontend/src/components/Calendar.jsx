@@ -164,9 +164,9 @@ export default function Calendar({ selectedDay, onDayClick }) {
   };
 
   return (
-    <div className="flex w-[300px] flex-col justify-center rounded-lg bg-orange-200">
+    <div className="flex w-full flex-col justify-center rounded-lg bg-orange-200 p-2">
       {/* Calendar header */}
-      <div className="mb-4 flex w-[300px] items-center justify-between">
+      <div className="mb-4 flex w-full items-center justify-between">
         <div
           className="cursor-default pl-2 pt-1 text-xl font-bold"
           onClick={handleJumpToCurrentDay}
@@ -192,7 +192,7 @@ export default function Calendar({ selectedDay, onDayClick }) {
           </button>
         </div>
       </div>
-      <table className="w-[300px] transform transition-all duration-500 ease-in-out">
+      <table className="w-full transform transition-all duration-500 ease-in-out">
         {/* Calendar week header */}
         <thead>
           <tr>
