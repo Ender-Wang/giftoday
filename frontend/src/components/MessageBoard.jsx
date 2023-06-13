@@ -23,7 +23,7 @@ export default function MessageBoard() {
   const handleButtonClick = (content) => {
     setActiveButton(content);
   };
-  const deleteMessage = (event) => {};
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -63,6 +63,25 @@ export default function MessageBoard() {
         break;
       default:
         break;
+    }
+  };
+  const handleDeleteMessage = async (mID) => {
+    try {
+      const response = await fetch(
+        "http://localhost:4000/user/" + userID + "/message" + mID,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      if (response.ok) {
+        console.log(response);
+        setPreMessage(preMessage.filter((preM) => preM.id !== mID));
+      } else {
+        console.log("Deleting data failed.");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
   // Save new message and post it into postman
@@ -208,7 +227,7 @@ export default function MessageBoard() {
                             </div>
                             <div
                               className="absolute right-0 top-0 rounded-full bg-lightPlusButton "
-                              onClick={deleteMessage}
+                              // onClick={() => handleDeleteMessage(item.id)}
                             >
                               {/* "False" icon */}
                               <AiOutlineClose className="text-xs text-white" />
