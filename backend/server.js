@@ -2,14 +2,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
-// const { ObjectId } = require("mongoose");
-
 const UserDB = require("./schemas/User.js");
-// const dummyUserData = require("./dummyUserData.js");
 const ShopItemDB = require("./schemas/ShopItem.js");
-// const {
-//   default: ShopItem,
-// } = require("../frontend/src/components/ShopItem.jsx");
+
+//import ShopData from "./ShopData.json";
+const shopItems = require("./ShopData.json");
+
 const app = express();
 
 //allow cross origin requests
@@ -22,6 +20,7 @@ mongoose
   .then(() => {
     console.log("Connected to DB");
     run();
+    // populateShopItemDB();
   })
   .catch((err) => {
     console.log(err);
@@ -39,6 +38,32 @@ async function run() {
   }
 }
 
+//Populate ShopItemDB with ShopData.json
+async function populateShopItemDB() {
+  try {
+    const count = await ShopItemDB.countDocuments();
+    if (count > 0) {
+      await ShopItemDB.deleteMany();
+      console.log("ShopItemDB already populated");
+    }
+    for (const item in shopItems) {
+      const shopItem = new ShopItemDB({
+        id: shopItems[item].id,
+        name: shopItems[item].name,
+        image: shopItems[item].image,
+        stock: shopItems[item].stock,
+        description: shopItems[item].description,
+        price: shopItems[item].price,
+        tag: shopItems[item].tag,
+      });
+      await shopItem.save();
+    }
+    console.log("ShopItemDB populated with " + shopItems.length + " items");
+  } catch (error) {
+    console.log("Error populating ShopItemDB:", error);
+  }
+}
+
 //Demo: get all info from all users
 app.get("/users", (req, res) => {
   UserDB.find()
@@ -50,9 +75,9 @@ app.get("/users", (req, res) => {
     });
 });
 
-//Get APIs
+//<---------------------- GET ---------------------->
 
-//Get shopItem general into: [id, name, description, price, tag]
+//Get all shopItems
 app.get("/shopItems", async (req, res) => {
   try {
     const shopItems = await ShopItemDB.find();
@@ -60,6 +85,22 @@ app.get("/shopItems", async (req, res) => {
   } catch (error) {
     console.error(error);
     // res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+//Get shopItem by id
+app.get("/shopItem/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const shopItem = await ShopItemDB.findOne({ id });
+    res.json(shopItem);
+  } catch (error) {
+    if (error.status === 404) {
+      return res.status(404).json({ error: "ShopItem not found" });
+    } else {
+      console.error(error);
+      res.status(500).json({ error: "Internal server error" });
+    }
   }
 });
 
@@ -81,6 +122,25 @@ app.get("/user/:userID/info", (req, res) => {
     });
 });
 
+// Get user General info: [id, name, email, password, premium]
+app.get("/user/:userID/premium", (req, res) => {
+  const { userID } = req.params;
+  let id = Number(userID);
+
+  UserDB.findOne({ id: id }) // Find the user by ID
+    .then((user) => {
+      if (user) {
+        res.json(user.premium);
+        console.log(user.premium); // Wrap user in an array
+      } else {
+        res.status(404).json({ error: "User not found" });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ error: "Internal server error" });
+    });
+});
 //TODO: Get user Card info with user id: [id, number, cvv, expMonth, expYear]
 app.get("/user/:userID/card", (req, res) => {});
 
@@ -91,10 +151,15 @@ app.get("/user/:userID/message", async (req, res) => {
     let id = Number(userID);
     const user = await UserDB.findOne({ id });
     const message = user.message;
-    console.log("message " + message);
+    // console.log("message " + message);
     return res.status(200).json(message);
   } catch (error) {
-    return res.status(200).json({ message: error.message });
+    if (error.status === 404) {
+      return res.status(404).json({ error: "Messages not found" });
+    } else {
+      console.error(error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
   }
 });
 
@@ -118,6 +183,7 @@ app.get("/user/:userID/cart", async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 //TODO: Get user Order info with user id: id, gift: [id, name, description, price, tag: [id, name]], card: [id, number, cvv, expMonth, expYear], address: [id, fullName, postalCode, street, city, country], shippingDate
 app.get("/user/:userID/order", async (req, res) => {
   try {
@@ -130,11 +196,19 @@ app.get("/user/:userID/order", async (req, res) => {
     return res.status(200).json({ message: error.message });
   }
 });
+=======
+//TODO: Get user Order info with user id: id,
+//gift: [id, name, description, price, tag: [id, name]],
+//card: [id, number, cvv, expMonth, expYear],
+//address: [id, fullName, postalCode, street, city, country],
+//shippingDate
+app.get("/user/:userID/order", (req, res) => {});
+>>>>>>> master
 
 //TODO: Get user Address info with user id: [id, fullName, postalCode, street, city, country]
 app.get("/user/:userID/address", (req, res) => {});
 
-//Post APIs
+//<---------------------- POST ---------------------->
 //Registration
 app.post("/user/registration", (req, res) => {
   const { email } = req.body;
@@ -208,42 +282,7 @@ app.post("/user/login", (req, res) => {
     });
 });
 
-//Post shopItem with shop id: [id, name, description, price, tag]
-app.post("/shopItems", (req, res) => {
-  ShopItemDB.countDocuments()
-    .then((count) => {
-      let shopItemID = count + 1;
-      req.body.id = shopItemID;
-      var { id, name, stock, picture, description, price, tag } = req.body;
-      const newShopItem = new ShopItemDB({
-        id,
-        name,
-        stock,
-        picture,
-        description,
-        price,
-        tag,
-      });
-
-      newShopItem
-        .save()
-        .then((item) => {
-          console.log("Successful with item: ", item);
-          const { _id, __v, ...responseItem } = item._doc; // Exclude _id and __v fields
-          return res.json(item);
-        })
-        .catch((err) => {
-          console.log(err);
-          return res.status(500).json({ error: "Internal server error" });
-        });
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(500).json({ error: "Internal server error" });
-    });
-});
-// });
-
+//<---------------------- PUT ---------------------->
 //Set premium status
 app.put("/user/:userID/premium", async (req, res) => {
   const { userID } = req.params;
@@ -285,9 +324,8 @@ app.put("/user/:userID/message", async (req, res) => {
   try {
     const { userID } = req.params;
     let id = Number(userID);
-    const { message } = req.body;
-    console.log("message " + message);
-    console.log("userID " + id);
+    const { message, tag } = req.body;
+
     if (!message) {
       throw new Error("Invalid message value");
     }
@@ -297,12 +335,18 @@ app.put("/user/:userID/message", async (req, res) => {
     if (!user) {
       throw new Error("User not found");
     }
+    const messages = user.message;
+    // Find the maximum ID using reduce
+    const biggestID = messages.reduce(
+      (maxID, message) => (message.id > maxID ? message.id : maxID),
+      0
+    );
 
     const newMessage = {
-      id: user.message.length + 1,
+      id: biggestID + 1,
       message: message,
       date: new Date(),
-      tag: { id: 1, name: "message Tag" },
+      tag: tag,
     };
 
     // Update the user data with the new message
@@ -312,22 +356,13 @@ app.put("/user/:userID/message", async (req, res) => {
     return res.status(200).json({
       message: message,
       id: id,
+      tag: tag,
     });
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ message: error.message });
   }
 });
-
-// app.delete("/usesr/:userID/message", async (req, res)=>{
-//   try{
-//     const { userID } = req.params;
-//     let id = Number(userID);
-//     const user = await UserDB.findOne({ id });
-// }catch(error) {
-//   return res.status(200).json({ message: error.message });
-
-// }})
 
 //Add Gift to user Cart
 app.put("/user/:userID/cart", async (req, res) => {
@@ -377,6 +412,7 @@ app.put("/user/:userID/cart", async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 //TODO: Post user Order info with user id: id, gift: [id, name, description, price, tag: [id, name]], card: [id, number, cvv, expMonth, expYear], address: [id, fullName, postalCode, street, city, country], shippingDate
 app.put("/user/:userID/order", async (req, res) => {
   try {
@@ -414,6 +450,14 @@ app.put("/user/:userID/order", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+=======
+//TODO: Post user Order info with user id: id,
+//gift: [id, name, description, price, tag: [id, name]],
+//card: [id, number, cvv, expMonth, expYear],
+//address: [id, fullName, postalCode, street, city, country],
+//shippingDate
+app.put("/user/:userID/order", (req, res) => {});
+>>>>>>> master
 
 //TODO: Post user Address info with user id: [id, fullName, postalCode, street, city, country]
 app.put("/user/:userID/address", (req, res) => {});
@@ -441,7 +485,50 @@ app.put("/user/userInfo", async (req, res) => {
   }
 });
 
-//TODO: Delete APIs
+//<---------------------- DELETE ---------------------->
+// Delete user message
+// app.delete("/user/:userID/message/:messageID", async (req, res) => {
+//   try {
+//     const { userID } = req.params;
+//     let id = Number(userID);
+//     const { messageID } = req.params;
+//     let mID = Number(messageID);
+//     const user = await UserDB.findOne({ id });
+//     const messages = user.message;
+//     console.log(messages.findOne({ mID }));
+//     await messages.deleteOne({ mID });
+//   } catch (error) {
+//     if (error.status === 404) {
+//       return res.status(404).json({ error: "User not found" });
+//     } else {
+//       console.error(error);
+//       res.status(500).json({ error: "Internal server error" });
+//     }
+//   }
+// });
+app.delete("/user/:userID/message/:messageID", async (req, res) => {
+  try {
+    const { userID, messageID } = req.params;
+    const id = Number(userID);
+    const mID = Number(messageID);
+
+    const user = await UserDB.findOne({ id: id });
+    if (!user) {
+      throw new Error("User not found");
+    }
+    const messages = user.message;
+    const messageIndex = messages.find({ id: mID });
+    console.log(messageIndex);
+    if (messageIndex === -1) {
+      throw new Error("Message not found");
+    }
+
+    res.status(200).json({ message: "Message deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 //Expose API to port 4000
 const port = 4000;
