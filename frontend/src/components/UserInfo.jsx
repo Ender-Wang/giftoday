@@ -184,7 +184,7 @@ export default function UserInfo() {
           // Check if the email is already registered
           if (res.status === 404) {
             console.log(res.status);
-            alert("Not found th euser");
+            alert("Not found the user");
           } else {
             console.log(res.status);
             alert("Update failed for reason of console!");
@@ -198,13 +198,13 @@ export default function UserInfo() {
     <div className="flex items-center justify-start">
       {/* <div className="flex w-2/5 items-center justify-center"></div> */}
 
-      <div className="flex w-3/5 flex-col items-center justify-left">
-        <h1 className="text-3xl mb-4 font-sans">General Information</h1>
+      <div className="justify-left flex w-3/5 flex-col items-center">
+        <h1 className="mb-4 font-sans text-3xl">General Information</h1>
 
         <div className="w-full max-w-sm">
           {/* Full Name input */}
           <div className="mb-4">
-            <label htmlFor="name" className="block font-bold mb-2">
+            <label htmlFor="name" className="mb-2 block font-bold">
               Full Name
             </label>
             <input
@@ -213,7 +213,7 @@ export default function UserInfo() {
               name="name"
               value={name}
               onChange={handleInputChange}
-              className={`w-full border-b-2 border-themeColor p-2 outline-none ${
+              className={`border-themeColor w-full border-b-2 p-2 outline-none ${
                 formErrors.name ? "border-red-500" : ""
               }`}
               required
@@ -223,7 +223,7 @@ export default function UserInfo() {
 
           {/* Email input */}
           <div className="mb-4">
-            <label htmlFor="email" className="block font-bold mb-2">
+            <label htmlFor="email" className="mb-2 block font-bold">
               Email Address:
             </label>
             <input
@@ -232,7 +232,7 @@ export default function UserInfo() {
               name="email"
               value={email}
               onChange={handleInputChange}
-              className="w-full border-b-2 border-themeColor p-2 outline-none"
+              className="border-themeColor w-full border-b-2 p-2 outline-none"
               required
               //  can not be changed
             />
@@ -240,7 +240,7 @@ export default function UserInfo() {
 
           {/* Password input */}
           <div className="mb-4">
-            <label htmlFor="password" className="block font-bold mb-2">
+            <label htmlFor="password" className="mb-2 block font-bold">
               Password
             </label>
             <input
@@ -249,7 +249,7 @@ export default function UserInfo() {
               name="password"
               value={password}
               onChange={handleInputChange}
-              className={`w-full border-b-2 border-themeColor p-2 outline-none ${
+              className={`border-themeColor w-full border-b-2 p-2 outline-none ${
                 formErrors.password ? "border-red-500" : ""
               }`}
               required
@@ -259,13 +259,13 @@ export default function UserInfo() {
 
           {/* Address input */}
           <div className="mb-4">
-            <label htmlFor="address" className="block font-bold mb-2">
+            <label htmlFor="address" className="mb-2 block font-bold">
               Address
             </label>
             <div className="grid grid-cols-2 gap-4">
               {/* Postal Code input */}
               <div className="mb-4">
-                <label htmlFor="postalCode" className="block font-small mb-2">
+                <label htmlFor="postalCode" className="font-small mb-2 block">
                   Postal Code:
                 </label>
                 <input
@@ -274,7 +274,7 @@ export default function UserInfo() {
                   name="postalCode"
                   value={postalCode}
                   onChange={handleInputChange}
-                  className={`w-full border-b-2 border-themeColor p-2 outline-none ${
+                  className={`border-themeColor w-full border-b-2 p-2 outline-none ${
                     formErrors.postalCode ? "border-red-500" : ""
                   }`}
                   required
@@ -286,7 +286,7 @@ export default function UserInfo() {
 
               {/* Street input */}
               <div className="mb-4">
-                <label htmlFor="street" className="block font-small mb-2">
+                <label htmlFor="street" className="font-small mb-2 block">
                   Street:
                 </label>
                 <input
@@ -295,7 +295,7 @@ export default function UserInfo() {
                   name="street"
                   value={street}
                   onChange={handleInputChange}
-                  className={`w-full border-b-2 border-themeColor p-2 outline-none ${
+                  className={`border-themeColor w-full border-b-2 p-2 outline-none ${
                     formErrors.street ? "border-red-500" : ""
                   }`}
                   required
@@ -305,7 +305,7 @@ export default function UserInfo() {
 
               {/* City input */}
               <div className="mb-4">
-                <label htmlFor="city" className="block font-small mb-2">
+                <label htmlFor="city" className="font-small mb-2 block">
                   City:
                 </label>
                 <select
@@ -313,7 +313,7 @@ export default function UserInfo() {
                   name="city"
                   value={city}
                   onChange={handleInputChange}
-                  className={`w-full border-b-2 border-themeColor p-2 outline-none ${
+                  className={`border-themeColor w-full border-b-2 p-2 outline-none ${
                     formErrors.city ? "border-red-500" : ""
                   }`}
                   required
@@ -331,7 +331,7 @@ export default function UserInfo() {
 
               {/* Country input */}
               <div className="mb-4">
-                <label htmlFor="country" className="block font-small mb-2">
+                <label htmlFor="country" className="font-small mb-2 block">
                   Country/Region:
                 </label>
                 <input
@@ -340,7 +340,7 @@ export default function UserInfo() {
                   name="country"
                   value={country}
                   onChange={handleInputChange}
-                  className="w-full border-b-2 border-themeColor p-2 outline-none"
+                  className="border-themeColor w-full border-b-2 p-2 outline-none"
                   required
                   // disabled
                 />
@@ -353,7 +353,7 @@ export default function UserInfo() {
             {/* cancel button */}
             <button
               type="cancel"
-              className="flex col bg-themeColor-400 hover:bg-themeColor-200 text-white font-medium py-2 px-4 rounded transition-colors duration-600 ease-in-out"
+              className="col duration-600 flex rounded bg-themeColor-400 px-4 py-2 font-medium text-white transition-colors ease-in-out hover:bg-themeColor-200"
               onClick={handleCancel}
             >
               cancel
@@ -362,7 +362,7 @@ export default function UserInfo() {
             {/* save button */}
             <button
               type="submit"
-              className="flex col bg-themeColor-400 hover:bg-themeColor-200 text-white font-medium py-2 px-4 rounded transition-colors duration-600 ease-in-out"
+              className="col duration-600 flex rounded bg-themeColor-400 px-4 py-2 font-medium text-white transition-colors ease-in-out hover:bg-themeColor-200"
               onClick={handleSubmit}
             >
               save
