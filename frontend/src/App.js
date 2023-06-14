@@ -14,13 +14,19 @@ function App() {
     <AuthProvider>
       <NavBar />
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/registration" element={<RegistrationPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/homepage" element={<HomePage />} />
-        <Route path="/premium-benefits" element={<PremiumBenefitsPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/giftoday.com" element={<HomePage />} />
+        <Route
+          path="/giftoday.com/registration"
+          element={<RegistrationPage />}
+        />
+        <Route path="/giftoday.com/login" element={<LoginPage />} />
+        <Route path="/giftoday.com/homepage" element={<HomePage />} />
+        <Route
+          path="/giftoday.com/premium-benefits"
+          element={<PremiumBenefitsPage />}
+        />
+        <Route path="/giftoday.com/profile" element={<ProfilePage />} />
+        <Route path="/giftoday.com/checkout" element={<CheckoutPage />} />
         <Route path="*" element={<p>There's nothing here!</p>} />
       </Routes>
     </AuthProvider>
