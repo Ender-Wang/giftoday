@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import sideImg from "../images/wallpaper-tetiana-shadrina.jpg";
 import { setUserID, setLoggedInDate } from "../states/GlobalState";
 import { AuthContext } from "./AuthContext";
@@ -86,7 +87,7 @@ export default function Login() {
 
   const handleRegistration = (event) => {
     event.preventDefault();
-    window.location.href = "/registration";
+    window.location.href = "/giftoday.com/registration";
   };
 
   return (
@@ -168,13 +169,13 @@ export default function Login() {
         <div className="mt-4 text-xs flex flex-row">
           <div className="flex opacity-50">*Don't have an account? &nbsp;</div>
           <div className="flex">
-            <a
-              href="/giftoday.com/registration"
+            <Link
+              to="/giftoday.com/registration"
               onClick={handleRegistration}
               className="text-themeColor-100"
             >
               Register
-            </a>
+            </Link>
           </div>
         </div>
       </div>
