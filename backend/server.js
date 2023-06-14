@@ -42,23 +42,24 @@ async function run() {
 async function populateShopItemDB() {
   try {
     const count = await ShopItemDB.countDocuments();
+    // await ShopItemDB.deleteMany(); //Dump all existing ShopItems
     if (count > 0) {
-      await ShopItemDB.deleteMany();
       console.log("ShopItemDB already populated");
+    } else {
+      for (const item in shopItems) {
+        const shopItem = new ShopItemDB({
+          id: shopItems[item].id,
+          name: shopItems[item].name,
+          image: shopItems[item].image,
+          stock: shopItems[item].stock,
+          description: shopItems[item].description,
+          price: shopItems[item].price,
+          tag: shopItems[item].tag,
+        });
+        await shopItem.save();
+      }
+      console.log("ShopItemDB populated with " + shopItems.length + " items");
     }
-    for (const item in shopItems) {
-      const shopItem = new ShopItemDB({
-        id: shopItems[item].id,
-        name: shopItems[item].name,
-        image: shopItems[item].image,
-        stock: shopItems[item].stock,
-        description: shopItems[item].description,
-        price: shopItems[item].price,
-        tag: shopItems[item].tag,
-      });
-      await shopItem.save();
-    }
-    console.log("ShopItemDB populated with " + shopItems.length + " items");
   } catch (error) {
     console.log("Error populating ShopItemDB:", error);
   }
@@ -479,47 +480,24 @@ app.put("/user/userInfo", async (req, res) => {
 });
 
 //<---------------------- DELETE ---------------------->
-// Delete user message
-// app.delete("/user/:userID/message/:messageID", async (req, res) => {
-//   try {
-//     const { userID } = req.params;
-//     let id = Number(userID);
-//     const { messageID } = req.params;
-//     let mID = Number(messageID);
-//     const user = await UserDB.findOne({ id });
-//     const messages = user.message;
-//     console.log(messages.findOne({ mID }));
-//     await messages.deleteOne({ mID });
-//   } catch (error) {
-//     if (error.status === 404) {
-//       return res.status(404).json({ error: "User not found" });
-//     } else {
-//       console.error(error);
-//       res.status(500).json({ error: "Internal server error" });
-//     }
-//   }
-// });
+// Delete user message by message id
 app.delete("/user/:userID/message/:messageID", async (req, res) => {
+  const { userID, messageID } = req.params;
+  let userId = Number(userID);
+  let mID = Number(messageID);
+
   try {
-    const { userID, messageID } = req.params;
-    const id = Number(userID);
-    const mID = Number(messageID);
-
-    const user = await UserDB.findOne({ id: id });
-    if (!user) {
-      throw new Error("User not found");
-    }
-    const messages = user.message;
-    const messageIndex = messages.find({ id: mID });
-    console.log(messageIndex);
+    const user = await UserDB.findOne({ id: userId });
+    const messageIndex = user.message.findIndex((msg) => msg.id === mID);
     if (messageIndex === -1) {
-      throw new Error("Message not found");
+      return res.status(404).json({ error: "Message not found" });
     }
-
-    res.status(200).json({ message: "Message deleted successfully" });
+    user.message.splice(messageIndex, 1);
+    await user.save();
+    return res.status(200).json({ message: "Message deleted" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(404).json({ error: "User not found" });
   }
 });
 

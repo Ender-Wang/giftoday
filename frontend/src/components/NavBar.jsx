@@ -64,64 +64,43 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="w-full h-16 fffff flex justify-between items-center shadow-lg mb-8">
-      <div className="ml-4">
-        <Link to="/" className="text-white text-xl font-bold">
-          <img src={logo} alt="My Website Logo" className="h-8" />
-        </Link>
-      </div>
+    <nav className="w-full px-32 bg-themeColor-100">
+      {/* Nav Bar */}
+      <div className="flex justify-between items-center mb-8">
+        {/* Logo */}
+        <div className="flex">
+          <Link to="/">
+            <img src={logo} alt="Giftoday Logo" className="h-8" />
+          </Link>
+        </div>
 
-      <div className="flex items-center">
+        {/* Search Bar */}
         <div
-          className="flex mr-4 border-2 rounded-md relative"
+          className="flex border-b-[1px] rounded-sm relative"
           onMouseLeave={handleMouseLeave}
         >
-          <div className="flex search-container">
+          <div className="flex w-64">
             <input
               type="text"
-              placeholder="Search"
-              className="px-2 py-1 text-black bg-white rounded-md"
+              placeholder="Which gift for today?"
+              className="px-2 py-1 text-white w-full italic bg-themeColor-100 rounded focus:outline-none focus:not-italic"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
             />
             <img
               src={filter}
               alt="Search Icon"
-              className="flex search-icon rounded-md"
-              style={{ marginLeft: "-30px", width: "30px", height: "30px" }}
+              className="rounded-md mr-0 w-7 h-7"
               onClick={() => handleClick(searchText)}
               onMouseEnter={handleMouseEnter}
             />
           </div>
           {showDropdown && (
-            <div
-              className="dropdown-menu border-2 rounded-md"
-              style={{
-                backgroundColor: "#ffffff",
-                position: "absolute",
-                top: "110%",
-                left: 90,
-                right: 0,
-                zIndex: 999,
-              }}
-            >
-              <ul className="dropdown-menu-list" style={{ fontSize: "14px" }}>
-                <li
-                  className="dropdown-menu-item break-words leading-4 mt-2 ml-2 cursor-pointer"
-                  onClick={() => handleClick("household")}
-                >
-                  household
-                </li>
-                <li
-                  className="dropdown-menu-item break-words leading-4 mt-2 ml-2 cursor-pointer"
-                  onClick={() => handleClick("game")}
-                >
-                  game
-                </li>
-                <li
-                  className="dropdown-menu-item break-words leading-4 mt-2 ml-2 mb-2 cursor-pointer"
-                  onClick={() => handleClick("electronic product")}
-                >
+            <div className="rounded-md bg-white shadow-lg absolute top-[110%] left-90 right-0 z-10">
+              <ul className="text-14px">
+                <li onClick={() => handleClick("household")}>household</li>
+                <li onClick={() => handleClick("game")}>game</li>
+                <li onClick={() => handleClick("electronic product")}>
                   electronic product
                 </li>
               </ul>
@@ -129,141 +108,90 @@ const Navbar = () => {
           )}
         </div>
 
-        {!isLoggedIn && (
-          <>
-            <div
-              className="mr-4 py-1 border-2 rounded-md"
-              style={{ backgroundColor: "#892455" }}
-            >
-              <Link
-                to="/login"
-                className="text-white font-bold  rounded-md mr-2 ml-2"
-              >
-                Login
-              </Link>
-            </div>
-            <div
-              className="mr-4 py-1 border-2 rounded-md"
-              style={{ backgroundColor: "#892455" }}
-            >
-              <Link
-                to="/registration"
-                className="text-white font-bold  rounded-md mr-2 ml-2"
-              >
-                Registration
-              </Link>
-            </div>
-          </>
-        )}
-
-        {isLoggedIn && (
-          <>
-            {premium ? (
-              <div
-                className="mr-4 py-1 border-2 rounded-md"
-                style={{ backgroundColor: "#5D487F" }}
-              >
+        {/* Premium Status or Login/Registration, Cart, Profile*/}
+        <div className="flex items-center justify-end">
+          {!isLoggedIn && (
+            <>
+              <div className="mr-4 py-1 rounded-md bg-[#892455]">
                 <Link
-                  to="/premium-benefits"
-                  className="text-yellow-400 font-bold rounded-md flex items-center mr-2 ml-2"
+                  to="/login"
+                  className="text-white font-bold  rounded-md mr-2 ml-2"
                 >
-                  <AiTwotoneCrown
-                    size={24}
-                    style={{ color: "yellow", marginRight: "0.5rem" }}
-                  />
-                  Premium User
+                  Login
                 </Link>
               </div>
-            ) : (
-              <div
-                className="mr-4 py-1 border-2 rounded-md"
-                style={{ backgroundColor: "#5D487F" }}
-              >
+              <div className="mr-4 py-1 rounded-md bg-[#892455]">
                 <Link
-                  to="/premium-benefits"
-                  className="text-yellow-500 font-bold rounded-md mr-2 ml-2"
+                  to="/registration"
+                  className="text-white font-bold  rounded-md mr-2 ml-2"
                 >
-                  Join Premium
+                  Registration
                 </Link>
               </div>
-            )}
+            </>
+          )}
 
-            <div
-              className="mr-4 py-2.5 rounded-md"
-              style={{
-                border: "1px solid SteelBlue ",
-                width: "50px",
-                height: "50px",
-                borderRadius: "80%",
-                position: "relative",
-              }}
-            >
-              <Link to="/checkout" className="rounded-md">
-                <AiOutlineShoppingCart
-                  size={30}
-                  color="#4682B4"
-                  style={{ marginLeft: "6.5px" }}
-                />
-              </Link>
-              <div
-                className="rounded-circle d-flex justify-content-center align-items-center"
-                style={{
-                  borderRadius: "80%",
-                  backgroundColor: "FireBrick ",
-                  color: "white",
-                  width: "1.5rem",
-                  height: "1.5rem",
-                  position: "absolute",
-                  bottom: 0,
-                  right: 0,
-                  transform: "translate(25%, 25%)",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                3
-              </div>
-            </div>
-
-            <div
-              className="mr-4 py-1 rounded-md"
-              onMouseLeave={handleMouseLeave}
-            >
-              <Link
-                to="#"
-                className="text-white font-bold rounded-md mr-2 ml-2"
-                onClick={handleProfileClick}
-              >
-                <FaUser size={24} color="#892455" />
-              </Link>
-              {showProfileMenu && (
-                <div
-                  className="dropdown-menu rounded-md"
-                  style={{
-                    backgroundColor: "#892455",
-                    position: "absolute",
-                    top: "5%",
-                    right: 5,
-                    zIndex: 999,
-                  }}
-                >
-                  <ul
-                    className="dropdown-menu-list"
-                    style={{ fontSize: "14px" }}
+          {isLoggedIn && (
+            <>
+              {/* Premium */}
+              {premium ? (
+                <div className="mr-4 py-1 rounded-md bg-[#5D487F]">
+                  <Link
+                    to="/premium-benefits"
+                    className="text-yellow-400 font-bold rounded-md flex items-center mr-2 ml-2"
                   >
-                    <li className="dropdown-menu-item break-words text-white font-bold leading-1 mt-0.5 ml-0.5 mr-0.5 cursor-pointer">
-                      <Link to="/profile">Profile</Link>
-                    </li>
-                    <li className="dropdown-menu-item break-words text-white font-bold leading-1 mt-0.5 ml-0.5 mr-0.5 mb-0.5 cursor-pointer">
-                      <button onClick={logout}>Logout</button>
-                    </li>
-                  </ul>
+                    <AiTwotoneCrown
+                      size={24}
+                      className="text-yellow-400 justify-center"
+                    />
+                    Premium User
+                  </Link>
+                </div>
+              ) : (
+                <div className="mr-4 py-1 rounded-md bg-[#5D487F]">
+                  <Link
+                    to="/premium-benefits"
+                    className="text-yellow-500 font-bold rounded-md mr-2 ml-2"
+                  >
+                    Join Premium
+                  </Link>
                 </div>
               )}
-            </div>
-          </>
-        )}
+
+              {/* Cart */}
+              <div className="mr-4 pt-2.5 items-center relative w-[50px] h-[50px]">
+                <Link to="/checkout">
+                  <AiOutlineShoppingCart
+                    size={30}
+                    className="text-white ml-2"
+                  />
+                </Link>
+                <div className="absolute top-0 right-0 text-white">3</div>
+              </div>
+
+              {/* Profile */}
+              <div className="mr-4" onMouseLeave={handleMouseLeave}>
+                <Link
+                  to="#"
+                  className="text-white"
+                  onClick={handleProfileClick}
+                >
+                  <FaUser size={24} className="text-white" />
+                </Link>
+                {showProfileMenu && (
+                  <div className="mr-32 bg-themeColor-100 absolute rounded-md p-0.5 shadow--white-2xl">
+                    <div className="text-white font-bold mt-0.5 mx-0.5 cursor-pointer">
+                      <Link to="/profile">Profile</Link>
+                    </div>
+                    <div className="text-black font-bold mt-0.5 mx-0.5 cursor-pointer">
+                      <button onClick={logout}>Logout</button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </nav>
   );
