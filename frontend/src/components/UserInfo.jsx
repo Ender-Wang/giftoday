@@ -195,178 +195,180 @@ export default function UserInfo() {
   };
 
   return (
-    <div className="flex items-center justify-start">
-      {/* <div className="flex w-2/5 items-center justify-center"></div> */}
+    <div>
+      <div className="flex items-center justify-start">
+        {/* <div className="flex w-2/5 items-center justify-center"></div> */}
 
-      <div className="justify-left flex w-3/5 flex-col items-center">
-        <h1 className="mb-4 font-sans text-3xl">General Information</h1>
+        <div className="justify-left flex w-3/5 flex-col items-center">
+          <h1 className="mb-4 font-sans text-3xl">General Information</h1>
 
-        <div className="w-full max-w-sm">
-          {/* Full Name input */}
-          <div className="mb-4">
-            <label htmlFor="name" className="mb-2 block font-bold">
-              Full Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={name}
-              onChange={handleInputChange}
-              className={`border-themeColor w-full border-b-2 p-2 outline-none ${
-                formErrors.name ? "border-red-500" : ""
-              }`}
-              required
-              placeholder={formErrors.name ? formErrors.name : ""}
-            />
-          </div>
+          <div className="w-full max-w-sm">
+            {/* Full Name input */}
+            <div className="mb-4">
+              <label htmlFor="name" className="mb-2 block font-bold">
+                Full Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={name}
+                onChange={handleInputChange}
+                className={`border-themeColor w-full border-b-2 p-2 outline-none ${
+                  formErrors.name ? "border-red-500" : ""
+                }`}
+                required
+                placeholder={formErrors.name ? formErrors.name : ""}
+              />
+            </div>
 
-          {/* Email input */}
-          <div className="mb-4">
-            <label htmlFor="email" className="mb-2 block font-bold">
-              Email Address:
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={email}
-              onChange={handleInputChange}
-              className="border-themeColor w-full border-b-2 p-2 outline-none"
-              required
-              //  can not be changed
-            />
-          </div>
+            {/* Email input */}
+            <div className="mb-4">
+              <label htmlFor="email" className="mb-2 block font-bold">
+                Email Address:
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={email}
+                onChange={handleInputChange}
+                className="border-themeColor w-full border-b-2 p-2 outline-none"
+                required
+                //  can not be changed
+              />
+            </div>
 
-          {/* Password input */}
-          <div className="mb-4">
-            <label htmlFor="password" className="mb-2 block font-bold">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={password}
-              onChange={handleInputChange}
-              className={`border-themeColor w-full border-b-2 p-2 outline-none ${
-                formErrors.password ? "border-red-500" : ""
-              }`}
-              required
-              placeholder={formErrors.password ? formErrors.password : ""}
-            />
-          </div>
+            {/* Password input */}
+            <div className="mb-4">
+              <label htmlFor="password" className="mb-2 block font-bold">
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={password}
+                onChange={handleInputChange}
+                className={`border-themeColor w-full border-b-2 p-2 outline-none ${
+                  formErrors.password ? "border-red-500" : ""
+                }`}
+                required
+                placeholder={formErrors.password ? formErrors.password : ""}
+              />
+            </div>
 
-          {/* Address input */}
-          <div className="mb-4">
-            <label htmlFor="address" className="mb-2 block font-bold">
-              Address
-            </label>
-            <div className="grid grid-cols-2 gap-4">
-              {/* Postal Code input */}
-              <div className="mb-4">
-                <label htmlFor="postalCode" className="font-small mb-2 block">
-                  Postal Code:
-                </label>
-                <input
-                  type="text"
-                  id="postalCode"
-                  name="postalCode"
-                  value={postalCode}
-                  onChange={handleInputChange}
-                  className={`border-themeColor w-full border-b-2 p-2 outline-none ${
-                    formErrors.postalCode ? "border-red-500" : ""
-                  }`}
-                  required
-                  placeholder={
-                    formErrors.postalCode ? formErrors.postalCode : ""
-                  }
-                />
-              </div>
+            {/* Address input */}
+            <div className="mb-4">
+              <label htmlFor="address" className="mb-2 block font-bold">
+                Address
+              </label>
+              <div className="grid grid-cols-2 gap-4">
+                {/* Postal Code input */}
+                <div className="mb-4">
+                  <label htmlFor="postalCode" className="font-small mb-2 block">
+                    Postal Code:
+                  </label>
+                  <input
+                    type="text"
+                    id="postalCode"
+                    name="postalCode"
+                    value={postalCode}
+                    onChange={handleInputChange}
+                    className={`border-themeColor w-full border-b-2 p-2 outline-none ${
+                      formErrors.postalCode ? "border-red-500" : ""
+                    }`}
+                    required
+                    placeholder={
+                      formErrors.postalCode ? formErrors.postalCode : ""
+                    }
+                  />
+                </div>
 
-              {/* Street input */}
-              <div className="mb-4">
-                <label htmlFor="street" className="font-small mb-2 block">
-                  Street:
-                </label>
-                <input
-                  type="text"
-                  id="street"
-                  name="street"
-                  value={street}
-                  onChange={handleInputChange}
-                  className={`border-themeColor w-full border-b-2 p-2 outline-none ${
-                    formErrors.street ? "border-red-500" : ""
-                  }`}
-                  required
-                  placeholder={formErrors.street ? formErrors.street : ""}
-                />
-              </div>
+                {/* Street input */}
+                <div className="mb-4">
+                  <label htmlFor="street" className="font-small mb-2 block">
+                    Street:
+                  </label>
+                  <input
+                    type="text"
+                    id="street"
+                    name="street"
+                    value={street}
+                    onChange={handleInputChange}
+                    className={`border-themeColor w-full border-b-2 p-2 outline-none ${
+                      formErrors.street ? "border-red-500" : ""
+                    }`}
+                    required
+                    placeholder={formErrors.street ? formErrors.street : ""}
+                  />
+                </div>
 
-              {/* City input */}
-              <div className="mb-4">
-                <label htmlFor="city" className="font-small mb-2 block">
-                  City:
-                </label>
-                <select
-                  id="city"
-                  name="city"
-                  value={city}
-                  onChange={handleInputChange}
-                  className={`border-themeColor w-full border-b-2 p-2 outline-none ${
-                    formErrors.city ? "border-red-500" : ""
-                  }`}
-                  required
-                >
-                  <option value="" disabled>
-                    Select a city
-                  </option>
-                  {germanyCities.map((germanCity) => (
-                    <option key={germanCity} value={germanCity}>
-                      {germanCity}
+                {/* City input */}
+                <div className="mb-4">
+                  <label htmlFor="city" className="font-small mb-2 block">
+                    City:
+                  </label>
+                  <select
+                    id="city"
+                    name="city"
+                    value={city}
+                    onChange={handleInputChange}
+                    className={`border-themeColor w-full border-b-2 p-2 outline-none ${
+                      formErrors.city ? "border-red-500" : ""
+                    }`}
+                    required
+                  >
+                    <option value="" disabled>
+                      Select a city
                     </option>
-                  ))}
-                </select>
-              </div>
+                    {germanyCities.map((germanCity) => (
+                      <option key={germanCity} value={germanCity}>
+                        {germanCity}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-              {/* Country input */}
-              <div className="mb-4">
-                <label htmlFor="country" className="font-small mb-2 block">
-                  Country/Region:
-                </label>
-                <input
-                  type="text"
-                  id="country"
-                  name="country"
-                  value={country}
-                  onChange={handleInputChange}
-                  className="border-themeColor w-full border-b-2 p-2 outline-none"
-                  required
-                  // disabled
-                />
+                {/* Country input */}
+                <div className="mb-4">
+                  <label htmlFor="country" className="font-small mb-2 block">
+                    Country/Region:
+                  </label>
+                  <input
+                    type="text"
+                    id="country"
+                    name="country"
+                    value={country}
+                    onChange={handleInputChange}
+                    className="border-themeColor w-full border-b-2 p-2 outline-none"
+                    required
+                    // disabled
+                  />
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* two button */}
-          <div className="flex flex-row justify-center gap-20">
-            {/* cancel button */}
-            <button
-              type="cancel"
-              className="col duration-600 flex rounded bg-themeColor-400 px-4 py-2 font-medium text-white transition-colors ease-in-out hover:bg-themeColor-200"
-              onClick={handleCancel}
-            >
-              cancel
-            </button>
+            {/* two button */}
+            <div className="flex flex-row justify-center gap-20">
+              {/* cancel button */}
+              <button
+                type="cancel"
+                className="col duration-600 flex rounded bg-themeColor-400 px-4 py-2 font-medium text-white transition-colors ease-in-out hover:bg-themeColor-200"
+                onClick={handleCancel}
+              >
+                cancel
+              </button>
 
-            {/* save button */}
-            <button
-              type="submit"
-              className="col duration-600 flex rounded bg-themeColor-400 px-4 py-2 font-medium text-white transition-colors ease-in-out hover:bg-themeColor-200"
-              onClick={handleSubmit}
-            >
-              save
-            </button>
+              {/* save button */}
+              <button
+                type="submit"
+                className="col duration-600 flex rounded bg-themeColor-400 px-4 py-2 font-medium text-white transition-colors ease-in-out hover:bg-themeColor-200"
+                onClick={handleSubmit}
+              >
+                save
+              </button>
+            </div>
           </div>
         </div>
       </div>
