@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import sideImg from "../images/wallpaper-tetiana-shadrina.jpg";
 
 export default function Registration() {
@@ -129,7 +130,7 @@ export default function Registration() {
             setStreet("");
             setCity("");
             setFormErrors({});
-            window.location.href = "/login";
+            window.location.href = "/giftoday.com/login";
           } else {
             // Check if the email is already registered
             if (res.status === 409) {
@@ -341,13 +342,13 @@ export default function Registration() {
             *Already have an account? &nbsp;
           </div>
           <div className="flex">
-            <a
-              href="/giftoday.com/login"
+            <Link
+              to="/giftoday.com/login"
               onClick={handleLogin}
               className="text-themeColor-400"
             >
               Login
-            </a>
+            </Link>
           </div>
         </div>
       </div>
