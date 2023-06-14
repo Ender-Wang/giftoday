@@ -116,18 +116,18 @@ const Navbar = () => {
         <div className="flex items-center justify-end">
           {!isLoggedIn && (
             <div className="flex pt-[8px]">
-              <div className="mr-4 rounded-md bg-themeColor-60 py-1">
+              <div className="mr-4 rounded-md bg-themeColor-60 py-1 hover:scale-125 transition duration-300 ease-in-out">
                 <Link
                   to="/giftoday.com/login"
-                  className="ml-2 mr-2  rounded-md font-bold text-white hover:scale-125"
+                  className="ml-2 mr-2  rounded-md font-bold text-white hover:text-black transition duration-300 ease-in-out"
                 >
                   Login
                 </Link>
               </div>
-              <div className="mr-4 rounded-md bg-themeColor-80 py-1">
+              <div className="mr-4 rounded-md bg-themeColor-80 py-1 hover:scale-125 transition duration-300 ease-in-out">
                 <Link
                   to="/giftoday.com/registration"
-                  className="ml-2 mr-2  rounded-md font-bold text-white hover:scale-125"
+                  className="ml-2 mr-2  rounded-md font-bold text-white hover:text-black transition duration-300 ease-in-out"
                 >
                   Registration
                 </Link>
@@ -152,7 +152,7 @@ const Navbar = () => {
                   </Link>
                 </div>
               ) : (
-                <div className="mr-4 rounded-md py-1 transition duration-300 ease-in-out hover:bg-yellow-400 hover:text-white">
+                <div className="mr-4 rounded-md py-1 hover:bg-yellow-400 hover:text-white hover:scale-125 transition duration-300 ease-in-out">
                   <Link
                     to="/giftoday.com/premium-benefits"
                     className="ml-2 mr-2 animate-pulse rounded-md font-bold text-yellow-400 hover:text-white"
