@@ -18,7 +18,7 @@ const Address = new Schema({
 const Gift = new Schema({
   id: Number,
   name: String,
-  stock: Number,
+  quantity: Number,
   description: String,
   price: Number,
   tag: Tag,
