@@ -152,7 +152,7 @@ export default function Registration() {
 
   const handleLogin = (event) => {
     event.preventDefault();
-    window.location.href = "/login";
+    window.location.href = "/giftoday.com/login";
   };
 
   return (
@@ -328,7 +328,7 @@ export default function Registration() {
           <div className="flex justify-center">
             <button
               type="submit"
-              className="bg-themeColor-400 hover:bg-themeColor-200 text-white font-medium py-2 px-4 rounded transition-colors duration-600 ease-in-out"
+              className="bg-themeColor-100 hover:bg-themeColor-80 text-white font-medium py-2 px-4 rounded transition-colors duration-600 ease-in-out"
               onClick={handleSubmit}
             >
               Create Account

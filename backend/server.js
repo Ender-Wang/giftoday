@@ -132,7 +132,7 @@ app.get("/user/:userID/premium", (req, res) => {
     .then((user) => {
       if (user) {
         res.json(user.premium);
-        console.log(user.premium); // Wrap user in an array
+        // console.log(user.premium); // Wrap user in an array
       } else {
         res.status(404).json({ error: "User not found" });
       }
@@ -142,6 +142,7 @@ app.get("/user/:userID/premium", (req, res) => {
       res.status(500).json({ error: "Internal server error" });
     });
 });
+
 //TODO: Get user Card info with user id: [id, number, cvv, expMonth, expYear]
 app.get("/user/:userID/card", (req, res) => {});
 
@@ -471,7 +472,7 @@ app.put("/user/userInfo", async (req, res) => {
       return res.status(404).json({ error: "Not found user" });
     }
 
-    console.log("User Information has been updated：", updatedUser);
+    console.log("User Information has been updated: ", updatedUser);
     return res.json(updatedUser);
   } catch (err) {
     console.log(err);

@@ -64,12 +64,12 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="w-full px-32 bg-themeColor-100">
+    <nav className="w-full h-[48px] px-32 bg-themeColor-100 fixed z-50 shadow-xl backdrop-blur-sm backdrop-opacity-10 backdrop-invert">
       {/* Nav Bar */}
       <div className="flex justify-between items-center mb-8">
         {/* Logo */}
         <div className="flex">
-          <Link to="/">
+          <Link to="/giftoday.com">
             <img src={logo} alt="Giftoday Logo" className="h-8" />
           </Link>
         </div>
@@ -111,47 +111,47 @@ const Navbar = () => {
         {/* Premium Status or Login/Registration, Cart, Profile*/}
         <div className="flex items-center justify-end">
           {!isLoggedIn && (
-            <>
-              <div className="mr-4 py-1 rounded-md bg-[#892455]">
+            <div className="flex pt-[8px]">
+              <div className="mr-4 py-1 rounded-md bg-themeColor-60">
                 <Link
-                  to="/login"
-                  className="text-white font-bold  rounded-md mr-2 ml-2"
+                  to="/giftoday.com/login"
+                  className="text-white font-bold  rounded-md mr-2 ml-2 hover:scale-125"
                 >
                   Login
                 </Link>
               </div>
-              <div className="mr-4 py-1 rounded-md bg-[#892455]">
+              <div className="mr-4 py-1 rounded-md bg-themeColor-80">
                 <Link
-                  to="/registration"
-                  className="text-white font-bold  rounded-md mr-2 ml-2"
+                  to="/giftoday.com/registration"
+                  className="text-white font-bold  rounded-md mr-2 ml-2 hover:scale-125"
                 >
                   Registration
                 </Link>
               </div>
-            </>
+            </div>
           )}
 
           {isLoggedIn && (
             <>
               {/* Premium */}
               {premium ? (
-                <div className="mr-4 py-1 rounded-md bg-[#5D487F]">
+                <div className="mr-4 py-1 rounded-md bg-purple-400">
                   <Link
-                    to="/premium-benefits"
+                    to="/giftoday.com/premium-benefits"
                     className="text-yellow-400 font-bold rounded-md flex items-center mr-2 ml-2"
                   >
                     <AiTwotoneCrown
                       size={24}
-                      className="text-yellow-400 justify-center"
+                      className="text-yellow-400 justify-center animate-pulse hover:scale-125"
                     />
                     Premium User
                   </Link>
                 </div>
               ) : (
-                <div className="mr-4 py-1 rounded-md bg-[#5D487F]">
+                <div className="mr-4 py-1 hover:bg-yellow-400 hover:text-white rounded-md transition duration-300 ease-in-out">
                   <Link
-                    to="/premium-benefits"
-                    className="text-yellow-500 font-bold rounded-md mr-2 ml-2"
+                    to="/giftoday.com/premium-benefits"
+                    className="text-yellow-400 hover:text-white font-bold rounded-md mr-2 ml-2 animate-pulse"
                   >
                     Join Premium
                   </Link>
@@ -160,30 +160,37 @@ const Navbar = () => {
 
               {/* Cart */}
               <div className="mr-4 pt-2.5 items-center relative w-[50px] h-[50px]">
-                <Link to="/checkout">
+                <Link to="/giftoday.com/checkout">
                   <AiOutlineShoppingCart
                     size={30}
-                    className="text-white ml-2"
+                    className="text-white ml-2 hover:text-black transition duration-300 ease-in-out hover:scale-125"
                   />
                 </Link>
                 <div className="absolute top-0 right-0 text-white">3</div>
               </div>
 
               {/* Profile */}
-              <div className="mr-4" onMouseLeave={handleMouseLeave}>
+              <div className="mr-4">
                 <Link
                   to="#"
                   className="text-white"
                   onClick={handleProfileClick}
                 >
-                  <FaUser size={24} className="text-white" />
+                  {/* Profile icon */}
+                  <FaUser
+                    size={24}
+                    className="text-white hover:text-black transition duration-300 ease-in-out hover:scale-125"
+                  />
                 </Link>
                 {showProfileMenu && (
-                  <div className="mr-32 bg-themeColor-100 absolute rounded-md p-0.5 shadow--white-2xl">
-                    <div className="text-white font-bold mt-0.5 mx-0.5 cursor-pointer">
-                      <Link to="/profile">Profile</Link>
+                  <div
+                    className="flex flex-col mr-32 p-0.5 mt-[20px] bg-themeColor-100 absolute top-5 rounded-md shadow-xl z-10"
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <div className=" text-center text-white font-bold py-0.5 hover:cursor-pointer hover:text-black transition duration-300 ease-in-out rounded-md">
+                      <Link to="/giftoday.com/profile">Profile</Link>
                     </div>
-                    <div className="text-black font-bold mt-0.5 mx-0.5 cursor-pointer">
+                    <div className="text-center text-black font-bold mt-0.5 px-1 hover:cursor-pointer hover:text-red-500 transition duration-300 ease-in-out rounded-md">
                       <button onClick={logout}>Logout</button>
                     </div>
                   </div>

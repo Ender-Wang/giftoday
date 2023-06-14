@@ -76,7 +76,7 @@ export default function Login() {
           setUserID(userID);
           setLoggedInDate();
           login();
-          window.location.href = "/";
+          window.location.href = "/giftoday.com";
         })
         .catch((error) => {
           console.log(error);
@@ -157,7 +157,7 @@ export default function Login() {
           <div className="flex justify-center">
             <button
               type="submit"
-              className="bg-themeColor-400 hover:bg-themeColor-200 text-white font-medium py-2 px-4 rounded transition-colors duration-600 ease-in-out"
+              className="bg-themeColor-100 hover:bg-themeColor-80 text-white font-medium py-2 px-4 rounded transition-colors duration-600 ease-in-out"
               onClick={handleSubmit}
             >
               Login
@@ -172,7 +172,7 @@ export default function Login() {
             <a
               href="/registration"
               onClick={handleRegistration}
-              className="text-themeColor-400"
+              className="text-themeColor-100"
             >
               Register
             </a>

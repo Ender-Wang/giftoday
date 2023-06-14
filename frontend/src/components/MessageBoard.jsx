@@ -251,7 +251,7 @@ export default function MessageBoard({ selectedDay }) {
         </div>
       ) : (
         // Homepage without login
-        <div>
+        <div className="min-w-[300px]">
           <div className="mb-8 mt-8 flex flex-row items-center justify-center ">
             <button
               type="button"

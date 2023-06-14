@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
     // Remove userID from global state
     removeUserID();
     // Navigate to homepage after logout
-    navigate("/");
+    navigate("/giftoday.com");
     window.location.reload(); // reload current page
   };
 
