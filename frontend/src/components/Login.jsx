@@ -68,7 +68,7 @@ export default function Login() {
               setFormErrors({ email: data.error });
             });
           } else {
-            alert("Login failed Please retry later!");
+            console.log("Login failed. Error: " + res.status);
           }
         })
         .then((data) => {
@@ -80,7 +80,6 @@ export default function Login() {
         })
         .catch((error) => {
           console.log(error);
-          alert("Login failed Please retry later!");
         });
     }
   };
@@ -91,7 +90,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center pt-[100px]">
       <div className="flex w-2/5 items-center justify-center">
         <img
           src={sideImg}
@@ -170,7 +169,7 @@ export default function Login() {
           <div className="flex opacity-50">*Don't have an account? &nbsp;</div>
           <div className="flex">
             <a
-              href="/registration"
+              href="/giftoday.com/registration"
               onClick={handleRegistration}
               className="text-themeColor-100"
             >

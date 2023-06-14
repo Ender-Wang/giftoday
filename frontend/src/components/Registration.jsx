@@ -122,7 +122,6 @@ export default function Registration() {
       })
         .then((res) => {
           if (res.ok) {
-            alert("Registration successful!");
             setName("");
             setEmail("");
             setPassword("");
@@ -139,13 +138,13 @@ export default function Registration() {
                 email: "Email already registered!",
               }));
             } else {
-              alert("Registration failed!");
+              console.log("Registration failed! Error: " + res.status);
             }
           }
         })
         .catch((error) => {
           console.log(error);
-          alert("Registration failed!");
+          console.log("Registration failed! Error: " + error);
         });
     }
   };
@@ -156,7 +155,7 @@ export default function Registration() {
   };
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center pt-[100px]">
       <div className="flex w-2/5 items-center justify-center">
         <img
           src={sideImg}
@@ -343,7 +342,7 @@ export default function Registration() {
           </div>
           <div className="flex">
             <a
-              href="/login"
+              href="/giftoday.com/login"
               onClick={handleLogin}
               className="text-themeColor-400"
             >
