@@ -414,11 +414,9 @@ app.put("/user/:userID/cart", async (req, res) => {
 app.put("/user/:userID/order", async (req, res) => {
   try {
     const { userID } = req.params;
-<<<<<<< HEAD
+
     const { id, gift, card, address, shippingDate } = req.body;
-=======
-    const { gift, card, address, shippingDate } = req.body;
->>>>>>> master
+
     console.log("userID " + userID);
     // if (!order) {
     //   throw new Error("There is no order");
@@ -431,11 +429,7 @@ app.put("/user/:userID/order", async (req, res) => {
     }
 
     const newOrder = {
-<<<<<<< HEAD
       id: id,
-=======
-      id: userID + 1,
->>>>>>> master
       gift: gift,
       card: card,
       address: address,

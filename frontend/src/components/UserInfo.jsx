@@ -179,7 +179,7 @@ export default function UserInfo() {
           setFormErrors({});
           // reload the user inforamtion pages
           event.preventDefault();
-          window.location.href = "/profile";
+          window.location.href = "/giftoday.com/profile";
         } else {
           // Check if the email is already registered
           if (res.status === 404) {
@@ -354,7 +354,7 @@ export default function UserInfo() {
               {/* cancel button */}
               <button
                 type="cancel"
-                className="col duration-600 flex rounded bg-themeColor-400 px-4 py-2 font-medium text-white transition-colors ease-in-out hover:bg-themeColor-200"
+                className="col duration-600 hover:bg-themeColor-200 flex rounded bg-themeColor-100 px-4 py-2 font-medium text-white transition-colors ease-in-out"
                 onClick={handleCancel}
               >
                 cancel
@@ -363,7 +363,7 @@ export default function UserInfo() {
               {/* save button */}
               <button
                 type="submit"
-                className="col duration-600 flex rounded bg-themeColor-400 px-4 py-2 font-medium text-white transition-colors ease-in-out hover:bg-themeColor-200"
+                className="col duration-600 hover:bg-themeColor-200 flex rounded bg-themeColor-100 px-4 py-2 font-medium text-white transition-colors ease-in-out"
                 onClick={handleSubmit}
               >
                 save

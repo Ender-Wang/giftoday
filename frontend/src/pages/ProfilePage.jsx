@@ -3,7 +3,6 @@ import UserInfo from "../components/UserInfo";
 import OrderHistory from "../components/OrderHistory";
 
 export default function ProfilePage() {
-<<<<<<< HEAD
   return (
     <div
       style={{
@@ -36,11 +35,4 @@ export default function ProfilePage() {
       </div>
     </div>
   );
-=======
-  useEffect(() => {
-    document.title = "Giftoday - User Profile";
-  }, []);
-  // return <UserInfo />;
-  return <OrderHistory />;
->>>>>>> master
 }
