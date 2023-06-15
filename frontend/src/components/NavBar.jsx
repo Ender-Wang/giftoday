@@ -79,8 +79,19 @@ const Navbar = () => {
     setShowProfileMenu(false);
   };
 
-  const handleClick = (text) => {
-    setSearchText(text);
+  const handleClick = (result) => {
+    setSearchText((prevText) => {
+      if (prevText.length === 0) {
+        return result;
+      } else {
+        const texts = prevText.split(";").map((text) => text.trim());
+        if (texts.includes(result.trim())) {
+          return prevText;
+        } else {
+          return `${prevText}; ${result}`;
+        }
+      }
+    });
   };
 
   const handleProfileClick = (e) => {
@@ -121,14 +132,16 @@ const Navbar = () => {
             />
           </div>
           {showDropdown && (
-            <div className="left-90 absolute right-0 top-[110%] z-10 rounded-md bg-white shadow-lg">
-              <ul className="text-14px">
-                <li onClick={() => handleClick("household")}>household</li>
-                <li onClick={() => handleClick("game")}>game</li>
-                <li onClick={() => handleClick("electronic product")}>
-                  electronic product
-                </li>
-              </ul>
+            <div className="left-90 absolute right-0 top-[110%] z-10">
+              <div className="rounded-md bg-white p-2 shadow-lg">
+                <ul className="text-14px">
+                  <li onClick={() => handleClick("household")}>household</li>
+                  <li onClick={() => handleClick("game")}>game</li>
+                  <li onClick={() => handleClick("electronic product")}>
+                    electronic product
+                  </li>
+                </ul>
+              </div>
             </div>
           )}
         </div>
@@ -191,7 +204,9 @@ const Navbar = () => {
                     className="ml-2 text-white transition duration-300 ease-in-out hover:scale-125 hover:text-black"
                   />
                 </Link>
-                <div className="absolute right-0 top-0 text-white">{cartCount}</div>
+                <div className="absolute right-0 top-0 text-white">
+                  {cartCount}
+                </div>
               </div>
 
               {/* Profile */}
