@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { getUserID } from "../states/GlobalState";
+import { AiFillGift } from "react-icons/ai";
 
 export default function Calendar({ selectedDay, onDayClick }) {
   //TODO: Connect with server to fetch festival info and message info
@@ -53,7 +54,7 @@ export default function Calendar({ selectedDay, onDayClick }) {
     // } catch (error) {
     //   console.error("Error fetching festival info:", error);
     // }
-    alert("User ID: " + userID + ", selected day: " + day);
+    // alert("User ID: " + userID + ", selected day: " + day);
   };
 
   const daysInWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -164,11 +165,12 @@ export default function Calendar({ selectedDay, onDayClick }) {
   };
 
   return (
-    <div className="flex w-[300px] flex-col justify-center rounded-lg bg-orange-200">
+    <div className="flex w-full flex-col justify-center rounded-lg bg-themeColor-80 bg-cover bg-center bg-no-repeat p-2">
+      <AiFillGift className="absolute text-[260px] ml-2.5 mt-16 text-white opacity-20 z-0" />
       {/* Calendar header */}
-      <div className="mb-4 flex w-[300px] items-center justify-between">
+      <div className="mb-4 flex w-full items-center justify-between">
         <div
-          className="cursor-default pl-2 pt-1 text-xl font-bold"
+          className="cursor-default pl-2 pt-1 text-xl font-bold hover:text-white transition duration-300 ease-in-out hover:scale-125"
           onClick={handleJumpToCurrentDay}
           title="Click to jump to current day"
         >
@@ -179,20 +181,20 @@ export default function Calendar({ selectedDay, onDayClick }) {
         </div>
         <div className="flex items-center pr-2 pt-1">
           <button
-            className="cursor-pointer px-2 text-lg font-semibold"
+            className="cursor-pointer px-2 text-2xl font-semibold hover:text-white transition duration-300 ease-in-out hover:scale-125"
             onClick={handlePreviousMonth}
           >
             &lt;
           </button>
           <button
-            className="cursor-pointer px-2 text-lg font-semibold"
+            className="cursor-pointer px-2 text-2xl font-semibold hover:text-white transition duration-300 ease-in-out hover:scale-125"
             onClick={handleNextMonth}
           >
             &gt;
           </button>
         </div>
       </div>
-      <table className="w-[300px] transform transition-all duration-500 ease-in-out">
+      <table className="w-full transform transition-all duration-500 ease-in-out">
         {/* Calendar week header */}
         <thead>
           <tr>
