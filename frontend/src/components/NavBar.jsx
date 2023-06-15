@@ -17,6 +17,7 @@ const Navbar = () => {
   const [id] = useState(getUserID);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
     // Fetch user information from the backend
@@ -35,6 +36,26 @@ const Navbar = () => {
           console.log("Error fetching user info:", error);
           setError(error);
           setLoading(false);
+        });
+    } else {
+      setLoading(false);
+    }
+  }, [id, isLoggedIn]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      fetch(`http://localhost:4000/user/${id}/cart`)
+        .then((response) => response.json())
+        .then((data) => {
+          // Retrieve the cart data from the response
+          const cartData = data.cart;
+
+          // Update the cart count based on the retrieved data
+          const cartCount = cartData.length;
+          setCartCount(cartCount);
+        })
+        .catch((error) => {
+          console.log("Error fetching user cart:", error);
         });
     } else {
       setLoading(false);
@@ -116,18 +137,18 @@ const Navbar = () => {
         <div className="flex items-center justify-end">
           {!isLoggedIn && (
             <div className="flex pt-[8px]">
-              <div className="mr-4 rounded-md bg-themeColor-60 py-1 hover:scale-125 transition duration-300 ease-in-out">
+              <div className="mr-4 rounded-md bg-themeColor-60 py-1 transition duration-300 ease-in-out hover:scale-125">
                 <Link
                   to="/giftoday.com/login"
-                  className="ml-2 mr-2  rounded-md font-bold text-white hover:text-black transition duration-300 ease-in-out"
+                  className="ml-2 mr-2  rounded-md font-bold text-white transition duration-300 ease-in-out hover:text-black"
                 >
                   Login
                 </Link>
               </div>
-              <div className="mr-4 rounded-md bg-themeColor-80 py-1 hover:scale-125 transition duration-300 ease-in-out">
+              <div className="mr-4 rounded-md bg-themeColor-80 py-1 transition duration-300 ease-in-out hover:scale-125">
                 <Link
                   to="/giftoday.com/registration"
-                  className="ml-2 mr-2  rounded-md font-bold text-white hover:text-black transition duration-300 ease-in-out"
+                  className="ml-2 mr-2  rounded-md font-bold text-white transition duration-300 ease-in-out hover:text-black"
                 >
                   Registration
                 </Link>
@@ -152,7 +173,7 @@ const Navbar = () => {
                   </Link>
                 </div>
               ) : (
-                <div className="mr-4 rounded-md py-1 hover:bg-yellow-400 hover:text-white hover:scale-125 transition duration-300 ease-in-out">
+                <div className="mr-4 rounded-md py-1 transition duration-300 ease-in-out hover:scale-125 hover:bg-yellow-400 hover:text-white">
                   <Link
                     to="/giftoday.com/premium-benefits"
                     className="ml-2 mr-2 animate-pulse rounded-md font-bold text-yellow-400 hover:text-white"
@@ -170,7 +191,7 @@ const Navbar = () => {
                     className="ml-2 text-white transition duration-300 ease-in-out hover:scale-125 hover:text-black"
                   />
                 </Link>
-                <div className="absolute right-0 top-0 text-white">3</div>
+                <div className="absolute right-0 top-0 text-white">{cartCount}</div>
               </div>
 
               {/* Profile */}
