@@ -157,7 +157,7 @@ export default function Login() {
           <div className="flex justify-center">
             <button
               type="submit"
-              className="bg-themeColor-100 hover:bg-themeColor-80 text-white font-medium py-2 px-4 rounded transition-colors duration-600 ease-in-out"
+              className="bg-themeColor-100 text-white font-medium py-2 px-4 rounded hover:bg-themeColor-60 hover:scale-110 hover:text-black transition duration-300 ease-in-out"
               onClick={handleSubmit}
             >
               Login
@@ -172,7 +172,7 @@ export default function Login() {
             <Link
               to="/giftoday.com/registration"
               onClick={handleRegistration}
-              className="text-themeColor-100"
+              className="text-themeColor-400 hover:text-themeColor-100 hover:scale-110 transition duration-300 ease-in-out"
             >
               Register
             </Link>
