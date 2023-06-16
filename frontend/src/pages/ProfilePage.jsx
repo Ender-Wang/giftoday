@@ -16,7 +16,7 @@ export default function ProfilePage() {
       <div
         style={{
           flex: "4 4 auto",
-          marginTop: "25px",
+          marginTop: "125px",
         }}
       >
         {" "}
@@ -25,7 +25,7 @@ export default function ProfilePage() {
       <div
         style={{
           flex: "1 1 auto",
-          marginTop: "-115px",
+          marginTop: "0px",
           marginLeft: "-300px",
           marginRight: "120px",
         }}
