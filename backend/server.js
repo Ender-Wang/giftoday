@@ -415,7 +415,7 @@ app.put("/user/:userID/order", async (req, res) => {
   try {
     const { userID } = req.params;
 
-    const { id, gift, card, address, shippingDate } = req.body;
+    const { id, total, gift, card, address, shippingDate } = req.body;
 
     console.log("userID " + userID);
     // if (!order) {
@@ -430,6 +430,7 @@ app.put("/user/:userID/order", async (req, res) => {
 
     const newOrder = {
       id: id,
+      total: total,
       gift: gift,
       card: card,
       address: address,
@@ -515,14 +516,17 @@ app.delete("/user/:userID/order/:orderID", async (req, res) => {
     if (!user) {
       throw new Error("User not found");
     }
-    const order = user.order;
-    const orderIndex = order.find({ id: OID });
 
+    const orderIndex = user.order.findIndex((order) => order.id === OID);
     if (orderIndex === -1) {
       throw new Error("Order not found");
     }
 
-    res.status(200).json({ message: "order deleted successfully" });
+    user.order.splice(orderIndex, 1); // 从订单数组中删除订单
+
+    await user.save(); // 将更改保存回数据库
+
+    res.status(200).json({ message: "Order deleted successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });

@@ -143,7 +143,7 @@ export default function UserInfo() {
       );
       if (response.ok) {
         console.log(response);
-        setOrders(orders.filter((order) => orders.id !== OID));
+        setOrders(orders.filter((order) => order.id !== OID));
       } else {
         console.log("Deleting data failed.");
       }
@@ -187,14 +187,22 @@ export default function UserInfo() {
                               <dt className="font-medium text-gray-900">
                                 Order number
                               </dt>
-                              <dd className="mt-1 text-gray-500">{order.id}</dd>
+                              <dd
+                                className="mt-1 text-gray-900"
+                                style={{ textAlign: "center" }}
+                              >
+                                {order.id}
+                              </dd>
                             </div>
 
                             <div>
                               <dt className="font-medium text-gray-900">
                                 Total amount
                               </dt>
-                              <dd className="mt-1 font-medium text-gray-900">
+                              <dd
+                                className="mt-1 font-medium text-gray-900"
+                                style={{ textAlign: "center" }}
+                              >
                                 {order.total}
                               </dd>
                             </div>
@@ -204,7 +212,7 @@ export default function UserInfo() {
                               <button
                                 type="submit"
                                 className="duration-600 hover:bg-themeColor-200 rounded bg-themeColor-100 px-4 py-2 font-medium text-white transition-colors ease-in-out"
-                                // onClick={() => handleDelete(order.id)}
+                                onClick={() => handleDelete(order.id)}
                               >
                                 Cancel
                               </button>
