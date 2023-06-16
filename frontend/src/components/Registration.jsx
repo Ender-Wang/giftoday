@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import sideImg from "../images/wallpaper-tetiana-shadrina.jpg";
 
 export default function Registration() {
@@ -122,7 +123,6 @@ export default function Registration() {
       })
         .then((res) => {
           if (res.ok) {
-            alert("Registration successful!");
             setName("");
             setEmail("");
             setPassword("");
@@ -130,7 +130,7 @@ export default function Registration() {
             setStreet("");
             setCity("");
             setFormErrors({});
-            window.location.href = "/login";
+            window.location.href = "/giftoday.com/login";
           } else {
             // Check if the email is already registered
             if (res.status === 409) {
@@ -139,13 +139,13 @@ export default function Registration() {
                 email: "Email already registered!",
               }));
             } else {
-              alert("Registration failed!");
+              console.log("Registration failed! Error: " + res.status);
             }
           }
         })
         .catch((error) => {
           console.log(error);
-          alert("Registration failed!");
+          console.log("Registration failed! Error: " + error);
         });
     }
   };
@@ -156,7 +156,7 @@ export default function Registration() {
   };
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center pt-[100px]">
       <div className="flex w-2/5 items-center justify-center">
         <img
           src={sideImg}
@@ -328,7 +328,7 @@ export default function Registration() {
           <div className="flex justify-center">
             <button
               type="submit"
-              className="bg-themeColor-100 hover:bg-themeColor-80 text-white font-medium py-2 px-4 rounded transition-colors duration-600 ease-in-out"
+              className="bg-themeColor-100 text-white font-medium py-2 px-4 rounded hover:bg-themeColor-60 hover:scale-110 hover:text-black transition duration-300 ease-in-out"
               onClick={handleSubmit}
             >
               Create Account
@@ -342,13 +342,13 @@ export default function Registration() {
             *Already have an account? &nbsp;
           </div>
           <div className="flex">
-            <a
-              href="/login"
+            <Link
+              to="/giftoday.com/login"
               onClick={handleLogin}
-              className="text-themeColor-400"
+              className="text-themeColor-400 hover:text-themeColor-100 hover:scale-110 transition duration-300 ease-in-out"
             >
               Login
-            </a>
+            </Link>
           </div>
         </div>
       </div>

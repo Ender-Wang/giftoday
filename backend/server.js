@@ -235,7 +235,12 @@ app.post("/user/registration", (req, res) => {
         newUser
           .save()
           .then((user) => {
-            console.log("Registration successful with user: ", user);
+            console.log(
+              "Registration successful with user: ",
+              user.name,
+              " id ",
+              user.id
+            );
             return res.json(user);
           })
           .catch((err) => {
@@ -267,11 +272,10 @@ app.post("/user/login", (req, res) => {
       }
 
       // Authentication successful
-      console.log("Login successful for user: ", user);
+      console.log("Login successful for user", user.id);
       const response = {
         userID: user.id,
       };
-      console.log("User Id from the backend: ", response.userID);
       return res.json(response);
     })
     .catch((err) => {
