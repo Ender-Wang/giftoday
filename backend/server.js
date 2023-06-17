@@ -467,7 +467,9 @@ app.put("/user/:userID/cart", async (req, res) => {
 app.put("/user/:userID/order", async (req, res) => {
   try {
     const { userID } = req.params;
-    const { gift, card, address, shippingDate } = req.body;
+
+    const { id, total, gift, card, address, shippingDate } = req.body;
+
     console.log("userID " + userID);
     // if (!order) {
     //   throw new Error("There is no order");
@@ -480,7 +482,8 @@ app.put("/user/:userID/order", async (req, res) => {
     }
 
     const newOrder = {
-      id: userID + 1,
+      id: id,
+      total: total,
       gift: gift,
       card: card,
       address: address,
@@ -552,6 +555,34 @@ app.delete("/user/:userID/message/:messageID", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(404).json({ error: "User not found" });
+  }
+});
+
+//delete the order
+app.delete("/user/:userID/order/:orderID", async (req, res) => {
+  try {
+    const { userID, orderID } = req.params;
+    const id = Number(userID);
+    const OID = Number(orderID);
+
+    const user = await UserDB.findOne({ id: id });
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const orderIndex = user.order.findIndex((order) => order.id === OID);
+    if (orderIndex === -1) {
+      throw new Error("Order not found");
+    }
+
+    user.order.splice(orderIndex, 1); // 从订单数组中删除订单
+
+    await user.save(); // 将更改保存回数据库
+
+    res.status(200).json({ message: "Order deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 

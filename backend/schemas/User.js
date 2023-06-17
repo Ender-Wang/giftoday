@@ -50,7 +50,7 @@ const Cart = new Schema({
 
 const Order = new Schema({
   id: Number,
-  cancelled: Boolean,
+  total: Number,
   gift: [Gift],
   card: Card,
   address: Address,
