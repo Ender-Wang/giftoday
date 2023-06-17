@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import sideImg from "../images/wallpaper-tetiana-shadrina.jpg";
 import { setUserID, setLoggedInDate } from "../states/GlobalState";
 import { AuthContext } from "./AuthContext";
@@ -68,7 +69,7 @@ export default function Login() {
               setFormErrors({ email: data.error });
             });
           } else {
-            alert("Login failed Please retry later!");
+            console.log("Login failed. Error: " + res.status);
           }
         })
         .then((data) => {
@@ -76,22 +77,21 @@ export default function Login() {
           setUserID(userID);
           setLoggedInDate();
           login();
-          window.location.href = "/";
+          window.location.href = "/giftoday.com";
         })
         .catch((error) => {
           console.log(error);
-          alert("Login failed Please retry later!");
         });
     }
   };
 
   const handleRegistration = (event) => {
     event.preventDefault();
-    window.location.href = "/registration";
+    window.location.href = "/giftoday.com/registration";
   };
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center pt-[100px]">
       <div className="flex w-2/5 items-center justify-center">
         <img
           src={sideImg}
@@ -157,7 +157,7 @@ export default function Login() {
           <div className="flex justify-center">
             <button
               type="submit"
-              className="bg-themeColor-400 hover:bg-themeColor-200 text-white font-medium py-2 px-4 rounded transition-colors duration-600 ease-in-out"
+              className="bg-themeColor-100 text-white font-medium py-2 px-4 rounded hover:bg-themeColor-60 hover:scale-110 hover:text-black transition duration-300 ease-in-out"
               onClick={handleSubmit}
             >
               Login
@@ -169,13 +169,13 @@ export default function Login() {
         <div className="mt-4 text-xs flex flex-row">
           <div className="flex opacity-50">*Don't have an account? &nbsp;</div>
           <div className="flex">
-            <a
-              href="/registration"
+            <Link
+              to="/giftoday.com/registration"
               onClick={handleRegistration}
-              className="text-themeColor-400"
+              className="text-themeColor-400 hover:text-themeColor-100 hover:scale-110 transition duration-300 ease-in-out"
             >
               Register
-            </a>
+            </Link>
           </div>
         </div>
       </div>

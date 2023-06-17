@@ -20,22 +20,26 @@ const Navbar = () => {
 
   useEffect(() => {
     // Fetch user information from the backend
-    fetch(`http://localhost:4000/user/${id}/info`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data && data.length > 0) {
-          const user = data[0];
-          setPremium(user.premium);
-        }
+    if (isLoggedIn) {
+      fetch(`http://localhost:4000/user/${id}/info`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data && data.length > 0) {
+            const user = data[0];
+            setPremium(user.premium);
+          }
 
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log("Error fetching user info:", error);
-        setError(error);
-        setLoading(false);
-      });
-  }, [id]);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log("Error fetching user info:", error);
+          setError(error);
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
+    }
+  }, [id, isLoggedIn]);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -64,64 +68,43 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="w-full h-16 fffff flex justify-between items-center">
-      <div className="ml-4">
-        <Link to="/" className="text-white text-xl font-bold">
-          <img src={logo} alt="My Website Logo" className="h-8" />
-        </Link>
-      </div>
+    <nav className="fixed z-50 h-[48px] w-full bg-themeColor-100 px-32 shadow-xl backdrop-blur-sm backdrop-invert backdrop-opacity-10">
+      {/* Nav Bar */}
+      <div className="mb-8 flex items-center justify-between">
+        {/* Logo */}
+        <div className="flex">
+          <Link to="/giftoday.com">
+            <img src={logo} alt="Giftoday Logo" className="h-8" />
+          </Link>
+        </div>
 
-      <div className="flex items-center">
+        {/* Search Bar */}
         <div
-          className="flex mr-4 border-2 rounded-md relative"
+          className="relative flex rounded-sm border-b-[1px]"
           onMouseLeave={handleMouseLeave}
         >
-          <div className="flex search-container">
+          <div className="flex w-64">
             <input
               type="text"
-              placeholder="Search"
-              className="px-2 py-1 text-black bg-white rounded-md"
+              placeholder="Which gift for today?"
+              className="w-full rounded bg-themeColor-100 px-2 py-1 italic text-white focus:not-italic focus:outline-none"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
             />
             <img
               src={filter}
               alt="Search Icon"
-              className="flex search-icon rounded-md"
-              style={{ marginLeft: "-30px", width: "30px", height: "30px" }}
+              className="mr-0 h-7 w-7 rounded-md"
               onClick={() => handleClick(searchText)}
               onMouseEnter={handleMouseEnter}
             />
           </div>
           {showDropdown && (
-            <div
-              className="dropdown-menu border-2 rounded-md"
-              style={{
-                backgroundColor: "#ffffff",
-                position: "absolute",
-                top: "110%",
-                left: 90,
-                right: 0,
-                zIndex: 999,
-              }}
-            >
-              <ul className="dropdown-menu-list" style={{ fontSize: "14px" }}>
-                <li
-                  className="dropdown-menu-item break-words leading-4 mt-2 ml-2 cursor-pointer"
-                  onClick={() => handleClick("household")}
-                >
-                  household
-                </li>
-                <li
-                  className="dropdown-menu-item break-words leading-4 mt-2 ml-2 cursor-pointer"
-                  onClick={() => handleClick("game")}
-                >
-                  game
-                </li>
-                <li
-                  className="dropdown-menu-item break-words leading-4 mt-2 ml-2 mb-2 cursor-pointer"
-                  onClick={() => handleClick("electronic product")}
-                >
+            <div className="left-90 absolute right-0 top-[110%] z-10 rounded-md bg-white shadow-lg">
+              <ul className="text-14px">
+                <li onClick={() => handleClick("household")}>household</li>
+                <li onClick={() => handleClick("game")}>game</li>
+                <li onClick={() => handleClick("electronic product")}>
                   electronic product
                 </li>
               </ul>
@@ -129,108 +112,97 @@ const Navbar = () => {
           )}
         </div>
 
-        {!isLoggedIn && (
-          <>
-            <div
-              className="mr-4 py-1 border-2 rounded-md"
-              style={{ backgroundColor: "#892455" }}
-            >
-              <Link
-                to="/login"
-                className="text-white font-bold  rounded-md mr-2 ml-2"
-              >
-                Login
-              </Link>
-            </div>
-            <div
-              className="mr-4 py-1 border-2 rounded-md"
-              style={{ backgroundColor: "#892455" }}
-            >
-              <Link
-                to="/registration"
-                className="text-white font-bold  rounded-md mr-2 ml-2"
-              >
-                Registration
-              </Link>
-            </div>
-          </>
-        )}
-
-        {isLoggedIn && (
-          <>
-            {premium ? (
-              <div
-                className="mr-4 py-1 border-2 rounded-md"
-                style={{ backgroundColor: "#5D487F" }}
-              >
+        {/* Premium Status or Login/Registration, Cart, Profile*/}
+        <div className="flex items-center justify-end">
+          {!isLoggedIn && (
+            <div className="flex pt-[8px]">
+              <div className="mr-4 rounded-md bg-themeColor-60 py-1 hover:scale-125 transition duration-300 ease-in-out">
                 <Link
-                  to="/premium-benefits"
-                  className="text-yellow-400 font-bold rounded-md flex items-center mr-2 ml-2"
+                  to="/giftoday.com/login"
+                  className="ml-2 mr-2  rounded-md font-bold text-white hover:text-black transition duration-300 ease-in-out"
                 >
-                  <AiTwotoneCrown
-                    size={24}
-                    style={{ color: "yellow", marginRight: "0.5rem" }}
-                  />
-                  Premium User
+                  Login
                 </Link>
               </div>
-            ) : (
-              <div
-                className="mr-4 py-1 border-2 rounded-md"
-                style={{ backgroundColor: "#5D487F" }}
-              >
+              <div className="mr-4 rounded-md bg-themeColor-80 py-1 hover:scale-125 transition duration-300 ease-in-out">
                 <Link
-                  to="/premium-benefits"
-                  className="text-yellow-500 font-bold rounded-md mr-2 ml-2"
+                  to="/giftoday.com/registration"
+                  className="ml-2 mr-2  rounded-md font-bold text-white hover:text-black transition duration-300 ease-in-out"
                 >
-                  Join Premium
+                  Registration
                 </Link>
               </div>
-            )}
-
-            <div className="mr-4 py-1 rounded-md">
-              <Link to="/checkout" className="rounded-md mr-1 ml-2">
-                <AiOutlineShoppingCart size={24} color="#000000" />
-              </Link>
             </div>
-            <div
-              className="mr-4 py-1 rounded-md"
-              onMouseLeave={handleMouseLeave}
-            >
-              <Link
-                to="#"
-                className="text-white font-bold rounded-md mr-2 ml-2"
-                onClick={handleProfileClick}
-              >
-                <FaUser size={24} color="#892455" />
-              </Link>
-              {showProfileMenu && (
-                <div
-                  className="dropdown-menu rounded-md"
-                  style={{
-                    backgroundColor: "#892455",
-                    position: "absolute",
-                    top: "5%",
-                    right: 5,
-                    zIndex: 999,
-                  }}
-                >
-                  <ul
-                    className="dropdown-menu-list"
-                    style={{ fontSize: "14px" }}
+          )}
+
+          {isLoggedIn && (
+            <>
+              {/* Premium */}
+              {premium ? (
+                <div className="mr-4 rounded-md bg-purple-400 py-1">
+                  <Link
+                    to="/giftoday.com/premium-benefits"
+                    className="ml-2 mr-2 flex items-center rounded-md font-bold text-yellow-400"
                   >
-                    <li className="dropdown-menu-item break-words text-white font-bold leading-1 mt-0.5 ml-0.5 mr-0.5 cursor-pointer">
-                      <Link to="/profile">Profile</Link>
-                    </li>
-                    <li className="dropdown-menu-item break-words text-white font-bold leading-1 mt-0.5 ml-0.5 mr-0.5 mb-0.5 cursor-pointer">
-                      <button onClick={logout}>Logout</button>
-                    </li>
-                  </ul>
+                    <AiTwotoneCrown
+                      size={24}
+                      className="animate-pulse justify-center text-yellow-400 hover:scale-125"
+                    />
+                    Premium User
+                  </Link>
+                </div>
+              ) : (
+                <div className="mr-4 rounded-md py-1 hover:bg-yellow-400 hover:text-white hover:scale-125 transition duration-300 ease-in-out">
+                  <Link
+                    to="/giftoday.com/premium-benefits"
+                    className="ml-2 mr-2 animate-pulse rounded-md font-bold text-yellow-400 hover:text-white"
+                  >
+                    Join Premium
+                  </Link>
                 </div>
               )}
-            </div>
-          </>
-        )}
+
+              {/* Cart */}
+              <div className="relative mr-4 h-[50px] w-[50px] items-center pt-2.5">
+                <Link to="/giftoday.com/checkout">
+                  <AiOutlineShoppingCart
+                    size={30}
+                    className="ml-2 text-white transition duration-300 ease-in-out hover:scale-125 hover:text-black"
+                  />
+                </Link>
+                <div className="absolute right-0 top-0 text-white">3</div>
+              </div>
+
+              {/* Profile */}
+              <div className="mr-4">
+                <Link
+                  to="#"
+                  className="text-white"
+                  onClick={handleProfileClick}
+                >
+                  {/* Profile icon */}
+                  <FaUser
+                    size={24}
+                    className="text-white transition duration-300 ease-in-out hover:scale-125 hover:text-black"
+                  />
+                </Link>
+                {showProfileMenu && (
+                  <div
+                    className="absolute top-5 z-10 mr-32 mt-[20px] flex flex-col rounded-md bg-themeColor-100 p-0.5 shadow-xl"
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <div className=" rounded-md py-0.5 text-center font-bold text-white transition duration-300 ease-in-out hover:cursor-pointer hover:text-black">
+                      <Link to="/giftoday.com/profile">Profile</Link>
+                    </div>
+                    <div className="mt-0.5 rounded-md px-1 text-center font-bold text-black transition duration-300 ease-in-out hover:cursor-pointer hover:text-red-500">
+                      <button onClick={logout}>Logout</button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </nav>
   );

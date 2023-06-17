@@ -18,7 +18,7 @@ const Address = new Schema({
 const Gift = new Schema({
   id: Number,
   name: String,
-  stock: Number,
+  quantity: Number,
   description: String,
   price: Number,
   tag: Tag,
@@ -50,7 +50,7 @@ const Cart = new Schema({
 
 const Order = new Schema({
   id: Number,
-  cancelled: Boolean,
+  total: Number,
   gift: [Gift],
   card: Card,
   address: Address,

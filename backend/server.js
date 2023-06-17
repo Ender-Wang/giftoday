@@ -42,8 +42,8 @@ async function run() {
 async function populateShopItemDB() {
   try {
     const count = await ShopItemDB.countDocuments();
+    // await ShopItemDB.deleteMany(); //Dump all existing ShopItems
     if (count > 0) {
-      await ShopItemDB.deleteMany();
       console.log("ShopItemDB already populated");
     }
     for (const item in shopItems) {
@@ -131,7 +131,7 @@ app.get("/user/:userID/premium", (req, res) => {
     .then((user) => {
       if (user) {
         res.json(user.premium);
-        console.log(user.premium); // Wrap user in an array
+        // console.log(user.premium); // Wrap user in an array
       } else {
         res.status(404).json({ error: "User not found" });
       }
@@ -141,6 +141,7 @@ app.get("/user/:userID/premium", (req, res) => {
       res.status(500).json({ error: "Internal server error" });
     });
 });
+
 //TODO: Get user Card info with user id: [id, number, cvv, expMonth, expYear]
 app.get("/user/:userID/card", (req, res) => {});
 
@@ -183,12 +184,23 @@ app.get("/user/:userID/cart", async (req, res) => {
   }
 });
 
+//TODO: Get user Order info with user id: id, gift: [id, name, description, price, tag: [id, name]], card: [id, number, cvv, expMonth, expYear], address: [id, fullName, postalCode, street, city, country], shippingDate
+app.get("/user/:userID/order", async (req, res) => {
+  try {
+    const { userID } = req.params;
+    let id = Number(userID);
+    const user = await UserDB.findOne({ id });
+    const order = user.order;
+    return res.status(200).json(order);
+  } catch (error) {
+    return res.status(200).json({ message: error.message });
+  }
+});
 //TODO: Get user Order info with user id: id,
 //gift: [id, name, description, price, tag: [id, name]],
 //card: [id, number, cvv, expMonth, expYear],
 //address: [id, fullName, postalCode, street, city, country],
 //shippingDate
-app.get("/user/:userID/order", (req, res) => {});
 
 //TODO: Get user Address info with user id: [id, fullName, postalCode, street, city, country]
 app.get("/user/:userID/address", (req, res) => {});
@@ -222,7 +234,12 @@ app.post("/user/registration", (req, res) => {
         newUser
           .save()
           .then((user) => {
-            console.log("Registration successful with user: ", user);
+            console.log(
+              "Registration successful with user: ",
+              user.name,
+              " id ",
+              user.id
+            );
             return res.json(user);
           })
           .catch((err) => {
@@ -254,11 +271,10 @@ app.post("/user/login", (req, res) => {
       }
 
       // Authentication successful
-      console.log("Login successful for user: ", user);
+      console.log("Login successful for user", user.id);
       const response = {
         userID: user.id,
       };
-      console.log("User Id from the backend: ", response.userID);
       return res.json(response);
     })
     .catch((err) => {
@@ -397,6 +413,46 @@ app.put("/user/:userID/cart", async (req, res) => {
   }
 });
 
+//TODO: Post user Order info with user id: id, gift: [id, name, description, price, tag: [id, name]], card: [id, number, cvv, expMonth, expYear], address: [id, fullName, postalCode, street, city, country], shippingDate
+app.put("/user/:userID/order", async (req, res) => {
+  try {
+    const { userID } = req.params;
+
+    const { id, total, gift, card, address, shippingDate } = req.body;
+
+    console.log("userID " + userID);
+    // if (!order) {
+    //   throw new Error("There is no order");
+    // }
+    // Retrieve the existing user data from the database
+    const user = await UserDB.findOne({ id: userID });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const newOrder = {
+      id: id,
+      total: total,
+      gift: gift,
+      card: card,
+      address: address,
+      shippingDate: shippingDate,
+    };
+
+    // Update the user data with the new message
+    user.order.push(newOrder);
+    await user.save();
+
+    return res.status(200).json({
+      order: newOrder,
+      id: userID,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: error.message });
+  }
+});
 //TODO: Post user Order info with user id: id,
 //gift: [id, name, description, price, tag: [id, name]],
 //card: [id, number, cvv, expMonth, expYear],
@@ -422,7 +478,7 @@ app.put("/user/userInfo", async (req, res) => {
       return res.status(404).json({ error: "Not found user" });
     }
 
-    console.log("User Information has been updated：", updatedUser);
+    console.log("User Information has been updated: ", updatedUser);
     return res.json(updatedUser);
   } catch (err) {
     console.log(err);
@@ -431,44 +487,49 @@ app.put("/user/userInfo", async (req, res) => {
 });
 
 //<---------------------- DELETE ---------------------->
-// Delete user message
-// app.delete("/user/:userID/message/:messageID", async (req, res) => {
-//   try {
-//     const { userID } = req.params;
-//     let id = Number(userID);
-//     const { messageID } = req.params;
-//     let mID = Number(messageID);
-//     const user = await UserDB.findOne({ id });
-//     const messages = user.message;
-//     console.log(messages.findOne({ mID }));
-//     await messages.deleteOne({ mID });
-//   } catch (error) {
-//     if (error.status === 404) {
-//       return res.status(404).json({ error: "User not found" });
-//     } else {
-//       console.error(error);
-//       res.status(500).json({ error: "Internal server error" });
-//     }
-//   }
-// });
+// Delete user message by message id
 app.delete("/user/:userID/message/:messageID", async (req, res) => {
+  const { userID, messageID } = req.params;
+  let userId = Number(userID);
+  let mID = Number(messageID);
+
   try {
-    const { userID, messageID } = req.params;
+    const user = await UserDB.findOne({ id: userId });
+    const messageIndex = user.message.findIndex((msg) => msg.id === mID);
+    if (messageIndex === -1) {
+      return res.status(404).json({ error: "Message not found" });
+    }
+    user.message.splice(messageIndex, 1);
+    await user.save();
+    return res.status(200).json({ message: "Message deleted" });
+  } catch (error) {
+    console.error(error);
+    res.status(404).json({ error: "User not found" });
+  }
+});
+
+//delete the order
+app.delete("/user/:userID/order/:orderID", async (req, res) => {
+  try {
+    const { userID, orderID } = req.params;
     const id = Number(userID);
-    const mID = Number(messageID);
+    const OID = Number(orderID);
 
     const user = await UserDB.findOne({ id: id });
     if (!user) {
       throw new Error("User not found");
     }
-    const messages = user.message;
-    const messageIndex = messages.find({ id: mID });
-    console.log(messageIndex);
-    if (messageIndex === -1) {
-      throw new Error("Message not found");
+
+    const orderIndex = user.order.findIndex((order) => order.id === OID);
+    if (orderIndex === -1) {
+      throw new Error("Order not found");
     }
 
-    res.status(200).json({ message: "Message deleted successfully" });
+    user.order.splice(orderIndex, 1); // 从订单数组中删除订单
+
+    await user.save(); // 将更改保存回数据库
+
+    res.status(200).json({ message: "Order deleted successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
