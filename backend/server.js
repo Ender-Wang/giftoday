@@ -144,7 +144,30 @@ app.get("/user/:userID/premium", (req, res) => {
 });
 
 //TODO: Get user Card info with user id: [id, number, cvv, expMonth, expYear]
-app.get("/user/:userID/card", (req, res) => {});
+// Get user Card info by user id
+app.get("/user/:userID/card", async (req, res) => {
+  try {
+    const { userID } = req.params;
+    const uid = Number(userID);
+
+    const user = await UserDB.findOne({ id: uid }); // Find the user by ID
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const cardInfo = user.card;
+    if (!cardInfo) {
+      return res
+        .status(404)
+        .json({ error: "Card information not found for the user" });
+    }
+
+    res.status(200).json({ cardInfo });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 //Get user Message info with user id: [id, message, date]
 app.get("/user/:userID/message", async (req, res) => {
@@ -319,7 +342,33 @@ app.put("/user/:userID/premium", async (req, res) => {
 });
 
 //TODO: Post user Card info with user id: [id, number, cvv, expMonth, expYear]
-app.put("/user/:userID/card", (req, res) => {});
+app.put("/user/:userID/card", async (req, res) => {
+  try {
+    const { userID } = req.params;
+    const uid = Number(userID);
+    const { id, number, cvv, expMonth, expYear } = req.body;
+
+    const user = await UserDB.findOne({ id: uid }); // Find the user by ID
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Update the card information
+    user.card.id = id;
+    user.card.number = number;
+    user.card.cvv = cvv;
+    user.card.expMonth = expMonth;
+    user.card.expYear = expYear;
+
+    const updatedUser = await user.save();
+    res
+      .status(200)
+      .json({ message: "Card information updated.", user: updatedUser });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 //Add user Message info with user id: [id, message, date]
 app.put("/user/:userID/message", async (req, res) => {
