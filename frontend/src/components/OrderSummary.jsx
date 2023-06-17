@@ -1,8 +1,4 @@
 import {
-  CheckIcon,
-  ClockIcon,
-  QuestionMarkCircleIcon,
-  XMarkIcon,
   PlusCircleIcon,
   TrashIcon,
   MinusCircleIcon,
@@ -186,6 +182,7 @@ export default function UserInfo() {
                                         <MinusCircleIcon
                                           className="h-5 w-5"
                                           aria-hidden="true"
+                                          style={{ color: "#892455" }}
                                           onClick={() => handleReduce(cart.id)}
                                         />
                                         <span style={{ margin: "0 5px" }}>
@@ -194,6 +191,7 @@ export default function UserInfo() {
                                         <PlusCircleIcon
                                           className="h-5 w-5"
                                           aria-hidden="true"
+                                          style={{ color: "#892455" }}
                                           onClick={() => handleAdd(cart.id)}
                                         />
                                       </div>
@@ -203,6 +201,7 @@ export default function UserInfo() {
                                       <TrashIcon
                                         className="h-5 w-5"
                                         aria-hidden="true"
+                                        style={{ color: "#DD7E9A" }}
                                         onClick={() => handleDelete(cart.id)}
                                       />
                                     </h5>
