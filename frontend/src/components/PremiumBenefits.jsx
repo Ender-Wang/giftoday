@@ -78,7 +78,7 @@ export default function PremiumBenefit() {
                 : "bg-white/60 sm:mx-8 lg:mx-0",
               tier.featured
                 ? ""
-                : "rounded-t-3xl sm:rounded-b-none lg:rounded-tr-none lg:rounded-bl-3xl",
+                : "rounded-t-3xl sm:rounded-b-none lg:rounded-bl-3xl lg:rounded-tr-none",
               "rounded-3xl p-8 ring-1 ring-gray-400/10 sm:p-10"
             )}
           >
@@ -130,7 +130,7 @@ export default function PremiumBenefit() {
                 tier.featured
                   ? "bg-red-300 text-black shadow-sm hover:bg-red-400 focus-visible:outline-red-500"
                   : "bg-gray-100 text-black shadow-sm hover:bg-gray-200 focus-visible:outline-gray-300",
-                "mt-8 block rounded-md py-2.5 px-3.5 text-center text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 sm:mt-10"
+                "mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 sm:mt-10"
               )}
             >
               {tier.button}
