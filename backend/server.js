@@ -345,28 +345,38 @@ app.put("/user/:userID/premium", async (req, res) => {
 app.put("/user/:userID/card", async (req, res) => {
   try {
     const { userID } = req.params;
-    const uid = Number(userID);
-    const { id, number, cvv, expMonth, expYear } = req.body;
-
-    const user = await UserDB.findOne({ id: uid }); // Find the user by ID
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
+    let id = Number(userID);
+    const { cardNumber, cvv, expiryDate } = req.body;
+    if (!cardNumber) {
+      throw new Error("Invalid card value");
     }
-
-    // Update the card information
-    user.card.id = id;
-    user.card.number = number;
-    user.card.cvv = cvv;
-    user.card.expMonth = expMonth;
-    user.card.expYear = expYear;
-
-    const updatedUser = await user.save();
-    res
-      .status(200)
-      .json({ message: "Card information updated.", user: updatedUser });
+    const user = await UserDB.findOne({ id }); // Find the user by ID
+    if (!user) {
+      throw new Error("User not found");
+    }
+    console.log("User card:", user.card);
+    const existingCard = user.card.find((card) => card.cardNumber === cardNumber);
+    if (existingCard) {
+      throw new Error("Card number already exists");
+    }
+    const newCard = {
+      cardNumber: cardNumber,
+      expiryDate: expiryDate,
+      cvv: cvv,
+    };
+    //remove before card
+    user.card = [];
+    user.card.push(newCard);
+    await user.save();
+    return res.status(200).json({
+      message: "Card information updated.",
+      cardNumber: cardNumber,
+      expiryDate: expiryDate,
+      cvv: cvv,
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    console.log(error.message);
+    res.status(500).json({ message: error.message });
   }
 });
 
