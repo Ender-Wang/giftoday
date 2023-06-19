@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { getUserID } from "../states/GlobalState";
 import { AuthContext } from "./AuthContext";
 import { useContext } from "react";
-import { AiOutlineEdit } from "react-icons/ai";
 import { AiOutlineClose } from "react-icons/ai";
 
 export default function MessageBoard({ selectedDay }) {
@@ -14,6 +13,7 @@ export default function MessageBoard({ selectedDay }) {
   // const [preTag, setPreTag] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [newTag, setNewTag] = useState("");
+  const [festivals, setFestivals] = useState([]);
   const userID = getUserID();
   // const [showInput, setShowInput] = useState(false);
 
@@ -46,8 +46,10 @@ export default function MessageBoard({ selectedDay }) {
       }
     };
 
-    fetchData();
-  }, [userID]);
+    if (isLoggedIn) {
+      fetchData();
+    }
+  }, [userID, preMessage, isLoggedIn]);
 
   //If newMessage is entered or tag is selected
   const handleInputChange = (event) => {
@@ -68,9 +70,9 @@ export default function MessageBoard({ selectedDay }) {
   const handleDeleteMessage = async (mID) => {
     try {
       const response = await fetch(
-        "http://localhost:4000/user/" + userID + "/message" + mID,
+        "http://localhost:4000/user/" + userID + "/message/" + mID,
         {
-          method: "PUT",
+          method: "DELETE",
           headers: { "Content-Type": "application/json" },
         }
       );
@@ -84,10 +86,29 @@ export default function MessageBoard({ selectedDay }) {
       console.log(error);
     }
   };
+  // useEffect(() => {
+  //   const fetchFestivals = async (day, userID) => {
+  //     userID = getUserID();
+  //     try {
+  //       const response = await fetch(
+  //         `/api/festival-info?day=${day}&userID=${userID}`
+  //       );
+  //       const festivalInfo = await response.json();
+  //       setFestivals(festivalInfo);
+  //       console.log(festivalInfo);
+  //     } catch (error) {
+  //       console.error("Error fetching festival info:", error);
+  //     }
+  //     // alert("User ID: " + userID + ", selected day: " + day);
+  //   };
+  //   fetchFestivals(selectedDay, userID);
+  // }, [userID, selectedDay]);
+
   // Save new message and post it into postman
   const handleSaveButton = async () => {
     const data = {
       message: newMessage,
+      date: selectedDay,
       tag: {
         id: 1,
         name: newTag === "" ? "general" : newTag,
@@ -107,6 +128,7 @@ export default function MessageBoard({ selectedDay }) {
         const result = await response.json();
         alert("successful!");
         setNewMessage("");
+        setNewTag("");
         setPreMessage(preMessage.concat(result));
       } else {
         alert("Set Record failed!");
@@ -143,7 +165,9 @@ export default function MessageBoard({ selectedDay }) {
           <div>
             {/* After pressing "Festivals" button */}
             {activeButton === "Button 1" && (
-              <div className="h-32 overflow-y-auto">
+              <div className=" h-32 min-w-[300px] overflow-y-auto">
+                {/* <div className="absolute inset-0 bg-white" /> */}
+
                 <div className="mb-4 ">
                   {holidays.map((item, index) => (
                     <div
@@ -158,7 +182,7 @@ export default function MessageBoard({ selectedDay }) {
             )}
             {/* After pressing "Records" button */}
             {activeButton === "Button 2" && (
-              <div>
+              <div className="min-w-[300px]">
                 <div>
                   {/* input box */}
                   <div>
@@ -213,38 +237,39 @@ export default function MessageBoard({ selectedDay }) {
                 <div className="h-32 overflow-y-auto">
                   <div>
                     <div className="mb-4 ">
-                      {preMessage.map((item, index) => (
-                        <div
-                          className="hover:scale-102 mx-auto mb-4 h-7 w-4/5 transform rounded-sm  bg-message1 hover:bg-message2"
-                          key={index}
-                        >
-                          <div className="flex items-center justify-between">
-                            <div>{item.message}</div>
-                            <div className=" mr-6 w-24  rounded-xl bg-tag text-center">
-                              {item.tag && item.tag.name}
+                      {preMessage
+                        .filter((item) => {
+                          const itemDate = new Date(item.date);
+                          return (
+                            itemDate.getFullYear() ===
+                              selectedDay.getFullYear() &&
+                            itemDate.getMonth() === selectedDay.getMonth() &&
+                            itemDate.getDate() === selectedDay.getDate()
+                          );
+                        })
+                        .map((item, index) => (
+                          <div
+                            className="hover:scale-102 mx-auto mb-4 h-7 w-4/5 transform rounded-sm  bg-message1 hover:bg-message2"
+                            key={index}
+                          >
+                            <div className="flex items-center justify-between">
+                              <div>{item.message}</div>
+                              <div className=" mr-6 w-24  rounded-xl bg-tag text-center">
+                                {item.tag && item.tag.name}
+                              </div>
+                            </div>
+                            <div
+                              className="absolute right-0 top-0 rounded-full bg-lightPlusButton "
+                              onClick={() => handleDeleteMessage(item.id)}
+                            >
+                              {/* "False" icon */}
+                              <AiOutlineClose className="text-xs text-white" />
                             </div>
                           </div>
-                          <div
-                            className="absolute right-0 top-0 rounded-full bg-lightPlusButton "
-                            // onClick={() => handleDeleteMessage(item.id)}
-                          >
-                            {/* "False" icon */}
-                            <AiOutlineClose className="text-xs text-white" />
-                          </div>
-                        </div>
-                      ))}
+                        ))}
                     </div>
                   </div>
                 </div>
-                {/* write button */}
-                {/* {!showInput && (
-                    <div
-                      className=" button-4 absolute right-2 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-lightPlusButton"
-                      onClick={() => setShowInput(true)}
-                    >
-                      <AiOutlineEdit className="text-2xl text-white" />
-                    </div>
-                  )} */}
               </div>
             )}
           </div>
