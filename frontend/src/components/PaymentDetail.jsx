@@ -65,6 +65,7 @@ const CreditCardForm = () => {
         setCardExistsError(
           "Card already exists. Please enter a different card number."
         );
+
         return;
       }
 
@@ -94,7 +95,12 @@ const CreditCardForm = () => {
             console.log("Payment failed. Please try again.");
           }
         } else if (response.status === 409) {
-          setCardExistsError("Card already exists. Please enter a different card number.");
+          setCardExistsError(
+            "Card already exists. Please enter a different card number."
+          );
+          setTimeout(() => {
+            setCardExistsError("");
+          }, 500);
         } else {
           console.log("Error updating card information:", response.status);
           console.log("Error updating card information. Please try again.");
@@ -109,53 +115,85 @@ const CreditCardForm = () => {
   const today = new Date().toISOString().split("T")[0];
 
   return (
-    <div style={{ position: "absolute", top: 80, right: 10 }}>
+    <div style={{ position: "absolute", top: 80, right: 500 }}>
+      {/* new card */}
+      <h1 className="font-sans text-xl">Payment Detail:</h1>
       {successMessage && <p>{successMessage}</p>}
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="cardNumber">Card Number:</label>
-          <input
-            type="text"
-            id="cardNumber"
-            placeholder="Enter card number"
-            pattern="\d{16}"
-            value={cardNumber}
-            onChange={(e) => setCardNumber(e.target.value)}
-            required
-          />
-          {formErrors.cardNumber && <p>{formErrors.cardNumber}</p>}
-          {cardExistsError && <p>{cardExistsError}</p>}
+        <div className="grid grid-cols-2 gap-4">
+          <div className="col-span-4 mb-4">
+            <label htmlFor="cardNumber" className="block font-bold">
+              Card Number:
+            </label>
+            <input
+              type="text"
+              id="cardNumber"
+              placeholder="Enter card number"
+              pattern="\d{16}"
+              value={cardNumber}
+              onChange={(e) => setCardNumber(e.target.value)}
+              required
+              style={{
+                border: formErrors.cardNumber
+                  ? "2px solid pink"
+                  : "1px solid #ccc",
+              }}
+            />
+            {formErrors.cardNumber && <p>{formErrors.cardNumber}</p>}
+            {cardExistsError && <p>{cardExistsError}</p>}
+          </div>
+
+          <div className="col-span-4 mb-4">
+            <label htmlFor="cvv" className="block font-bold">
+              CVV:
+            </label>
+            <input
+              type="text"
+              id="cvv"
+              name="cvv"
+              placeholder="Enter CVV"
+              pattern="\d{3}"
+              value={cvv}
+              onChange={(e) => setCvv(e.target.value)}
+              required
+              style={{
+                border: formErrors.cvv ? "2px solid pink" : "1px solid #ccc",
+              }}
+            />
+            {formErrors.cvv && <p>{formErrors.cvv}</p>}
+          </div>
+
+          <div className="col-span-4 mb-4">
+            <label htmlFor="expiryDate" className="block font-bold">
+              Expiry Date:
+            </label>
+            <input
+              type="month"
+              id="expiryDate"
+              name="expiryDate"
+              placeholder="MM/YY"
+              min={today}
+              value={expiryDate}
+              onChange={(e) => setExpiryDate(e.target.value)}
+              required
+              style={{
+                border: formErrors.expiryDate
+                  ? "2px solid pink"
+                  : "1px solid #ccc",
+              }}
+            />
+            {formErrors.expiryDate && <p>{formErrors.expiryDate}</p>}
+          </div>
         </div>
 
-        <div>
-          <label htmlFor="expiryDate">Expiry Date:</label>
-          <input
-            type="month"
-            id="expiryDate"
-            name="expiryDate"
-            placeholder="MM/YY"
-            min={today}
-            value={expiryDate}
-            onChange={(e) => setExpiryDate(e.target.value)}
-            required
-          />
-          {formErrors.expiryDate && <p>{formErrors.expiryDate}</p>}
-
-          <label htmlFor="cvv">CVV:</label>
-          <input
-            type="text"
-            id="cvv"
-            name="cvv"
-            placeholder="Enter CVV"
-            pattern="\d{3}"
-            value={cvv}
-            onChange={(e) => setCvv(e.target.value)}
-            required
-          />
-          {formErrors.cvv && <p>{formErrors.cvv}</p>}
+        <div className="mb-4 ">
+          <button
+            type="submit"
+            className="hover:scale-102 transform rounded-lg bg-lightButton px-5 py-1 hover:bg-normalButton"
+          >
+            Submit
+          </button>
         </div>
-
-        <button type="submit">Submit</button>
       </form>
     </div>
   );

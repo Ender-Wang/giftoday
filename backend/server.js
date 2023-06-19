@@ -365,7 +365,7 @@ app.put("/user/:userID/card", async (req, res) => {
       cvv: cvv,
     };
     //remove before card
-    user.card = [];
+    // user.card = [];
     user.card.push(newCard);
     await user.save();
     return res.status(200).json({
