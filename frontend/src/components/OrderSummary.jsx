@@ -18,7 +18,7 @@ export default function UserInfo() {
   useEffect(() => {
     // Fetch user information from the backend
 
-    fetch(`http://localhost:4000/user/${id}/cart`)
+    fetch(`http://localhost:4000/user/${id}/finalcart`)
       .then((response) => response.json())
       .then((data) => {
         if (data && data.length > 0) {
