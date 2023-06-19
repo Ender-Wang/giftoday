@@ -10,6 +10,7 @@ const Address = new Schema({
   id: Number,
   fullName: String,
   postalCode: String,
+  phoneNumber: String,
   street: String,
   city: String,
   country: String,
