@@ -115,9 +115,10 @@ const CreditCardForm = () => {
   const today = new Date().toISOString().split("T")[0];
 
   return (
-    <div style={{ position: "absolute", top: 80, right: 500 }}>
+    <div style={{ position: "absolute", top: 80, right: 150 }}>
       {/* new card */}
       <h1 className="font-sans text-xl">Payment Detail:</h1>
+      <br />
       {successMessage && <p>{successMessage}</p>}
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-2 gap-4">
@@ -134,9 +135,8 @@ const CreditCardForm = () => {
               onChange={(e) => setCardNumber(e.target.value)}
               required
               style={{
-                border: formErrors.cardNumber
-                  ? "2px solid pink"
-                  : "1px solid #ccc",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
               }}
             />
             {formErrors.cardNumber && <p>{formErrors.cardNumber}</p>}
@@ -157,7 +157,8 @@ const CreditCardForm = () => {
               onChange={(e) => setCvv(e.target.value)}
               required
               style={{
-                border: formErrors.cvv ? "2px solid pink" : "1px solid #ccc",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
               }}
             />
             {formErrors.cvv && <p>{formErrors.cvv}</p>}
@@ -177,9 +178,8 @@ const CreditCardForm = () => {
               onChange={(e) => setExpiryDate(e.target.value)}
               required
               style={{
-                border: formErrors.expiryDate
-                  ? "2px solid pink"
-                  : "1px solid #ccc",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
               }}
             />
             {formErrors.expiryDate && <p>{formErrors.expiryDate}</p>}

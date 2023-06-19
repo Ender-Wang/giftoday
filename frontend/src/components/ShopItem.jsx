@@ -79,6 +79,7 @@ export default function ShopItem() {
       if (response.ok) {
         const result = await response.json();
         alert("successful put into cart!");
+        window.location.reload();
         console.log(result);
       } else {
         alert("Putting into cart failed!");
