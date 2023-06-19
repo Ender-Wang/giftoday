@@ -8,7 +8,6 @@ import { getUserID } from "../states/GlobalState";
 export default function ShopItem() {
   const { isLoggedIn } = useContext(AuthContext);
   const [shopItems, setShopItems] = useState([]);
-  const [cart, setCart] = useState([]);
   const [isPremium, setPremium] = useState(false);
   const userID = getUserID();
   useEffect(() => {
@@ -31,35 +30,70 @@ export default function ShopItem() {
     };
 
     fetchShopItems();
-    fetchPremium();
-  }, [userID]);
+  }, []);
 
-  const fetchPremium = async () => {
-    // console.log("shopItems: " + shopItems);
+  useEffect(() => {
+    const fetchPremium = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:4000/user/" + userID + "/premium",
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        if (response.ok) {
+          const responseData = await response.json();
+          setPremium(responseData);
+        } else {
+          console.log("Fetching data failed.");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (isLoggedIn) fetchPremium();
+  }, [userID, isPremium, isLoggedIn]);
+
+  const handleCartButton = async (item) => {
+    const data = {
+      id: item.id,
+      name: item.name,
+      stock: item.stock,
+      description: item.description,
+      price: item.price,
+      tag: {
+        id: 1,
+        name: item.tag,
+      },
+    };
     try {
       const response = await fetch(
-        "http://localhost:4000/user/" + userID + "/premium",
+        "http://localhost:4000/user/" + userID + "/cart",
         {
-          method: "GET",
+          method: "PUT",
           headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
         }
       );
       if (response.ok) {
-        setPremium(response);
+        const result = await response.json();
+        alert("successful put into cart!");
+        console.log(result);
       } else {
-        console.log("Fetching data failed.");
+        alert("Putting into cart failed!");
       }
     } catch (error) {
       console.log(error);
+      alert("An error occurred while processing the request.");
     }
   };
-
   return (
     <div className="grid grid-cols-3 grid-rows-2 gap-16 p-10  ">
       {shopItems.map((item) => (
         <div
           key={item.id}
-          className="h-64  transform rounded-xl shadow-xl hover:scale-110"
+          className="h-64 min-w-[100px]  transform rounded-xl shadow-xl hover:scale-110"
         >
           {/* product picture */}
           <div className="pl-4 pr-4">
@@ -94,7 +128,7 @@ export default function ShopItem() {
             {isLoggedIn && (
               <div
                 className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-normalPlusButton"
-                onClick={setCart}
+                onClick={() => handleCartButton(item)}
               >
                 <AiOutlinePlus className="text-xl text-white" />
               </div>
