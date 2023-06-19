@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import {
   PlusCircleIcon,
   TrashIcon,
@@ -226,3 +227,5 @@ export default function UserInfo() {
 }
 =======
 >>>>>>> 837faa5131cad3648fd92074a2529f1587286e88
+=======
+>>>>>>> master

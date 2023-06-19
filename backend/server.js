@@ -527,6 +527,7 @@ app.put("/user/:userID/order", async (req, res) => {
 });
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 //Add Gift to user Cart
 app.put("/user/:userID/cart", async (req, res) => {
@@ -686,6 +687,8 @@ app.put("/user/:userID/order", (req, res) => {});
 >>>>>>> master
 =======
 >>>>>>> 837faa5131cad3648fd92074a2529f1587286e88
+=======
+>>>>>>> master
 
 //TODO: Post user Address info with user id: [id, fullName, postalCode, street, city, country]
 app.put("/user/:userID/address", async (req, res) => {
