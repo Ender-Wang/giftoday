@@ -5,7 +5,7 @@ import { AuthContext } from "./AuthContext";
 import { useContext } from "react";
 import { AiOutlineHome } from "react-icons/ai";
 export default function PostalAddress() {
-  const [name, setName] = useState("");
+  const [fullName, setFullName] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [street, setStreet] = useState("");
   const [city, setCity] = useState("");
@@ -47,37 +47,37 @@ export default function PostalAddress() {
     "Mönchengladbach",
   ];
 
-  //   useEffect(() => {
-  //     const fetchData = async () => {
-  //       try {
-  //         const response = await fetch(
-  //           "http://localhost:4000/user/" + userID + "/message",
-  //           {
-  //             method: "GET",
-  //             headers: { "Content-Type": "application/json" },
-  //           }
-  //         );
-  //         if (response.ok) {
-  //           const responseData = await response.json();
-  //           setPreMessage([...responseData]);
-  //           console.log(responseData);
-  //         } else {
-  //           console.log("Fetching data failed.");
-  //         }
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:4000/user/" + userID + "/address",
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        if (response.ok) {
+          const responseData = await response.json();
+          setPreAddress([...responseData]);
+          console.log(responseData);
+        } else {
+          console.log("Fetching data failed.");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-  //     fetchData();
-  //   }, [userID]);
+    fetchData();
+  }, [userID, phoneNumber]);
 
   //   //If newMessage is entered or tag is selected
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     switch (name) {
-      case "name":
-        setName(value);
+      case "fullName":
+        setFullName(value);
         setFormErrors((prevErrors) => ({ ...prevErrors, name: "" }));
         break;
       case "shippingDate":
@@ -104,32 +104,35 @@ export default function PostalAddress() {
         break;
     }
   };
-  //   const validateForm = (data) => {
-  //     const errors = {};
+  const validateForm = (data) => {
+    const errors = {};
 
-  //     if (data.name.trim() === "") {
-  //       errors.name = "Full Name is required!";
-  //     }
-  //     if (data.date.trim() === "") {
-  //       errors.password = "Password is required!";
-  //     }
-  //     if (data.address.postalCode.trim() === "") {
-  //       errors.postalCode = "Postal Code is required!";
-  //     }
-  //     if (data.address.street.trim() === "") {
-  //       errors.street = "Street is required!";
-  //     }
-  //     if (data.address.city.trim() === "") {
-  //       errors.city = "City is required!";
-  //     }
+    if (data.fullName.trim() === "") {
+      errors.name = "Full Name is required!";
+    }
+    if (data.shippingDate.trim() === "") {
+      errors.shippingDate = "Shipping Date is required!";
+    }
+    if (data.postalCode.trim() === "") {
+      errors.postalCode = "Postal Code is required!";
+    }
+    if (data.phoneNumber.trim() === "") {
+      errors.phoneNumber = "Phone Number is required!";
+    }
+    if (data.street.trim() === "") {
+      errors.street = "Street is required!";
+    }
+    if (data.city.trim() === "") {
+      errors.city = "City is required!";
+    }
 
-  //     return errors;
-  //   };
+    return errors;
+  };
   //
   // Save new address and post it into mongoDB
   const handleSave = async () => {
     const data = {
-      name: name,
+      fullName: fullName,
       postalCode: postalCode,
       phoneNumber: phoneNumber,
       city: city,
@@ -137,89 +140,114 @@ export default function PostalAddress() {
       street: street,
       shippingDate: shippingDate,
     };
+    const errors = validateForm(data);
+    setFormErrors(errors);
+    if (Object.keys(errors).length === 0) {
+      try {
+        const response = await fetch(
+          "http://localhost:4000/user/" + userID + "/address",
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          }
+        );
+        console.log(response);
+        if (response.ok) {
+          const result = await response.json();
+          alert("successful!");
+          setFullName("");
+          setPostalCode("");
+          setStreet("");
+          setCity("");
+          setPhoneNumber("");
+          setShippingDate("");
+
+          setPreAddress(preAddress.concat(result));
+        } else {
+          alert("Save failed!");
+        }
+      } catch (error) {
+        console.log(error);
+        alert("An error occurred while processing the request.");
+      }
+    }
+  };
+  //delete pre Address
+  const handleDelete = async (aID) => {
     try {
       const response = await fetch(
-        "http://localhost:4000/user/" + userID + "/message",
+        "http://localhost:4000/user/" + userID + "/address/" + aID,
         {
-          method: "PUT",
+          method: "DELETE",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
         }
       );
-      console.log(response);
       if (response.ok) {
-        const result = await response.json();
-        alert("successful!");
-        setName("");
-        setPostalCode("");
-        setStreet("");
-        setCity("");
-        setPhoneNumber("");
-        setShippingDate("");
-
-        setPreAddress(preAddress.concat(result));
+        console.log(response);
+        setPreAddress(preAddress.filter((preA) => preA.id !== aID));
       } else {
-        alert("Save failed!");
+        console.log("Deleting data failed.");
       }
     } catch (error) {
       console.log(error);
-      alert("An error occurred while processing the request.");
     }
   };
-
   return (
     <div className="h-600 ">
       {/* "choose address" container */}
-      <div className="absolute bottom-8 left-10 h-2/5 w-2/5 pl-4 pt-2">
+      <div className=" absolute bottom-8 left-10 h-2/5 w-2/5 min-w-[300px] pl-4 pt-2">
         <h1 className=" font-sans text-xl">Choose address</h1>
         <div className=" grid h-full w-full grid-rows-4">
           {/* previous addresses */}
           <div className=" row-span-1 mb-2 w-4/5 overflow-y-auto rounded-lg border shadow-lg ">
-            <div className=" grid grid-cols-4 grid-rows-3">
-              {/* home icon */}
-              <div className="row-span-3">
-                <AiOutlineHome className="ml-4 mt-2 text-6xl " />
+            {preAddress.map((item) => (
+              <div className=" boarder grid grid-cols-4 grid-rows-3 ">
+                {/* home icon */}
+                <div className="row-span-3">
+                  <AiOutlineHome className="ml-4 text-6xl " />
+                </div>
+                <div className="col-span-2 ml-4 ">
+                  <div>{item.fullName}</div>
+                  <div className="row-span-3">
+                    <span>{item.phoneNumber}, </span>
+                    <span>{item.postalCode}, </span>
+                    <span>{item.street}, </span>
+                    <span>{item.city}</span>
+                  </div>
+                </div>
+                {/* delete Button */}
+                <div className=" mr-4 ">
+                  <button
+                    type="button"
+                    className="hover:scale-102 transform rounded-lg bg-normalButton px-5  py-1 hover:bg-normalButton"
+                    onClick={() => handleDelete(item)}
+                  >
+                    DELETE
+                  </button>
+                </div>
+                <div></div>
               </div>
-              {/* text infor */}
-              <div className="col-span-3 ml-4 mt-2">
-                {/* name */}
-                <div>name</div>
-                {/* address */}
-                <div className="row-span-2">address</div>
-              </div>
-            </div>
-            <div className=" grid grid-cols-4 grid-rows-3">
-              {/* home icon */}
-              <div className="row-span-3">
-                <AiOutlineHome className="text-6xl " />
-              </div>
-              {/* text infor */}
-              <div className="col-span-3">
-                {/* name */}
-                <div>name</div>
-                {/* address */}
-                <div className="row-span-2">address</div>
-              </div>
-            </div>
+            ))}
           </div>
           {/* new address */}
           <div className="row-span-3 ml-4 mt-2 grid grid-cols-6 gap-4">
             {/* full name */}
             <div className="col-span-4 mb-4">
-              <label htmlFor="name" className=" block font-bold">
+              <label htmlFor="fullName" className=" block font-bold">
                 Full Name
               </label>
               <input
                 type="text"
-                id="name"
-                name="name"
-                value={name}
+                id="fullName"
+                name="fullName"
+                value={fullName}
                 onChange={handleInputChange}
                 className={`border-themeColor w-full border-b-2 outline-none ${
                   formErrors.name ? "border-red-500" : ""
                 }`}
                 required
-                placeholder={formErrors.name ? formErrors.name : ""}
+                placeholder={formErrors.fullName ? formErrors.fullName : ""}
               />
             </div>
             {/* shipping date */}
@@ -234,10 +262,12 @@ export default function PostalAddress() {
                 value={shippingDate}
                 onChange={handleInputChange}
                 className={`border-themeColor w-full border-b-2 outline-none ${
-                  formErrors.name ? "border-red-500" : ""
+                  formErrors.shippingDate ? "border-red-500" : ""
                 }`}
                 required
-                placeholder={formErrors.name ? formErrors.name : ""}
+                placeholder={
+                  formErrors.shippingDate ? formErrors.shippingDate : ""
+                }
               />
             </div>
             {/* Street */}
@@ -252,10 +282,10 @@ export default function PostalAddress() {
                 value={street}
                 onChange={handleInputChange}
                 className={`border-themeColor w-full border-b-2 outline-none ${
-                  formErrors.name ? "border-red-500" : ""
+                  formErrors.street ? "border-red-500" : ""
                 }`}
                 required
-                placeholder={formErrors.name ? formErrors.name : ""}
+                placeholder={formErrors.street ? formErrors.street : ""}
               />
             </div>
             {/* phone number */}
@@ -270,10 +300,12 @@ export default function PostalAddress() {
                 value={phoneNumber}
                 onChange={handleInputChange}
                 className={`border-themeColor w-full border-b-2 outline-none ${
-                  formErrors.name ? "border-red-500" : ""
+                  formErrors.phoneNumber ? "border-red-500" : ""
                 }`}
                 required
-                placeholder={formErrors.name ? formErrors.name : ""}
+                placeholder={
+                  formErrors.phoneNumber ? formErrors.phoneNumber : ""
+                }
               />
             </div>
             {/* city */}
@@ -281,18 +313,26 @@ export default function PostalAddress() {
               <label htmlFor="city" className=" block] font-bold">
                 City/Town
               </label>
-              <input
-                type="text"
+              <select
                 id="city"
                 name="city"
                 value={city}
                 onChange={handleInputChange}
-                className={`border-themeColor w-full border-b-2 outline-none ${
-                  formErrors.name ? "border-red-500" : ""
+                className={`border-themeColor w-full border-b-2 p-2 outline-none ${
+                  formErrors.city ? "border-red-500" : ""
                 }`}
                 required
-                placeholder={formErrors.name ? formErrors.name : ""}
-              />
+                placeholder={formErrors.city ? formErrors.city : ""}
+              >
+                <option value="" disabled>
+                  Select a city
+                </option>
+                {germanyCities.map((germanCity) => (
+                  <option key={germanCity} value={germanCity}>
+                    {germanCity}
+                  </option>
+                ))}
+              </select>
             </div>
             {/* country */}
             <div className="col-span-1 mb-4">
@@ -305,11 +345,8 @@ export default function PostalAddress() {
                 name="country"
                 value={country}
                 onChange={handleInputChange}
-                className={`border-themeColor w-full border-b-2 outline-none ${
-                  formErrors.name ? "border-red-500" : ""
-                }`}
+                className="border-themeColor w-full border-b-2 outline-none "
                 required
-                placeholder={formErrors.name ? formErrors.name : ""}
               />
             </div>
             {/* postal code */}
@@ -324,10 +361,10 @@ export default function PostalAddress() {
                 value={postalCode}
                 onChange={handleInputChange}
                 className={`border-themeColor w-full border-b-2 outline-none ${
-                  formErrors.name ? "border-red-500" : ""
+                  formErrors.postalCode ? "border-red-500" : ""
                 }`}
                 required
-                placeholder={formErrors.name ? formErrors.name : ""}
+                placeholder={formErrors.postalCode ? formErrors.postalCode : ""}
               />
             </div>
             {/* save button */}
@@ -335,7 +372,7 @@ export default function PostalAddress() {
               <button
                 type="button"
                 className="hover:scale-102 transform rounded-lg bg-lightButton px-5  py-1 hover:bg-normalButton"
-                // onClick={handleSave}
+                onClick={handleSave}
               >
                 Save
               </button>
