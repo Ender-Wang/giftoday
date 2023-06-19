@@ -17,6 +17,7 @@ const Navbar = () => {
   const [id] = useState(getUserID);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
     // Fetch user information from the backend
@@ -41,6 +42,26 @@ const Navbar = () => {
     }
   }, [id, isLoggedIn]);
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      fetch(`http://localhost:4000/user/${id}/cart`)
+        .then((response) => response.json())
+        .then((data) => {
+          // Retrieve the cart data from the response
+          const cartData = data.cart;
+
+          // Update the cart count based on the retrieved data
+          const cartCount = cartData.length;
+          setCartCount(cartCount);
+        })
+        .catch((error) => {
+          console.log("Error fetching user cart:", error);
+        });
+    } else {
+      setLoading(false);
+    }
+  }, [id, isLoggedIn]);
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -58,8 +79,19 @@ const Navbar = () => {
     setShowProfileMenu(false);
   };
 
-  const handleClick = (text) => {
-    setSearchText(text);
+  const handleClick = (result) => {
+    setSearchText((prevText) => {
+      if (prevText.length === 0) {
+        return result;
+      } else {
+        const texts = prevText.split(";").map((text) => text.trim());
+        if (texts.includes(result.trim())) {
+          return prevText;
+        } else {
+          return `${prevText}; ${result}`;
+        }
+      }
+    });
   };
 
   const handleProfileClick = (e) => {
@@ -100,14 +132,16 @@ const Navbar = () => {
             />
           </div>
           {showDropdown && (
-            <div className="left-90 absolute right-0 top-[110%] z-10 rounded-md bg-white shadow-lg">
-              <ul className="text-14px">
-                <li onClick={() => handleClick("household")}>household</li>
-                <li onClick={() => handleClick("game")}>game</li>
-                <li onClick={() => handleClick("electronic product")}>
-                  electronic product
-                </li>
-              </ul>
+            <div className="left-90 absolute right-0 top-[110%] z-10">
+              <div className="rounded-md bg-white p-2 shadow-lg">
+                <ul className="text-14px">
+                  <li onClick={() => handleClick("household")}>household</li>
+                  <li onClick={() => handleClick("game")}>game</li>
+                  <li onClick={() => handleClick("electronic product")}>
+                    electronic product
+                  </li>
+                </ul>
+              </div>
             </div>
           )}
         </div>
@@ -116,18 +150,18 @@ const Navbar = () => {
         <div className="flex items-center justify-end">
           {!isLoggedIn && (
             <div className="flex pt-[8px]">
-              <div className="mr-4 rounded-md bg-themeColor-60 py-1 hover:scale-125 transition duration-300 ease-in-out">
+              <div className="mr-4 rounded-md bg-themeColor-60 py-1 transition duration-300 ease-in-out hover:scale-125">
                 <Link
                   to="/giftoday.com/login"
-                  className="ml-2 mr-2  rounded-md font-bold text-white hover:text-black transition duration-300 ease-in-out"
+                  className="ml-2 mr-2  rounded-md font-bold text-white transition duration-300 ease-in-out hover:text-black"
                 >
                   Login
                 </Link>
               </div>
-              <div className="mr-4 rounded-md bg-themeColor-80 py-1 hover:scale-125 transition duration-300 ease-in-out">
+              <div className="mr-4 rounded-md bg-themeColor-80 py-1 transition duration-300 ease-in-out hover:scale-125">
                 <Link
                   to="/giftoday.com/registration"
-                  className="ml-2 mr-2  rounded-md font-bold text-white hover:text-black transition duration-300 ease-in-out"
+                  className="ml-2 mr-2  rounded-md font-bold text-white transition duration-300 ease-in-out hover:text-black"
                 >
                   Registration
                 </Link>
@@ -152,7 +186,7 @@ const Navbar = () => {
                   </Link>
                 </div>
               ) : (
-                <div className="mr-4 rounded-md py-1 hover:bg-yellow-400 hover:text-white hover:scale-125 transition duration-300 ease-in-out">
+                <div className="mr-4 rounded-md py-1 transition duration-300 ease-in-out hover:scale-125 hover:bg-yellow-400 hover:text-white">
                   <Link
                     to="/giftoday.com/premium-benefits"
                     className="ml-2 mr-2 animate-pulse rounded-md font-bold text-yellow-400 hover:text-white"
@@ -170,7 +204,9 @@ const Navbar = () => {
                     className="ml-2 text-white transition duration-300 ease-in-out hover:scale-125 hover:text-black"
                   />
                 </Link>
-                <div className="absolute right-0 top-0 text-white">3</div>
+                <div className="absolute right-0 top-0 text-white">
+                  {cartCount}
+                </div>
               </div>
 
               {/* Profile */}
