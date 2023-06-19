@@ -1,7 +1,5 @@
 // User info: [id, name, email, password]
-const express = require("express");
-const router = express.Router();
-const UserDB = require("../schemas/User.js");
+const { router, UserDB } = require("./DB.js");
 
 // Get user General info: [id, name, email, password, premium]
 router.get("/user/:userID/info", (req, res) => {

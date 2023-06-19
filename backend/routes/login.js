@@ -1,6 +1,4 @@
-const express = require("express");
-const router = express.Router();
-const UserDB = require("../schemas/User.js");
+const { router, UserDB } = require("./DB.js");
 
 //Login
 router.post("/user/login", (req, res) => {

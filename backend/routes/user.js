@@ -1,6 +1,4 @@
-const express = require("express");
-const router = express.Router();
-const UserDB = require("../schemas/User.js");
+const { router, UserDB } = require("./DB.js");
 
 //Demo: get all info from all users
 router.get("/users", (req, res) => {

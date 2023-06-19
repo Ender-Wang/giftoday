@@ -1,6 +1,4 @@
-const express = require("express");
-const router = express.Router();
-const UserDB = require("../schemas/User.js");
+const { router, UserDB } = require("./DB.js");
 
 //Get user Cart info with user id
 router.get("/user/:userID/finalcart", async (req, res) => {

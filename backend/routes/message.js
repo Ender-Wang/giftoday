@@ -1,6 +1,4 @@
-const express = require("express");
-const router = express.Router();
-const UserDB = require("../schemas/User.js");
+const { router, UserDB } = require("./DB.js");
 
 //Get user Message info with user id: [id, message, date]
 router.get("/user/:userID/message", async (req, res) => {

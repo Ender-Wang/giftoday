@@ -1,6 +1,4 @@
-const express = require("express");
-const router = express.Router();
-const ShopItemDB = require("../schemas/ShopItem.js");
+const { router, ShopItemDB } = require("./DB.js");
 
 //Get all shopItems
 router.get("/shopItems", async (req, res) => {
