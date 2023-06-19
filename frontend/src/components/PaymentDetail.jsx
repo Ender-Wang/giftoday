@@ -8,7 +8,6 @@ const CreditCardForm = () => {
   const [id] = useState(getUserID);
   const [successMessage, setSuccessMessage] = useState("");
   const [formErrors, setFormErrors] = useState({});
-  const [cardExists, setCardExists] = useState(false);
   const [cardExistsError, setCardExistsError] = useState("");
 
   const checkCardExists = async (cardNumber) => {
@@ -23,16 +22,14 @@ const CreditCardForm = () => {
       if (response.ok) {
         const data = await response.json();
         const cardInfo = data.cardInfo;
-        setCardExists(
-          cardInfo.some((card) => card.cardNumber === cardNumber)
-        );
+        return cardInfo.some((card) => card.cardNumber === cardNumber);
       } else {
         console.log("Error checking card existence:", response.status);
-        setCardExists(false);
+        return false;
       }
     } catch (error) {
       console.log("Error checking card existence:", error);
-      setCardExists(false);
+      return false;
     }
   };
 
@@ -63,8 +60,8 @@ const CreditCardForm = () => {
     setFormErrors(errors);
 
     if (Object.keys(errors).length === 0) {
-      const exists = await checkCardExists(cardNumber);
-      if (exists) {
+      const cardExists = await checkCardExists(cardNumber);
+      if (cardExists) {
         setCardExistsError(
           "Card already exists. Please enter a different card number."
         );
@@ -94,18 +91,17 @@ const CreditCardForm = () => {
               setSuccessMessage("");
             }, 500);
           } else {
-            alert("Payment failed. Please try again.");
+            console.log("Payment failed. Please try again.");
           }
-        } else if (response.status === 400) {
-          const data = await response.json();
-          setCardExistsError(data.message);
+        } else if (response.status === 409) {
+          setCardExistsError("Card already exists. Please enter a different card number.");
         } else {
           console.log("Error updating card information:", response.status);
-          alert("Error updating card information. Please try again.");
+          console.log("Error updating card information. Please try again.");
         }
       } catch (error) {
         console.log("Error updating card information:", error);
-        alert("Error updating card information. Please try again.");
+        console.log("Error updating card information. Please try again.");
       }
     }
   };

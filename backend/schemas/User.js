@@ -27,7 +27,7 @@ const Gift = new Schema({
 const Card = new Schema({
   cardNumber: Number,
   expiryDate: Date,
-  cvv: Number,
+  cvv: String,
 });
 
 const Message = new Schema({

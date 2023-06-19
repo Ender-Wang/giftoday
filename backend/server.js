@@ -354,10 +354,10 @@ app.put("/user/:userID/card", async (req, res) => {
     if (!user) {
       throw new Error("User not found");
     }
-    console.log("User card:", user.card);
-    const existingCard = user.card.find((card) => card.cardNumber === cardNumber);
+    // console.log("User card:", user.card);
+    const existingCard = await UserDB.findOne({ "card.cardNumber": cardNumber });
     if (existingCard) {
-      throw new Error("Card number already exists");
+      return res.status(409).json({ message: "Card number already exists" });
     }
     const newCard = {
       cardNumber: cardNumber,
