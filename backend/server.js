@@ -471,55 +471,6 @@ app.put("/user/:userID/message", async (req, res) => {
   }
 });
 
-//Add Gift to user Cart
-app.put("/user/:userID/cart", async (req, res) => {
-  try {
-    const { userID } = req.params;
-    const uid = Number(userID);
-    const { id, name, image, description, price, quantity, tag } = req.body;
-    console.log("UserID: " + uid);
-    if (!name) {
-      throw new Error("Invalid gift value");
-    }
-
-    // Retrieve the existing user data from the database
-    const user = await UserDB.findOne({ id: uid });
-    if (!user) {
-      throw new Error("User not found");
-    }
-
-    // Check if the gift already exists in the cart
-    const existingGiftIndex = user.cart.findIndex((gift) => gift.id === id);
-    if (existingGiftIndex !== -1) {
-      // If the gift already exists, increase the quantity by one
-      user.cart[existingGiftIndex].quantity += 1;
-    } else {
-      // If the gift doesn't exist, add it as a new gift to the cart
-      const newGift = {
-        id: id,
-        name: name,
-        image: image,
-        description: description,
-        price: price,
-        quantity: quantity,
-        tag: tag,
-      };
-      user.cart.push(newGift);
-    }
-
-    // TODO: Reduce Gift stock by 1 if the gift is added to the cart
-
-    // Update the user data with the modified cart
-    await user.save();
-    return res.status(200).json({
-      message: "Gift added to cart of user with userID " + uid,
-    });
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
 //TODO: Post user Order info with user id: id, gift: [id, name, description, price, tag: [id, name]], card: [id, number, cvv, expMonth, expYear], address: [id, fullName, postalCode, street, city, country], shippingDate
 app.put("/user/:userID/order", async (req, res) => {
   try {
@@ -566,11 +517,7 @@ app.put("/user/:userID/cart", async (req, res) => {
   try {
     const { userID } = req.params;
     const uid = Number(userID);
-    const { id, name, image, description, price, quantity, tag } = req.body;
-    console.log("UserID: " + uid);
-    if (!name) {
-      throw new Error("Invalid gift value");
-    }
+    const { id, name, image, description, price, tag } = req.body;
 
     // Retrieve the existing user data from the database
     const user = await UserDB.findOne({ id: uid });
@@ -591,7 +538,7 @@ app.put("/user/:userID/cart", async (req, res) => {
         image: image,
         description: description,
         price: price,
-        quantity: quantity,
+        quantity: 1,
         tag: tag,
       };
       user.cart.push(newGift);
