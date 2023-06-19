@@ -52,7 +52,7 @@ export default function PremiumBenefit() {
     })
       .then((response) => {
         if (response.ok) {
-          navigate("/");
+          navigate("/giftoday.com");
           window.location.reload(); // reload current page
         } else {
           console.log("Premium upgrade failed");

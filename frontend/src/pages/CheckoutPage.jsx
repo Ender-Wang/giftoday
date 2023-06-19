@@ -18,8 +18,8 @@ function CheckoutPage() {
       >
         <OrderSummary />
       </div>
-
       <PostalAddress />
+      <PaymentDetail />
     </div>
   );
 }
