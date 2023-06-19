@@ -121,7 +121,7 @@ const CreditCardForm = () => {
       {successMessage && <p>{successMessage}</p>}
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-2 gap-4">
-          <div className="col-span-4 mb-4">
+          <div className=" mb-4">
             <label htmlFor="cardNumber" className="block font-bold">
               Card Number:
             </label>
@@ -143,7 +143,7 @@ const CreditCardForm = () => {
             {cardExistsError && <p>{cardExistsError}</p>}
           </div>
 
-          <div className="col-span-4 mb-4">
+          <div className=" mb-4">
             <label htmlFor="cvv" className="block font-bold">
               CVV:
             </label>
@@ -163,7 +163,7 @@ const CreditCardForm = () => {
             {formErrors.cvv && <p>{formErrors.cvv}</p>}
           </div>
 
-          <div className="col-span-4 mb-4">
+          <div className=" mb-4">
             <label htmlFor="expiryDate" className="block font-bold">
               Expiry Date:
             </label>
