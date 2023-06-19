@@ -188,6 +188,8 @@ app.get("/user/:userID/message", async (req, res) => {
   }
 });
 
+//Get user Message info with user id: [id, message, date]
+
 //Get user Cart info with user id
 app.get("/user/:userID/cart", async (req, res) => {
   try {
@@ -217,7 +219,7 @@ app.get("/user/:userID/order", async (req, res) => {
     const order = user.order;
     return res.status(200).json(order);
   } catch (error) {
-    return res.status(200).json({ message: error.message });
+    return res.status(404).json({ message: error.message });
   }
 });
 //TODO: Get user Order info with user id: id,
@@ -226,8 +228,18 @@ app.get("/user/:userID/order", async (req, res) => {
 //address: [id, fullName, postalCode, street, city, country],
 //shippingDate
 
-//TODO: Get user Address info with user id: [id, fullName, postalCode, street, city, country]
-app.get("/user/:userID/address", (req, res) => {});
+//TODO: Get user Address info with user id: [id, fullName, postalCode, street, city, country, phoneNumber]
+app.get("/user/:userID/address", async (req, res) => {
+  try {
+    const { userID } = req.params;
+    let id = Number(userID);
+    const user = await UserDB.findOne({ id });
+    const address = user.address;
+    return res.status(200).json(address);
+  } catch (error) {
+    return res.status(404).json({ message: error.message });
+  }
+});
 
 //<---------------------- POST ---------------------->
 //Registration
@@ -385,7 +397,7 @@ app.put("/user/:userID/message", async (req, res) => {
   try {
     const { userID } = req.params;
     let id = Number(userID);
-    const { message, tag } = req.body;
+    const { message, tag, date } = req.body;
 
     if (!message) {
       throw new Error("Invalid message value");
@@ -406,7 +418,7 @@ app.put("/user/:userID/message", async (req, res) => {
     const newMessage = {
       id: biggestID + 1,
       message: message,
-      date: new Date(),
+      date: date,
       tag: tag,
     };
 
@@ -513,15 +525,51 @@ app.put("/user/:userID/order", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-//TODO: Post user Order info with user id: id,
-//gift: [id, name, description, price, tag: [id, name]],
-//card: [id, number, cvv, expMonth, expYear],
-//address: [id, fullName, postalCode, street, city, country],
-//shippingDate
-app.put("/user/:userID/order", (req, res) => {});
 
 //TODO: Post user Address info with user id: [id, fullName, postalCode, street, city, country]
-app.put("/user/:userID/address", (req, res) => {});
+app.put("/user/:userID/address", async (req, res) => {
+  try {
+    const { userID } = req.params;
+    let id = Number(userID);
+    const { phoneNumber, fullName, postalCode, street, city } = req.body;
+
+    // Retrieve the existing user data from the database
+    const user = await UserDB.findOne({ id });
+    if (!user) {
+      throw new Error("User not found");
+    }
+    const address = user.address;
+    // Find the maximum ID using reduce
+    const biggestID = address.reduce(
+      (maxID, address) => (address.id > maxID ? address.id : maxID),
+      0
+    );
+    const newAddress = {
+      id: biggestID + 1,
+      fullName: fullName,
+      postalCode: postalCode,
+      street: street,
+      city: city,
+      country: "Germany",
+      phoneNumber: phoneNumber,
+    };
+
+    // Update the user data with the new message
+    user.address.push(newAddress);
+    await user.save();
+
+    return res.status(200).json({
+      id: id,
+      fullName: fullName,
+      postalCode: postalCode,
+      street: street,
+      city: city,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: error.message });
+  }
+});
 
 //Update the profile information of customer
 app.put("/user/userInfo", async (req, res) => {
@@ -565,6 +613,48 @@ app.delete("/user/:userID/message/:messageID", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(404).json({ error: "User not found" });
+  }
+});
+
+//delete address
+app.delete("/user/:userID/address/:addressID", async (req, res) => {
+  const { userID, addressID } = req.params;
+  let userId = Number(userID);
+  let aID = Number(addressID);
+
+  try {
+    const user = await UserDB.findOne({ id: userId });
+    const addressIndex = user.address.findIndex((addr) => addr.id === aID);
+    if (addressIndex === -1) {
+      return res.status(404).json({ error: "address not found" });
+    }
+    user.address.splice(addressIndex, 1);
+    await user.save();
+    return res.status(200).json({ message: "Address deleted" });
+  } catch (error) {
+    console.error(error);
+    res.status(404).json({ error: "User not found" });
+  }
+});
+
+//delete address
+app.delete("/user/:userID/address", async (req, res) => {
+  const { userID } = req.params;
+  let userId = Number(userID);
+
+  try {
+    const user = await UserDB.findOne({ id: userId });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    user.address = []; // Clear all addresses by assigning an empty array
+    await user.save();
+
+    return res.status(200).json({ message: "All addresses deleted" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
   }
 });
 
