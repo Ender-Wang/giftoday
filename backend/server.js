@@ -188,9 +188,21 @@ app.get("/user/:userID/message", async (req, res) => {
   }
 });
 
+//Get user Cart info with user id
+app.get("/user/:userID/finalcart", async (req, res) => {
+  try {
+    const { userID } = req.params;
+    let id = Number(userID);
+    const user = await UserDB.findOne({ id });
+    const cart = user.cart;
+    return res.status(200).json(cart);
+  } catch (error) {
+    return res.status(200).json({ message: error.message });
+  }
+});
+
 //Get user Message info with user id: [id, message, date]
 
-//Get user Cart info with user id
 app.get("/user/:userID/cart", async (req, res) => {
   try {
     const { userID } = req.params;
