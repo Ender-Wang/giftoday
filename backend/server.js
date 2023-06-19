@@ -191,7 +191,7 @@ app.get("/user/:userID/message", async (req, res) => {
 //Get user Message info with user id: [id, message, date]
 
 //Get user Cart info with user id
-app.get("/user/:userID/cart", async (req, res) => {
+app.get("/user/:userID/finalcart", async (req, res) => {
   try {
     const { userID } = req.params;
     let id = Number(userID);
@@ -231,6 +231,25 @@ app.get("/user/:userID/address", async (req, res) => {
     return res.status(200).json(address);
   } catch (error) {
     return res.status(404).json({ message: error.message });
+  }
+});
+
+app.get("/user/:userID/cart", async (req, res) => {
+  try {
+    const { userID } = req.params;
+    const uid = Number(userID);
+    // Retrieve the existing user data from the database
+    const user = await UserDB.findOne({ id: uid });
+    if (!user) {
+      throw new Error("User not found");
+    }
+    // Return the user's cart
+    return res.status(200).json({
+      cart: user.cart,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: error.message });
   }
 });
 
