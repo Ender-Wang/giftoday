@@ -1,18 +1,24 @@
 import React, { useEffect } from "react";
 import PostalAddress from "../components/PostalAddress";
 import PaymentDetail from "../components/PaymentDetail";
+import OrderSummary from "../components/OrderSummary";
 function CheckoutPage() {
   useEffect(() => {
     document.title = "Giftoday - Checkout";
   }, []);
   return (
     <div>
-      <h1>Checkout</h1>
-      <h1>Checkout</h1>
-      <h1>Checkout</h1>
-      <h1>Checkout</h1>
-      <h1>Checkout</h1>
-      <h1>Checkout</h1>
+      <div
+        style={{
+          flex: "1 1 auto",
+          marginTop: "-10px",
+          marginLeft: "35px",
+        }}
+      >
+        {" "}
+        <OrderSummary />
+      </div>
+
       <PostalAddress />
       <PaymentDetail />
     </div>

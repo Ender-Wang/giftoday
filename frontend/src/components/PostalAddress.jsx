@@ -200,33 +200,49 @@ export default function PostalAddress() {
         <h1 className=" font-sans text-xl">Choose address</h1>
         <div className=" grid h-full w-full grid-rows-4">
           {/* previous addresses */}
-          <div className=" row-span-1 mb-2 w-4/5 overflow-y-auto rounded-lg border shadow-lg ">
+          <div className=" row-span-1 mb-2 overflow-x-auto rounded-lg">
             {preAddress.map((item) => (
-              <div className=" boarder grid grid-cols-4 grid-rows-3 ">
-                {/* home icon */}
-                <div className="row-span-3">
-                  <AiOutlineHome className="ml-4 text-6xl " />
-                </div>
-                <div className="col-span-2 ml-4 ">
-                  <div>{item.fullName}</div>
-                  <div className="row-span-3">
-                    <span>{item.phoneNumber}, </span>
-                    <span>{item.postalCode}, </span>
-                    <span>{item.street}, </span>
-                    <span>{item.city}</span>
+              <div className="boarder h-full">
+                {item.id ? (
+                  <div className=" grid grid-cols-4">
+                    <div>
+                      <AiOutlineHome className="ml-4 text-6xl " />
+                    </div>
+                    <div className="col-span-2 ml-4 ">
+                      <div>{item.fullName}</div>
+                      <div>
+                        <span>{item.phoneNumber}, </span>
+                        <span>{item.postalCode}, </span>
+                        <span>{item.street}, </span>
+                        <span>{item.city}</span>
+                      </div>
+                    </div>
+                    {/* delete Button */}
+                    <div className="col-span-1 mr-4 ">
+                      <button
+                        type="button"
+                        className="hover:scale-102 transform rounded-lg bg-normalButton px-5  py-1 hover:bg-normalButton"
+                        onClick={() => handleDelete(item.index)}
+                      >
+                        DELETE
+                      </button>
+                    </div>
                   </div>
-                </div>
-                {/* delete Button */}
-                <div className=" mr-4 ">
-                  <button
-                    type="button"
-                    className="hover:scale-102 transform rounded-lg bg-normalButton px-5  py-1 hover:bg-normalButton"
-                    onClick={() => handleDelete(item)}
-                  >
-                    DELETE
-                  </button>
-                </div>
-                <div></div>
+                ) : (
+                  <div className="grid grid-cols-4 ">
+                    <div>
+                      <AiOutlineHome className="ml-4 text-6xl " />
+                    </div>
+                    <div className="col-span-2 ml-4 ">
+                      <div>Your name</div>
+                      <div>
+                        <span>{item.postalCode}, </span>
+                        <span>{item.street}, </span>
+                        <span>{item.city}</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
