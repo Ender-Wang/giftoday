@@ -62,6 +62,7 @@ export default function ShopItem() {
       stock: item.stock,
       description: item.description,
       price: item.price,
+      image: item.image,
       tag: {
         id: 1,
         name: item.tag,
