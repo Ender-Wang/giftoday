@@ -194,12 +194,19 @@ app.get("/user/:userID/message", async (req, res) => {
 app.get("/user/:userID/cart", async (req, res) => {
   try {
     const { userID } = req.params;
-    let id = Number(userID);
-    const user = await UserDB.findOne({ id });
-    const cart = user.cart;
-    return res.status(200).json(cart);
+    const uid = Number(userID);
+    // Retrieve the existing user data from the database
+    const user = await UserDB.findOne({ id: uid });
+    if (!user) {
+      throw new Error("User not found");
+    }
+    // Return the user's cart
+    return res.status(200).json({
+      cart: user.cart,
+    });
   } catch (error) {
-    return res.status(200).json({ message: error.message });
+    console.log(error.message);
+    res.status(500).json({ message: error.message });
   }
 });
 
@@ -519,6 +526,7 @@ app.put("/user/:userID/order", async (req, res) => {
   }
 });
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 //Add Gift to user Cart
 app.put("/user/:userID/cart", async (req, res) => {
@@ -676,6 +684,8 @@ app.put("/user/:userID/order", async (req, res) => {
 app.put("/user/:userID/order", (req, res) => {});
 =======
 >>>>>>> master
+=======
+>>>>>>> 837faa5131cad3648fd92074a2529f1587286e88
 
 //TODO: Post user Address info with user id: [id, fullName, postalCode, street, city, country]
 app.put("/user/:userID/address", async (req, res) => {
@@ -827,34 +837,6 @@ app.delete("/user/:userID/order/:orderID", async (req, res) => {
     }
 
     user.order.splice(orderIndex, 1); // 从订单数组中删除订单
-
-    await user.save(); // 将更改保存回数据库
-
-    res.status(200).json({ message: "Order deleted successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
-
-//delete the gift in the cart
-app.delete("/user/:userID/cart/:cartID", async (req, res) => {
-  try {
-    const { userID, cartID } = req.params;
-    const id = Number(userID);
-    const OID = Number(cartID);
-
-    const user = await UserDB.findOne({ id: id });
-    if (!user) {
-      throw new Error("User not found");
-    }
-
-    const cartIndex = user.cart.findIndex((cart) => cart.id === OID);
-    if (cartIndex === -1) {
-      throw new Error("Order not found");
-    }
-
-    user.cart.splice(cartIndex, 1); // 从购物车删除gift
 
     await user.save(); // 将更改保存回数据库
 

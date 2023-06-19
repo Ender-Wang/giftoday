@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   PlusCircleIcon,
   TrashIcon,
@@ -223,3 +224,5 @@ export default function UserInfo() {
     </div>
   );
 }
+=======
+>>>>>>> 837faa5131cad3648fd92074a2529f1587286e88
