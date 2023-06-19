@@ -194,12 +194,19 @@ app.get("/user/:userID/message", async (req, res) => {
 app.get("/user/:userID/cart", async (req, res) => {
   try {
     const { userID } = req.params;
-    let id = Number(userID);
-    const user = await UserDB.findOne({ id });
-    const cart = user.cart;
-    return res.status(200).json(cart);
+    const uid = Number(userID);
+    // Retrieve the existing user data from the database
+    const user = await UserDB.findOne({ id: uid });
+    if (!user) {
+      throw new Error("User not found");
+    }
+    // Return the user's cart
+    return res.status(200).json({
+      cart: user.cart,
+    });
   } catch (error) {
-    return res.status(200).json({ message: error.message });
+    console.log(error.message);
+    res.status(500).json({ message: error.message });
   }
 });
 
@@ -435,7 +442,7 @@ app.put("/user/:userID/cart", async (req, res) => {
   try {
     const { userID } = req.params;
     const uid = Number(userID);
-    const { id, name, image, description, price, quantity, tag } = req.body;
+    const { id, name, description, price, quantity, tag } = req.body;
     console.log("UserID: " + uid);
     if (!name) {
       throw new Error("Invalid gift value");
@@ -457,7 +464,6 @@ app.put("/user/:userID/cart", async (req, res) => {
       const newGift = {
         id: id,
         name: name,
-        image: image,
         description: description,
         price: price,
         quantity: quantity,
@@ -519,165 +525,6 @@ app.put("/user/:userID/order", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-<<<<<<< HEAD
-
-//Add Gift to user Cart
-app.put("/user/:userID/cart", async (req, res) => {
-  try {
-    const { userID } = req.params;
-    const uid = Number(userID);
-    const { id, name, image, description, price, quantity, tag } = req.body;
-    console.log("UserID: " + uid);
-    if (!name) {
-      throw new Error("Invalid gift value");
-    }
-
-    // Retrieve the existing user data from the database
-    const user = await UserDB.findOne({ id: uid });
-    if (!user) {
-      throw new Error("User not found");
-    }
-
-    // Check if the gift already exists in the cart
-    const existingGiftIndex = user.cart.findIndex((gift) => gift.id === id);
-    if (existingGiftIndex !== -1) {
-      // If the gift already exists, increase the quantity by one
-      user.cart[existingGiftIndex].quantity += 1;
-    } else {
-      // If the gift doesn't exist, add it as a new gift to the cart
-      const newGift = {
-        id: id,
-        name: name,
-        image: image,
-        description: description,
-        price: price,
-        quantity: quantity,
-        tag: tag,
-      };
-      user.cart.push(newGift);
-    }
-
-    // TODO: Reduce Gift stock by 1 if the gift is added to the cart
-
-    // Update the user data with the modified cart
-    await user.save();
-    return res.status(200).json({
-      message: "Gift added to cart of user with userID " + uid,
-    });
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
-// add gift in user cart
-app.put("/user/:userID/cartAdd/:cartID", async (req, res) => {
-  try {
-    const { userID, cartID } = req.params;
-    const uid = Number(userID);
-    const cID = Number(cartID);
-    console.log("UserID: " + uid);
-
-    // Retrieve the existing user data from the database
-    const user = await UserDB.findOne({ id: uid });
-    if (!user) {
-      throw new Error("User not found");
-    }
-
-    const existingGiftIndex = user.cart.findIndex((gift) => gift.id === cID);
-
-    user.cart[existingGiftIndex].quantity += 1;
-    // Update the user data with the modified cart
-    await user.save();
-    return res.status(200).json({
-      message: "Gift added to cart of user with userID " + uid,
-    });
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
-// reduce gift in user cart
-app.put("/user/:userID/cartReduce/:cartID", async (req, res) => {
-  try {
-    const { userID, cartID } = req.params;
-    const uid = Number(userID);
-    const cID = Number(cartID);
-    console.log("UserID: " + uid);
-
-    // Retrieve the existing user data from the database
-    const user = await UserDB.findOne({ id: uid });
-    if (!user) {
-      throw new Error("User not found");
-    }
-
-    const existingGiftIndex = user.cart.findIndex((gift) => gift.id === cID);
-
-    if (user.cart[existingGiftIndex].quantity > 1) {
-      user.cart[existingGiftIndex].quantity -= 1;
-    }
-
-    // Update the user data with the modified cart
-    await user.save();
-    return res.status(200).json({
-      message: "Gift added to cart of user with userID " + uid,
-    });
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
-//TODO: Post user Order info with user id: id, gift: [id, name, description, price, tag: [id, name]], card: [id, number, cvv, expMonth, expYear], address: [id, fullName, postalCode, street, city, country], shippingDate
-app.put("/user/:userID/order", async (req, res) => {
-  try {
-    const { userID } = req.params;
-
-    const { id, total, gift, card, address, shippingDate } = req.body;
-
-    console.log("userID " + userID);
-    // if (!order) {
-    //   throw new Error("There is no order");
-    // }
-    // Retrieve the existing user data from the database
-    const user = await UserDB.findOne({ id: userID });
-
-    if (!user) {
-      throw new Error("User not found");
-    }
-
-    const newOrder = {
-      id: id,
-      total: total,
-      gift: gift,
-      card: card,
-      address: address,
-      shippingDate: shippingDate,
-    };
-
-    // Update the user data with the new message
-    user.order.push(newOrder);
-    await user.save();
-
-    return res.status(200).json({
-      order: newOrder,
-      id: userID,
-    });
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
-//TODO: Post user Order info with user id: id,
-//gift: [id, name, description, price, tag: [id, name]],
-//card: [id, number, cvv, expMonth, expYear],
-//address: [id, fullName, postalCode, street, city, country],
-//shippingDate
-app.put("/user/:userID/order", (req, res) => {});
-=======
->>>>>>> master
 
 //TODO: Post user Address info with user id: [id, fullName, postalCode, street, city, country]
 app.put("/user/:userID/address", async (req, res) => {
@@ -829,34 +676,6 @@ app.delete("/user/:userID/order/:orderID", async (req, res) => {
     }
 
     user.order.splice(orderIndex, 1); // 从订单数组中删除订单
-
-    await user.save(); // 将更改保存回数据库
-
-    res.status(200).json({ message: "Order deleted successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
-
-//delete the gift in the cart
-app.delete("/user/:userID/cart/:cartID", async (req, res) => {
-  try {
-    const { userID, cartID } = req.params;
-    const id = Number(userID);
-    const OID = Number(cartID);
-
-    const user = await UserDB.findOne({ id: id });
-    if (!user) {
-      throw new Error("User not found");
-    }
-
-    const cartIndex = user.cart.findIndex((cart) => cart.id === OID);
-    if (cartIndex === -1) {
-      throw new Error("Order not found");
-    }
-
-    user.cart.splice(cartIndex, 1); // 从购物车删除gift
 
     await user.save(); // 将更改保存回数据库
 
