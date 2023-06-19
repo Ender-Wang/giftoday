@@ -151,15 +151,11 @@ export default function UserInfo() {
                             <li key={cart.id} className="p-4 sm:p-6">
                               <div className="flex items-center sm:items-start">
                                 <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-gray-200 sm:h-40 sm:w-40">
-                                  <img
-                                    src={
-                                      "https://github.com/Ender-Wang/giftoday/blob/master/frontend/src/images/shopItems/" +
-                                      cart.image +
-                                      "?raw=true"
-                                    }
-                                    className="h-full w-full object-cover object-center"
-                                    style={{ aspectRatio: "1/1" }}
-                                  />
+                                  {/* <img
+                                src={product.imageSrc}
+                                alt={product.imageAlt}
+                                className="h-full w-full object-cover object-center"
+                              /> */}
                                 </div>
 
                                 <div className="ml-6 flex-1 text-sm">

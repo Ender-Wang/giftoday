@@ -435,7 +435,7 @@ app.put("/user/:userID/cart", async (req, res) => {
   try {
     const { userID } = req.params;
     const uid = Number(userID);
-    const { id, name, image, description, price, quantity, tag } = req.body;
+    const { id, name, description, price, quantity, tag } = req.body;
     console.log("UserID: " + uid);
     if (!name) {
       throw new Error("Invalid gift value");
@@ -457,7 +457,6 @@ app.put("/user/:userID/cart", async (req, res) => {
       const newGift = {
         id: id,
         name: name,
-        image: image,
         description: description,
         price: price,
         quantity: quantity,
@@ -526,7 +525,7 @@ app.put("/user/:userID/cart", async (req, res) => {
   try {
     const { userID } = req.params;
     const uid = Number(userID);
-    const { id, name, image, description, price, quantity, tag } = req.body;
+    const { id, name, description, price, quantity, tag } = req.body;
     console.log("UserID: " + uid);
     if (!name) {
       throw new Error("Invalid gift value");
@@ -548,7 +547,6 @@ app.put("/user/:userID/cart", async (req, res) => {
       const newGift = {
         id: id,
         name: name,
-        image: image,
         description: description,
         price: price,
         quantity: quantity,
