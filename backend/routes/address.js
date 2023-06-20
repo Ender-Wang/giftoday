@@ -1,6 +1,4 @@
-const express = require("express");
-const router = express.Router();
-const UserDB = require("../schemas/User.js");
+const { router, UserDB } = require("./DB.js");
 
 //TODO: Get user Address info with user id: [id, fullName, postalCode, street, city, country, phoneNumber]
 router.get("/user/:userID/address", async (req, res) => {
