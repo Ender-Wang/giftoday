@@ -121,6 +121,8 @@ const CreditCardForm = () => {
             setSuccessMessage("Payment successful!");
             setTimeout(() => {
               setSuccessMessage("");
+              // Refresh the page
+              window.location.reload();
             }, 500);
           } else {
             console.log("Payment failed. Please try again.");
@@ -129,9 +131,9 @@ const CreditCardForm = () => {
           setCardExistsError(
             "Card already exists. Please enter a different card number."
           );
-          setTimeout(() => {
-            setCardExistsError("");
-          }, 500);
+          // setTimeout(() => {
+          //   setCardExistsError("");
+          // }, 1500);
         } else {
           console.log("Error updating card information:", response.status);
           console.log("Error updating card information. Please try again.");
