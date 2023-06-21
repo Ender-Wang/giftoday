@@ -41,6 +41,7 @@ const Message = new Schema({
 const Cart = new Schema({
   id: Number,
   name: String,
+  image: String,
   description: String,
   price: Number,
   quantity: Number,

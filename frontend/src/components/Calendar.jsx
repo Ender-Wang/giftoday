@@ -1,12 +1,7 @@
-import React, { useState } from "react";
-import { getUserID } from "../states/GlobalState";
+import React from "react";
 import { AiFillGift } from "react-icons/ai";
 
 export default function Calendar({ selectedDay, onDayClick }) {
-  //TODO: Connect with server to fetch festival info and message info
-  //   const [festivalInfo, setFestivalInfo] = useState(null);
-  //   const [messageInfo, setMessageInfo] = useState(null);
-
   const currentDay = new Date();
 
   const handleDayClick = (day) => {
@@ -16,7 +11,6 @@ export default function Calendar({ selectedDay, onDayClick }) {
       day
     );
     onDayClick(dayWithMonthAndYear);
-    fetchFestivalInfo(dayWithMonthAndYear, getUserID());
   };
 
   const handlePreviousMonth = () => {
@@ -42,21 +36,6 @@ export default function Calendar({ selectedDay, onDayClick }) {
     onDayClick(currentDay);
   };
 
-  //TODO: Fetch festival info from backend on selected day
-  const fetchFestivalInfo = async (day, userID) => {
-    userID = getUserID();
-    // try {
-    //   const response = await fetch(
-    //     `/api/festival-info?day=${day}&userID=${userID}`
-    //   );
-    //   festivalInfo = await response.json();
-    //   setFestivalInfo(festivalInfo);
-    // } catch (error) {
-    //   console.error("Error fetching festival info:", error);
-    // }
-    // alert("User ID: " + userID + ", selected day: " + day);
-  };
-
   const daysInWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const daysInPreviousMonth = getDaysInMonth(
     selectedDay.getMonth() - 1,
@@ -74,7 +53,6 @@ export default function Calendar({ selectedDay, onDayClick }) {
   );
 
   const startDayIndex = firstDayOfMonth.getDay(); //Returns 0-6, 0 is Sunday
-  const weeksInMonth = Math.ceil((daysInCurrentMonth + startDayIndex) / 7);
 
   function getDaysInMonth(month, year) {
     return new Date(year, month + 1, 0).getDate();

@@ -59,7 +59,7 @@ export default function ShopItem() {
     const data = {
       id: item.id,
       name: item.name,
-      stock: item.stock,
+      image: item.image,
       description: item.description,
       price: item.price,
       tag: {

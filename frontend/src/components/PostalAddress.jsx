@@ -208,7 +208,7 @@ export default function PostalAddress() {
                     <div>
                       <AiOutlineHome className="ml-4 text-6xl " />
                     </div>
-                    <div className="col-span-2 ml-4 ">
+                    <div className="col-span-2 ml-4 mt-2 ">
                       <div>{item.fullName}</div>
                       <div>
                         <span>{item.phoneNumber}, </span>
@@ -218,7 +218,7 @@ export default function PostalAddress() {
                       </div>
                     </div>
                     {/* delete Button */}
-                    <div className="col-span-1 mr-4 ">
+                    <div className="col-span-1 mr-4 mt-2 ">
                       <button
                         type="button"
                         className="hover:scale-102 transform rounded-lg bg-normalButton px-5  py-1 hover:bg-normalButton"
@@ -231,9 +231,9 @@ export default function PostalAddress() {
                 ) : (
                   <div className="grid grid-cols-4 ">
                     <div>
-                      <AiOutlineHome className="ml-4 text-6xl " />
+                      <AiOutlineHome className="ml-4 text-6xl  " />
                     </div>
-                    <div className="col-span-2 ml-4 ">
+                    <div className="col-span-2 ml-4 mt-2 ">
                       <div>Your name</div>
                       <div>
                         <span>{item.postalCode}, </span>
