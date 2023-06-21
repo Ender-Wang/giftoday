@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getUserID } from "../states/GlobalState";
 
 const CreditCardForm = () => {
@@ -9,6 +9,7 @@ const CreditCardForm = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [formErrors, setFormErrors] = useState({});
   const [cardExistsError, setCardExistsError] = useState("");
+  const [existingCardInfo, setExistingCardInfo] = useState(null);
 
   const checkCardExists = async (cardNumber) => {
     try {
@@ -21,7 +22,7 @@ const CreditCardForm = () => {
 
       if (response.ok) {
         const data = await response.json();
-        const cardInfo = data.cardInfo;
+        const cardInfo = data;
         return cardInfo.some((card) => card.cardNumber === cardNumber);
       } else {
         console.log("Error checking card existence:", response.status);
@@ -32,6 +33,34 @@ const CreditCardForm = () => {
       return false;
     }
   };
+
+  useEffect(() => {
+    const fetchCardDetails = async () => {
+      try {
+        const response = await fetch(`http://localhost:4000/user/${id}/card`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const cardInfo = data.cardInfo;
+          if (cardInfo && cardInfo.length > 0) {
+            const existingCard = cardInfo;
+            setExistingCardInfo(existingCard);
+          }
+        } else {
+          console.log("Error fetching card details:", response.status);
+        }
+      } catch (error) {
+        console.log("Error fetching card details:", error);
+      }
+    };
+
+    fetchCardDetails();
+  }, [id]);
 
   const validateForm = () => {
     const errors = {};
@@ -69,9 +98,11 @@ const CreditCardForm = () => {
         return;
       }
 
+      // Format expiryDate to store only month and year
+      const formattedExpiryDate = expiryDate.substring(0, 7);
       const requestBody = {
         cardNumber: cardNumber,
-        expiryDate: expiryDate,
+        expiryDate: formattedExpiryDate,
         cvv: cvv,
       };
 
@@ -116,9 +147,29 @@ const CreditCardForm = () => {
 
   return (
     <div style={{ position: "absolute", top: 80, right: 150 }}>
-      {/* new card */}
       <h1 className="font-sans text-xl">Payment Detail:</h1>
       <br />
+      {/* Display existing bank card information */}
+      {existingCardInfo && (
+        <div>
+          {existingCardInfo.map((Card, index) => (
+            <div
+              key={index}
+              style={{
+                border: "1px solid #ccc",
+                borderRadius: "10px",
+                padding: "10px",
+                marginBottom: "10px",
+              }}
+            >
+              <p>Card Number: {Card.cardNumber}</p>
+              <p>Expiry Date: {Card.expiryDate.substring(0, 7)}</p>
+              <p>CVV: {Card.cvv}</p>
+            </div>
+          ))}
+        </div>
+      )}
+      {/* new card */}
       {successMessage && <p>{successMessage}</p>}
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-2 gap-4">
