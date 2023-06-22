@@ -145,6 +145,35 @@ const CreditCardForm = () => {
     }
   };
 
+  const deleteCard = async (cardNumber) => {
+    try {
+      const response = await fetch(
+        `http://localhost:4000/user/${id}/card/${cardNumber}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.ok) {
+        console.log(response);
+        setExistingCardInfo(
+          existingCardInfo.filter((card) => card.cardNumber !== cardNumber)
+        );
+        // Show success message
+        alert("Card deleted successfully");
+        // Refresh the page
+        // window.location.reload();
+      } else {
+        console.log("Error deleting card:", response.status);
+      }
+    } catch (error) {
+      console.log("Error deleting card:", error);
+    }
+  };
+
   const today = new Date().toISOString().split("T")[0];
 
   return (
@@ -167,6 +196,13 @@ const CreditCardForm = () => {
               <p>Card Number: {Card.cardNumber}</p>
               <p>Expiry Date: {Card.expiryDate.substring(0, 7)}</p>
               <p>CVV: {Card.cvv}</p>
+
+              <button
+                onClick={() => deleteCard(Card.cardNumber)}
+                className="mt-2 rounded-lg bg-red-500 px-3 py-1 text-white"
+              >
+                Delete Card
+              </button>
             </div>
           ))}
         </div>

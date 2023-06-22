@@ -61,6 +61,8 @@ export default function UserInfo() {
       if (response.ok) {
         console.log(response);
         setCarts(carts.filter((cart) => cart.id !== OID));
+        // Refresh the page
+        window.location.reload();
       } else {
         console.log("Deleting data failed.");
       }
