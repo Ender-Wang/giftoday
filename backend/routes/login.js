@@ -17,7 +17,6 @@ router.post("/user/login", (req, res) => {
       }
 
       // Authentication successful
-      console.log("Login successful for user", user.id);
       const response = {
         userID: user.id,
       };

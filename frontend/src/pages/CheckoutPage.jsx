@@ -8,17 +8,7 @@ function CheckoutPage() {
   }, []);
   return (
     <div>
-      <div
-        style={{
-          flex: "1 1 auto",
-          marginTop: "-10px",
-          marginLeft: "35px",
-        }}
-      >
-        {" "}
-        <OrderSummary />
-      </div>
-
+      <OrderSummary />
       <PostalAddress />
       <PaymentDetail />
     </div>

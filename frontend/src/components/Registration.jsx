@@ -144,7 +144,6 @@ export default function Registration() {
           }
         })
         .catch((error) => {
-          console.log(error);
           console.log("Registration failed! Error: " + error);
         });
     }
@@ -166,13 +165,13 @@ export default function Registration() {
         />
       </div>
 
-      <div className="w-2/5 flex flex-col items-center">
-        <h1 className="text-6xl mb-8 font-sans">Registration</h1>
+      <div className="flex w-2/5 flex-col items-center">
+        <h1 className="mb-8 font-sans text-6xl">Registration</h1>
 
         <div className="w-full max-w-sm">
           {/* Full Name input */}
           <div className="mb-4">
-            <label htmlFor="name" className="block font-bold mb-2">
+            <label htmlFor="name" className="mb-2 block font-bold">
               Full Name
             </label>
             <input
@@ -181,7 +180,7 @@ export default function Registration() {
               name="name"
               value={name}
               onChange={handleInputChange}
-              className={`w-full border-b-2 border-themeColor p-2 outline-none ${
+              className={`border-themeColor w-full border-b-2 p-2 outline-none ${
                 formErrors.name ? "border-red-500" : ""
               }`}
               required
@@ -191,10 +190,10 @@ export default function Registration() {
 
           {/* Email input */}
           <div className="mb-4">
-            <label htmlFor="email" className="block font-bold mb-2">
+            <label htmlFor="email" className="mb-2 block font-bold">
               Email Address{" "}
               {formErrors.email && (
-                <span className="text-red-500 text-sm">
+                <span className="text-sm text-red-500">
                   {" *"}
                   {formErrors.email}
                 </span>
@@ -206,7 +205,7 @@ export default function Registration() {
               name="email"
               value={email}
               onChange={handleInputChange}
-              className={`w-full border-b-2 border-themeColor p-2 outline-none ${
+              className={`border-themeColor w-full border-b-2 p-2 outline-none ${
                 formErrors.email ? "border-red-500" : ""
               }`}
               required
@@ -216,7 +215,7 @@ export default function Registration() {
 
           {/* Password input */}
           <div className="mb-4">
-            <label htmlFor="password" className="block font-bold mb-2">
+            <label htmlFor="password" className="mb-2 block font-bold">
               Password
             </label>
             <input
@@ -225,7 +224,7 @@ export default function Registration() {
               name="password"
               value={password}
               onChange={handleInputChange}
-              className={`w-full border-b-2 border-themeColor p-2 outline-none ${
+              className={`border-themeColor w-full border-b-2 p-2 outline-none ${
                 formErrors.password ? "border-red-500" : ""
               }`}
               required
@@ -235,13 +234,13 @@ export default function Registration() {
 
           {/* Address input */}
           <div className="mb-4">
-            <label htmlFor="address" className="block font-bold mb-2">
+            <label htmlFor="address" className="mb-2 block font-bold">
               Address
             </label>
             <div className="grid grid-cols-2 gap-4">
               {/* Postal Code input */}
               <div className="mb-4">
-                <label htmlFor="postalCode" className="block font-small mb-2">
+                <label htmlFor="postalCode" className="font-small mb-2 block">
                   Postal Code:
                 </label>
                 <input
@@ -250,7 +249,7 @@ export default function Registration() {
                   name="postalCode"
                   value={postalCode}
                   onChange={handleInputChange}
-                  className={`w-full border-b-2 border-themeColor p-2 outline-none ${
+                  className={`border-themeColor w-full border-b-2 p-2 outline-none ${
                     formErrors.postalCode ? "border-red-500" : ""
                   }`}
                   required
@@ -262,7 +261,7 @@ export default function Registration() {
 
               {/* Street input */}
               <div className="mb-4">
-                <label htmlFor="street" className="block font-small mb-2">
+                <label htmlFor="street" className="font-small mb-2 block">
                   Street:
                 </label>
                 <input
@@ -271,7 +270,7 @@ export default function Registration() {
                   name="street"
                   value={street}
                   onChange={handleInputChange}
-                  className={`w-full border-b-2 border-themeColor p-2 outline-none ${
+                  className={`border-themeColor w-full border-b-2 p-2 outline-none ${
                     formErrors.street ? "border-red-500" : ""
                   }`}
                   required
@@ -281,7 +280,7 @@ export default function Registration() {
 
               {/* City input */}
               <div className="mb-4">
-                <label htmlFor="city" className="block font-small mb-2">
+                <label htmlFor="city" className="font-small mb-2 block">
                   City:
                 </label>
                 <select
@@ -289,7 +288,7 @@ export default function Registration() {
                   name="city"
                   value={city}
                   onChange={handleInputChange}
-                  className={`w-full border-b-2 border-themeColor p-2 outline-none ${
+                  className={`border-themeColor w-full border-b-2 p-2 outline-none ${
                     formErrors.city ? "border-red-500" : ""
                   }`}
                   required
@@ -307,7 +306,7 @@ export default function Registration() {
 
               {/* Country input */}
               <div className="mb-4">
-                <label htmlFor="country" className="block font-small mb-2">
+                <label htmlFor="country" className="font-small mb-2 block">
                   Country/Region:
                 </label>
                 <input
@@ -316,7 +315,7 @@ export default function Registration() {
                   name="country"
                   value={country}
                   onChange={handleInputChange}
-                  className="w-full border-b-2 border-themeColor p-2 outline-none"
+                  className="border-themeColor w-full border-b-2 p-2 outline-none"
                   required
                   // disabled
                 />
@@ -328,7 +327,7 @@ export default function Registration() {
           <div className="flex justify-center">
             <button
               type="submit"
-              className="bg-themeColor-100 text-white font-medium py-2 px-4 rounded hover:bg-themeColor-60 hover:scale-110 hover:text-black transition duration-300 ease-in-out"
+              className="bg-themeColor-100 hover:bg-themeColor-60 rounded px-4 py-2 font-medium text-white transition duration-300 ease-in-out hover:scale-110 hover:text-black"
               onClick={handleSubmit}
             >
               Create Account
@@ -337,7 +336,7 @@ export default function Registration() {
         </div>
 
         {/* Login link */}
-        <div className="mt-4 text-xs flex flex-row">
+        <div className="mt-4 flex flex-row text-xs">
           <div className="flex opacity-50">
             *Already have an account? &nbsp;
           </div>
@@ -345,7 +344,7 @@ export default function Registration() {
             <Link
               to="/giftoday.com/login"
               onClick={handleLogin}
-              className="text-themeColor-400 hover:text-themeColor-100 hover:scale-110 transition duration-300 ease-in-out"
+              className="text-themeColor-400 hover:text-themeColor-100 transition duration-300 ease-in-out hover:scale-110"
             >
               Login
             </Link>

@@ -84,7 +84,6 @@ router.put("/user/:userID/cartAdd/:cartID", async (req, res) => {
     const { userID, cartID } = req.params;
     const uid = Number(userID);
     const cID = Number(cartID);
-    console.log("UserID: " + uid);
 
     // Retrieve the existing user data from the database
     const user = await UserDB.findOne({ id: uid });
@@ -112,7 +111,6 @@ router.put("/user/:userID/cartReduce/:cartID", async (req, res) => {
     const { userID, cartID } = req.params;
     const uid = Number(userID);
     const cID = Number(cartID);
-    console.log("UserID: " + uid);
 
     // Retrieve the existing user data from the database
     const user = await UserDB.findOne({ id: uid });

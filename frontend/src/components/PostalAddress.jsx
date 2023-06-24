@@ -60,7 +60,6 @@ export default function PostalAddress() {
         if (response.ok) {
           const responseData = await response.json();
           setPreAddress([...responseData]);
-          console.log(responseData);
         } else {
           console.log("Fetching data failed.");
         }
@@ -152,10 +151,8 @@ export default function PostalAddress() {
             body: JSON.stringify(data),
           }
         );
-        console.log(response);
         if (response.ok) {
           const result = await response.json();
-          alert("successful!");
           setFullName("");
           setPostalCode("");
           setStreet("");
@@ -165,11 +162,10 @@ export default function PostalAddress() {
 
           setPreAddress(preAddress.concat(result));
         } else {
-          alert("Save failed!");
+          console.log("Save address failed.");
         }
       } catch (error) {
-        console.log(error);
-        alert("An error occurred while processing the request.");
+        console.log("An error occurred while processing the request.", error);
       }
     }
   };
@@ -184,7 +180,6 @@ export default function PostalAddress() {
         }
       );
       if (response.ok) {
-        console.log(response);
         setPreAddress(preAddress.filter((preA) => preA.id !== aID));
       } else {
         console.log("Deleting data failed.");
@@ -223,7 +218,7 @@ export default function PostalAddress() {
                     <div className="col-span-1 mr-4 mt-2 ">
                       <button
                         type="button"
-                        className="hover:scale-102 transform rounded-lg bg-normalButton px-5  py-1 hover:bg-normalButton"
+                        className="hover:scale-102 bg-normalButton hover:bg-normalButton transform rounded-lg  px-5 py-1"
                         onClick={() => handleDelete(item.index)}
                       >
                         DELETE
@@ -389,7 +384,7 @@ export default function PostalAddress() {
             <div className=" mb-4">
               <button
                 type="button"
-                className="hover:scale-102 transform rounded-lg bg-lightButton px-5  py-1 hover:bg-normalButton"
+                className="hover:scale-102 bg-lightButton hover:bg-normalButton transform rounded-lg  px-5 py-1"
                 onClick={handleSave}
               >
                 Save

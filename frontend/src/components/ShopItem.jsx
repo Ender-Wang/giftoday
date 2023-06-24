@@ -12,7 +12,6 @@ export default function ShopItem() {
   const userID = getUserID();
   useEffect(() => {
     const fetchShopItems = async () => {
-      // console.log("shopItems: " + shopItems);
       try {
         const response = await fetch("http://localhost:4000/shopItems", {
           method: "GET",
@@ -78,14 +77,12 @@ export default function ShopItem() {
       );
       if (response.ok) {
         const result = await response.json();
-        alert("successful put into cart!");
-        console.log(result);
+        console.log("Adding to cart succeeded!");
       } else {
-        alert("Putting into cart failed!");
+        console.log("Putting into cart failed!");
       }
     } catch (error) {
       console.log(error);
-      alert("An error occurred while processing the request.");
     }
   };
   return (
@@ -113,21 +110,21 @@ export default function ShopItem() {
           {/* product price */}
           <div className="flex flex-row pl-2 ">
             {!isPremium && (
-              <span className="basis-5/6 font-bold text-lightFontColor">
+              <span className="text-lightFontColor basis-5/6 font-bold">
                 € {item.price}
               </span>
             )}
             {isPremium && (
-              <div className="basis-5/6 font-bold text-lightFontColor ">
+              <div className="text-lightFontColor basis-5/6 font-bold ">
                 <span className="line-through">€ {item.price}</span>
-                <span className=" ml-4 basis-5/6 text-xl font-bold text-orangeFontColor ">
+                <span className=" text-orangeFontColor ml-4 basis-5/6 text-xl font-bold ">
                   € {item.price * 0.9}
                 </span>
               </div>
             )}
             {isLoggedIn && (
               <div
-                className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-normalPlusButton"
+                className="bg-normalPlusButton flex h-6 w-6 cursor-pointer items-center justify-center rounded-full"
                 onClick={() => handleCartButton(item)}
               >
                 <AiOutlinePlus className="text-xl text-white" />

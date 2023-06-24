@@ -158,7 +158,6 @@ export default function UserInfo() {
       },
     };
     const errors = validateForm(data);
-    console.log(data);
     setFormErrors(errors);
 
     if (Object.keys(errors).length === 0) {
@@ -168,8 +167,6 @@ export default function UserInfo() {
         body: JSON.stringify(data),
       }).then((res) => {
         if (res.ok) {
-          console.log(res.status);
-          alert("Update successfully");
           setName("");
           setEmail("");
           setPassword("");
@@ -183,11 +180,9 @@ export default function UserInfo() {
         } else {
           // Check if the email is already registered
           if (res.status === 404) {
-            console.log(res.status);
-            alert("Not found the user");
+            console.log("User not found!");
           } else {
-            console.log(res.status);
-            alert("Update failed for reason of console!");
+            console.log("Internal server error!");
           }
         }
       });
@@ -354,7 +349,7 @@ export default function UserInfo() {
               {/* cancel button */}
               <button
                 type="cancel"
-                className="col duration-600 hover:bg-themeColor-200 flex rounded bg-themeColor-100 px-4 py-2 font-medium text-white transition-colors ease-in-out"
+                className="col duration-600 hover:bg-themeColor-200 bg-themeColor-100 flex rounded px-4 py-2 font-medium text-white transition-colors ease-in-out"
                 onClick={handleCancel}
               >
                 cancel
@@ -363,7 +358,7 @@ export default function UserInfo() {
               {/* save button */}
               <button
                 type="submit"
-                className="col duration-600 hover:bg-themeColor-200 flex rounded bg-themeColor-100 px-4 py-2 font-medium text-white transition-colors ease-in-out"
+                className="col duration-600 hover:bg-themeColor-200 bg-themeColor-100 flex rounded px-4 py-2 font-medium text-white transition-colors ease-in-out"
                 onClick={handleSubmit}
               >
                 save

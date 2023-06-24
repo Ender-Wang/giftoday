@@ -103,11 +103,9 @@ const CreditCardForm = () => {
           }, 500);
         } else {
           console.log("Error updating card information:", response.status);
-          console.log("Error updating card information. Please try again.");
         }
       } catch (error) {
         console.log("Error updating card information:", error);
-        console.log("Error updating card information. Please try again.");
       }
     }
   };
@@ -189,7 +187,7 @@ const CreditCardForm = () => {
         <div className="mb-4 ">
           <button
             type="submit"
-            className="hover:scale-102 transform rounded-lg bg-lightButton px-5 py-1 hover:bg-normalButton"
+            className="hover:scale-102 bg-lightButton hover:bg-normalButton transform rounded-lg px-5 py-1"
           >
             Submit
           </button>

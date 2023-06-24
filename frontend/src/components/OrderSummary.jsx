@@ -59,7 +59,6 @@ export default function UserInfo() {
         }
       );
       if (response.ok) {
-        console.log(response);
         setCarts(carts.filter((cart) => cart.id !== OID));
       } else {
         console.log("Deleting data failed.");
@@ -69,7 +68,6 @@ export default function UserInfo() {
     }
   };
 
-  // 点击添加按钮时触发的函数
   const handleAdd = async (giftId) => {
     try {
       const response = await fetch(
@@ -82,8 +80,6 @@ export default function UserInfo() {
         }
       );
       if (response.ok) {
-        console.log("Gift added successfully to cart");
-        // 在这里可以根据需要进行其他操作，如更新购物车列表等
         window.location.reload(); // reload current page
       } else {
         console.log("Failed to add gift to cart");

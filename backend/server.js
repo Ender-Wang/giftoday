@@ -2,10 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
-const UserDB = require("./schemas/User.js");
 const ShopItemDB = require("./schemas/ShopItem.js");
-
-//import ShopData from "./ShopData.json";
 const shopItems = require("./ShopData.json");
 
 const app = express();
@@ -28,13 +25,9 @@ mongoose
 
 async function run() {
   try {
-    // await UserDB.deleteMany(); // Remove existing users before adding new ones
     // await ShopItemDB.deleteMany(); // Remove existing ShopItems before adding new ones
-    // console.log(dummyUserData);
-    // const createdUsers = await UserDB.create(dummyUserData);
-    // console.log("Users created:", createdUsers);
   } catch (error) {
-    console.log("Error creating users:", error);
+    console.log(error);
   }
 }
 
