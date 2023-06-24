@@ -14,15 +14,19 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div>
-      <div className="absolute right-2/3 max-w-400 h-1/2 mt-16">
-        <Calendar selectedDay={selectedDay} onDayClick={handleDayClick} />
+    <div className="ml-28 flex flex-col md:flex-row">
+      <div className="fixed mt-14 w-full md:w-1/3">
+        <div className="mt-4 h-[350px] w-[300px]">
+          <Calendar selectedDay={selectedDay} onDayClick={handleDayClick} />
+        </div>
+        <div className="mt-8 h-[350px] w-[300px]">
+          <MessageBoard selectedDay={selectedDay} />
+        </div>
       </div>
-      <div className="absolute right-2/3 max-w-400 h-1/2 bottom-[-90px]">
-        <MessageBoard selectedDay={selectedDay} />
-      </div>
-      <div className="absolute left-1/3 w-3/5 h-full mt-8 justify-center overflow-y-auto">
-        <ShopItem />
+      <div className=" ml-[350px] w-full md:w-2/3">
+        <div className="mt-8 h-full justify-center overflow-y-auto">
+          <ShopItem />
+        </div>
       </div>
     </div>
   );
