@@ -34,7 +34,6 @@ router.put("/user/userInfo", async (req, res) => {
       return res.status(404).json({ error: "Not found user" });
     }
 
-    console.log("User Information has been updated: ", updatedUser);
     return res.json(updatedUser);
   } catch (err) {
     console.log(err);
