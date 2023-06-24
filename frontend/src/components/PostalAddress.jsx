@@ -193,6 +193,8 @@ export default function PostalAddress() {
       console.log(error);
     }
   };
+
+  const handleSelect = async (aID) => {};
   return (
     <div className="h-600 ">
       {/* "choose address" container */}

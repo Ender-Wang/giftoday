@@ -7,17 +7,47 @@ import { AiOutlineClose } from "react-icons/ai";
 
 export default function MessageBoard({ selectedDay }) {
   const [activeButton, setActiveButton] = useState("Button 2");
-  const holidays = ["Youth", "Chrismas", "Valentien", "Spring Festival"];
+  const [holidays, setHolidays] = useState([]);
   const { isLoggedIn } = useContext(AuthContext);
   const [preMessage, setPreMessage] = useState([]);
-  // const [preTag, setPreTag] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [newTag, setNewTag] = useState("");
-  const [festivals, setFestivals] = useState([]);
   const userID = getUserID();
-  // const [showInput, setShowInput] = useState(false);
-
   const tags = ["parents", "friends", " colleagues"];
+
+  useEffect(() => {
+    const fetchHolidays = async () => {
+      let month = String(selectedDay.getMonth() + 1).padStart(2, "0");
+      let year = String(selectedDay.getFullYear()).padStart(2, "0");
+      let day = String(selectedDay.getDate()).padStart(2, "0");
+      let url =
+        "https://openholidaysapi.org/PublicHolidaysByDate?date=" +
+        year +
+        "-" +
+        month +
+        "-" +
+        day;
+
+      let response = await fetch(url, {
+        method: "GET",
+      });
+      const responseData = await response.json();
+      const days = responseData
+        .map((item) => {
+          // Map to get the text of "EN"
+          const enName = item.name.find((name) => name.language === "EN");
+          return enName.text;
+        })
+        .filter((value, index, self) => {
+          return self.indexOf(value) === index;
+        });
+
+      setHolidays([...days]);
+      // console.log(responseData);
+      response.json().then(console.log).catch(console.error);
+    };
+    fetchHolidays();
+  }, [selectedDay, setHolidays]);
 
   //Show messages or festivals
   const handleButtonClick = (content) => {
@@ -86,23 +116,6 @@ export default function MessageBoard({ selectedDay }) {
       console.log(error);
     }
   };
-  // useEffect(() => {
-  //   const fetchFestivals = async (day, userID) => {
-  //     userID = getUserID();
-  //     try {
-  //       const response = await fetch(
-  //         `/api/festival-info?day=${day}&userID=${userID}`
-  //       );
-  //       const festivalInfo = await response.json();
-  //       setFestivals(festivalInfo);
-  //       console.log(festivalInfo);
-  //     } catch (error) {
-  //       console.error("Error fetching festival info:", error);
-  //     }
-  //     // alert("User ID: " + userID + ", selected day: " + day);
-  //   };
-  //   fetchFestivals(selectedDay, userID);
-  // }, [userID, selectedDay]);
 
   // Save new message and post it into postman
   const handleSaveButton = async () => {
@@ -175,6 +188,7 @@ export default function MessageBoard({ selectedDay }) {
                       key={index}
                     >
                       {item}
+                      {/* {item.text} */}
                     </div>
                   ))}
                 </div>
