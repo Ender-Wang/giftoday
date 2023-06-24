@@ -26,8 +26,6 @@ mongoose
 async function run() {
   try {
     // await ShopItemDB.deleteMany(); // Remove existing ShopItems before adding new ones
-    let a = 2;
-    console.log(a);
   } catch (error) {
     console.log(error);
   }

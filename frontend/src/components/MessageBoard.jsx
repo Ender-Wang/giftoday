@@ -138,7 +138,7 @@ export default function MessageBoard({ selectedDay }) {
           <div className="flex flex-row items-center justify-center px-5 ">
             <button
               type="button"
-              className={`mt-5 w-1/2 rounded-t-lg rounded-br-[-2px] pb-2 pt-2 font-bold ${
+              className={`mt-5 w-1/2 rounded-t-lg pb-2 pt-2 font-bold ${
                 activeButton === "Button 1" ? "bg-themeColor-40" : ""
               }`}
               onClick={() => handleButtonClick("Button 1")}
