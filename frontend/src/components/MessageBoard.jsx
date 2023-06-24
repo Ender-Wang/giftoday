@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { getUserID } from "../states/GlobalState";
 import { AuthContext } from "./AuthContext";
 import { useContext } from "react";
-import { AiOutlineClose } from "react-icons/ai";
+import { BsFillTrashFill } from "react-icons/bs";
 
 export default function MessageBoard({ selectedDay }) {
   const [activeButton, setActiveButton] = useState("Button 2");
@@ -37,7 +37,6 @@ export default function MessageBoard({ selectedDay }) {
         if (response.ok) {
           const responseData = await response.json();
           setPreMessage([...responseData]);
-          // console.log(responseData);
         } else {
           console.log("Fetching data failed.");
         }
@@ -49,7 +48,7 @@ export default function MessageBoard({ selectedDay }) {
     if (isLoggedIn) {
       fetchData();
     }
-  }, [userID, preMessage, isLoggedIn]);
+  }, [userID, isLoggedIn]);
 
   //If newMessage is entered or tag is selected
   const handleInputChange = (event) => {
@@ -77,7 +76,6 @@ export default function MessageBoard({ selectedDay }) {
         }
       );
       if (response.ok) {
-        console.log(response);
         setPreMessage(preMessage.filter((preM) => preM.id !== mID));
       } else {
         console.log("Deleting data failed.");
@@ -123,120 +121,111 @@ export default function MessageBoard({ selectedDay }) {
           body: JSON.stringify(data),
         }
       );
-      console.log(response);
-      if (response.ok) {
-        const result = await response.json();
-        alert("successful!");
-        setNewMessage("");
-        setNewTag("");
-        setPreMessage(preMessage.concat(result));
-      } else {
-        alert("Set Record failed!");
-      }
+      const result = await response.json();
+      setNewMessage("");
+      setNewTag("");
+      setPreMessage(preMessage.concat(result));
     } catch (error) {
-      console.log(error);
-      alert("An error occurred while processing the request.");
+      console.log("An error occurred while processing the request.", error);
     }
   };
 
   return (
-    <div className="rounded-md bg-background py-6">
+    <div className="bg-themeColor-80 h-4/5 rounded-md pb-5">
       {isLoggedIn ? (
-        // Homepage after login
-        <div>
-          {/* header */}
-          <div className="mb-6 flex flex-row items-center justify-center ">
+        <div className="h-full">
+          {/* Buttons */}
+          <div className="flex flex-row items-center justify-center px-5 ">
             <button
               type="button"
-              className="  mr-4 transform rounded-lg bg-lightButton px-5 py-1  hover:scale-105 hover:bg-normalButton"
+              className={`mt-5 w-1/2 rounded-t-lg rounded-br-[-2px] pb-2 pt-2 font-bold ${
+                activeButton === "Button 1" ? "bg-themeColor-40" : ""
+              }`}
               onClick={() => handleButtonClick("Button 1")}
             >
               Festivals
             </button>
             <button
               type="button"
-              className=" transform rounded-lg bg-lightButton px-5 py-1 hover:scale-105 hover:bg-normalButton"
+              className={`mt-5 w-1/2 rounded-t-lg pb-2 pt-2 font-bold ${
+                activeButton === "Button 2" ? "bg-themeColor-40" : ""
+              }`}
               onClick={() => handleButtonClick("Button 2")}
             >
               Records
             </button>
           </div>
-          {/* body */}
-          <div>
+
+          {/* Message of Festivals */}
+          <div
+            className={` bg-themeColor-40 mx-5 h-4/5 ${
+              activeButton === "Button 1" ? "rounded-tr-md" : "rounded-tl-md"
+            } rounded-b-md pb-6`}
+          >
             {/* After pressing "Festivals" button */}
             {activeButton === "Button 1" && (
-              <div className=" h-32 min-w-[300px] overflow-y-auto">
+              <div className="max-h-[160px] overflow-y-auto pt-1">
                 {/* <div className="absolute inset-0 bg-white" /> */}
-
-                <div className="mb-4 ">
-                  {holidays.map((item, index) => (
-                    <div
-                      className="hover:scale-102 mx-auto mb-4 h-7 w-4/5 transform rounded-sm  bg-message1 hover:bg-message2"
-                      key={index}
-                    >
-                      {item}
-                    </div>
-                  ))}
-                </div>
+                {holidays.map((item, index) => (
+                  <div
+                    className=" hover:bg-themeColor-80 mx-5 my-1 transform border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:font-bold"
+                    key={index}
+                  >
+                    {item}
+                  </div>
+                ))}
               </div>
             )}
-            {/* After pressing "Records" button */}
+
+            {/* Message of Records */}
             {activeButton === "Button 2" && (
-              <div className="min-w-[300px]">
-                <div>
-                  {/* input box */}
-                  <div>
-                    <div className="mx-auto mb-4 flex h-7  w-4/5 rounded-sm bg-message1 ">
-                      <input
-                        type="text"
-                        id="newMessage"
-                        name="newMessage"
-                        value={newMessage}
-                        onChange={handleInputChange}
-                        className="mx-auto h-7 w-full bg-message1 text-sm hover:bg-message2"
-                        placeholder="Add a new record..."
-                      />
+              <div className="">
+                {/* Add a new record */}
+                <div className="mb-1 flex justify-center px-5 pt-3">
+                  <input
+                    type="text"
+                    id="newMessage"
+                    name="newMessage"
+                    value={newMessage}
+                    onChange={handleInputChange}
+                    className="focus w-full border-b-2 bg-transparent px-1 italic placeholder-white placeholder-opacity-50 focus:not-italic focus:outline-none"
+                    placeholder="Add a new tag"
+                  />
 
-                      <select
-                        id="newTag"
-                        name="newTag"
-                        value={newTag}
-                        onChange={handleInputChange}
-                        className=" bg-message1 text-lightFontColor "
-                      >
-                        <option
-                          value=""
-                          className="text-sm text-lightFontColor"
-                          disabled
-                        >
-                          Select a tag
-                        </option>
-                        {tags.map((tag) => (
-                          <option
-                            className="text-sm text-lightFontColor"
-                            key={tag}
-                            value={tag}
-                          >
-                            {tag}
-                          </option>
-                        ))}
-                      </select>
+                  <select
+                    id="newTag"
+                    name="newTag"
+                    value={newTag}
+                    onChange={handleInputChange}
+                    className=" text-lightFontColor w-14 bg-transparent text-right text-sm hover:cursor-pointer focus:outline-none"
+                  >
+                    <option value="" disabled>
+                      #
+                    </option>
+                    {tags.map((tag) => (
+                      <option key={tag} value={tag}>
+                        #{tag}
+                      </option>
+                    ))}
+                  </select>
 
-                      <button
-                        type="button"
-                        className=" hover:scale-102 transform rounded-sm bg-lightButton hover:bg-normalButton"
-                        onClick={() => {
-                          handleSaveButton();
-                        }}
-                      >
-                        save
-                      </button>
-                    </div>
+                  <div className="bg-themeColor-60 hover:bg-themeColor-80 ml-2 rounded-md text-white transition duration-300 ease-in-out hover:cursor-pointer hover:text-black">
+                    <button
+                      type="button"
+                      className="text-bold px-1"
+                      onClick={() => {
+                        handleSaveButton();
+                      }}
+                    >
+                      save
+                    </button>
                   </div>
                 </div>
-                <div className="h-32 overflow-y-auto">
+
+                {/* Existing Records */}
+                <div className="max-h-[160px] overflow-y-auto">
                   <div>
-                    <div className="mb-4 ">
+                    <div className=" pr-5">
                       {preMessage
                         .filter((item) => {
                           const itemDate = new Date(item.date);
@@ -248,22 +237,23 @@ export default function MessageBoard({ selectedDay }) {
                           );
                         })
                         .map((item, index) => (
-                          <div
-                            className="hover:scale-102 mx-auto mb-4 h-7 w-4/5 transform rounded-sm  bg-message1 hover:bg-message2"
-                            key={index}
-                          >
+                          <div className="" key={index}>
                             <div className="flex items-center justify-between">
-                              <div>{item.message}</div>
-                              <div className=" mr-6 w-24  rounded-xl bg-tag text-center">
-                                {item.tag && item.tag.name}
+                              <div className="hover:bg-themeColor-80 mx-5 my-1 w-full transform truncate whitespace-nowrap border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:font-bold">
+                                {item.message}
                               </div>
-                            </div>
-                            <div
-                              className="absolute right-0 top-0 rounded-full bg-lightPlusButton "
-                              onClick={() => handleDeleteMessage(item.id)}
-                            >
-                              {/* "False" icon */}
-                              <AiOutlineClose className="text-xs text-white" />
+                              <div className="flex">
+                                <div className=" text-lightFontColor mr-2 flex text-right hover:cursor-default">
+                                  #{item.tag && item.tag.name}
+                                </div>
+                                <div
+                                  className="flex items-center"
+                                  onClick={() => handleDeleteMessage(item.id)}
+                                >
+                                  {/* "False" icon */}
+                                  <BsFillTrashFill className="text-lightFontColor bg-transparent text-lg transition duration-300 ease-in-out hover:scale-125 hover:cursor-pointer hover:text-red-600" />
+                                </div>
+                              </div>
                             </div>
                           </div>
                         ))}
@@ -276,27 +266,31 @@ export default function MessageBoard({ selectedDay }) {
         </div>
       ) : (
         // Homepage without login
-        <div className="min-w-[300px]">
-          <div className="mb-8 mt-8 flex flex-row items-center justify-center ">
+        <div className="bg-themeColor-80 h-4/5 rounded-md pb-5">
+          <div className="mb-3 flex flex-row items-center justify-center px-5 text-xl">
             <button
               type="button"
-              className="  mr-4 transform rounded-lg bg-lightButton px-5 py-1  hover:scale-105 hover:bg-normalButton"
+              className="mt-5 rounded-t-lg pb-2 pt-2 font-bold hover:cursor-default"
               onClick={() => handleButtonClick("Button 1")}
             >
               Festivals
             </button>
           </div>
-          <div className="h-32 overflow-y-auto">
-            <div className="mb-4 ">
-              {holidays.map((item, index) => (
-                <div
-                  className="hover:scale-102 mx-auto mb-4 h-7 w-4/5 transform rounded-sm  bg-message1 hover:bg-message2"
-                  key={index}
-                >
-                  {item}
-                </div>
-              ))}
-            </div>
+          <div className="bg-themeColor-40 mx-5 h-full rounded-md pb-6">
+            {/* After pressing "Festivals" button */}
+            {activeButton === "Button 1" && (
+              <div className="min-w-[230px] overflow-y-auto pt-2">
+                {/* <div className="absolute inset-0 bg-white" /> */}
+                {holidays.map((item, index) => (
+                  <div
+                    className=" hover:bg-themeColor-80 mx-5 my-1 transform border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:font-bold"
+                    key={index}
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}
