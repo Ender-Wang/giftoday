@@ -15,6 +15,29 @@ export default function OrderSummary() {
   //get ready to fetch data from backend
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isPremium, setPremium] = useState(false);
+  useEffect(() => {
+    const fetchPremium = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:4000/user/" + id + "/premium",
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        if (response.ok) {
+          const responseData = await response.json();
+          setPremium(responseData);
+        } else {
+          console.log("Fetching data failed.");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchPremium();
+  }, [id, isPremium]);
 
   useEffect(() => {
     // Fetch user information from the backend
@@ -227,7 +250,19 @@ export default function OrderSummary() {
             className="fixed bottom-4 right-4 rounded-lg bg-gray-100 p-4"
             style={{ zIndex: 9999 }}
           >
-            Total Price: €{totalPrice}
+            {!isPremium && (
+              <span className="basis-5/6 font-bold text-lightFontColor">
+                € {totalPrice}
+              </span>
+            )}
+            {isPremium && (
+              <div className="basis-5/6 font-bold text-lightFontColor ">
+                <span className="line-through">€ {totalPrice}</span>
+                <span className=" ml-4 basis-5/6 text-xl font-bold text-orangeFontColor ">
+                  Total Price: €{totalPrice * 0.9}
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>
