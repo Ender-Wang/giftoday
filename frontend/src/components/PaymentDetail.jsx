@@ -10,6 +10,7 @@ const CreditCardForm = () => {
   const [formErrors, setFormErrors] = useState({});
   const [cardExistsError, setCardExistsError] = useState("");
   const [existingCardInfo, setExistingCardInfo] = useState(null);
+  const [selectedCard, setSelectedCard] = useState(null);
 
   const checkCardExists = async (cardNumber) => {
     try {
@@ -174,6 +175,10 @@ const CreditCardForm = () => {
     }
   };
 
+  const selectCard = (Card) => {
+    setSelectedCard(Card);
+  };
+
   const today = new Date().toISOString().split("T")[0];
 
   return (
@@ -187,11 +192,12 @@ const CreditCardForm = () => {
             <div
               key={index}
               style={{
-                border: "1px solid #ccc",
+                border: `1px solid ${selectedCard === Card ? "blue" : "#ccc"}`,
                 borderRadius: "10px",
                 padding: "10px",
                 marginBottom: "10px",
               }}
+              onClick={() => selectCard(Card)}
             >
               <p>Card Number: {Card.cardNumber}</p>
               <p>Expiry Date: {Card.expiryDate.substring(0, 7)}</p>
@@ -283,6 +289,16 @@ const CreditCardForm = () => {
             Submit
           </button>
         </div>
+        
+        {/* Display the selected card information */}
+        {selectedCard && (
+          <div>
+            <h2>Selected Card:</h2>
+            <p>Card Number: {selectedCard.cardNumber}</p>
+            <p>Expiry Date: {selectedCard.expiryDate.substring(0, 7)}</p>
+            <p>CVV: {selectedCard.cvv}</p>
+          </div>
+        )}
       </form>
     </div>
   );
