@@ -176,7 +176,7 @@ export default function OrderSummary() {
                       >
                         {/* Products */}
                         <div class="scrollbar-thumb-gray-500 scrollbar-track-gray-200 scrollbar-w-2 h-64 overflow-y-scroll">
-                          <ul role="list" className="divide-y divide-gray-200">
+                          <ul className="divide-y divide-gray-200">
                             <li key={cart.id} className="p-4 sm:p-6">
                               <div className="flex items-center sm:items-start">
                                 <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-gray-200 sm:h-40 sm:w-40">
@@ -186,6 +186,7 @@ export default function OrderSummary() {
                                       cart.image +
                                       "?raw=true"
                                     }
+                                    alt={cart.name}
                                     className="h-full w-full object-cover object-center"
                                     style={{ aspectRatio: "1/1" }}
                                   />
