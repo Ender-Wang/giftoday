@@ -110,22 +110,25 @@ export default function ShopItem() {
           {/* product price */}
           <div className="flex flex-row pl-2 ">
             {!isPremium && (
-              <span className="text-lightFontColor basis-5/6 font-bold">
+              <span className="basis-5/6 font-bold text-lightFontColor">
                 € {item.price}
               </span>
             )}
             {isPremium && (
-              <div className="text-lightFontColor basis-5/6 font-bold ">
+              <div className="basis-5/6 font-bold text-lightFontColor ">
                 <span className="line-through">€ {item.price}</span>
-                <span className=" text-orangeFontColor ml-4 basis-5/6 text-xl font-bold ">
+                <span className=" ml-4 basis-5/6 text-xl font-bold text-orangeFontColor ">
                   € {item.price * 0.9}
                 </span>
               </div>
             )}
             {isLoggedIn && (
               <div
-                className="bg-normalPlusButton flex h-6 w-6 cursor-pointer items-center justify-center rounded-full"
-                onClick={() => handleCartButton(item)}
+                className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-normalPlusButton"
+                onClick={() => {
+                  handleCartButton(item);
+                  // window.location.reload();
+                }}
               >
                 <AiOutlinePlus className="text-xl text-white" />
               </div>

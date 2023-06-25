@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+// import { useState } from "react";
 import PostalAddress from "../components/PostalAddress";
 import PaymentDetail from "../components/PaymentDetail";
 import OrderSummary from "../components/OrderSummary";
 function CheckoutPage() {
-  const [totalPrice, setTotalPrice] = useState(0);
+  // const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
     document.title = "Giftoday - Checkout";
   }, []);

@@ -249,14 +249,15 @@ export default function OrderSummary() {
           >
             {!isPremium && (
               <span className="basis-5/6 font-bold text-lightFontColor">
-                € {totalPrice}
+                Total Price: € {totalPrice}
               </span>
             )}
             {isPremium && (
               <div className="basis-5/6 font-bold text-lightFontColor ">
                 <span className="line-through">€ {totalPrice}</span>
                 <span className=" ml-4 basis-5/6 text-xl font-bold text-orangeFontColor ">
-                  Total Price: €{totalPrice * 0.9}
+                  {/* toFixed 保留小数点后两位 */}
+                  Total Price: €{(totalPrice * 0.9).toFixed(2)}
                 </span>
               </div>
             )}
