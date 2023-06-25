@@ -6,6 +6,7 @@ export default function Registration() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [street, setStreet] = useState("");
   const [city, setCity] = useState("");
@@ -57,6 +58,10 @@ export default function Registration() {
         setPassword(value);
         setFormErrors((prevErrors) => ({ ...prevErrors, password: "" }));
         break;
+      case "phoneNumber":
+        setPhoneNumber(value);
+        setFormErrors((prevErrors) => ({ ...prevErrors, phoneNumber: "" }));
+        break;
       case "postalCode":
         setPostalCode(value);
         setFormErrors((prevErrors) => ({ ...prevErrors, postalCode: "" }));
@@ -86,6 +91,9 @@ export default function Registration() {
     if (data.password.trim() === "") {
       errors.password = "Password is required!";
     }
+    if (data.address.phoneNumber.trim() === "") {
+      errors.phoneNumber = "Phone Number is required!";
+    }
     if (data.address.postalCode.trim() === "") {
       errors.postalCode = "Postal Code is required!";
     }
@@ -106,6 +114,9 @@ export default function Registration() {
       email: email,
       password: password,
       address: {
+        id: 0,
+        fullName: name,
+        phoneNumber: phoneNumber,
         postalCode: postalCode,
         street: street,
         city: city,
@@ -126,6 +137,7 @@ export default function Registration() {
             setName("");
             setEmail("");
             setPassword("");
+            setPhoneNumber("");
             setPostalCode("");
             setStreet("");
             setCity("");
@@ -229,6 +241,25 @@ export default function Registration() {
               }`}
               required
               placeholder={formErrors.password ? formErrors.password : ""}
+            />
+          </div>
+
+          {/* Phone Number input */}
+          <div className="mb-4">
+            <label htmlFor="phoneNumber" className="mb-2 block font-bold">
+              Phone Number
+            </label>
+            <input
+              type="text"
+              id="phoneNumber"
+              name="phoneNumber"
+              value={phoneNumber}
+              onChange={handleInputChange}
+              className={`border-themeColor w-full border-b-2 p-2 outline-none ${
+                formErrors.phoneNumber ? "border-red-500" : ""
+              }`}
+              required
+              placeholder={formErrors.phoneNumber ? formErrors.phoneNumber : ""}
             />
           </div>
 
