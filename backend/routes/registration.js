@@ -28,12 +28,6 @@ router.post("/user/registration", (req, res) => {
         newUser
           .save()
           .then((user) => {
-            console.log(
-              "Registration successful with user: ",
-              user.name,
-              " id ",
-              user.id
-            );
             return res.json(user);
           })
           .catch((err) => {

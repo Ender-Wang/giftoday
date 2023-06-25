@@ -9,7 +9,7 @@ function CheckoutPage() {
   }, []);
   return (
     <div>
-      <div
+      {/* <div
         style={{
           flex: "1 1 auto",
           marginTop: "-10px",
@@ -22,13 +22,14 @@ function CheckoutPage() {
             setTotalPrice(totalPrice);
           }}
         />
-      </div>
+      </div> */}
       {/* <div
         className="fixed bottom-4 right-4 rounded-lg bg-gray-100 p-4"
         style={{ zIndex: 9999 }}
       >
         Total Price: €{totalPrice}
       </div> */}
+      <OrderSummary />
       <PostalAddress />
       <PaymentDetail />
     </div>

@@ -9,7 +9,6 @@ router.get("/user/:userID/premium", (req, res) => {
     .then((user) => {
       if (user) {
         res.json(user.premium);
-        // console.log(user.premium); // Wrap user in an array
       } else {
         res.status(404).json({ error: "User not found" });
       }
@@ -34,12 +33,8 @@ router.put("/user/:userID/premium", async (req, res) => {
 
     if (user) {
       if (premium) {
-        console.log(`User ${userID} upgraded to premium. Premium: ${premium}`);
         res.status(200).json({ message: "Premium upgrade successful.", user });
       } else {
-        console.log(
-          `User ${userID} downgraded from premium. Premium: ${premium}`
-        );
         res.status(200).json({ message: "Do not subscribe to premium.", user });
       }
     } else {

@@ -143,12 +143,12 @@ export default function Calendar({ selectedDay, onDayClick }) {
   };
 
   return (
-    <div className="flex w-full flex-col justify-center rounded-lg bg-themeColor-80 bg-cover bg-center bg-no-repeat p-2">
-      <AiFillGift className="absolute text-[260px] ml-2.5 mt-16 text-white opacity-20 z-0" />
+    <div className="bg-themeColor-80 flex w-full flex-col justify-center rounded-lg bg-cover bg-center bg-no-repeat p-2">
+      <AiFillGift className="absolute z-0 ml-2.5 mt-16 text-[260px] text-white opacity-20" />
       {/* Calendar header */}
       <div className="mb-4 flex w-full items-center justify-between">
         <div
-          className="cursor-default pl-2 pt-1 text-xl font-bold hover:text-white transition duration-300 ease-in-out hover:scale-125"
+          className="cursor-default pl-2 pt-1 text-xl font-bold transition duration-300 ease-in-out hover:scale-125 hover:text-white"
           onClick={handleJumpToCurrentDay}
           title="Click to jump to current day"
         >
@@ -159,13 +159,13 @@ export default function Calendar({ selectedDay, onDayClick }) {
         </div>
         <div className="flex items-center pr-2 pt-1">
           <button
-            className="cursor-pointer px-2 text-2xl font-semibold hover:text-white transition duration-300 ease-in-out hover:scale-125"
+            className="cursor-pointer px-2 text-2xl font-semibold transition duration-300 ease-in-out hover:scale-125 hover:text-white"
             onClick={handlePreviousMonth}
           >
             &lt;
           </button>
           <button
-            className="cursor-pointer px-2 text-2xl font-semibold hover:text-white transition duration-300 ease-in-out hover:scale-125"
+            className="cursor-pointer px-2 text-2xl font-semibold transition duration-300 ease-in-out hover:scale-125 hover:text-white"
             onClick={handleNextMonth}
           >
             &gt;

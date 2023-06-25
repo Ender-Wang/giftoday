@@ -20,7 +20,6 @@ router.put("/user/:userID/order", async (req, res) => {
 
     const { id, total, gift, card, address, shippingDate } = req.body;
 
-    console.log("userID " + userID);
     // if (!order) {
     //   throw new Error("There is no order");
     // }
