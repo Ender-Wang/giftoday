@@ -17,7 +17,7 @@ export default function PostalAddress() {
   const userID = getUserID();
 
   const [formErrors, setFormErrors] = useState({});
-
+  const [selectAddress, setSelectedAddress] = useState(0);
   const germanyCities = [
     "Berlin",
     "Hamburg",
@@ -158,7 +158,7 @@ export default function PostalAddress() {
           setStreet("");
           setCity("");
           setPhoneNumber("");
-          setShippingDate("");
+          // setSelectedAddress();
 
           setPreAddress(preAddress.concat(result));
         } else {
@@ -188,6 +188,58 @@ export default function PostalAddress() {
       console.log(error);
     }
   };
+  //Select address
+  // const handleSelect = (item) => {
+  //   if(isNaN(item.id)){
+  //     setSelectedAddress(-1);
+  //   }else{
+  //     set
+  //   }
+
+  // };
+  //Selected address
+  // const handleSelect = async (aID) =>{
+  //   if (aID===-1) {
+
+  //   } else {
+
+  //   }
+  //   const data = {
+  //     fullName: fullName,
+  //     postalCode: postalCode,
+  //     phoneNumber: phoneNumber,
+  //     city: city,
+  //     country: country,
+  //     street: street,
+  //     shippingDate: shippingDate,
+  //   };
+  //     try {
+  //       const response = await fetch(
+  //         "http://localhost:4000/user/" + userID + "/address",
+  //         {
+  //           method: "PUT",
+  //           headers: { "Content-Type": "application/json" },
+  //           body: JSON.stringify(data),
+  //         }
+  //       );
+  //       if (response.ok) {
+  //         const result = await response.json();
+  //         setFullName("");
+  //         setPostalCode("");
+  //         setStreet("");
+  //         setCity("");
+  //         setPhoneNumber("");
+  //         setShippingDate("");
+
+  //         setPreAddress(preAddress.concat(result));
+  //       } else {
+  //         console.log("Save address failed.");
+  //       }
+  //     } catch (error) {
+  //       console.log("An error occurred while processing the request.", error);
+  //     }
+
+  // }
   return (
     <div className="h-600 ">
       {/* "choose address" container */}
@@ -201,7 +253,10 @@ export default function PostalAddress() {
                 {item.id ? (
                   <div className=" grid grid-cols-4">
                     <div>
-                      <AiOutlineHome className="ml-4 text-6xl " />
+                      <AiOutlineHome
+                        className="ml-4 text-6xl"
+                        onClick={() => setSelectedAddress(item.id)}
+                      />
                     </div>
                     <div className="col-span-2 ml-4 mt-2 ">
                       <div>{item.fullName}</div>
@@ -216,7 +271,7 @@ export default function PostalAddress() {
                     <div className="col-span-1 mr-4 mt-2 ">
                       <button
                         type="button"
-                        className="hover:scale-102 bg-normalButton hover:bg-normalButton transform rounded-lg  px-5 py-1"
+                        className="hover:scale-102 transform rounded-lg bg-normalButton px-5  py-1 hover:bg-normalButton"
                         onClick={() => handleDelete(item.index)}
                       >
                         DELETE
@@ -226,7 +281,10 @@ export default function PostalAddress() {
                 ) : (
                   <div className="grid grid-cols-4 ">
                     <div>
-                      <AiOutlineHome className="ml-4 text-6xl  " />
+                      <AiOutlineHome
+                        className="ml-4 text-6xl"
+                        onClick={() => setSelectedAddress(0)}
+                      />
                     </div>
                     <div className="col-span-2 ml-4 mt-2 ">
                       <div>Your name</div>
@@ -382,7 +440,7 @@ export default function PostalAddress() {
             <div className=" mb-4">
               <button
                 type="button"
-                className="hover:scale-102 bg-lightButton hover:bg-normalButton transform rounded-lg  px-5 py-1"
+                className="hover:scale-102 transform rounded-lg bg-lightButton px-5  py-1 hover:bg-normalButton"
                 onClick={handleSave}
               >
                 Save
