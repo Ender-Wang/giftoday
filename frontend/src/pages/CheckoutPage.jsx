@@ -1,38 +1,36 @@
 import React, { useEffect } from "react";
-// import { useState } from "react";
+import { useState } from "react";
 import PostalAddress from "../components/PostalAddress";
 import PaymentDetail from "../components/PaymentDetail";
 import OrderSummary from "../components/OrderSummary";
 function CheckoutPage() {
-  // const [totalPrice, setTotalPrice] = useState(0);
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
     document.title = "Giftoday - Checkout";
   }, []);
+  const handleSelectCard = (card) => {
+    setSelectedCard(card);
+  };
+
   return (
     <div>
-      {/* <div
-        style={{
-          flex: "1 1 auto",
-          marginTop: "-10px",
-          marginLeft: "35px",
+      <OrderSummary
+        onTotalPriceChange={(totalPrice) => {
+          setTotalPrice(totalPrice);
         }}
-      >
-        {" "}
-        <OrderSummary
-          onTotalPriceChange={(totalPrice) => {
-            setTotalPrice(totalPrice);
-          }}
-        />
-      </div> */}
-      {/* <div
-        className="fixed bottom-4 right-4 rounded-lg bg-gray-100 p-4"
-        style={{ zIndex: 9999 }}
-      >
-        Total Price: €{totalPrice}
-      </div> */}
-      <OrderSummary />
+      />
+      <div>Total Price: €{totalPrice}</div>
       <PostalAddress />
-      <PaymentDetail />
+      <PaymentDetail onSelectCard={handleSelectCard} />
+      {selectedCard && (
+        <div>
+          <h2>Selected Card:</h2>
+          <p>Card Number: {selectedCard.cardNumber}</p>
+          <p>Expiry Date: {selectedCard.expiryDate.substring(0, 7)}</p>
+          <p>CVV: {selectedCard.cvv}</p>
+        </div>
+      )}
     </div>
   );
 }

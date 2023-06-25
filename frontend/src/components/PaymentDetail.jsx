@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getUserID } from "../states/GlobalState";
 
-const CreditCardForm = () => {
+const CreditCardForm = ({ onSelectCard }) => {
   const [cardNumber, setCardNumber] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [cvv, setCvv] = useState("");
@@ -175,6 +175,7 @@ const CreditCardForm = () => {
 
   const selectCard = (Card) => {
     setSelectedCard(Card);
+    onSelectCard(Card);
   };
 
   const today = new Date().toISOString().split("T")[0];
@@ -282,21 +283,21 @@ const CreditCardForm = () => {
         <div className="mb-4 ">
           <button
             type="submit"
-            className="hover:scale-102 bg-lightButton hover:bg-normalButton transform rounded-lg px-5 py-1"
+            className="hover:scale-102 transform rounded-lg bg-lightButton px-5 py-1 hover:bg-normalButton"
           >
             Submit
           </button>
         </div>
-        
+
         {/* Display the selected card information */}
-        {selectedCard && (
+        {/* {selectedCard && (
           <div>
             <h2>Selected Card:</h2>
             <p>Card Number: {selectedCard.cardNumber}</p>
             <p>Expiry Date: {selectedCard.expiryDate.substring(0, 7)}</p>
             <p>CVV: {selectedCard.cvv}</p>
           </div>
-        )}
+        )} */}
       </form>
     </div>
   );

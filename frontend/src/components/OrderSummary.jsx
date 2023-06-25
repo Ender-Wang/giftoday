@@ -6,7 +6,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { getUserID } from "../states/GlobalState";
 
-export default function OrderSummary() {
+export default function OrderSummary({ onTotalPriceChange }) {
   const [id] = useState(getUserID);
 
   const [carts, setCarts] = useState(null);
@@ -67,6 +67,7 @@ export default function OrderSummary() {
       0
     );
     setTotalPrice(totalPrice);
+    onTotalPriceChange(totalPrice); 
   };
 
   if (loading) {
