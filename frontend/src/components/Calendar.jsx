@@ -121,16 +121,7 @@ export default function Calendar({ selectedDay, onDayClick }) {
         weekRow.push(
           <td
             key={dayIndex}
-            className={`text-center ${dayClass} ${currentDayStyle}`}
-            style={{
-              height: "40px",
-              width: "40px",
-              //   border: "1px solid #ddd",
-              borderRadius: "50%",
-              borderCollapse: "separate",
-              //   padding: "10px",
-              //   borderSpacing: "10px",
-            }}
+            className={`text-center ${dayClass} ${currentDayStyle} h-10 w-10 border-separate rounded-[50%]`}
             onClick={handleClick}
           >
             {dayObj.day}
