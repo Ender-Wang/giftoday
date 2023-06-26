@@ -2,7 +2,6 @@ import { CheckIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserID } from "../states/GlobalState";
-import PaymentDetail from "../components/PaymentDetail";
 
 const tiers = [
   {
@@ -40,40 +39,31 @@ export default function PremiumBenefit() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const userID = getUserID();
-  const [selectedCard, setSelectedCard] = useState(null);
-  const handleSelectCard = (card) => {
-    setSelectedCard(card);
-  };
 
   const handlePremiumUpgrade = (premium) => {
     setLoading(true);
 
-    if (premium === false || selectedCard !== null) {
-      fetch(`http://localhost:4000/user/${userID}/premium`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ premium }),
+    fetch(`http://localhost:4000/user/${userID}/premium`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ premium }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          navigate("/giftoday.com");
+          window.location.reload(); // reload current page
+        } else {
+          console.log("Premium upgrade failed");
+        }
       })
-        .then((response) => {
-          if (response.ok) {
-            navigate("/giftoday.com");
-            window.location.reload(); // reload current page
-          } else {
-            console.log("Premium upgrade failed");
-          }
-        })
-        .catch((error) => {
-          console.error("Error upgrading to premium:", error);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    } else {
-      alert("Please select your payment method first");
-      setLoading(false);
-    }
+      .catch((error) => {
+        console.error("Error upgrading to premium:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -147,9 +137,6 @@ export default function PremiumBenefit() {
             </button>
           </div>
         ))}
-      </div>
-      <div className="absolute right-0 top-0 mt-16 sm:mt-20 lg:mt-16 lg:max-w-sm lg:px-6">
-        <PaymentDetail onSelectCard={handleSelectCard} />
       </div>
     </div>
   );
