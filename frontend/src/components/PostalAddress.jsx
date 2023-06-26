@@ -76,7 +76,6 @@ export default function PostalAddress({ onSelectAddress }) {
         setFullName(value);
         setFormErrors((prevErrors) => ({ ...prevErrors, name: "" }));
         break;
-
       case "street":
         setStreet(value);
         setFormErrors((prevErrors) => ({ ...prevErrors, street: "" }));
@@ -103,9 +102,6 @@ export default function PostalAddress({ onSelectAddress }) {
     if (data.fullName.trim() === "") {
       errors.name = "Full Name is required!";
     }
-    if (data.shippingDate.trim() === "") {
-      errors.shippingDate = "Shipping Date is required!";
-    }
     if (data.postalCode.trim() === "") {
       errors.postalCode = "Postal Code is required!";
     }
@@ -131,7 +127,6 @@ export default function PostalAddress({ onSelectAddress }) {
       city: city,
       country: country,
       street: street,
-      shippingDate: shippingDate,
     };
     const errors = validateForm(data);
     setFormErrors(errors);
@@ -185,7 +180,7 @@ export default function PostalAddress({ onSelectAddress }) {
   const handleSelectAddress = (address) => {
     onSelectAddress(address);
     setSelectedAddress(address.id);
-  }
+  };
   return (
     <div className="h-600 ">
       {/* "choose address" container */}
@@ -215,13 +210,13 @@ export default function PostalAddress({ onSelectAddress }) {
         <div className=" grid h-full w-full grid-rows-4">
           {/* previous addresses */}
           <div className=" row-span-1 mb-2 overflow-x-auto rounded-lg">
-            {preAddress.map((item) => (
-              <div className="boarder h-full">
+            {preAddress.map((item, index) => (
+              <div className="boarder h-full" key={index}>
                 <div className=" grid grid-cols-4">
                   <div>
                     <AiOutlineHome
                       className="ml-4 text-6xl"
-                      onClick={() => handleSelectAddress(item)}
+                      onClick={() => setSelectedAddress(item.id)}
                     />
                   </div>
                   <div className="col-span-2 ml-4 mt-2 ">
@@ -238,7 +233,7 @@ export default function PostalAddress({ onSelectAddress }) {
                       <button
                         type="button"
                         className="hover:scale-102 transform rounded-lg bg-normalButton px-5  py-1 hover:bg-normalButton"
-                        onClick={() => handleDelete(item.index)}
+                        onClick={() => handleDelete(item.id)}
                       >
                         DELETE
                       </button>
@@ -280,6 +275,8 @@ export default function PostalAddress({ onSelectAddress }) {
                 id="shippingDate"
                 name="shippingDate"
                 value="26/06/2023"
+                // value={shippingDate}
+                // onChange={handleInputChange}
                 className="border-themeColor w-full border-b-2 outline-none"
                 required
               />
@@ -358,7 +355,7 @@ export default function PostalAddress({ onSelectAddress }) {
                 id="country"
                 name="country"
                 value={country}
-                onChange={handleInputChange}
+                // onChange={handleInputChange}
                 className="border-themeColor w-full border-b-2 outline-none "
                 required
               />
