@@ -8,7 +8,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { AiTwotoneCrown } from "react-icons/ai";
 import { getUserID } from "../states/GlobalState";
 
-const Navbar = () => {
+const Navbar = ({ searchContent, handleSearchSubmit }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const { isLoggedIn, logout } = useContext(AuthContext);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -61,7 +61,9 @@ const Navbar = () => {
       setLoading(false);
     }
   }, [id, isLoggedIn]);
+  // const handleSubmit(()=>{
 
+  // });
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -98,6 +100,9 @@ const Navbar = () => {
     e.preventDefault();
     setShowProfileMenu(!showProfileMenu);
   };
+  const handleSubmit = (text) => {
+    handleSearchSubmit(text);
+  };
 
   return (
     <nav className="fixed z-50 h-[48px] w-full bg-themeColor-100 px-32 shadow-xl backdrop-blur-sm backdrop-invert backdrop-opacity-10">
@@ -123,13 +128,20 @@ const Navbar = () => {
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
             />
-            <img
+            <button
+              type="button"
+              className="hover:scale-102 boarder boarder-lightButton transform rounded-lg pl-1 pr-1 text-white  hover:bg-normalButton"
+              onClick={() => handleSubmit(searchText)}
+            >
+              Search
+            </button>
+            {/* <img
               src={filter}
               alt="Search Icon"
               className="mr-0 h-7 w-7 rounded-md"
               onClick={() => handleClick(searchText)}
               onMouseEnter={handleMouseEnter}
-            />
+            /> */}
           </div>
           {showDropdown && (
             <div className="left-90 absolute right-0 top-[110%] z-10">

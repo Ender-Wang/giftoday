@@ -8,19 +8,32 @@ import PremiumBenefitsPage from "./pages/PremiumBenefitsPage";
 import ProfilePage from "./pages/ProfilePage";
 import CheckoutPage from "./pages/CheckoutPage";
 import { AuthProvider } from "./components/AuthContext";
-
+import { useState } from "react";
 function App() {
+  const [searchContent, setSearchContent] = useState("");
+  const handleSearchSubmit = (text) => {
+    setSearchContent(text);
+  };
   return (
     <AuthProvider>
-      <NavBar />
+      <NavBar
+        searchText={searchContent}
+        handleSearchSubmit={handleSearchSubmit}
+      />
       <Routes>
-        <Route path="/giftoday.com" element={<HomePage />} />
+        <Route
+          path="/giftoday.com"
+          element={<HomePage searchText={searchContent} />}
+        />
         <Route
           path="/giftoday.com/registration"
           element={<RegistrationPage />}
         />
         <Route path="/giftoday.com/login" element={<LoginPage />} />
-        <Route path="/giftoday.com/homepage" element={<HomePage />} />
+        <Route
+          path="/giftoday.com/homepage"
+          element={<HomePage searchText={searchContent} />}
+        />
         <Route
           path="/giftoday.com/premium-benefits"
           element={<PremiumBenefitsPage />}

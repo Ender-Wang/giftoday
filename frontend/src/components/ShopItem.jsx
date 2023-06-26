@@ -5,7 +5,7 @@ import { AuthContext } from "./AuthContext";
 import { AiOutlinePlus } from "react-icons/ai";
 import { getUserID } from "../states/GlobalState";
 
-export default function ShopItem({ selectedTag }) {
+export default function ShopItem({ selectedTag, searchContent }) {
   const { isLoggedIn } = useContext(AuthContext);
   const [shopItems, setShopItems] = useState([]);
   const [isPremium, setPremium] = useState(false);
@@ -32,6 +32,7 @@ export default function ShopItem({ selectedTag }) {
   }, []);
 
   const filterTag = (items, tag) => {
+    // console.log(searchContent);
     if (tag === "home")
       return items.filter(
         (item) => item.tag === "home_decor" || item.tag === "kitchen"
@@ -55,6 +56,16 @@ export default function ShopItem({ selectedTag }) {
       );
     return items;
   };
+
+  // const filterOnSearch = (items, text) => {
+  //   console.log(text);
+  //   if (text === "") return items;
+  //   return items.filter(
+  //     (item) =>
+  //       item.tag.toLowerCase().includes(text.toLowerCase()) ||
+  //       item.name.toLowerCase().includes(text.toLowerCase())
+  //   );
+  // };
 
   // const filteredItems = filterTag(shopItems, selectedTag);
   useEffect(() => {
@@ -112,6 +123,7 @@ export default function ShopItem({ selectedTag }) {
   };
   return (
     <div className="grid grid-cols-3 grid-rows-2 gap-16 p-10  ">
+      {/* {filterTag(shopItems, selectedTag).map((item) => ( */}
       {filterTag(shopItems, selectedTag).map((item) => (
         <div
           key={item.id}

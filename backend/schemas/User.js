@@ -62,6 +62,7 @@ const User = new Schema({
   name: String,
   email: String,
   password: String,
+  // search: String,
   premium: { type: Boolean, default: false },
   card: { type: [Card], default: [] },
   message: { type: [Message], default: [] },
