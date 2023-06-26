@@ -26,7 +26,11 @@ export default function HomePage({ searchContent }) {
       <div className=" ml-[350px] w-full md:w-2/3">
         <div className="mt-8 h-full justify-center overflow-y-auto">
 <<<<<<< HEAD
+<<<<<<< HEAD
           <ShopItem />
+=======
+          <ShopItem selectedTag={selectedTag} searchContent={searchContent} />
+>>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)
 =======
           <ShopItem selectedTag={selectedTag} searchContent={searchContent} />
 >>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)

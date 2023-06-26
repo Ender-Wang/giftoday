@@ -7,9 +7,12 @@ export default function ProfilePage() {
     <div class="flex">
       <div class="w-4/5">
 <<<<<<< HEAD
+<<<<<<< HEAD
         <div class="ml-12 mt-12">
           <UserInfo />
 =======
+=======
+>>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)
         <div>
           <div class="ml-12 mt-12">
             <UserInfo />
@@ -19,6 +22,9 @@ export default function ProfilePage() {
           {/* <div class="mr-20 "> */}
           <OrderHistory />
           {/* </div> */}
+<<<<<<< HEAD
+>>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)
+=======
 >>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)
         </div>
       </div>

@@ -6,7 +6,11 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { getUserID } from "../states/GlobalState";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 export default function ShopItem() {
+=======
+export default function ShopItem({ selectedTag, searchContent }) {
+>>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)
 =======
 export default function ShopItem({ selectedTag, searchContent }) {
 >>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)
@@ -139,6 +143,9 @@ export default function ShopItem({ selectedTag, searchContent }) {
         <div
           key={item.id}
           className="h-[300px] w-[250px] transform rounded-xl shadow-xl duration-300 hover:scale-110"
+<<<<<<< HEAD
+>>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)
+=======
 >>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)
         >
           {/* product picture */}
@@ -153,6 +160,7 @@ export default function ShopItem({ selectedTag, searchContent }) {
               style={{ aspectRatio: "1/1" }}
               alt={item.name}
 <<<<<<< HEAD
+<<<<<<< HEAD
             />
           </div>
           {/* product name */}
@@ -166,11 +174,20 @@ export default function ShopItem({ selectedTag, searchContent }) {
             />
           </div>
           {/* product name */}
+=======
+              title={item.description}
+            />
+          </div>
+          {/* product name */}
+>>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)
           <div className="ml-2 font-bold">{item.name}</div>
           {/* product price */}
           <div className="flex flex-row pl-2 ">
             {!isPremium && (
               <span className="ml-2 basis-5/6 font-bold text-lightFontColor">
+<<<<<<< HEAD
+>>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)
+=======
 >>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)
                 € {item.price}
               </span>
@@ -187,10 +204,14 @@ export default function ShopItem({ selectedTag, searchContent }) {
               <div
                 className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-normalPlusButton"
 <<<<<<< HEAD
+<<<<<<< HEAD
                 onClick={() => {
                   handleCartButton(item);
                   // window.location.reload();
                 }}
+=======
+                onClick={() => handleCartButton(item)}
+>>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)
 =======
                 onClick={() => handleCartButton(item)}
 >>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)

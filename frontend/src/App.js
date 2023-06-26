@@ -9,6 +9,7 @@ import ProfilePage from "./pages/ProfilePage";
 import CheckoutPage from "./pages/CheckoutPage";
 import { AuthProvider } from "./components/AuthContext";
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 function App() {
   return (
@@ -17,6 +18,10 @@ function App() {
 =======
 import { useState } from "react";
 function App() {
+=======
+import { useState } from "react";
+function App() {
+>>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)
   const [searchContent, setSearchContent] = useState("");
   const handleSearchSubmit = (text) => {
     setSearchContent(text);
