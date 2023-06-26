@@ -5,10 +5,11 @@ import { AuthContext } from "./AuthContext";
 import { AiOutlinePlus } from "react-icons/ai";
 import { getUserID } from "../states/GlobalState";
 
-export default function ShopItem() {
+export default function ShopItem({ selectedTag }) {
   const { isLoggedIn } = useContext(AuthContext);
   const [shopItems, setShopItems] = useState([]);
   const [isPremium, setPremium] = useState(false);
+  // const [filteredItems, setFilteredItems] = useState([]);
   const userID = getUserID();
   useEffect(() => {
     const fetchShopItems = async () => {
@@ -31,6 +32,32 @@ export default function ShopItem() {
     fetchShopItems();
   }, []);
 
+  const filterTag = (items, tag) => {
+    if (tag === "home")
+      return items.filter(
+        (item) => item.tag === "home_decor" || item.tag === "kitchen"
+      );
+    if (tag === "beauty") return items.filter((item) => item.tag === "beauty");
+    if (tag === "lifestyle")
+      return items.filter(
+        (item) =>
+          item.tag === "accessories" ||
+          item.tag === "stationery" ||
+          item.tag === "books" ||
+          item.tag === "travel"
+      );
+    if (tag === "technology")
+      return items.filter(
+        (item) => item.tag === "tools" || item.tag === "electronics"
+      );
+    if (tag === "health")
+      return items.filter(
+        (item) => item.tag === "fitness" || item.tag === "food"
+      );
+    return items;
+  };
+
+  // const filteredItems = filterTag(shopItems, selectedTag);
   useEffect(() => {
     const fetchPremium = async () => {
       try {
@@ -87,7 +114,7 @@ export default function ShopItem() {
   };
   return (
     <div className="grid grid-cols-3 grid-rows-2 gap-16 p-10  ">
-      {shopItems.map((item) => (
+      {filterTag(shopItems, selectedTag).map((item) => (
         <div
           key={item.id}
           className="h-64 min-w-[100px]  transform rounded-xl shadow-xl duration-300 hover:scale-110"

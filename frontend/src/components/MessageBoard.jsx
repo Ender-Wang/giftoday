@@ -5,7 +5,7 @@ import { AuthContext } from "./AuthContext";
 import { useContext } from "react";
 import { BsFillTrashFill } from "react-icons/bs";
 
-export default function MessageBoard({ selectedDay }) {
+export default function MessageBoard({ selectedDay, onTagClick }) {
   const [activeButton, setActiveButton] = useState("Button 2");
   const { isLoggedIn } = useContext(AuthContext);
   const [holidays, setHolidays] = useState([]);
@@ -13,11 +13,9 @@ export default function MessageBoard({ selectedDay }) {
   // const [preTag, setPreTag] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [newTag, setNewTag] = useState("");
-  const [festivals, setFestivals] = useState([]);
   const userID = getUserID();
-  // const [showInput, setShowInput] = useState(false);
 
-  const tags = ["parents", "friends", " colleagues"];
+  const tags = ["home", "beauty", "lifestyle", "technology", "health"];
 
   //Calendar API
   useEffect(() => {
@@ -140,6 +138,7 @@ export default function MessageBoard({ selectedDay }) {
       const result = await response.json();
       setNewMessage("");
       setNewTag("");
+      console.log([result].concat(preMessage));
       setPreMessage([result].concat(preMessage));
     } catch (error) {
       console.log("An error occurred while processing the request.", error);
@@ -258,6 +257,7 @@ export default function MessageBoard({ selectedDay }) {
                               <div
                                 className="mx-5 my-1 w-full transform truncate whitespace-nowrap border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:bg-themeColor-80 hover:font-bold"
                                 title={item.message}
+                                onClick={() => onTagClick(item.tag.name)}
                               >
                                 {item.message}
                               </div>
