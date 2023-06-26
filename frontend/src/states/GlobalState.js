@@ -1,15 +1,6 @@
 // This file contains functions to get and set the global state of the application
 
-// Getters
-export function getUserID() {
-  return localStorage.getItem("userID");
-}
-
-export function getLoggedInDate() {
-  return localStorage.getItem("loggedInDate");
-}
-
-// Setters
+//--------------------- User ID -----------------------------//
 export async function setUserID(userID) {
   try {
     await localStorage.setItem("userID", userID);
@@ -20,6 +11,20 @@ export async function setUserID(userID) {
   }
 }
 
+export function getUserID() {
+  return localStorage.getItem("userID");
+}
+export async function removeUserID() {
+  try {
+    await localStorage.removeItem("userID");
+    return true;
+  } catch (err) {
+    console.log("Error removing userID:", err);
+    return false;
+  }
+}
+
+//--------------------- LoggedInDate -----------------------------//
 export async function setLoggedInDate() {
   const loggedInDate = new Date();
   try {
@@ -34,12 +39,30 @@ export async function setLoggedInDate() {
   }
 }
 
-export async function removeUserID() {
+export function getLoggedInDate() {
+  return localStorage.getItem("loggedInDate");
+}
+
+//--------------------- Selected Date -----------------------------//
+export async function setSelectedDate(date) {
+  const selectedDate = new Date(date);
   try {
-    await localStorage.removeItem("userID");
+    await localStorage.setItem(
+      "selectedDate",
+      selectedDate.toLocaleDateString("en-GB")
+    );
     return true;
   } catch (err) {
-    console.log("Error removing userID:", err);
+    console.log("Error setting selectedDate:", err);
+    return false;
+  }
+}
+
+export async function getSelectedDate() {
+  try {
+    return localStorage.getItem("selectedDate");
+  } catch (err) {
+    console.log("Error getting selectedDate:", err);
     return false;
   }
 }
