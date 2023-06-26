@@ -290,7 +290,6 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
             <button
               type="button"
               className="mt-5 rounded-t-lg pb-2 pt-2 font-bold hover:cursor-default"
-              // onClick={() => handleButtonClick("Button 1")}
             >
               Festivals
             </button>
@@ -299,7 +298,6 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
             {/* After pressing "Festivals" button */}
 
             <div className="min-w-[230px] overflow-y-auto pt-2">
-              {/* <div className="absolute inset-0 bg-white" /> */}
               {holidays.map((item, index) => (
                 <div
                   className=" mx-5 my-1 transform border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:bg-themeColor-80 hover:font-bold"

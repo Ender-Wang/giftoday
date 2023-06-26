@@ -185,83 +185,11 @@ export default function PostalAddress() {
       console.log(error);
     }
   };
-  //Select address
-  // const handleSelect = (item) => {
-  //   if(isNaN(item.id)){
-  //     setSelectedAddress(-1);
-  //   }else{
-  //     set
-  //   }
 
-  // };
-  //Selected address
-  // const handleSelect = async (aID) =>{
-  //   if (aID===-1) {
-
-  //   } else {
-
-  //   }
-  //   const data = {
-  //     fullName: fullName,
-  //     postalCode: postalCode,
-  //     phoneNumber: phoneNumber,
-  //     city: city,
-  //     country: country,
-  //     street: street,
-  //     shippingDate: shippingDate,
-  //   };
-  //     try {
-  //       const response = await fetch(
-  //         "http://localhost:4000/user/" + userID + "/address",
-  //         {
-  //           method: "PUT",
-  //           headers: { "Content-Type": "application/json" },
-  //           body: JSON.stringify(data),
-  //         }
-  //       );
-  //       if (response.ok) {
-  //         const result = await response.json();
-  //         setFullName("");
-  //         setPostalCode("");
-  //         setStreet("");
-  //         setCity("");
-  //         setPhoneNumber("");
-  //         setShippingDate("");
-
-  //         setPreAddress(preAddress.concat(result));
-  //       } else {
-  //         console.log("Save address failed.");
-  //       }
-  //     } catch (error) {
-  //       console.log("An error occurred while processing the request.", error);
-  //     }
-
-  // }
   return (
     <div className="h-600 ">
       {/* "choose address" container */}
       <div className=" absolute bottom-8 left-10 h-2/5 w-2/5 min-w-[300px] pl-4 pt-2">
-        <div>
-          {preAddress
-            .filter((item) => {
-              return item.id === selectAddress;
-            })
-            .map((item, index) => (
-              <div className="boarder h-full" key={index}>
-                <div className=" grid grid-cols-4">
-                  <div className="col-span-2 ml-4 mt-2 ">
-                    <div>{item.fullName}</div>
-                    <div>
-                      <span>{item.phoneNumber}, </span>
-                      <span>{item.postalCode}, </span>
-                      <span>{item.street}, </span>
-                      <span>{item.city}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-        </div>
         <h1 className=" font-sans text-xl">Choose address</h1>
         <div className=" grid h-full w-full grid-rows-4">
           {/* previous addresses */}

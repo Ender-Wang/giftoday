@@ -115,7 +115,7 @@ export default function ShopItem({ selectedTag }) {
       {filterTag(shopItems, selectedTag).map((item) => (
         <div
           key={item.id}
-          className="h-64 min-w-[100px]  transform rounded-xl shadow-xl duration-300 hover:scale-110"
+          className="h-[300px] w-[250px] transform rounded-xl shadow-xl duration-300 hover:scale-110"
         >
           {/* product picture */}
           <div className="pl-4 pr-4">
@@ -132,11 +132,11 @@ export default function ShopItem({ selectedTag }) {
             />
           </div>
           {/* product name */}
-          <div className="font-bold">{item.name}</div>
+          <div className="ml-2 font-bold">{item.name}</div>
           {/* product price */}
           <div className="flex flex-row pl-2 ">
             {!isPremium && (
-              <span className="basis-5/6 font-bold text-lightFontColor">
+              <span className="ml-2 basis-5/6 font-bold text-lightFontColor">
                 € {item.price}
               </span>
             )}
