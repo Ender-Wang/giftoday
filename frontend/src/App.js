@@ -8,19 +8,40 @@ import PremiumBenefitsPage from "./pages/PremiumBenefitsPage";
 import ProfilePage from "./pages/ProfilePage";
 import CheckoutPage from "./pages/CheckoutPage";
 import { AuthProvider } from "./components/AuthContext";
+<<<<<<< HEAD
 
 function App() {
   return (
     <AuthProvider>
       <NavBar />
+=======
+import { useState } from "react";
+function App() {
+  const [searchContent, setSearchContent] = useState("");
+  const handleSearchSubmit = (text) => {
+    setSearchContent(text);
+  };
+  return (
+    <AuthProvider>
+      <NavBar
+        searchText={searchContent}
+        handleSearchSubmit={handleSearchSubmit}
+      />
+>>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)
       <Routes>
-        <Route path="/giftoday.com" element={<HomePage />} />
+        <Route
+          path="/giftoday.com"
+          element={<HomePage searchText={searchContent} />}
+        />
         <Route
           path="/giftoday.com/registration"
           element={<RegistrationPage />}
         />
         <Route path="/giftoday.com/login" element={<LoginPage />} />
-        <Route path="/giftoday.com/homepage" element={<HomePage />} />
+        <Route
+          path="/giftoday.com/homepage"
+          element={<HomePage searchText={searchContent} />}
+        />
         <Route
           path="/giftoday.com/premium-benefits"
           element={<PremiumBenefitsPage />}

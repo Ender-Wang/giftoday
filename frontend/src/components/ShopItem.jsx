@@ -5,7 +5,11 @@ import { AuthContext } from "./AuthContext";
 import { AiOutlinePlus } from "react-icons/ai";
 import { getUserID } from "../states/GlobalState";
 
+<<<<<<< HEAD
 export default function ShopItem() {
+=======
+export default function ShopItem({ selectedTag, searchContent }) {
+>>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)
   const { isLoggedIn } = useContext(AuthContext);
   const [shopItems, setShopItems] = useState([]);
   const [isPremium, setPremium] = useState(false);
@@ -32,9 +36,7 @@ export default function ShopItem() {
   }, []);
 
   const filterTag = (items, tag) => {
-    console.log(getSearchContent());
-
-    // console.log(typeof searchContent);
+    // console.log(searchContent);
     if (tag === "home")
       return items.filter(
         (item) => item.tag === "home_decor" || item.tag === "kitchen"
@@ -59,15 +61,15 @@ export default function ShopItem() {
     return items;
   };
 
-  const filterOnSearch = (items, text) => {
-    console.log(text);
-    if (text === "") return items;
-    return items.filter(
-      (item) =>
-        item.tag.toLowerCase().includes(text.toLowerCase()) ||
-        item.name.toLowerCase().includes(text.toLowerCase())
-    );
-  };
+  // const filterOnSearch = (items, text) => {
+  //   console.log(text);
+  //   if (text === "") return items;
+  //   return items.filter(
+  //     (item) =>
+  //       item.tag.toLowerCase().includes(text.toLowerCase()) ||
+  //       item.name.toLowerCase().includes(text.toLowerCase())
+  //   );
+  // };
 
   // const filteredItems = filterTag(shopItems, selectedTag);
   useEffect(() => {
@@ -126,10 +128,18 @@ export default function ShopItem() {
   };
   return (
     <div className="grid grid-cols-3 grid-rows-2 gap-16 p-10  ">
+<<<<<<< HEAD
       {shopItems.map((item) => (
         <div
           key={item.id}
           className="h-64 min-w-[100px]  transform rounded-xl shadow-xl hover:scale-110"
+=======
+      {/* {filterTag(shopItems, selectedTag).map((item) => ( */}
+      {filterTag(shopItems, selectedTag).map((item) => (
+        <div
+          key={item.id}
+          className="h-[300px] w-[250px] transform rounded-xl shadow-xl duration-300 hover:scale-110"
+>>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)
         >
           {/* product picture */}
           <div className="pl-4 pr-4">
@@ -142,6 +152,7 @@ export default function ShopItem() {
               className="h-full w-full object-cover"
               style={{ aspectRatio: "1/1" }}
               alt={item.name}
+<<<<<<< HEAD
             />
           </div>
           {/* product name */}
@@ -150,6 +161,17 @@ export default function ShopItem() {
           <div className="flex flex-row pl-2 ">
             {!isPremium && (
               <span className="basis-5/6 font-bold text-lightFontColor">
+=======
+              title={item.description}
+            />
+          </div>
+          {/* product name */}
+          <div className="ml-2 font-bold">{item.name}</div>
+          {/* product price */}
+          <div className="flex flex-row pl-2 ">
+            {!isPremium && (
+              <span className="ml-2 basis-5/6 font-bold text-lightFontColor">
+>>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)
                 € {item.price}
               </span>
             )}
@@ -164,10 +186,14 @@ export default function ShopItem() {
             {isLoggedIn && (
               <div
                 className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-normalPlusButton"
+<<<<<<< HEAD
                 onClick={() => {
                   handleCartButton(item);
                   // window.location.reload();
                 }}
+=======
+                onClick={() => handleCartButton(item)}
+>>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)
               >
                 <AiOutlinePlus className="text-xl text-white" />
               </div>

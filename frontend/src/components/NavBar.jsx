@@ -103,6 +103,9 @@ const Navbar = () => {
     e.preventDefault();
     setShowProfileMenu(!showProfileMenu);
   };
+  const handleSubmit = (text) => {
+    handleSearchSubmit(text);
+  };
 
   return (
     <nav className="fixed z-50 h-[48px] w-full bg-themeColor-100 px-32 shadow-xl backdrop-blur-sm backdrop-invert backdrop-opacity-10">
@@ -128,7 +131,18 @@ const Navbar = () => {
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
             />
+<<<<<<< HEAD
             <img
+=======
+            <button
+              type="button"
+              className="hover:scale-102 boarder boarder-lightButton transform rounded-lg pl-1 pr-1 text-white  hover:bg-normalButton"
+              onClick={() => handleSubmit(searchText)}
+            >
+              Search
+            </button>
+            {/* <img
+>>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)
               src={filter}
               alt="Search Icon"
               className="mr-0 h-7 w-7 rounded-md"
