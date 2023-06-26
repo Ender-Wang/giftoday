@@ -67,7 +67,7 @@ export default function OrderSummary({ onTotalPriceChange }) {
       0
     );
     setTotalPrice(totalPrice);
-    onTotalPriceChange(totalPrice); 
+    onTotalPriceChange(totalPrice);
   };
 
   if (loading) {
@@ -243,25 +243,6 @@ export default function OrderSummary({ onTotalPriceChange }) {
                 )}
               </div>
             </div>
-          </div>
-          <div
-            className="fixed bottom-4 right-4 rounded-lg bg-gray-100 p-4"
-            style={{ zIndex: 9999 }}
-          >
-            {!isPremium && (
-              <span className="basis-5/6 font-bold text-lightFontColor">
-                Total Price: € {totalPrice}
-              </span>
-            )}
-            {isPremium && (
-              <div className="basis-5/6 font-bold text-lightFontColor ">
-                <span className="line-through">€ {totalPrice}</span>
-                <span className=" ml-4 basis-5/6 text-xl font-bold text-orangeFontColor ">
-                  {/* toFixed 保留小数点后两位 */}
-                  Total Price: €{(totalPrice * 0.9).toFixed(2)}
-                </span>
-              </div>
-            )}
           </div>
         </div>
       </div>

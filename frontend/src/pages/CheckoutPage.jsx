@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import PostalAddress from "../components/PostalAddress";
 import PaymentDetail from "../components/PaymentDetail";
 import OrderSummary from "../components/OrderSummary";
@@ -9,8 +8,32 @@ function CheckoutPage() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
   const [selectedAddress, setSelectedAddress] = useState(null);
-  const navigate = useNavigate();
   const [id] = useState(getUserID);
+  const [isPremium, setPremium] = useState(false);
+
+  useEffect(() => {
+    const fetchPremium = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:4000/user/" + id + "/premium",
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        if (response.ok) {
+          const responseData = await response.json();
+          setPremium(responseData);
+        } else {
+          console.log("Fetching data failed.");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchPremium();
+  }, [id, isPremium]);
+
   useEffect(() => {
     document.title = "Giftoday - Checkout";
   }, []);
@@ -22,8 +45,14 @@ function CheckoutPage() {
   };
   const handleSubmit = async () => {
     try {
+      let calculatedTotalPrice = totalPrice;
+
+      if (isPremium) {
+        calculatedTotalPrice *= 0.9;
+      }
+      calculatedTotalPrice = Number(calculatedTotalPrice.toFixed(2));
       const orderData = {
-        total: totalPrice,
+        total: calculatedTotalPrice,
         address: selectedAddress,
         card: selectedCard,
       };
@@ -52,38 +81,36 @@ function CheckoutPage() {
           setTotalPrice(totalPrice);
         }}
       />
-
+      <div
+        className="fixed bottom-4 right-4 rounded-lg bg-gray-100 p-4"
+        style={{ zIndex: 9999 }}
+      >
+        {!isPremium && (
+          <span className="basis-5/6 font-bold text-lightFontColor">
+            Total Price: € {totalPrice}
+          </span>
+        )}
+        {isPremium && (
+          <div className="basis-5/6 font-bold text-lightFontColor ">
+            <span className="line-through">€ {totalPrice}</span>
+            <span className=" ml-4 basis-5/6 text-xl font-bold text-orangeFontColor ">
+              {/* toFixed Retain two decimal places */}
+              Total Price: €{(totalPrice * 0.9).toFixed(2)}
+            </span>
+          </div>
+        )}
+        <button
+          className="mt-4 rounded bg-orangeFontColor px-4 py-2 font-bold text-white"
+          onClick={handleSubmit}
+        >
+          Submit
+        </button>
+      </div>
       <PostalAddress onSelectAddress={handleSelectAddress} />
 
       <PaymentDetail onSelectCard={handleSelectCard} />
-      <button onClick={handleSubmit}>Submit</button>
     </div>
   );
 }
 
 export default CheckoutPage;
-
-{
-  /* <div>Total Price: €{totalPrice}</div> */
-}
-{
-  /* {selectedAddress && (
-        <div>
-          <h2>Selected Address:</h2>
-          <p>Full Name: {selectedAddress.fullName}</p>
-          <p>Postal Code: {selectedAddress.postalCode}</p>
-          <p>Street: {selectedAddress.street}</p>
-          <p>City: {selectedAddress.city}</p>
-        </div>
-      )} */
-}
-{
-  /* {selectedCard && (
-        <div>
-          <h2>Selected Card:</h2>
-          <p>Card Number: {selectedCard.cardNumber}</p>
-          <p>Expiry Date: {selectedCard.expiryDate.substring(0, 7)}</p>
-          <p>CVV: {selectedCard.cvv}</p>
-        </div>
-      )} */
-}
