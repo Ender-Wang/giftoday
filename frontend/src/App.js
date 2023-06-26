@@ -10,6 +10,7 @@ import CheckoutPage from "./pages/CheckoutPage";
 import { AuthProvider } from "./components/AuthContext";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 function App() {
   return (
@@ -18,6 +19,10 @@ function App() {
 =======
 import { useState } from "react";
 function App() {
+=======
+import { useState } from "react";
+function App() {
+>>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)
 =======
 import { useState } from "react";
 function App() {

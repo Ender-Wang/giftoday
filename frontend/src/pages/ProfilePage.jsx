@@ -8,9 +8,12 @@ export default function ProfilePage() {
       <div class="w-4/5">
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         <div class="ml-12 mt-12">
           <UserInfo />
 =======
+=======
+>>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)
 =======
 >>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)
         <div>
@@ -23,6 +26,9 @@ export default function ProfilePage() {
           <OrderHistory />
           {/* </div> */}
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)
+=======
 >>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)
 =======
 >>>>>>> parent of 3200ef4 (feat(ShopItem): add filter function)
