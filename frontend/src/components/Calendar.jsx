@@ -16,12 +16,12 @@ export default function Calendar({ selectedDay, onDayClick }) {
     const selectedDate = new Date(dayWithMonthAndYear);
     setSelectedDate(selectedDate);
 
-    awaitGetSelectedDate();
-
-    async function awaitGetSelectedDate() {
-      const date = await getSelectedDate();
-      console.log("getSelectedDate after await func:", date);
-    }
+    // wrap the selected date in a Date object
+    // const dateOfSelected = new Date(getSelectedDate());  // this is a Date object
+    // console.log(
+    //   "Date of selected to string:",
+    //   dateOfSelected.toLocaleDateString("en-GB")
+    // );
   };
 
   const handlePreviousMonth = () => {

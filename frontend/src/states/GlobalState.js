@@ -28,10 +28,7 @@ export async function removeUserID() {
 export async function setLoggedInDate() {
   const loggedInDate = new Date();
   try {
-    await localStorage.setItem(
-      "loggedInDate",
-      loggedInDate.toLocaleDateString("en-GB")
-    );
+    await localStorage.setItem("loggedInDate", loggedInDate);
     return true;
   } catch (err) {
     console.log("Error setting loggedInDate:", err);
@@ -47,10 +44,7 @@ export function getLoggedInDate() {
 export async function setSelectedDate(date) {
   const selectedDate = new Date(date);
   try {
-    await localStorage.setItem(
-      "selectedDate",
-      selectedDate.toLocaleDateString("en-GB")
-    );
+    await localStorage.setItem("selectedDate", selectedDate);
     return true;
   } catch (err) {
     console.log("Error setting selectedDate:", err);
@@ -58,11 +52,6 @@ export async function setSelectedDate(date) {
   }
 }
 
-export async function getSelectedDate() {
-  try {
-    return localStorage.getItem("selectedDate");
-  } catch (err) {
-    console.log("Error getting selectedDate:", err);
-    return false;
-  }
+export function getSelectedDate() {
+  return localStorage.getItem("selectedDate");
 }
