@@ -31,6 +31,43 @@ export default function ShopItem() {
     fetchShopItems();
   }, []);
 
+  const filterTag = (items, tag) => {
+    // console.log(typeof searchContent);
+    if (tag === "home")
+      return items.filter(
+        (item) => item.tag === "home_decor" || item.tag === "kitchen"
+      );
+    if (tag === "beauty") return items.filter((item) => item.tag === "beauty");
+    if (tag === "lifestyle")
+      return items.filter(
+        (item) =>
+          item.tag === "accessories" ||
+          item.tag === "stationery" ||
+          item.tag === "books" ||
+          item.tag === "travel"
+      );
+    if (tag === "technology")
+      return items.filter(
+        (item) => item.tag === "tools" || item.tag === "electronics"
+      );
+    if (tag === "health")
+      return items.filter(
+        (item) => item.tag === "fitness" || item.tag === "food"
+      );
+    return items;
+  };
+
+  const filterOnSearch = (items, text) => {
+    console.log(text);
+    if (text === null || text === "") return items;
+    return items.filter(
+      (item) =>
+        item.tag.toLowerCase().includes(text.toLowerCase()) ||
+        item.name.toLowerCase().includes(text.toLowerCase())
+    );
+  };
+
+  // const filteredItems = filterTag(shopItems, selectedTag);
   useEffect(() => {
     const fetchPremium = async () => {
       try {
