@@ -30,6 +30,7 @@ const Card = new Schema({
   cardNumber: Number,
   expiryDate: Date,
   cvv: String,
+  logo: String,
 });
 
 const Message = new Schema({
