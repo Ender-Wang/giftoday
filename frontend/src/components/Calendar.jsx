@@ -1,5 +1,6 @@
 import React from "react";
 import { AiFillGift } from "react-icons/ai";
+import { getSelectedDate, setSelectedDate } from "../states/GlobalState";
 
 export default function Calendar({ selectedDay, onDayClick }) {
   const currentDay = new Date();
@@ -11,6 +12,16 @@ export default function Calendar({ selectedDay, onDayClick }) {
       day
     );
     onDayClick(dayWithMonthAndYear);
+
+    const selectedDate = new Date(dayWithMonthAndYear);
+    setSelectedDate(selectedDate);
+
+    // wrap the selected date in a Date object
+    // const dateOfSelected = new Date(getSelectedDate());  // this is a Date object
+    // console.log(
+    //   "Date of selected to string:",
+    //   dateOfSelected.toLocaleDateString("en-GB")
+    // );
   };
 
   const handlePreviousMonth = () => {
