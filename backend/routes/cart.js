@@ -163,4 +163,26 @@ router.delete("/user/:userID/cart/:cartID", async (req, res) => {
   }
 });
 
+// Delete all cart items for a user
+router.delete("/user/:userID/cart", async (req, res) => {
+  try {
+    const { userID } = req.params;
+    const uid = Number(userID);
+
+    const user = await UserDB.findOne({ id: uid });
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    user.cart = []; // Empty the cart array
+
+    await user.save(); // Save the changes to the database
+
+    res.status(200).json({ message: "All cart items deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 module.exports = router;

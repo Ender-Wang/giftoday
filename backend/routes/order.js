@@ -18,7 +18,7 @@ router.put("/user/:userID/order", async (req, res) => {
   try {
     const { userID } = req.params;
 
-    const { total, card, address } = req.body;
+    const { total, card, gift, address } = req.body;
 
     // if (!order) {
     //   throw new Error("There is no order");
@@ -38,7 +38,7 @@ router.put("/user/:userID/order", async (req, res) => {
     const newOrder = {
       id: biggestID + 1,
       total: total,
-      // gift: gift,
+      gift: gift,
       card: card,
       address: address,
       // shippingDate: shippingDate,

@@ -10,6 +10,51 @@ function CheckoutPage() {
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [id] = useState(getUserID);
   const [isPremium, setPremium] = useState(false);
+  const [carts, setCarts] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    // Fetch user information from the backend
+
+    fetch(`http://localhost:4000/user/${id}/finalcart`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data && data.length > 0) {
+          const carts = data;
+          setCarts(carts);
+        }
+
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log("Error fetching user info:", error);
+
+        setLoading(false);
+      });
+  }, [id]);
+
+  const deleteAllCartItems  = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:4000/user/${id}/cart`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.ok) {
+       // Clear the carts state
+       setCarts([]);
+      } else {
+        console.log("Deleting data failed.");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     const fetchPremium = async () => {
@@ -44,6 +89,20 @@ function CheckoutPage() {
     setSelectedAddress(address);
   };
   const handleSubmit = async () => {
+    if (!selectedCard) {
+      setErrorMessage("Please select a card ");
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 1000);
+      return;
+    }
+    if (!selectedAddress) {
+      setErrorMessage("Please select a address.");
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 1000);
+      return;
+    }
     try {
       let calculatedTotalPrice = totalPrice;
 
@@ -55,6 +114,7 @@ function CheckoutPage() {
         total: calculatedTotalPrice,
         address: selectedAddress,
         card: selectedCard,
+        gift: carts,
       };
 
       const response = await fetch(`http://localhost:4000/user/${id}/order`, {
@@ -66,6 +126,7 @@ function CheckoutPage() {
       });
 
       if (response.ok) {
+        await deleteAllCartItems();
         window.location.href = "/order-confirmation";
       } else {
         console.error("Failed to submit order");
@@ -107,8 +168,12 @@ function CheckoutPage() {
         </button>
       </div>
       <PostalAddress onSelectAddress={handleSelectAddress} />
-
       <PaymentDetail onSelectCard={handleSelectCard} />
+      {errorMessage && (
+        <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-md bg-red-500 px-4 py-2 text-white">
+          {errorMessage}
+        </div>
+      )}
     </div>
   );
 }
