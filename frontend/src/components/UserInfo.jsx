@@ -6,6 +6,7 @@ export default function UserInfo() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phoneNumber, setphoneNumber] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [street, setStreet] = useState("");
   const [city, setCity] = useState("");
@@ -30,6 +31,7 @@ export default function UserInfo() {
 
           if (user.address && user.address.length > 0) {
             const address = user.address[0];
+            setphoneNumber(address.phoneNumber);
             setPostalCode(address.postalCode);
             setStreet(address.street);
             setCity(address.city);
@@ -151,6 +153,7 @@ export default function UserInfo() {
       email: email,
       password: password,
       address: {
+        phoneNumber: phoneNumber,
         postalCode: postalCode,
         street: street,
         city: city,
@@ -169,6 +172,7 @@ export default function UserInfo() {
         if (res.ok) {
           setName("");
           setEmail("");
+          setphoneNumber("");
           setPassword("");
           setPostalCode("");
           setStreet("");
@@ -250,6 +254,23 @@ export default function UserInfo() {
                 }`}
                 required
                 placeholder={formErrors.password ? formErrors.password : ""}
+              />
+            </div>
+
+            {/* Email input */}
+            <div className="mb-4">
+              <label htmlFor="phoneNumber" className="mb-2 block font-bold">
+                Phone Number:
+              </label>
+              <input
+                type="phoneNumber"
+                id="phoneNumber"
+                name="phoneNumber"
+                value={phoneNumber}
+                onChange={handleInputChange}
+                className="border-themeColor w-full border-b-2 p-2 outline-none"
+                required
+                //  can not be changed
               />
             </div>
 
@@ -349,7 +370,7 @@ export default function UserInfo() {
               {/* cancel button */}
               <button
                 type="cancel"
-                className="col duration-600 hover:bg-themeColor-200 bg-themeColor-100 flex rounded px-4 py-2 font-medium text-white transition-colors ease-in-out"
+                className="col duration-600 hover:bg-themeColor-200 flex rounded bg-themeColor-100 px-4 py-2 font-medium text-white transition-colors ease-in-out"
                 onClick={handleCancel}
               >
                 cancel
@@ -358,7 +379,7 @@ export default function UserInfo() {
               {/* save button */}
               <button
                 type="submit"
-                className="col duration-600 hover:bg-themeColor-200 bg-themeColor-100 flex rounded px-4 py-2 font-medium text-white transition-colors ease-in-out"
+                className="col duration-600 hover:bg-themeColor-200 flex rounded bg-themeColor-100 px-4 py-2 font-medium text-white transition-colors ease-in-out"
                 onClick={handleSubmit}
               >
                 save

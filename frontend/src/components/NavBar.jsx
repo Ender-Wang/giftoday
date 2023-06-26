@@ -50,9 +50,14 @@ const Navbar = ({ searchContent, handleSearchSubmit }) => {
           // Retrieve the cart data from the response
           const cartData = data.cart;
 
-          // Update the cart count based on the retrieved data
-          const cartCount = cartData.length;
-          setCartCount(cartCount);
+          // Calculate the total quantity in the cart
+          const totalCount = cartData.reduce(
+            (total, gift) => total + gift.quantity,
+            0
+          );
+
+          // Update the cart count with the total quantity
+          setCartCount(totalCount);
         })
         .catch((error) => {
           console.log("Error fetching user cart:", error);

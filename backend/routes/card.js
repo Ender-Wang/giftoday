@@ -66,4 +66,31 @@ router.put("/user/:userID/card", async (req, res) => {
   }
 });
 
+// Delete user Card info by card number
+router.delete("/user/:userID/card/:cardNumber", async (req, res) => {
+  try {
+    const { userID, cardNumber } = req.params;
+    const uid = Number(userID);
+    const CID = Number(cardNumber);
+
+    const user = await UserDB.findOne({ id: uid });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const cardIndex = user.card.findIndex((card) => card.cardNumber === CID);
+    if (cardIndex === -1) {
+      return res.status(404).json({ error: "Card not found" });
+    }
+
+    user.card.splice(cardIndex, 1); // Remove the card at the specified index
+    await user.save();
+
+    res.status(200).json({ message: "Card deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting card:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 module.exports = router;
