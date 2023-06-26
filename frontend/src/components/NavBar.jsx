@@ -8,7 +8,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { AiTwotoneCrown } from "react-icons/ai";
 import { getUserID } from "../states/GlobalState";
 
-const Navbar = ({ searchContent, handleSearchSubmit }) => {
+const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const { isLoggedIn, logout } = useContext(AuthContext);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -66,9 +66,6 @@ const Navbar = ({ searchContent, handleSearchSubmit }) => {
       setLoading(false);
     }
   }, [id, isLoggedIn]);
-  // const handleSubmit(()=>{
-
-  // });
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -137,13 +134,6 @@ const Navbar = ({ searchContent, handleSearchSubmit }) => {
             >
               Search
             </button>
-            {/* <img
-              src={filter}
-              alt="Search Icon"
-              className="mr-0 h-7 w-7 rounded-md"
-              onClick={() => handleClick(searchText)}
-              onMouseEnter={handleMouseEnter}
-            /> */}
           </div>
           {showDropdown && (
             <div className="left-90 absolute right-0 top-[110%] z-10">

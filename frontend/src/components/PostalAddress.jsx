@@ -76,10 +76,6 @@ export default function PostalAddress({ onSelectAddress }) {
         setFullName(value);
         setFormErrors((prevErrors) => ({ ...prevErrors, name: "" }));
         break;
-      // case "shippingDate":
-      //   setShippingDate(value);
-      //   setFormErrors((prevErrors) => ({ ...prevErrors, shippingDate: "" }));
-      //   break;
       case "street":
         setStreet(value);
         setFormErrors((prevErrors) => ({ ...prevErrors, street: "" }));
@@ -106,9 +102,6 @@ export default function PostalAddress({ onSelectAddress }) {
     if (data.fullName.trim() === "") {
       errors.name = "Full Name is required!";
     }
-    // if (data.shippingDate.trim() === "") {
-    //   errors.shippingDate = "Shipping Date is required!";
-    // }
     if (data.postalCode.trim() === "") {
       errors.postalCode = "Postal Code is required!";
     }
@@ -134,7 +127,6 @@ export default function PostalAddress({ onSelectAddress }) {
       city: city,
       country: country,
       street: street,
-      // shippingDate: shippingDate,
     };
     const errors = validateForm(data);
     setFormErrors(errors);
@@ -155,7 +147,6 @@ export default function PostalAddress({ onSelectAddress }) {
           setStreet("");
           setCity("");
           setPhoneNumber("");
-          // setSelectedAddress();
 
           setPreAddress(preAddress.concat(result));
         } else {

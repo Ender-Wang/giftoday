@@ -11,8 +11,8 @@ export default function ProfilePage() {
             <UserInfo />
           </div>
         </div>
-        <div className="w-[400px]">
-          <div className="">
+        <div>
+          <div className="w-[400px]">
             <OrderHistory />
           </div>
         </div>
