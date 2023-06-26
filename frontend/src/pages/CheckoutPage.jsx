@@ -20,17 +20,17 @@ function CheckoutPage() {
           setTotalPrice(totalPrice);
         }}
       />
-      <div>Total Price: €{totalPrice}</div>
+      {/* <div>Total Price: €{totalPrice}</div> */}
       <PostalAddress />
       <PaymentDetail onSelectCard={handleSelectCard} />
-      {selectedCard && (
+      {/* {selectedCard && (
         <div>
           <h2>Selected Card:</h2>
           <p>Card Number: {selectedCard.cardNumber}</p>
           <p>Expiry Date: {selectedCard.expiryDate.substring(0, 7)}</p>
           <p>CVV: {selectedCard.cvv}</p>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

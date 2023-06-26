@@ -11,13 +11,13 @@ export default function PostalAddress() {
   const [city, setCity] = useState("");
   const [country] = useState("Germany");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [shippingDate, setShippingDate] = useState("");
+  const [shippingDate] = useState("26/06/2023");
   const [preAddress, setPreAddress] = useState([]);
   const { isLoggedIn } = useContext(AuthContext);
   const userID = getUserID();
 
   const [formErrors, setFormErrors] = useState({});
-
+  const [selectAddress, setSelectedAddress] = useState(0);
   const germanyCities = [
     "Berlin",
     "Hamburg",
@@ -79,10 +79,10 @@ export default function PostalAddress() {
         setFullName(value);
         setFormErrors((prevErrors) => ({ ...prevErrors, name: "" }));
         break;
-      case "shippingDate":
-        setShippingDate(value);
-        setFormErrors((prevErrors) => ({ ...prevErrors, shippingDate: "" }));
-        break;
+      // case "shippingDate":
+      //   setShippingDate(value);
+      //   setFormErrors((prevErrors) => ({ ...prevErrors, shippingDate: "" }));
+      //   break;
       case "street":
         setStreet(value);
         setFormErrors((prevErrors) => ({ ...prevErrors, street: "" }));
@@ -158,7 +158,7 @@ export default function PostalAddress() {
           setStreet("");
           setCity("");
           setPhoneNumber("");
-          setShippingDate("");
+          // setSelectedAddress();
 
           setPreAddress(preAddress.concat(result));
         } else {
@@ -188,56 +188,119 @@ export default function PostalAddress() {
       console.log(error);
     }
   };
+  //Select address
+  // const handleSelect = (item) => {
+  //   if(isNaN(item.id)){
+  //     setSelectedAddress(-1);
+  //   }else{
+  //     set
+  //   }
+
+  // };
+  //Selected address
+  // const handleSelect = async (aID) =>{
+  //   if (aID===-1) {
+
+  //   } else {
+
+  //   }
+  //   const data = {
+  //     fullName: fullName,
+  //     postalCode: postalCode,
+  //     phoneNumber: phoneNumber,
+  //     city: city,
+  //     country: country,
+  //     street: street,
+  //     shippingDate: shippingDate,
+  //   };
+  //     try {
+  //       const response = await fetch(
+  //         "http://localhost:4000/user/" + userID + "/address",
+  //         {
+  //           method: "PUT",
+  //           headers: { "Content-Type": "application/json" },
+  //           body: JSON.stringify(data),
+  //         }
+  //       );
+  //       if (response.ok) {
+  //         const result = await response.json();
+  //         setFullName("");
+  //         setPostalCode("");
+  //         setStreet("");
+  //         setCity("");
+  //         setPhoneNumber("");
+  //         setShippingDate("");
+
+  //         setPreAddress(preAddress.concat(result));
+  //       } else {
+  //         console.log("Save address failed.");
+  //       }
+  //     } catch (error) {
+  //       console.log("An error occurred while processing the request.", error);
+  //     }
+
+  // }
   return (
     <div className="h-600 ">
       {/* "choose address" container */}
       <div className=" absolute bottom-8 left-10 h-2/5 w-2/5 min-w-[300px] pl-4 pt-2">
+        <div>
+          {preAddress
+            .filter((item) => {
+              return item.id === selectAddress;
+            })
+            .map((item) => (
+              <div className="boarder h-full">
+                <div className=" grid grid-cols-4">
+                  <div className="col-span-2 ml-4 mt-2 ">
+                    <div>{item.fullName}</div>
+                    <div>
+                      <span>{item.phoneNumber}, </span>
+                      <span>{item.postalCode}, </span>
+                      <span>{item.street}, </span>
+                      <span>{item.city}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+        </div>
         <h1 className=" font-sans text-xl">Choose address</h1>
         <div className=" grid h-full w-full grid-rows-4">
           {/* previous addresses */}
           <div className=" row-span-1 mb-2 overflow-x-auto rounded-lg">
             {preAddress.map((item) => (
               <div className="boarder h-full">
-                {item.id ? (
-                  <div className=" grid grid-cols-4">
+                <div className=" grid grid-cols-4">
+                  <div>
+                    <AiOutlineHome
+                      className="ml-4 text-6xl"
+                      onClick={() => setSelectedAddress(item.id)}
+                    />
+                  </div>
+                  <div className="col-span-2 ml-4 mt-2 ">
+                    <div>{item.fullName}</div>
                     <div>
-                      <AiOutlineHome className="ml-4 text-6xl " />
+                      <span>{item.phoneNumber}, </span>
+                      <span>{item.postalCode}, </span>
+                      <span>{item.street}, </span>
+                      <span>{item.city}</span>
                     </div>
-                    <div className="col-span-2 ml-4 mt-2 ">
-                      <div>{item.fullName}</div>
-                      <div>
-                        <span>{item.phoneNumber}, </span>
-                        <span>{item.postalCode}, </span>
-                        <span>{item.street}, </span>
-                        <span>{item.city}</span>
-                      </div>
-                    </div>
-                    {/* delete Button */}
+                  </div>
+                  {item.id !== 0 ? (
                     <div className="col-span-1 mr-4 mt-2 ">
                       <button
                         type="button"
-                        className="hover:scale-102 bg-normalButton hover:bg-normalButton transform rounded-lg  px-5 py-1"
+                        className="hover:scale-102 transform rounded-lg bg-normalButton px-5  py-1 hover:bg-normalButton"
                         onClick={() => handleDelete(item.index)}
                       >
                         DELETE
                       </button>
                     </div>
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-4 ">
-                    <div>
-                      <AiOutlineHome className="ml-4 text-6xl  " />
-                    </div>
-                    <div className="col-span-2 ml-4 mt-2 ">
-                      <div>Your name</div>
-                      <div>
-                        <span>{item.postalCode}, </span>
-                        <span>{item.street}, </span>
-                        <span>{item.city}</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
+                  ) : (
+                    <div></div>
+                  )}
+                </div>
               </div>
             ))}
           </div>
@@ -270,15 +333,11 @@ export default function PostalAddress() {
                 type="text"
                 id="shippingDate"
                 name="shippingDate"
-                value={shippingDate}
-                onChange={handleInputChange}
-                className={`border-themeColor w-full border-b-2 outline-none ${
-                  formErrors.shippingDate ? "border-red-500" : ""
-                }`}
+                value="26/06/2023"
+                // value={shippingDate}
+                // onChange={handleInputChange}
+                className="border-themeColor w-full border-b-2 outline-none"
                 required
-                placeholder={
-                  formErrors.shippingDate ? formErrors.shippingDate : ""
-                }
               />
             </div>
             {/* Street */}
@@ -382,7 +441,7 @@ export default function PostalAddress() {
             <div className=" mb-4">
               <button
                 type="button"
-                className="hover:scale-102 bg-lightButton hover:bg-normalButton transform rounded-lg  px-5 py-1"
+                className="hover:scale-102 transform rounded-lg bg-lightButton px-5  py-1 hover:bg-normalButton"
                 onClick={handleSave}
               >
                 Save
