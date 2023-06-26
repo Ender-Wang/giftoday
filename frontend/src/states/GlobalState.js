@@ -9,6 +9,21 @@ export function getLoggedInDate() {
   return localStorage.getItem("loggedInDate");
 }
 
+export function getSearchContent() {
+  return localStorage.getItem("searchContent");
+}
+
+// Setters
+export async function setSearchContent(content) {
+  try {
+    await localStorage.setItem("searchContent", content);
+    return true;
+  } catch (err) {
+    console.log("Error setting searchContent:", err);
+    return false;
+  }
+}
+
 // Setters
 export async function setUserID(userID) {
   try {
@@ -40,6 +55,16 @@ export async function removeUserID() {
     return true;
   } catch (err) {
     console.log("Error removing userID:", err);
+    return false;
+  }
+}
+
+export async function removeSearchContent() {
+  try {
+    await localStorage.removeItem("searchContent");
+    return true;
+  } catch (err) {
+    console.log("Error removing searchContent:", err);
     return false;
   }
 }

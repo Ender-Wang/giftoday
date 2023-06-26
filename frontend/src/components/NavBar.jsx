@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../images/logo.png";
-import filter from "../images/filter.png";
+import { setSearchContent } from "../states/GlobalState";
 import { FaUser } from "react-icons/fa";
 import { AuthContext } from "./AuthContext";
 import { AiOutlineShoppingCart } from "react-icons/ai";
@@ -105,9 +105,6 @@ const Navbar = ({ searchContent, handleSearchSubmit }) => {
     e.preventDefault();
     setShowProfileMenu(!showProfileMenu);
   };
-  const handleSubmit = (text) => {
-    handleSearchSubmit(text);
-  };
 
   return (
     <nav className="fixed z-50 h-[48px] w-full bg-themeColor-100 px-32 shadow-xl backdrop-blur-sm backdrop-invert backdrop-opacity-10">
@@ -136,7 +133,7 @@ const Navbar = ({ searchContent, handleSearchSubmit }) => {
             <button
               type="button"
               className="hover:scale-102 boarder boarder-lightButton transform rounded-lg pl-1 pr-1 text-white  hover:bg-normalButton"
-              onClick={() => handleSubmit(searchText)}
+              onClick={() => setSearchContent(searchText)}
             >
               Search
             </button>

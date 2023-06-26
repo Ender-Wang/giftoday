@@ -4,17 +4,17 @@ import OrderHistory from "../components/OrderHistory";
 
 export default function ProfilePage() {
   return (
-    <div class="flex">
-      <div class="w-4/5">
+    <div>
+      <div className="flex flex-row">
         <div>
-          <div class="ml-12 mt-12">
+          <div className=" w-[400px]">
             <UserInfo />
           </div>
         </div>
-        <div class="w-1/2">
-          {/* <div class="mr-20 "> */}
-          <OrderHistory />
-          {/* </div> */}
+        <div className="w-[400px]">
+          <div className="">
+            <OrderHistory />
+          </div>
         </div>
       </div>
     </div>
