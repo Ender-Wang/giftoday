@@ -128,7 +128,7 @@ export default function ShopItem({ selectedTag }) {
         (item) => (
           <div
             key={item.id}
-            className="h-[300px] w-[250px] transform rounded-xl shadow-xl duration-300 hover:scale-110"
+            className="h-64 min-w-[100px]  transform rounded-xl shadow-xl hover:scale-110"
           >
             {/* product picture */}
             <div className="pl-4 pr-4">
@@ -145,11 +145,11 @@ export default function ShopItem({ selectedTag }) {
               />
             </div>
             {/* product name */}
-            <div className="ml-2 font-bold">{item.name}</div>
+            <div className="font-bold">{item.name}</div>
             {/* product price */}
             <div className="flex flex-row pl-2 ">
               {!isPremium && (
-                <span className="ml-2 basis-5/6 font-bold text-lightFontColor">
+                <span className="basis-5/6 font-bold text-lightFontColor">
                   € {item.price}
                 </span>
               )}
@@ -164,7 +164,10 @@ export default function ShopItem({ selectedTag }) {
               {isLoggedIn && (
                 <div
                   className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-normalPlusButton"
-                  onClick={() => handleCartButton(item)}
+                  onClick={() => {
+                    handleCartButton(item);
+                    // window.location.reload();
+                  }}
                 >
                   <AiOutlinePlus className="text-xl text-white" />
                 </div>

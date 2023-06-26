@@ -5,7 +5,7 @@ import { AuthContext } from "./AuthContext";
 import { useContext } from "react";
 import { BsFillTrashFill } from "react-icons/bs";
 
-export default function MessageBoard({ selectedDay, onTagClick }) {
+export default function MessageBoard({ selectedDay }) {
   const [activeButton, setActiveButton] = useState("Button 2");
   const { isLoggedIn } = useContext(AuthContext);
   const [holidays, setHolidays] = useState([]);
@@ -136,8 +136,7 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
       const result = await response.json();
       setNewMessage("");
       setNewTag("");
-      console.log([result].concat(preMessage));
-      setPreMessage([result].concat(preMessage));
+      setPreMessage(preMessage.concat(result));
     } catch (error) {
       console.log("An error occurred while processing the request.", error);
     }
@@ -252,11 +251,7 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
                         .map((item, index) => (
                           <div className="" key={index}>
                             <div className="flex items-center justify-between">
-                              <div
-                                className="mx-5 my-1 w-full transform truncate whitespace-nowrap border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:bg-themeColor-80 hover:font-bold"
-                                title={item.message}
-                                onClick={() => onTagClick(item.tag.name)}
-                              >
+                              <div className="mx-5 my-1 w-full transform truncate whitespace-nowrap border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:bg-themeColor-80 hover:font-bold">
                                 {item.message}
                               </div>
                               <div className="flex">
@@ -294,17 +289,19 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
           </div>
           <div className="mx-5 h-full rounded-md bg-themeColor-40 pb-6">
             {/* After pressing "Festivals" button */}
-
-            <div className="min-w-[230px] overflow-y-auto pt-2">
-              {holidays.map((item, index) => (
-                <div
-                  className=" mx-5 my-1 transform border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:bg-themeColor-80 hover:font-bold"
-                  key={index}
-                >
-                  {item}
-                </div>
-              ))}
-            </div>
+            {activeButton === "Button 1" && (
+              <div className="min-w-[230px] overflow-y-auto pt-2">
+                {/* <div className="absolute inset-0 bg-white" /> */}
+                {holidays.map((item, index) => (
+                  <div
+                    className=" mx-5 my-1 transform border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:bg-themeColor-80 hover:font-bold"
+                    key={index}
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}

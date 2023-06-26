@@ -89,15 +89,22 @@ function CheckoutPage() {
     setSelectedAddress(address);
   };
   const handleSubmit = async () => {
+    if (!carts || carts.length === 0) {
+      setErrorMessage("You don't have any order😣");
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 1000);
+      return;
+    }
     if (!selectedCard) {
-      setErrorMessage("Please select a card ");
+      setErrorMessage("Please select a card 💳");
       setTimeout(() => {
         setErrorMessage("");
       }, 1000);
       return;
     }
     if (!selectedAddress) {
-      setErrorMessage("Please select a address.");
+      setErrorMessage("Please select a address📍");
       setTimeout(() => {
         setErrorMessage("");
       }, 1000);

@@ -9,7 +9,7 @@ export default function PostalAddress({ onSelectAddress }) {
   const [city, setCity] = useState("");
   const [country] = useState("Germany");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [shippingDate] = useState("26/06/2023");
+  // const [shippingDate] = useState("26/06/2023");
   const [preAddress, setPreAddress] = useState([]);
   const userID = getUserID();
 
@@ -68,7 +68,7 @@ export default function PostalAddress({ onSelectAddress }) {
     fetchData();
   }, [userID, phoneNumber]);
 
-  //   //If newMessage is entered or tag is selected
+  //If newMessage is entered or tag is selected
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     switch (name) {
@@ -155,7 +155,6 @@ export default function PostalAddress({ onSelectAddress }) {
           setStreet("");
           setCity("");
           setPhoneNumber("");
-          // setSelectedAddress();
 
           setPreAddress(preAddress.concat(result));
         } else {
@@ -219,13 +218,13 @@ export default function PostalAddress({ onSelectAddress }) {
         <div className=" grid h-full w-full grid-rows-4">
           {/* previous addresses */}
           <div className=" row-span-1 mb-2 overflow-x-auto rounded-lg">
-            {preAddress.map((item, index) => (
-              <div className="boarder h-full" key={index}>
+            {preAddress.map((item) => (
+              <div className="boarder h-full">
                 <div className=" grid grid-cols-4">
                   <div>
                     <AiOutlineHome
                       className="ml-4 text-6xl"
-                      onClick={() => setSelectedAddress(item.id)}
+                      onClick={() => handleSelectAddress(item)}
                     />
                   </div>
                   <div className="col-span-2 ml-4 mt-2 ">
