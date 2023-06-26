@@ -5,51 +5,19 @@ import { AuthContext } from "./AuthContext";
 import { useContext } from "react";
 import { BsFillTrashFill } from "react-icons/bs";
 
-export default function MessageBoard({ selectedDay, onTagClick }) {
+export default function MessageBoard({ selectedDay }) {
   const [activeButton, setActiveButton] = useState("Button 2");
+  const holidays = ["Youth", "Chrismas", "Valentien", "Spring Festival"];
   const { isLoggedIn } = useContext(AuthContext);
-  const [holidays, setHolidays] = useState([]);
   const [preMessage, setPreMessage] = useState([]);
   // const [preTag, setPreTag] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [newTag, setNewTag] = useState("");
+  const [festivals, setFestivals] = useState([]);
   const userID = getUserID();
+  // const [showInput, setShowInput] = useState(false);
 
-  const tags = ["home", "beauty", "lifestyle", "technology", "health"];
-
-  //Calendar API
-  useEffect(() => {
-    const fetchHolidays = async () => {
-      let month = String(selectedDay.getMonth() + 1).padStart(2, "0");
-      let year = String(selectedDay.getFullYear()).padStart(2, "0");
-      let day = String(selectedDay.getDate()).padStart(2, "0");
-      let url =
-        "https://openholidaysapi.org/PublicHolidaysByDate?date=" +
-        year +
-        "-" +
-        month +
-        "-" +
-        day;
-
-      let response = await fetch(url, {
-        method: "GET",
-      });
-      const responseData = await response.json();
-      const days = responseData
-        .map((item) => {
-          // Map to get the text of "EN"
-          const enName = item.name.find((name) => name.language === "EN");
-          return enName.text;
-        })
-        .filter((value, index, self) => {
-          return self.indexOf(value) === index;
-        });
-
-      setHolidays([...days]);
-      // console.log(responseData);
-    };
-    fetchHolidays();
-  }, [selectedDay, setHolidays]);
+  const tags = ["parents", "friends", " colleagues"];
 
   //Show messages or festivals
   const handleButtonClick = (content) => {
@@ -116,6 +84,24 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
       console.log(error);
     }
   };
+  // useEffect(() => {
+  //   const fetchFestivals = async (day, userID) => {
+  //     userID = getUserID();
+  //     try {
+  //       const response = await fetch(
+  //         `/api/festival-info?day=${day}&userID=${userID}`
+  //       );
+  //       const festivalInfo = await response.json();
+  //       setFestivals(festivalInfo);
+  //       console.log(festivalInfo);
+  //     } catch (error) {
+  //       console.error("Error fetching festival info:", error);
+  //     }
+  //     // alert("User ID: " + userID + ", selected day: " + day);
+  //   };
+  //   fetchFestivals(selectedDay, userID);
+  // }, [userID, selectedDay]);
+
   // Save new message and post it into postman
   const handleSaveButton = async () => {
     const data = {
@@ -138,15 +124,14 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
       const result = await response.json();
       setNewMessage("");
       setNewTag("");
-      console.log([result].concat(preMessage));
-      setPreMessage([result].concat(preMessage));
+      setPreMessage(preMessage.concat(result));
     } catch (error) {
       console.log("An error occurred while processing the request.", error);
     }
   };
 
   return (
-    <div className="h-4/5 rounded-md bg-themeColor-80 pb-5">
+    <div className="bg-themeColor-80 h-4/5 rounded-md pb-5">
       {isLoggedIn ? (
         <div className="h-full">
           {/* Buttons */}
@@ -173,7 +158,7 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
 
           {/* Message of Festivals */}
           <div
-            className={` mx-5 h-4/5 bg-themeColor-40 ${
+            className={` bg-themeColor-40 mx-5 h-4/5 ${
               activeButton === "Button 1" ? "rounded-tr-md" : "rounded-tl-md"
             } rounded-b-md pb-6`}
           >
@@ -183,7 +168,7 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
                 {/* <div className="absolute inset-0 bg-white" /> */}
                 {holidays.map((item, index) => (
                   <div
-                    className=" mx-5 my-1 transform border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:bg-themeColor-80 hover:font-bold"
+                    className=" hover:bg-themeColor-80 mx-5 my-1 transform border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:font-bold"
                     key={index}
                   >
                     {item}
@@ -212,7 +197,7 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
                     name="newTag"
                     value={newTag}
                     onChange={handleInputChange}
-                    className=" w-14 bg-transparent text-right text-sm text-lightFontColor hover:cursor-pointer focus:outline-none"
+                    className=" text-lightFontColor w-14 bg-transparent text-right text-sm hover:cursor-pointer focus:outline-none"
                   >
                     <option value="" disabled>
                       #
@@ -224,7 +209,7 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
                     ))}
                   </select>
 
-                  <div className="ml-2 rounded-md bg-themeColor-60 text-white transition duration-300 ease-in-out hover:cursor-pointer hover:bg-themeColor-80 hover:text-black">
+                  <div className="bg-themeColor-60 hover:bg-themeColor-80 ml-2 rounded-md text-white transition duration-300 ease-in-out hover:cursor-pointer hover:text-black">
                     <button
                       type="button"
                       className="text-bold px-1"
@@ -254,23 +239,19 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
                         .map((item, index) => (
                           <div className="" key={index}>
                             <div className="flex items-center justify-between">
-                              <div
-                                className="mx-5 my-1 w-full transform truncate whitespace-nowrap border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:bg-themeColor-80 hover:font-bold"
-                                title={item.message}
-                                onClick={() => onTagClick(item.tag.name)}
-                              >
+                              <div className="hover:bg-themeColor-80 mx-5 my-1 w-full transform truncate whitespace-nowrap border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:font-bold">
                                 {item.message}
                               </div>
                               <div className="flex">
-                                <div className=" mr-2 flex text-right text-lightFontColor hover:cursor-default">
-                                  #{item.tag.name}
+                                <div className=" text-lightFontColor mr-2 flex text-right hover:cursor-default">
+                                  #{item.tag && item.tag.name}
                                 </div>
                                 <div
                                   className="flex items-center"
                                   onClick={() => handleDeleteMessage(item.id)}
                                 >
                                   {/* "False" icon */}
-                                  <BsFillTrashFill className="bg-transparent text-lg text-lightFontColor transition duration-300 ease-in-out hover:scale-125 hover:cursor-pointer hover:text-red-600" />
+                                  <BsFillTrashFill className="text-lightFontColor bg-transparent text-lg transition duration-300 ease-in-out hover:scale-125 hover:cursor-pointer hover:text-red-600" />
                                 </div>
                               </div>
                             </div>
@@ -285,28 +266,31 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
         </div>
       ) : (
         // Homepage without login
-        <div className="h-4/5 rounded-md bg-themeColor-80 pb-5">
+        <div className="bg-themeColor-80 h-4/5 rounded-md pb-5">
           <div className="mb-3 flex flex-row items-center justify-center px-5 text-xl">
             <button
               type="button"
               className="mt-5 rounded-t-lg pb-2 pt-2 font-bold hover:cursor-default"
+              onClick={() => handleButtonClick("Button 1")}
             >
               Festivals
             </button>
           </div>
-          <div className="mx-5 h-full rounded-md bg-themeColor-40 pb-6">
+          <div className="bg-themeColor-40 mx-5 h-full rounded-md pb-6">
             {/* After pressing "Festivals" button */}
-
-            <div className="min-w-[230px] overflow-y-auto pt-2">
-              {holidays.map((item, index) => (
-                <div
-                  className=" mx-5 my-1 transform border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:bg-themeColor-80 hover:font-bold"
-                  key={index}
-                >
-                  {item}
-                </div>
-              ))}
-            </div>
+            {activeButton === "Button 1" && (
+              <div className="min-w-[230px] overflow-y-auto pt-2">
+                {/* <div className="absolute inset-0 bg-white" /> */}
+                {holidays.map((item, index) => (
+                  <div
+                    className=" hover:bg-themeColor-80 mx-5 my-1 transform border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:font-bold"
+                    key={index}
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}

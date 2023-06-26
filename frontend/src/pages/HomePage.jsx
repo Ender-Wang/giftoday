@@ -6,12 +6,8 @@ import ShopItem from "../components/ShopItem";
 export default function HomePage() {
   //Default selected day is today
   const [selectedDay, setSelectedDay] = useState(new Date());
-  const [selectedTag, setSelectedTag] = useState("general");
   const handleDayClick = (day) => {
     setSelectedDay(new Date(day));
-  };
-  const handleTagClick = (tag) => {
-    setSelectedTag(tag);
   };
   useEffect(() => {
     document.title = "Giftoday - Home";
@@ -24,12 +20,12 @@ export default function HomePage() {
           <Calendar selectedDay={selectedDay} onDayClick={handleDayClick} />
         </div>
         <div className="mt-8 h-[350px] w-[300px]">
-          <MessageBoard selectedDay={selectedDay} onTagClick={handleTagClick} />
+          <MessageBoard selectedDay={selectedDay} />
         </div>
       </div>
       <div className=" ml-[350px] w-full md:w-2/3">
         <div className="mt-8 h-full justify-center overflow-y-auto">
-          <ShopItem selectedTag={selectedTag} />
+          <ShopItem />
         </div>
       </div>
     </div>

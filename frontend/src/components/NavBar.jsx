@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../images/logo.png";
-import { setSearchContent } from "../states/GlobalState";
+import filter from "../images/filter.png";
 import { FaUser } from "react-icons/fa";
 import { AuthContext } from "./AuthContext";
 import { AiOutlineShoppingCart } from "react-icons/ai";
@@ -66,6 +66,7 @@ const Navbar = () => {
       setLoading(false);
     }
   }, [id, isLoggedIn]);
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -127,13 +128,13 @@ const Navbar = () => {
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
             />
-            <button
-              type="button"
-              className="hover:scale-102 boarder boarder-lightButton transform rounded-lg pl-1 pr-1 text-white  hover:bg-normalButton"
-              onClick={() => setSearchContent(searchText)}
-            >
-              Search
-            </button>
+            <img
+              src={filter}
+              alt="Search Icon"
+              className="mr-0 h-7 w-7 rounded-md"
+              onClick={() => handleClick(searchText)}
+              onMouseEnter={handleMouseEnter}
+            />
           </div>
           {showDropdown && (
             <div className="left-90 absolute right-0 top-[110%] z-10">
