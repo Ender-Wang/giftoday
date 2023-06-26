@@ -34,8 +34,6 @@ export default function ShopItem({ selectedTag }) {
   }, []);
 
   const filterTag = (items, tag) => {
-    console.log(getSearchContent());
-
     // console.log(typeof searchContent);
     if (tag === "home")
       return items.filter(
@@ -63,7 +61,7 @@ export default function ShopItem({ selectedTag }) {
 
   const filterOnSearch = (items, text) => {
     console.log(text);
-    if (text === "") return items;
+    if (text === null || text === "") return items;
     return items.filter(
       (item) =>
         item.tag.toLowerCase().includes(text.toLowerCase()) ||
