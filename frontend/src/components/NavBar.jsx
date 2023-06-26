@@ -137,13 +137,6 @@ const Navbar = ({ searchContent, handleSearchSubmit }) => {
             >
               Search
             </button>
-            {/* <img
-              src={filter}
-              alt="Search Icon"
-              className="mr-0 h-7 w-7 rounded-md"
-              onClick={() => handleClick(searchText)}
-              onMouseEnter={handleMouseEnter}
-            /> */}
           </div>
           {showDropdown && (
             <div className="left-90 absolute right-0 top-[110%] z-10">

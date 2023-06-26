@@ -10,7 +10,6 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
   const { isLoggedIn } = useContext(AuthContext);
   const [holidays, setHolidays] = useState([]);
   const [preMessage, setPreMessage] = useState([]);
-  // const [preTag, setPreTag] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [newTag, setNewTag] = useState("");
   const userID = getUserID();
@@ -46,7 +45,6 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
         });
 
       setHolidays([...days]);
-      // console.log(responseData);
     };
     fetchHolidays();
   }, [selectedDay, setHolidays]);

@@ -34,9 +34,6 @@ export default function ShopItem({ selectedTag }) {
   }, []);
 
   const filterTag = (items, tag) => {
-    console.log(getSearchContent());
-
-    // console.log(typeof searchContent);
     if (tag === "home")
       return items.filter(
         (item) => item.tag === "home_decor" || item.tag === "kitchen"
@@ -63,7 +60,7 @@ export default function ShopItem({ selectedTag }) {
 
   const filterOnSearch = (items, text) => {
     console.log(text);
-    if (text === "") return items;
+    if (text === "" || text === null) return items;
     return items.filter(
       (item) =>
         item.tag.toLowerCase().includes(text.toLowerCase()) ||
@@ -71,7 +68,6 @@ export default function ShopItem({ selectedTag }) {
     );
   };
 
-  // const filteredItems = filterTag(shopItems, selectedTag);
   useEffect(() => {
     const fetchPremium = async () => {
       try {

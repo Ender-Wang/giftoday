@@ -284,8 +284,6 @@ export default function PostalAddress({ onSelectAddress }) {
                 id="shippingDate"
                 name="shippingDate"
                 value="26/06/2023"
-                // value={shippingDate}
-                // onChange={handleInputChange}
                 className="border-themeColor w-full border-b-2 outline-none"
                 required
               />
@@ -364,7 +362,6 @@ export default function PostalAddress({ onSelectAddress }) {
                 id="country"
                 name="country"
                 value={country}
-                // onChange={handleInputChange}
                 className="border-themeColor w-full border-b-2 outline-none "
                 required
               />
