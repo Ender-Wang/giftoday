@@ -34,20 +34,17 @@ function CheckoutPage() {
       });
   }, [id]);
 
-  const deleteAllCartItems  = async () => {
+  const deleteAllCartItems = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:4000/user/${id}/cart`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`http://localhost:4000/user/${id}/cart`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       if (response.ok) {
-       // Clear the carts state
-       setCarts([]);
+        // Clear the carts state
+        setCarts([]);
       } else {
         console.log("Deleting data failed.");
       }
@@ -89,20 +86,28 @@ function CheckoutPage() {
     setSelectedAddress(address);
   };
   const handleSubmit = async () => {
+    if (!carts || carts.length === 0) {
+      setErrorMessage("You don't have any order😣");
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 1000);
+      return;
+    }
     if (!selectedCard) {
-      setErrorMessage("Please select a card ");
+      setErrorMessage("Please select a card 💳 ");
       setTimeout(() => {
         setErrorMessage("");
       }, 1000);
       return;
     }
     if (!selectedAddress) {
-      setErrorMessage("Please select a address.");
+      setErrorMessage("Please select a address📍");
       setTimeout(() => {
         setErrorMessage("");
       }, 1000);
       return;
     }
+
     try {
       let calculatedTotalPrice = totalPrice;
 
