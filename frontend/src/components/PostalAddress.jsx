@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { getUserID } from "../states/GlobalState";
-import { AuthContext } from "./AuthContext";
-import { useContext } from "react";
 import { AiOutlineHome } from "react-icons/ai";
 export default function PostalAddress() {
   const [fullName, setFullName] = useState("");
@@ -13,7 +11,6 @@ export default function PostalAddress() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [shippingDate] = useState("26/06/2023");
   const [preAddress, setPreAddress] = useState([]);
-  const { isLoggedIn } = useContext(AuthContext);
   const userID = getUserID();
 
   const [formErrors, setFormErrors] = useState({});
@@ -109,9 +106,9 @@ export default function PostalAddress() {
     if (data.fullName.trim() === "") {
       errors.name = "Full Name is required!";
     }
-    if (data.shippingDate.trim() === "") {
-      errors.shippingDate = "Shipping Date is required!";
-    }
+    // if (data.shippingDate.trim() === "") {
+    //   errors.shippingDate = "Shipping Date is required!";
+    // }
     if (data.postalCode.trim() === "") {
       errors.postalCode = "Postal Code is required!";
     }
@@ -137,7 +134,7 @@ export default function PostalAddress() {
       city: city,
       country: country,
       street: street,
-      shippingDate: shippingDate,
+      // shippingDate: shippingDate,
     };
     const errors = validateForm(data);
     setFormErrors(errors);
@@ -249,8 +246,8 @@ export default function PostalAddress() {
             .filter((item) => {
               return item.id === selectAddress;
             })
-            .map((item) => (
-              <div className="boarder h-full">
+            .map((item, index) => (
+              <div className="boarder h-full" key={index}>
                 <div className=" grid grid-cols-4">
                   <div className="col-span-2 ml-4 mt-2 ">
                     <div>{item.fullName}</div>
@@ -269,8 +266,8 @@ export default function PostalAddress() {
         <div className=" grid h-full w-full grid-rows-4">
           {/* previous addresses */}
           <div className=" row-span-1 mb-2 overflow-x-auto rounded-lg">
-            {preAddress.map((item) => (
-              <div className="boarder h-full">
+            {preAddress.map((item, index) => (
+              <div className="boarder h-full" key={index}>
                 <div className=" grid grid-cols-4">
                   <div>
                     <AiOutlineHome
@@ -292,7 +289,7 @@ export default function PostalAddress() {
                       <button
                         type="button"
                         className="hover:scale-102 transform rounded-lg bg-normalButton px-5  py-1 hover:bg-normalButton"
-                        onClick={() => handleDelete(item.index)}
+                        onClick={() => handleDelete(item.id)}
                       >
                         DELETE
                       </button>
@@ -414,7 +411,7 @@ export default function PostalAddress() {
                 id="country"
                 name="country"
                 value={country}
-                onChange={handleInputChange}
+                // onChange={handleInputChange}
                 className="border-themeColor w-full border-b-2 outline-none "
                 required
               />

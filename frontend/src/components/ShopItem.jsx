@@ -9,7 +9,6 @@ export default function ShopItem({ selectedTag }) {
   const { isLoggedIn } = useContext(AuthContext);
   const [shopItems, setShopItems] = useState([]);
   const [isPremium, setPremium] = useState(false);
-  // const [filteredItems, setFilteredItems] = useState([]);
   const userID = getUserID();
   useEffect(() => {
     const fetchShopItems = async () => {
@@ -103,7 +102,6 @@ export default function ShopItem({ selectedTag }) {
         }
       );
       if (response.ok) {
-        const result = await response.json();
         console.log("Adding to cart succeeded!");
       } else {
         console.log("Putting into cart failed!");

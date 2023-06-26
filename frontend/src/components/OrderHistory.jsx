@@ -210,7 +210,7 @@ export default function UserInfo() {
                             <div className="flex justify-center">
                               <button
                                 type="submit"
-                                className="duration-600 hover:bg-themeColor-200 bg-themeColor-100 rounded px-4 py-2 font-medium text-white transition-colors ease-in-out"
+                                className="duration-600 hover:bg-themeColor-200 rounded bg-themeColor-100 px-4 py-2 font-medium text-white transition-colors ease-in-out"
                                 onClick={() => handleDelete(order.id)}
                               >
                                 Cancel
@@ -220,7 +220,7 @@ export default function UserInfo() {
                         </div>
 
                         {/* Products */}
-                        <div class="scrollbar-thumb-gray-500 scrollbar-track-gray-200 scrollbar-w-2 h-64 overflow-y-scroll">
+                        <div className="scrollbar-thumb-gray-500 scrollbar-track-gray-200 scrollbar-w-2 h-64 overflow-y-scroll">
                           <ul role="list" className="divide-y divide-gray-200">
                             {order.gift.map((gift) => (
                               <li key={gift.id} className="p-4 sm:p-6">

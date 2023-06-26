@@ -263,7 +263,7 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
                               </div>
                               <div className="flex">
                                 <div className=" mr-2 flex text-right text-lightFontColor hover:cursor-default">
-                                  #{item.tag && item.tag.name}
+                                  #{item.tag.name}
                                 </div>
                                 <div
                                   className="flex items-center"

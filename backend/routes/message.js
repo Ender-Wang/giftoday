@@ -7,7 +7,6 @@ router.get("/user/:userID/message", async (req, res) => {
     let id = Number(userID);
     const user = await UserDB.findOne({ id });
     const message = user.message;
-    // console.log("message " + message);
     return res.status(200).json(message);
   } catch (error) {
     if (error.status === 404) {
