@@ -184,7 +184,7 @@ export default function UserInfo() {
                           <dl className="grid flex-1 grid-cols-2 gap-x-6 text-sm sm:col-span-3 sm:grid-cols-3 lg:col-span-2">
                             <div>
                               <dt className="font-medium text-gray-900">
-                                Order number
+                                Order ID
                               </dt>
                               <dd
                                 className="mt-1 text-gray-900"
@@ -196,7 +196,7 @@ export default function UserInfo() {
 
                             <div>
                               <dt className="font-medium text-gray-900">
-                                Total amount
+                                Total Price
                               </dt>
                               <dd
                                 className="mt-1 font-medium text-gray-900"

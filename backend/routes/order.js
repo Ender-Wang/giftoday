@@ -18,7 +18,7 @@ router.put("/user/:userID/order", async (req, res) => {
   try {
     const { userID } = req.params;
 
-    const { id, total, gift, card, address, shippingDate } = req.body;
+    const { total, card, gift, address } = req.body;
 
     // if (!order) {
     //   throw new Error("There is no order");
@@ -29,20 +29,24 @@ router.put("/user/:userID/order", async (req, res) => {
     if (!user) {
       throw new Error("User not found");
     }
-
+    const orders = user.order;
+    // Find the maximum ID using reduce
+    const biggestID = orders.reduce(
+      (maxID, order) => (order.id > maxID ? order.id : maxID),
+      0
+    );
     const newOrder = {
-      id: id,
+      id: biggestID + 1,
       total: total,
       gift: gift,
       card: card,
       address: address,
-      shippingDate: shippingDate,
+      // shippingDate: shippingDate,
     };
 
     // Update the user data with the new message
     user.order.push(newOrder);
     await user.save();
-
     return res.status(200).json({
       order: newOrder,
       id: userID,

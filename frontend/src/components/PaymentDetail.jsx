@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getUserID } from "../states/GlobalState";
 
-const CreditCardForm = () => {
+const CreditCardForm = ({ onSelectCard }) => {
   const [cardNumber, setCardNumber] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [cvv, setCvv] = useState("");
@@ -9,6 +9,8 @@ const CreditCardForm = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [formErrors, setFormErrors] = useState({});
   const [cardExistsError, setCardExistsError] = useState("");
+  const [existingCardInfo, setExistingCardInfo] = useState(null);
+  const [selectedCard, setSelectedCard] = useState(null);
 
   const checkCardExists = async (cardNumber) => {
     try {
@@ -21,7 +23,7 @@ const CreditCardForm = () => {
 
       if (response.ok) {
         const data = await response.json();
-        const cardInfo = data.cardInfo;
+        const cardInfo = data;
         return cardInfo.some((card) => card.cardNumber === cardNumber);
       } else {
         console.log("Error checking card existence:", response.status);
@@ -32,6 +34,34 @@ const CreditCardForm = () => {
       return false;
     }
   };
+
+  useEffect(() => {
+    const fetchCardDetails = async () => {
+      try {
+        const response = await fetch(`http://localhost:4000/user/${id}/card`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const cardInfo = data.cardInfo;
+          if (cardInfo && cardInfo.length > 0) {
+            const existingCard = cardInfo;
+            setExistingCardInfo(existingCard);
+          }
+        } else {
+          console.log("Error fetching card details:", response.status);
+        }
+      } catch (error) {
+        console.log("Error fetching card details:", error);
+      }
+    };
+
+    fetchCardDetails();
+  }, [id]);
 
   const validateForm = () => {
     const errors = {};
@@ -69,9 +99,11 @@ const CreditCardForm = () => {
         return;
       }
 
+      // Format expiryDate to store only month and year
+      const formattedExpiryDate = expiryDate.substring(0, 7);
       const requestBody = {
         cardNumber: cardNumber,
-        expiryDate: expiryDate,
+        expiryDate: formattedExpiryDate,
         cvv: cvv,
       };
 
@@ -90,6 +122,8 @@ const CreditCardForm = () => {
             setSuccessMessage("Payment successful!");
             setTimeout(() => {
               setSuccessMessage("");
+              // Refresh the page
+              window.location.reload();
             }, 500);
           } else {
             console.log("Payment failed. Please try again.");
@@ -98,9 +132,9 @@ const CreditCardForm = () => {
           setCardExistsError(
             "Card already exists. Please enter a different card number."
           );
-          setTimeout(() => {
-            setCardExistsError("");
-          }, 500);
+          // setTimeout(() => {
+          //   setCardExistsError("");
+          // }, 1500);
         } else {
           console.log("Error updating card information:", response.status);
         }
@@ -110,16 +144,79 @@ const CreditCardForm = () => {
     }
   };
 
+  const deleteCard = async (cardNumber) => {
+    try {
+      const response = await fetch(
+        `http://localhost:4000/user/${id}/card/${cardNumber}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.ok) {
+        console.log(response);
+        setExistingCardInfo(
+          existingCardInfo.filter((card) => card.cardNumber !== cardNumber)
+        );
+        // Show success message
+        alert("Card deleted successfully");
+        // Refresh the page
+        // window.location.reload();
+      } else {
+        console.log("Error deleting card:", response.status);
+      }
+    } catch (error) {
+      console.log("Error deleting card:", error);
+    }
+  };
+
+  const selectCard = (Card) => {
+    setSelectedCard(Card);
+    onSelectCard(Card);
+  };
+
   const today = new Date().toISOString().split("T")[0];
 
   return (
-    <div style={{ position: "absolute", top: 80, right: 500 }}>
-      {/* new card */}
+    <div style={{ position: "absolute", top: 80, right: 150 }}>
       <h1 className="font-sans text-xl">Payment Detail:</h1>
+      <br />
+      {/* Display existing bank card information */}
+      {existingCardInfo && (
+        <div>
+          {existingCardInfo.map((Card, index) => (
+            <div
+              key={index}
+              style={{
+                border: `1px solid ${selectedCard === Card ? "blue" : "#ccc"}`,
+                borderRadius: "10px",
+                padding: "10px",
+                marginBottom: "10px",
+              }}
+              onClick={() => selectCard(Card)}
+            >
+              <p>Card Number: {Card.cardNumber}</p>
+              <p>Expiry Date: {Card.expiryDate.substring(0, 7)}</p>
+              <p>CVV: {Card.cvv}</p>
+
+              <button
+                onClick={() => deleteCard(Card.cardNumber)}
+                className="mt-2 rounded-lg bg-red-500 px-3 py-1 text-white"
+              >
+                Delete Card
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+      {/* new card */}
       {successMessage && <p>{successMessage}</p>}
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-2 gap-4">
-          <div className="col-span-4 mb-4">
+          <div className=" mb-4">
             <label htmlFor="cardNumber" className="block font-bold">
               Card Number:
             </label>
@@ -132,16 +229,15 @@ const CreditCardForm = () => {
               onChange={(e) => setCardNumber(e.target.value)}
               required
               style={{
-                border: formErrors.cardNumber
-                  ? "2px solid pink"
-                  : "1px solid #ccc",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
               }}
             />
             {formErrors.cardNumber && <p>{formErrors.cardNumber}</p>}
             {cardExistsError && <p>{cardExistsError}</p>}
           </div>
 
-          <div className="col-span-4 mb-4">
+          <div className=" mb-4">
             <label htmlFor="cvv" className="block font-bold">
               CVV:
             </label>
@@ -155,13 +251,14 @@ const CreditCardForm = () => {
               onChange={(e) => setCvv(e.target.value)}
               required
               style={{
-                border: formErrors.cvv ? "2px solid pink" : "1px solid #ccc",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
               }}
             />
             {formErrors.cvv && <p>{formErrors.cvv}</p>}
           </div>
 
-          <div className="col-span-4 mb-4">
+          <div className=" mb-4">
             <label htmlFor="expiryDate" className="block font-bold">
               Expiry Date:
             </label>
@@ -175,9 +272,8 @@ const CreditCardForm = () => {
               onChange={(e) => setExpiryDate(e.target.value)}
               required
               style={{
-                border: formErrors.expiryDate
-                  ? "2px solid pink"
-                  : "1px solid #ccc",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
               }}
             />
             {formErrors.expiryDate && <p>{formErrors.expiryDate}</p>}
@@ -187,11 +283,21 @@ const CreditCardForm = () => {
         <div className="mb-4 ">
           <button
             type="submit"
-            className="hover:scale-102 bg-lightButton hover:bg-normalButton transform rounded-lg px-5 py-1"
+            className="hover:scale-102 transform rounded-lg bg-lightButton px-5 py-1 hover:bg-normalButton"
           >
             Submit
           </button>
         </div>
+
+        {/* Display the selected card information */}
+        {/* {selectedCard && (
+          <div>
+            <h2>Selected Card:</h2>
+            <p>Card Number: {selectedCard.cardNumber}</p>
+            <p>Expiry Date: {selectedCard.expiryDate.substring(0, 7)}</p>
+            <p>CVV: {selectedCard.cvv}</p>
+          </div>
+        )} */}
       </form>
     </div>
   );

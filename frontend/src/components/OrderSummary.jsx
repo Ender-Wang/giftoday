@@ -6,14 +6,38 @@ import {
 import React, { useEffect, useState } from "react";
 import { getUserID } from "../states/GlobalState";
 
-export default function UserInfo() {
+export default function OrderSummary({ onTotalPriceChange }) {
   const [id] = useState(getUserID);
 
   const [carts, setCarts] = useState(null);
+  const [totalPrice, setTotalPrice] = useState(0); // Track total price
 
   //get ready to fetch data from backend
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isPremium, setPremium] = useState(false);
+  useEffect(() => {
+    const fetchPremium = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:4000/user/" + id + "/premium",
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        if (response.ok) {
+          const responseData = await response.json();
+          setPremium(responseData);
+        } else {
+          console.log("Fetching data failed.");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchPremium();
+  }, [id, isPremium]);
 
   useEffect(() => {
     // Fetch user information from the backend
@@ -24,10 +48,7 @@ export default function UserInfo() {
         if (data && data.length > 0) {
           const carts = data;
           setCarts(carts);
-
-          // if (order.gift && order.gift.length > 0) {
-          //   setGift(order.gift);
-          // }
+          calculateTotalPrice(carts); // Calculate total price
         }
 
         setLoading(false);
@@ -38,6 +59,16 @@ export default function UserInfo() {
         setLoading(false);
       });
   }, [id]);
+
+  // Calculate total price based on cart items
+  const calculateTotalPrice = (cartItems) => {
+    const totalPrice = cartItems.reduce(
+      (total, cartItem) => total + cartItem.price * cartItem.quantity,
+      0
+    );
+    setTotalPrice(totalPrice);
+    onTotalPriceChange(totalPrice);
+  };
 
   if (loading) {
     return <p>Loading...</p>;
@@ -60,6 +91,8 @@ export default function UserInfo() {
       );
       if (response.ok) {
         setCarts(carts.filter((cart) => cart.id !== OID));
+        // Refresh the page
+        window.location.reload();
       } else {
         console.log("Deleting data failed.");
       }
@@ -114,10 +147,7 @@ export default function UserInfo() {
 
   return (
     <div>
-      {/* <div class=" scrollbar-thumb-gray-500 scrollbar-track-gray-200 scrollbar-w-2 h-120 overflow-y-scroll"> */}
       <div className="flex items-center justify-start">
-        {/* <div class=" scrollbar-thumb-gray-500 scrollbar-track-gray-200 scrollbar-w-2 h-120 overflow-y-scroll"> */}
-        {/* <div className="bg-white"> */}
         <div className="py-16 sm:py-24">
           <div className="mx-auto max-w-md sm:px-2 lg:px-8">
             <div className="mx-auto max-w-2xl px-4 lg:max-w-4xl lg:px-0">
@@ -143,21 +173,17 @@ export default function UserInfo() {
                       >
                         {/* Products */}
                         <div class="scrollbar-thumb-gray-500 scrollbar-track-gray-200 scrollbar-w-2 h-64 overflow-y-scroll">
-                          <ul role="list" className="divide-y divide-gray-200">
+                          <ul className="divide-y divide-gray-200">
                             <li key={cart.id} className="p-4 sm:p-6">
                               <div className="flex items-center sm:items-start">
                                 <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-gray-200 sm:h-40 sm:w-40">
-                                  {/* <img
-                                src={product.imageSrc}
-                                alt={product.imageAlt}
-                                className="h-full w-full object-cover object-center"
-                              /> */}
                                   <img
                                     src={
                                       "https://github.com/Ender-Wang/giftoday/blob/master/frontend/src/images/shopItems/" +
                                       cart.image +
                                       "?raw=true"
                                     }
+                                    alt={cart.name}
                                     className="h-full w-full object-cover object-center"
                                     style={{ aspectRatio: "1/1" }}
                                   />
@@ -165,15 +191,10 @@ export default function UserInfo() {
 
                                 <div className="ml-6 flex-1 text-sm">
                                   <div className="font-medium text-gray-900">
-                                    <h5
-                                      className="mt-1 "
-                                      style={{ color: "white" }}
-                                    >
-                                      11111111111111111111111111
-                                    </h5>
+                                    <br />
                                     <h5 className="mt-1">Name: {cart.name}</h5>
 
-                                    <p className="mt-4">Price: {cart.price}</p>
+                                    <p className="mt-4">Price: €{cart.price}</p>
 
                                     <p className="mt-4">
                                       <div
@@ -183,7 +204,7 @@ export default function UserInfo() {
                                         }}
                                       >
                                         <p> Amount : </p>
-                                        <h5 style={{ color: "white" }}>11</h5>
+
                                         <MinusCircleIcon
                                           className="h-5 w-5"
                                           aria-hidden="true"
