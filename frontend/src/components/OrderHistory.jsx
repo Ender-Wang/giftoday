@@ -220,7 +220,7 @@ export default function UserInfo() {
                         </div>
 
                         {/* Products */}
-                        <div className="scrollbar-thumb-gray-500 scrollbar-track-gray-200 scrollbar-w-2 h-64 overflow-y-scroll">
+                        <div class="scrollbar-thumb-gray-500 scrollbar-track-gray-200 scrollbar-w-2 h-64 overflow-y-scroll">
                           <ul role="list" className="divide-y divide-gray-200">
                             {order.gift.map((gift) => (
                               <li key={gift.id} className="p-4 sm:p-6">

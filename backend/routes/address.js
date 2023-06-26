@@ -13,25 +13,6 @@ router.get("/user/:userID/address", async (req, res) => {
   }
 });
 
-//Get shopItem by id
-// router.get("user/:userID/address/:addressID", async (req, res) => {
-//   const { userID, addressID } = req.params;
-//   let uID = Number(userID);
-//   let aID = Number(addressID);
-//   try {
-//     const user = await UserDB.findOne({ id: uID });
-//     const addressIndex = user.address.findIndex((addr) => addr.id === aID);
-//     return res.json(addressIndex);
-//   } catch (error) {
-//     if (error.status === 404) {
-//       return res.status(404).json({ error: "ShopItem not found" });
-//     } else {
-//       console.error(error);
-//       res.status(500).json({ error: "Internal server error" });
-//     }
-//   }
-// });
-
 //TODO: Post user Address info with user id: [id, fullName, postalCode, street, city, country]
 router.put("/user/:userID/address", async (req, res) => {
   try {
