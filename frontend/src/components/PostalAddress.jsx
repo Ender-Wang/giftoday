@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { getUserID } from "../states/GlobalState";
-import { AuthContext } from "./AuthContext";
-import { useContext } from "react";
 import { AiOutlineHome } from "react-icons/ai";
-export default function PostalAddress() {
+export default function PostalAddress({ onSelectAddress }) {
   const [fullName, setFullName] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [street, setStreet] = useState("");
@@ -13,7 +11,6 @@ export default function PostalAddress() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [shippingDate] = useState("26/06/2023");
   const [preAddress, setPreAddress] = useState([]);
-  const { isLoggedIn } = useContext(AuthContext);
   const userID = getUserID();
 
   const [formErrors, setFormErrors] = useState({});
@@ -79,10 +76,7 @@ export default function PostalAddress() {
         setFullName(value);
         setFormErrors((prevErrors) => ({ ...prevErrors, name: "" }));
         break;
-      // case "shippingDate":
-      //   setShippingDate(value);
-      //   setFormErrors((prevErrors) => ({ ...prevErrors, shippingDate: "" }));
-      //   break;
+
       case "street":
         setStreet(value);
         setFormErrors((prevErrors) => ({ ...prevErrors, street: "" }));
@@ -158,7 +152,6 @@ export default function PostalAddress() {
           setStreet("");
           setCity("");
           setPhoneNumber("");
-          // setSelectedAddress();
 
           setPreAddress(preAddress.concat(result));
         } else {
@@ -188,58 +181,11 @@ export default function PostalAddress() {
       console.log(error);
     }
   };
-  //Select address
-  // const handleSelect = (item) => {
-  //   if(isNaN(item.id)){
-  //     setSelectedAddress(-1);
-  //   }else{
-  //     set
-  //   }
 
-  // };
-  //Selected address
-  // const handleSelect = async (aID) =>{
-  //   if (aID===-1) {
-
-  //   } else {
-
-  //   }
-  //   const data = {
-  //     fullName: fullName,
-  //     postalCode: postalCode,
-  //     phoneNumber: phoneNumber,
-  //     city: city,
-  //     country: country,
-  //     street: street,
-  //     shippingDate: shippingDate,
-  //   };
-  //     try {
-  //       const response = await fetch(
-  //         "http://localhost:4000/user/" + userID + "/address",
-  //         {
-  //           method: "PUT",
-  //           headers: { "Content-Type": "application/json" },
-  //           body: JSON.stringify(data),
-  //         }
-  //       );
-  //       if (response.ok) {
-  //         const result = await response.json();
-  //         setFullName("");
-  //         setPostalCode("");
-  //         setStreet("");
-  //         setCity("");
-  //         setPhoneNumber("");
-  //         setShippingDate("");
-
-  //         setPreAddress(preAddress.concat(result));
-  //       } else {
-  //         console.log("Save address failed.");
-  //       }
-  //     } catch (error) {
-  //       console.log("An error occurred while processing the request.", error);
-  //     }
-
-  // }
+  const handleSelectAddress = (address) => {
+    onSelectAddress(address);
+    setSelectedAddress(address.id);
+  }
   return (
     <div className="h-600 ">
       {/* "choose address" container */}
@@ -275,7 +221,7 @@ export default function PostalAddress() {
                   <div>
                     <AiOutlineHome
                       className="ml-4 text-6xl"
-                      onClick={() => setSelectedAddress(item.id)}
+                      onClick={() => handleSelectAddress(item)}
                     />
                   </div>
                   <div className="col-span-2 ml-4 mt-2 ">
@@ -334,8 +280,6 @@ export default function PostalAddress() {
                 id="shippingDate"
                 name="shippingDate"
                 value="26/06/2023"
-                // value={shippingDate}
-                // onChange={handleInputChange}
                 className="border-themeColor w-full border-b-2 outline-none"
                 required
               />
