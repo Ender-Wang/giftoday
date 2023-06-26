@@ -23,12 +23,12 @@ function CheckoutPage() {
   const handleSubmit = async () => {
     try {
       const orderData = {
-        totalPrice: totalPrice,
-        selectedAddress: selectedAddress,
-        selectedCard: selectedCard,
+        total: totalPrice,
+        address: selectedAddress,
+        card: selectedCard,
       };
 
-      const response = await fetch(`http://localhost:4000/user/${id}//order`, {
+      const response = await fetch(`http://localhost:4000/user/${id}/order`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
