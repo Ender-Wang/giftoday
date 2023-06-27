@@ -40,6 +40,30 @@ export function getLoggedInDate() {
   return localStorage.getItem("loggedInDate");
 }
 
+export function getSearchContent() {
+  return localStorage.getItem("searchContent");
+}
+
+// Setters
+export async function setSearchContent(content) {
+  try {
+    await localStorage.setItem("searchContent", content);
+    return true;
+  } catch (err) {
+    console.log("Error setting searchContent:", err);
+    return false;
+  }
+}
+
+export async function removeSearchContent() {
+  try {
+    await localStorage.removeItem("searchContent");
+    return true;
+  } catch (err) {
+    console.log("Error removing searchContent:", err);
+    return false;
+  }
+}
 //--------------------- Selected Date -----------------------------//
 export async function setSelectedDate(date) {
   const selectedDate = new Date(date);
