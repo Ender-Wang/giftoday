@@ -208,27 +208,20 @@ const CreditCardForm = ({ onSelectCard }) => {
             >
               <div className="mb-2 flex items-center">
                 {Card.logo === "Visa" && (
-                  <img
-                    src={visalogo}
-                    alt="Visa Logo"
-                    className="mr-2"
-                    style={{ width: "30px" }}
-                  />
+                  <img src={visalogo} alt="Visa Logo" className="mr-2 w-8" />
                 )}
                 {Card.logo === "Mastercard" && (
                   <img
                     src={mastercardlogo}
                     alt="Mastercard Logo"
-                    className="mr-2"
-                    style={{ width: "30px" }}
+                    className="mr-2 w-8"
                   />
                 )}
                 {Card.logo === "UnionPay" && (
                   <img
                     src={unionpaylogo}
                     alt="UnionPay Logo"
-                    className="mr-2"
-                    style={{ width: "30px" }}
+                    className="mr-2 w-8"
                   />
                 )}
                 <p>Card Number: {Card.cardNumber}</p>
