@@ -12,6 +12,15 @@ export default function ShopItem({ selectedTag }) {
   const [isPremium, setPremium] = useState(false);
   const userID = getUserID();
   let searchContent = getSearchContent();
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
+  const handleCategorySelect = (category) => {
+    if (selectedCategories.includes(category)) {
+      setSelectedCategories(selectedCategories.filter((c) => c !== category));
+    } else {
+      setSelectedCategories([...selectedCategories, category]);
+    }
+  };
   useEffect(() => {
     const fetchShopItems = async () => {
       try {
@@ -123,7 +132,31 @@ export default function ShopItem({ selectedTag }) {
   };
   return (
     <div>
-      <div className="h-[30px] p-10">table</div>
+      <div className="p-min-[30px] p-10">
+        <table className="table-auto">
+          <tbody>
+            <tr>
+              <td className="px-2">Electronics</td>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={selectedCategories.includes("Electronics")}
+                  onChange={() => handleCategorySelect("Electronics")}
+                />
+              </td>
+              <td className="px-2">Home Appliances</td>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={selectedCategories.includes("Home Appliances")}
+                  onChange={() => handleCategorySelect("Home Appliances")}
+                />
+              </td>
+            </tr>
+            {/* Add more rows for other categories */}
+          </tbody>
+        </table>
+      </div>
       <div className="grid grid-cols-3 grid-rows-2 gap-12 p-10  ">
         {/* {filterTag(shopItems, selectedTag).map((item) => ( */}
         {filterTag(filterOnSearch(shopItems, searchContent), selectedTag).map(
