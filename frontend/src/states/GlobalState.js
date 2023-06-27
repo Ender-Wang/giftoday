@@ -44,6 +44,7 @@ export function getSearchContent() {
   return localStorage.getItem("searchContent");
 }
 
+//--------------------- SearchContent -----------------------------//
 // Setters
 export async function setSearchContent(content) {
   try {

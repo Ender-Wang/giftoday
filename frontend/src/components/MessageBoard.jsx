@@ -5,7 +5,7 @@ import { AuthContext } from "./AuthContext";
 import { useContext } from "react";
 import { BsFillTrashFill } from "react-icons/bs";
 
-export default function MessageBoard({ selectedDay }) {
+export default function MessageBoard({ selectedDay, onTagClick }) {
   const [activeButton, setActiveButton] = useState("Button 2");
   const { isLoggedIn } = useContext(AuthContext);
   const [holidays, setHolidays] = useState([]);
@@ -251,7 +251,10 @@ export default function MessageBoard({ selectedDay }) {
                         .map((item, index) => (
                           <div className="" key={index}>
                             <div className="flex items-center justify-between">
-                              <div className="mx-5 my-1 w-full transform truncate whitespace-nowrap border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:bg-themeColor-80 hover:font-bold">
+                              <div
+                                className="mx-5 my-1 w-full transform truncate whitespace-nowrap border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:bg-themeColor-80 hover:font-bold"
+                                onClick={() => onTagClick(item.tag.name)}
+                              >
                                 {item.message}
                               </div>
                               <div className="flex">
