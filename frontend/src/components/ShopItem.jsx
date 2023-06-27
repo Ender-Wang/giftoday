@@ -122,13 +122,13 @@ export default function ShopItem({ selectedTag }) {
     }
   };
   return (
-    <div className="grid grid-cols-3 grid-rows-2 gap-16 p-10  ">
+    <div className="grid grid-cols-3 grid-rows-2 gap-12 p-10  ">
       {/* {filterTag(shopItems, selectedTag).map((item) => ( */}
       {filterTag(filterOnSearch(shopItems, searchContent), selectedTag).map(
         (item) => (
           <div
             key={item.id}
-            className="h-64 min-w-[100px]  transform rounded-xl shadow-xl hover:scale-110"
+            className="min-h-[270px] min-w-[200px] transform  rounded-xl shadow-xl duration-300 hover:scale-110"
           >
             {/* product picture */}
             <div className="pl-4 pr-4">
