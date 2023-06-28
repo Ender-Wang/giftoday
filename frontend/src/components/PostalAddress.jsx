@@ -9,7 +9,7 @@ export default function PostalAddress({ onSelectAddress }) {
   const [city, setCity] = useState("");
   const [country] = useState("Germany");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [shippingDate] = useState("26/06/2023");
+  // const [shippingDate] = useState("26/06/2023");
   const [preAddress, setPreAddress] = useState([]);
   const userID = getUserID();
 
@@ -68,7 +68,7 @@ export default function PostalAddress({ onSelectAddress }) {
     fetchData();
   }, [userID, phoneNumber]);
 
-  //   //If newMessage is entered or tag is selected
+  //If newMessage is entered or tag is selected
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     switch (name) {
@@ -76,7 +76,10 @@ export default function PostalAddress({ onSelectAddress }) {
         setFullName(value);
         setFormErrors((prevErrors) => ({ ...prevErrors, name: "" }));
         break;
-
+      // case "shippingDate":
+      //   setShippingDate(value);
+      //   setFormErrors((prevErrors) => ({ ...prevErrors, shippingDate: "" }));
+      //   break;
       case "street":
         setStreet(value);
         setFormErrors((prevErrors) => ({ ...prevErrors, street: "" }));
@@ -103,9 +106,9 @@ export default function PostalAddress({ onSelectAddress }) {
     if (data.fullName.trim() === "") {
       errors.name = "Full Name is required!";
     }
-    if (data.shippingDate.trim() === "") {
-      errors.shippingDate = "Shipping Date is required!";
-    }
+    // if (data.shippingDate.trim() === "") {
+    //   errors.shippingDate = "Shipping Date is required!";
+    // }
     if (data.postalCode.trim() === "") {
       errors.postalCode = "Postal Code is required!";
     }
@@ -131,7 +134,7 @@ export default function PostalAddress({ onSelectAddress }) {
       city: city,
       country: country,
       street: street,
-      shippingDate: shippingDate,
+      // shippingDate: shippingDate,
     };
     const errors = validateForm(data);
     setFormErrors(errors);
@@ -185,7 +188,7 @@ export default function PostalAddress({ onSelectAddress }) {
   const handleSelectAddress = (address) => {
     onSelectAddress(address);
     setSelectedAddress(address.id);
-  }
+  };
   return (
     <div className="h-600 ">
       {/* "choose address" container */}
@@ -238,7 +241,7 @@ export default function PostalAddress({ onSelectAddress }) {
                       <button
                         type="button"
                         className="hover:scale-102 transform rounded-lg bg-normalButton px-5  py-1 hover:bg-normalButton"
-                        onClick={() => handleDelete(item.index)}
+                        onClick={() => handleDelete(item.id)}
                       >
                         DELETE
                       </button>
@@ -358,7 +361,6 @@ export default function PostalAddress({ onSelectAddress }) {
                 id="country"
                 name="country"
                 value={country}
-                onChange={handleInputChange}
                 className="border-themeColor w-full border-b-2 outline-none "
                 required
               />
