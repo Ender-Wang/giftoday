@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { getUserID } from "../states/GlobalState";
+import visalogo from "../images/Visa_Logo.svg.png";
+import mastercardlogo from "../images/MasterCard_Logo.svg.png";
+import unionpaylogo from "../images/UnionPay_logo.svg.png";
 
 const CreditCardForm = ({ onSelectCard }) => {
   const [cardNumber, setCardNumber] = useState("");
@@ -11,6 +14,7 @@ const CreditCardForm = ({ onSelectCard }) => {
   const [cardExistsError, setCardExistsError] = useState("");
   const [existingCardInfo, setExistingCardInfo] = useState(null);
   const [selectedCard, setSelectedCard] = useState(null);
+  const [selectedLogo, setSelectedLogo] = useState(null);
 
   const checkCardExists = async (cardNumber) => {
     try {
@@ -81,6 +85,9 @@ const CreditCardForm = ({ onSelectCard }) => {
       errors.cvv = "Invalid CVV. Please enter a 3-digit number.";
     }
 
+    if (!selectedLogo) {
+      errors.selectedLogo = "Please select a card type.";
+    }
     return errors;
   };
 
@@ -105,6 +112,7 @@ const CreditCardForm = ({ onSelectCard }) => {
         cardNumber: cardNumber,
         expiryDate: formattedExpiryDate,
         cvv: cvv,
+        logo: selectedLogo,
       };
 
       try {
@@ -198,7 +206,27 @@ const CreditCardForm = ({ onSelectCard }) => {
               }}
               onClick={() => selectCard(Card)}
             >
-              <p>Card Number: {Card.cardNumber}</p>
+              <div className="mb-2 flex items-center">
+                {Card.logo === "Visa" && (
+                  <img src={visalogo} alt="Visa Logo" className="mr-2 w-8" />
+                )}
+                {Card.logo === "Mastercard" && (
+                  <img
+                    src={mastercardlogo}
+                    alt="Mastercard Logo"
+                    className="mr-2 w-8"
+                  />
+                )}
+                {Card.logo === "UnionPay" && (
+                  <img
+                    src={unionpaylogo}
+                    alt="UnionPay Logo"
+                    className="mr-2 w-8"
+                  />
+                )}
+                <p>Card Number: {Card.cardNumber}</p>
+              </div>
+
               <p>Expiry Date: {Card.expiryDate.substring(0, 7)}</p>
               <p>CVV: {Card.cvv}</p>
 
@@ -212,9 +240,40 @@ const CreditCardForm = ({ onSelectCard }) => {
           ))}
         </div>
       )}
+
       {/* new card */}
       {successMessage && <p>{successMessage}</p>}
       <form onSubmit={handleSubmit}>
+        <div className="flex">
+          <img
+            src={visalogo}
+            alt="Visa Logo"
+            className={`mr-2 ${
+              selectedLogo === "Visa" ? "ring-2 ring-red-500" : ""
+            }`}
+            style={{ width: "50px", cursor: "pointer" }}
+            onClick={() => setSelectedLogo("Visa")}
+          />
+          <img
+            src={mastercardlogo}
+            alt="Mastercard Logo"
+            className={`mr-2 ${
+              selectedLogo === "Mastercard" ? "ring-2 ring-red-500" : ""
+            }`}
+            style={{ width: "50px", cursor: "pointer" }}
+            onClick={() => setSelectedLogo("Mastercard")}
+          />
+          <img
+            src={unionpaylogo}
+            alt="UnionPay Logo"
+            className={`mr-2 ${
+              selectedLogo === "UnionPay" ? "ring-2 ring-red-500" : ""
+            }`}
+            style={{ width: "50px", cursor: "pointer" }}
+            onClick={() => setSelectedLogo("UnionPay")}
+          />
+          {formErrors.selectedLogo && <p>{formErrors.selectedLogo}</p>}
+        </div>
         <div className="grid grid-cols-2 gap-4">
           <div className=" mb-4">
             <label htmlFor="cardNumber" className="block font-bold">
@@ -227,11 +286,7 @@ const CreditCardForm = ({ onSelectCard }) => {
               pattern="\d{16}"
               value={cardNumber}
               onChange={(e) => setCardNumber(e.target.value)}
-              required
-              style={{
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-              }}
+              className="w-full rounded-md border border-gray-400 p-2"
             />
             {formErrors.cardNumber && <p>{formErrors.cardNumber}</p>}
             {cardExistsError && <p>{cardExistsError}</p>}
@@ -249,11 +304,7 @@ const CreditCardForm = ({ onSelectCard }) => {
               pattern="\d{3}"
               value={cvv}
               onChange={(e) => setCvv(e.target.value)}
-              required
-              style={{
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-              }}
+              className="w-full rounded-md border border-gray-400 p-2"
             />
             {formErrors.cvv && <p>{formErrors.cvv}</p>}
           </div>
@@ -270,11 +321,7 @@ const CreditCardForm = ({ onSelectCard }) => {
               min={today}
               value={expiryDate}
               onChange={(e) => setExpiryDate(e.target.value)}
-              required
-              style={{
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-              }}
+              className="w-full rounded-md border border-gray-400 p-2"
             />
             {formErrors.expiryDate && <p>{formErrors.expiryDate}</p>}
           </div>
@@ -288,16 +335,6 @@ const CreditCardForm = ({ onSelectCard }) => {
             Submit
           </button>
         </div>
-
-        {/* Display the selected card information */}
-        {/* {selectedCard && (
-          <div>
-            <h2>Selected Card:</h2>
-            <p>Card Number: {selectedCard.cardNumber}</p>
-            <p>Expiry Date: {selectedCard.expiryDate.substring(0, 7)}</p>
-            <p>CVV: {selectedCard.cvv}</p>
-          </div>
-        )} */}
       </form>
     </div>
   );

@@ -30,7 +30,7 @@ router.put("/user/:userID/card", async (req, res) => {
   try {
     const { userID } = req.params;
     let id = Number(userID);
-    const { cardNumber, cvv, expiryDate } = req.body;
+    const { cardNumber, cvv, expiryDate, logo } = req.body;
     if (!cardNumber) {
       throw new Error("Invalid card value");
     }
@@ -49,6 +49,7 @@ router.put("/user/:userID/card", async (req, res) => {
       cardNumber: cardNumber,
       expiryDate: expiryDate,
       cvv: cvv,
+      logo: logo,
     };
     //remove before card
     // user.card = [];
