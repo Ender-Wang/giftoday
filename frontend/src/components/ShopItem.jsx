@@ -1,10 +1,8 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
-import { useContext } from "react";
+import React from "react";
+import { useEffect, useContext, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { AiOutlinePlus } from "react-icons/ai";
-import { getUserID } from "../states/GlobalState";
-import { getSearchContent } from "../states/GlobalState";
+import { getSearchContent, getUserID } from "../states/GlobalState";
 
 export default function ShopItem({ selectedTag }) {
   const { isLoggedIn } = useContext(AuthContext);
@@ -13,7 +11,11 @@ export default function ShopItem({ selectedTag }) {
   const userID = getUserID();
   let searchContent = getSearchContent();
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
 
+  const toggleFilter = () => {
+    setIsOpen(!isOpen);
+  };
   const handleCategorySelect = (category) => {
     if (selectedCategories.includes(category)) {
       setSelectedCategories(selectedCategories.filter((c) => c !== category));
@@ -132,32 +134,43 @@ export default function ShopItem({ selectedTag }) {
   };
   return (
     <div>
-      <div className="p-min-[30px] p-10">
-        <table className="table-auto">
-          <tbody>
-            <tr>
-              <td className="px-2">Electronics</td>
-              <td>
-                <input
-                  type="checkbox"
-                  checked={selectedCategories.includes("Electronics")}
-                  onChange={() => handleCategorySelect("Electronics")}
-                />
-              </td>
-              <td className="px-2">Home Appliances</td>
-              <td>
-                <input
-                  type="checkbox"
-                  checked={selectedCategories.includes("Home Appliances")}
-                  onChange={() => handleCategorySelect("Home Appliances")}
-                />
-              </td>
-            </tr>
-            {/* Add more rows for other categories */}
-          </tbody>
-        </table>
+      <div className="relative p-2">
+        <button
+          className="rounded bg-white px-4 py-2 focus:outline-none"
+          onClick={toggleFilter}
+        >
+          Filter
+        </button>
+        {isOpen && (
+          <div className="p-min-[20px] ">
+            <table className="table-auto">
+              <tbody>
+                <tr>
+                  <td className="px-2">Electronics</td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      checked={selectedCategories.includes("Electronics")}
+                      onChange={() => handleCategorySelect("Electronics")}
+                    />
+                  </td>
+                  <td className="px-2">Home Appliances</td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      checked={selectedCategories.includes("Home Appliances")}
+                      onChange={() => handleCategorySelect("Home Appliances")}
+                    />
+                  </td>
+                </tr>
+                {/* Add more rows for other categories */}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
-      <div className="grid grid-cols-3 grid-rows-2 gap-12 p-10  ">
+
+      <div className="grid grid-cols-3 grid-rows-2 gap-12 p-5  ">
         {/* {filterTag(shopItems, selectedTag).map((item) => ( */}
         {filterTag(filterOnSearch(shopItems, searchContent), selectedTag).map(
           (item) => (
