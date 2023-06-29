@@ -22,7 +22,7 @@ const OrderConfirmationPage = () => {
   return (
     <div className="flex h-screen flex-col items-center justify-center">
       <h1 className="text-4xl font-bold">
-        Congratulations! Your order submitted successfully!
+        🥳Congratulations! 🎉Your order submitted successfully!🎉
       </h1>
       <h2 className="mt-4 text-2xl">Redirecting in {countdown}...</h2>
     </div>
