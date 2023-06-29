@@ -193,8 +193,8 @@ const CreditCardForm = ({ onSelectCard }) => {
       <h1 className="font-sans text-xl">Payment Detail:</h1>
       <br />
       <div style={{ maxHeight: "730px", overflowY: "auto" }}>
-        {/* Display existing bank card information */}
-        {existingCardInfo && (
+        {existingCardInfo && existingCardInfo.length > 0 ? (
+          // Display existing card information
           <div>
             {existingCardInfo.map((Card, index) => (
               <div
@@ -241,6 +241,14 @@ const CreditCardForm = ({ onSelectCard }) => {
                 </button>
               </div>
             ))}
+          </div>
+        ) : (
+          // Display "Your card is empty" message
+          <div>
+            <h2 className="text-lg font-bold text-gray-500">
+              Your Card 💳 is Empty 😥
+            </h2>
+            <br />
           </div>
         )}
 
