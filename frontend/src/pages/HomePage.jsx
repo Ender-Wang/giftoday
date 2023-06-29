@@ -27,7 +27,7 @@ export default function HomePage() {
           <MessageBoard selectedDay={selectedDay} onTagClick={handleTagClick} />
         </div>
       </div>
-      <div className=" ml-[350px] mt-8 h-full w-full justify-center pl-10 md:w-2/3">
+      <div className=" ml-[300px] mt-8 justify-center pl-10 md:w-2/3">
         <ShopItem selectedTag={selectedTag} />
       </div>
     </div>

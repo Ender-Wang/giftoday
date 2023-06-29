@@ -192,7 +192,7 @@ export default function PostalAddress({ onSelectAddress }) {
   return (
     <div className="h-600 ">
       {/* "choose address" container */}
-      <div className=" absolute bottom-8 left-10 h-2/5 w-2/5 min-w-[300px] pl-4 pt-2">
+      <div className=" h-2/5 w-2/5 min-w-[300px]">
         <div>
           {preAddress
             .filter((item) => {
@@ -240,7 +240,7 @@ export default function PostalAddress({ onSelectAddress }) {
                     <div className="col-span-1 mr-4 mt-2 ">
                       <button
                         type="button"
-                        className="hover:scale-102 transform rounded-lg bg-normalButton px-5  py-1 hover:bg-normalButton"
+                        className="hover:scale-102 bg-normalButton hover:bg-normalButton transform rounded-lg  px-5 py-1"
                         onClick={() => handleDelete(item.id)}
                       >
                         DELETE
@@ -387,7 +387,7 @@ export default function PostalAddress({ onSelectAddress }) {
             <div className=" mb-4">
               <button
                 type="button"
-                className="hover:scale-102 transform rounded-lg bg-lightButton px-5  py-1 hover:bg-normalButton"
+                className="hover:scale-102 bg-lightButton hover:bg-normalButton transform rounded-lg  px-5 py-1"
                 onClick={handleSave}
               >
                 Save

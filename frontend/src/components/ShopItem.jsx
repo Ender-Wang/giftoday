@@ -170,13 +170,13 @@ export default function ShopItem({ selectedTag }) {
         )}
       </div>
 
-      <div className="grid grid-cols-4 gap-8 ">
+      <div className="grid grid-cols-4 gap-x-20 gap-y-8">
         {/* {filterTag(shopItems, selectedTag).map((item) => ( */}
         {filterTag(filterOnSearch(shopItems, searchContent), selectedTag).map(
           (item) => (
             <div
               key={item.id}
-              className="h-[350px] w-[250px] transform rounded-xl px-3 py-1 shadow-md duration-300 hover:scale-105 hover:border-2 hover:shadow-none"
+              className="h-auto max-h-[350px] min-h-[320px] w-auto min-w-[220px] max-w-[250px] transform rounded-xl px-3 py-1 shadow-md duration-300 hover:scale-105 hover:border-2 hover:shadow-none"
             >
               {/* product picture */}
               <div className="">
@@ -201,7 +201,7 @@ export default function ShopItem({ selectedTag }) {
               </div>
 
               {/* product price */}
-              <div className="flex flex-row justify-between pt-2">
+              <div className="flex flex-row justify-around pt-2">
                 {!isPremium && (
                   <span className="text-lightFontColor font-bold">
                     € {item.price}
