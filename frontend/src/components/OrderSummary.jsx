@@ -9,7 +9,7 @@ import { getUserID } from "../states/GlobalState";
 export default function OrderSummary({ onTotalPriceChange }) {
   const [id] = useState(getUserID);
 
-  const [carts, setCarts] = useState(null);
+  const [carts, setCarts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0); // Track total price
 
   //get ready to fetch data from backend
@@ -164,7 +164,13 @@ export default function OrderSummary({ onTotalPriceChange }) {
             {/* give some blank between the top */}
             <div className="mt-0 ">
               <div className="mx-auto max-w-lg ">
-                {carts !== null && (
+                {carts !== null && carts.length === 0 ? (
+                  <div className="text-center">
+                    <h2 className="text-lg font-bold text-gray-500">
+                      Your Cart 🛒 is Empty 😥
+                    </h2>
+                  </div>
+                ) : (
                   <div className="mx-auto max-w-md space-y-3  lg:px-0">
                     {carts.map((cart) => (
                       <div
