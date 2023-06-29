@@ -14,7 +14,7 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
   const [newTag, setNewTag] = useState("");
   const userID = getUserID();
 
-  const tags = ["home", "beauty", "lifestyle", "technology", "health"];
+  const tags = ["all", "home", "beauty", "lifestyle", "technology", "health"];
 
   //Calendar API
   useEffect(() => {
@@ -121,7 +121,7 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
       date: selectedDay,
       tag: {
         id: 1,
-        name: newTag === "" ? "general" : newTag,
+        name: newTag,
       },
     };
     try {
@@ -211,9 +211,9 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
                     onChange={handleInputChange}
                     className=" w-14 bg-transparent text-right text-sm text-lightFontColor hover:cursor-pointer focus:outline-none"
                   >
-                    <option value="" disabled>
+                    {/* <option value="" disabled>
                       #
-                    </option>
+                    </option> */}
                     {tags.map((tag) => (
                       <option key={tag} value={tag}>
                         #{tag}
