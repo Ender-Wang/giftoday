@@ -193,66 +193,48 @@ export default function PostalAddress({ onSelectAddress }) {
     <div className="h-600 ">
       {/* "choose address" container */}
       <div className=" h-2/5 w-2/5 min-w-[300px]">
-        <div>
-          {preAddress
-            .filter((item) => {
-              return item.id === selectAddress;
-            })
-            .map((item) => (
-              <div className="boarder h-full">
-                <div className=" grid grid-cols-4">
-                  <div className="col-span-2 ml-4 mt-2 ">
-                    <div>{item.fullName}</div>
-                    <div>
-                      <span>{item.phoneNumber}, </span>
-                      <span>{item.postalCode}, </span>
-                      <span>{item.street}, </span>
-                      <span>{item.city}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-        </div>
         <h1 className=" font-sans text-xl">Choose address</h1>
         <div className=" grid h-full w-full grid-rows-4">
           {/* previous addresses */}
-          <div className=" row-span-1 mb-2 overflow-x-auto rounded-lg">
-            {preAddress.map((item, index) => (
-              <div className="boarder h-full" key={index}>
-                <div className=" grid grid-cols-4">
-                  <div>
-                    <AiOutlineHome
-                      className="ml-4 text-6xl"
-                      onClick={() => handleSelectAddress(item)}
-                    />
-                  </div>
-                  <div className="col-span-2 ml-4 mt-2 ">
-                    <div>{item.fullName}</div>
+          <div className="row-span-1 mb-2 overflow-x-auto rounded-lg">
+            <div className="flex">
+              {preAddress.map((item, index) => (
+                <div className="boarder h-full" key={index}>
+                  <div className="grid grid-cols-4">
                     <div>
-                      <span>{item.phoneNumber}, </span>
-                      <span>{item.postalCode}, </span>
-                      <span>{item.street}, </span>
-                      <span>{item.city}</span>
+                      <AiOutlineHome
+                        className="ml-4 text-6xl"
+                        onClick={() => handleSelectAddress(item)}
+                      />
                     </div>
+                    <div className="col-span-2 ml-4 mt-2">
+                      <div>{item.fullName}</div>
+                      <div>
+                        <span>{item.phoneNumber}, </span>
+                        <span>{item.postalCode}, </span>
+                        <span>{item.street}, </span>
+                        <span>{item.city}</span>
+                      </div>
+                    </div>
+                    {item.id !== 0 ? (
+                      <div className="col-span-1 mr-4 mt-2">
+                        <button
+                          type="button"
+                          className="hover:scale-102 transform rounded-lg bg-normalButton px-5 py-1 hover:bg-normalButton"
+                          onClick={() => handleDelete(item.id)}
+                        >
+                          DELETE
+                        </button>
+                      </div>
+                    ) : (
+                      <div></div>
+                    )}
                   </div>
-                  {item.id !== 0 ? (
-                    <div className="col-span-1 mr-4 mt-2 ">
-                      <button
-                        type="button"
-                        className="hover:scale-102 transform rounded-lg bg-normalButton px-5  py-1 hover:bg-normalButton"
-                        onClick={() => handleDelete(item.id)}
-                      >
-                        DELETE
-                      </button>
-                    </div>
-                  ) : (
-                    <div></div>
-                  )}
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
+
           {/* new address */}
           <div className="row-span-3 ml-4 mt-2 grid grid-cols-6 gap-4">
             {/* full name */}
