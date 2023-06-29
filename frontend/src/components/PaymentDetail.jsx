@@ -189,7 +189,7 @@ const CreditCardForm = ({ onSelectCard }) => {
   const today = new Date().toISOString().split("T")[0];
 
   return (
-    <div style={{ position: "absolute", top: 80, right: 150 }}>
+    <div className="w-[400px]">
       <h1 className="font-sans text-xl">Payment Detail:</h1>
       <br />
       <div style={{ maxHeight: "730px", overflowY: "auto" }}>
@@ -341,7 +341,7 @@ const CreditCardForm = ({ onSelectCard }) => {
           <div className="mb-4 ">
             <button
               type="submit"
-              className="hover:scale-102 transform rounded-lg bg-lightButton px-5 py-1 hover:bg-normalButton"
+              className="hover:scale-102 bg-lightButton hover:bg-normalButton transform rounded-lg px-5 py-1"
             >
               Submit
             </button>

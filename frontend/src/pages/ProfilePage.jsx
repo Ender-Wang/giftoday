@@ -3,17 +3,16 @@ import UserInfo from "../components/UserInfo";
 import OrderHistory from "../components/OrderHistory";
 
 export default function ProfilePage() {
+  useEffect(() => {
+    document.title = "Giftoday - Profile";
+  }, []);
   return (
-    <div class="flex">
-      <div class="w-4/5">
-        <div class="ml-12 mt-12">
-          <UserInfo />
-        </div>
+    <div className="flex">
+      <div className="ml-12 mt-12 w-4/5">
+        <UserInfo />
       </div>
-      <div class="w-1/2">
-        {/* <div class="mr-20 "> */}
+      <div className="w-1/2">
         <OrderHistory />
-        {/* </div> */}
       </div>
     </div>
   );

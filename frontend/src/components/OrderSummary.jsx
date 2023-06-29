@@ -147,20 +147,13 @@ export default function OrderSummary({ onTotalPriceChange }) {
 
   return (
     <div>
-      <div className="flex items-center justify-start">
-        <div className="py-16 sm:py-24">
-          <div className="mx-auto max-w-md sm:px-2 lg:px-8">
-            <div className="mx-auto max-w-2xl px-4 lg:max-w-4xl lg:px-0">
-              <h1 className="font-sans text-3xl tracking-tight text-gray-900 sm:text-3xl">
-                Cart
-              </h1>
-            </div>
-          </div>
+      <div className="mx-auto sm:px-2 lg:px-8">
+        <h1 className="font-sans text-3xl tracking-tight text-gray-900 sm:text-3xl">
+          Cart
+        </h1>
+      </div>
 
-          <div
-            className="rounded border border-white p-4"
-            style={{ maxHeight: "40vh", overflowY: "auto" }}
-          >
+          <div className="h-[400px] w-[500px] overflow-y-auto rounded border border-white p-4">
             {/* give some blank between the top */}
             <div className="mt-0 ">
               <div className="mx-auto max-w-lg ">
@@ -195,60 +188,58 @@ export default function OrderSummary({ onTotalPriceChange }) {
                                   />
                                 </div>
 
-                                <div className="ml-6 flex-1 text-sm">
-                                  <div className="font-medium text-gray-900">
-                                    <br />
-                                    <h5 className="mt-1">Name: {cart.name}</h5>
+                            <div className="ml-6 flex-1 text-sm">
+                              <div className="font-medium text-gray-900">
+                                <br />
+                                <h5 className="mt-1">Name: {cart.name}</h5>
 
-                                    <p className="mt-4">Price: €{cart.price}</p>
+                                <p className="mt-4">Price: €{cart.price}</p>
 
-                                    <p className="mt-4">
-                                      <div
-                                        style={{
-                                          display: "flex",
-                                          alignItems: "center",
-                                        }}
-                                      >
-                                        <p> Amount : </p>
+                                <p className="mt-4">
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <p> Amount : </p>
 
-                                        <MinusCircleIcon
-                                          className="h-5 w-5"
-                                          aria-hidden="true"
-                                          style={{ color: "#892455" }}
-                                          onClick={() => handleReduce(cart.id)}
-                                        />
-                                        <span style={{ margin: "0 5px" }}>
-                                          {cart.quantity}{" "}
-                                        </span>
-                                        <PlusCircleIcon
-                                          className="h-5 w-5"
-                                          aria-hidden="true"
-                                          style={{ color: "#892455" }}
-                                          onClick={() => handleAdd(cart.id)}
-                                        />
-                                      </div>
-                                    </p>
-
-                                    <h5 className="mt-1 flex justify-end">
-                                      <TrashIcon
-                                        className="h-5 w-5"
-                                        aria-hidden="true"
-                                        style={{ color: "#DD7E9A" }}
-                                        onClick={() => handleDelete(cart.id)}
-                                      />
-                                    </h5>
+                                    <MinusCircleIcon
+                                      className="h-5 w-5"
+                                      aria-hidden="true"
+                                      style={{ color: "#892455" }}
+                                      onClick={() => handleReduce(cart.id)}
+                                    />
+                                    <span style={{ margin: "0 5px" }}>
+                                      {cart.quantity}{" "}
+                                    </span>
+                                    <PlusCircleIcon
+                                      className="h-5 w-5"
+                                      aria-hidden="true"
+                                      style={{ color: "#892455" }}
+                                      onClick={() => handleAdd(cart.id)}
+                                    />
                                   </div>
-                                </div>
+                                </p>
+
+                                <h5 className="mt-1 flex justify-end">
+                                  <TrashIcon
+                                    className="h-5 w-5"
+                                    aria-hidden="true"
+                                    style={{ color: "#DD7E9A" }}
+                                    onClick={() => handleDelete(cart.id)}
+                                  />
+                                </h5>
                               </div>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    ))}
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
-                )}
+                ))}
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
