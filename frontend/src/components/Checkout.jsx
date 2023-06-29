@@ -158,7 +158,7 @@ function Checkout() {
       </div>
 
       {/* Shipping Address */}
-      <div className=" flex flex-row pt-4">
+      <div className=" row-span-2 flex flex-row pt-4">
         <PostalAddress onSelectAddress={handleSelectAddress} />
       </div>
 

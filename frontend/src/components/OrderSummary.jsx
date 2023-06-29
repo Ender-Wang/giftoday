@@ -153,7 +153,7 @@ export default function OrderSummary({ onTotalPriceChange }) {
         </h1>
       </div>
 
-      <div className="max-h-[400px] overflow-y-auto rounded border border-white p-4">
+      <div className="h-[400px] w-[500px] overflow-y-auto rounded border border-white p-4">
         {/* give some blank between the top */}
         <div className="mt-0 ">
           <div className="">
