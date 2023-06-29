@@ -170,54 +170,61 @@ export default function ShopItem({ selectedTag }) {
         )}
       </div>
 
-      <div className="grid grid-cols-3 grid-rows-2 gap-12 p-5  ">
+      <div className="grid grid-cols-4 gap-x-20 gap-y-8">
         {/* {filterTag(shopItems, selectedTag).map((item) => ( */}
         {filterTag(filterOnSearch(shopItems, searchContent), selectedTag).map(
           (item) => (
             <div
               key={item.id}
-              className="min-h-[270px] min-w-[200px] transform  rounded-xl shadow-xl duration-300 hover:scale-110"
+              className="h-auto max-h-[350px] min-h-[320px] w-auto min-w-[220px] max-w-[250px] transform rounded-xl px-3 py-1 shadow-md duration-300 hover:scale-105 hover:border-2 hover:shadow-none"
             >
               {/* product picture */}
-              <div className="pl-4 pr-4">
+              <div className="">
                 <img
                   src={
                     "https://github.com/Ender-Wang/giftoday/blob/master/frontend/src/images/shopItems/" +
                     item.image +
                     "?raw=true"
                   }
-                  className="h-full w-full object-cover"
-                  style={{ aspectRatio: "1/1" }}
+                  className="aspect-square h-full w-full rounded-md object-cover"
                   alt={item.name}
                   title={item.description}
                 />
               </div>
+
               {/* product name */}
-              <div className="font-bold">{item.name}</div>
+              <div className="line-clamp-1 pt-2 font-bold">{item.name}</div>
+
+              {/* product description */}
+              <div className="text-lightFontColor line-clamp-2 pt-1 text-sm">
+                {item.description}
+              </div>
+
               {/* product price */}
-              <div className="flex flex-row pl-2 ">
+              <div className="flex flex-row justify-around pt-2">
                 {!isPremium && (
-                  <span className="basis-5/6 font-bold text-lightFontColor">
+                  <span className="text-lightFontColor font-bold">
                     € {item.price}
                   </span>
                 )}
                 {isPremium && (
-                  <div className="basis-5/6 font-bold text-lightFontColor ">
-                    <span className="line-through">€ {item.price}</span>
-                    <span className=" ml-4 basis-5/6 text-xl font-bold text-orangeFontColor ">
-                      € {item.price * 0.9}
+                  <div className="flex flex-1 justify-between pr-12 font-bold">
+                    <span className=" pt-0.5 line-through">€{item.price}</span>
+                    <span className=" text-xl text-red-600">-10%</span>
+                    <span className=" text-orangeFontColor  text-xl  font-bold ">
+                      €{item.price * 0.9}
                     </span>
                   </div>
                 )}
                 {isLoggedIn && (
                   <div
-                    className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-normalPlusButton"
+                    className="bg-normalPlusButton flex h-6 w-6 cursor-pointer items-center justify-center rounded-full"
                     onClick={() => {
                       handleCartButton(item);
                       // window.location.reload();
                     }}
                   >
-                    <AiOutlinePlus className="text-xl text-white" />
+                    <AiOutlinePlus className="text-2xl text-white" />
                   </div>
                 )}
               </div>
