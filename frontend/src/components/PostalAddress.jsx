@@ -14,7 +14,7 @@ export default function PostalAddress({ onSelectAddress }) {
   const userID = getUserID();
 
   const [formErrors, setFormErrors] = useState({});
-  const [selectAddress, setSelectedAddress] = useState(0);
+  const [selectedAddress, setSelectedAddress] = useState(0);
   const germanyCities = [
     "Berlin",
     "Hamburg",
@@ -190,53 +190,58 @@ export default function PostalAddress({ onSelectAddress }) {
     setSelectedAddress(address.id);
   };
   return (
-    <div className="h-600 ">
+    <div>
       {/* "choose address" container */}
-      <div className=" h-2/5 w-2/5 min-w-[300px]">
+      <div className=" h-2/5 min-w-[300px] pb-10 pr-64">
         <h1 className=" font-sans text-xl">Choose address</h1>
-        <div className=" grid h-full w-full grid-rows-4">
+        <div className=" grid h-full w-full grid-cols-2 grid-rows-3">
           {/* previous addresses */}
-          <div className="row-span-1 mb-2 overflow-x-auto rounded-lg">
-            <div className="flex">
-              {preAddress.map((item, index) => (
-                <div className="boarder h-full" key={index}>
-                  <div className="grid grid-cols-4">
-                    <div>
-                      <AiOutlineHome
-                        className="ml-4 text-6xl"
-                        onClick={() => handleSelectAddress(item)}
-                      />
-                    </div>
-                    <div className="col-span-2 ml-4 mt-2">
-                      <div>{item.fullName}</div>
-                      <div>
-                        <span>{item.phoneNumber}, </span>
-                        <span>{item.postalCode}, </span>
-                        <span>{item.street}, </span>
-                        <span>{item.city}</span>
-                      </div>
-                    </div>
-                    {item.id !== 0 ? (
-                      <div className="col-span-1 mr-4 mt-2">
-                        <button
-                          type="button"
-                          className="hover:scale-102 transform rounded-lg bg-normalButton px-5 py-1 hover:bg-normalButton"
-                          onClick={() => handleDelete(item.id)}
-                        >
-                          DELETE
-                        </button>
-                      </div>
-                    ) : (
-                      <div></div>
-                    )}
+          <div className="row-span-3 h-[200px] overflow-y-auto  pb-2 pt-4">
+            {preAddress.map((item, index) => (
+              <div
+                // eslint-disable-next-line no-template-curly-in-string
+                className={`${
+                  selectedAddress === item.id ? "border-price" : ""
+                } hover:scale-102 mb-4 h-[90px]
+              transform rounded-lg border-2 px-2 duration-300`}
+                key={index}
+              >
+                <div className="grid grid-cols-4">
+                  <div>
+                    <AiOutlineHome
+                      className="pl-4 text-6xl"
+                      onClick={() => handleSelectAddress(item)}
+                    />
                   </div>
+                  <div className="col-span-2 pl-4 pt-2">
+                    <div>{item.fullName}</div>
+                    <div>
+                      <span>{item.phoneNumber}, </span>
+                      <span>{item.postalCode}, </span>
+                      <span>{item.street}, </span>
+                      <span>{item.city}</span>
+                    </div>
+                  </div>
+                  {item.id !== 0 ? (
+                    <div className="col-span-1 pr-4 pt-2">
+                      <button
+                        type="button"
+                        className="hover:scale-102 transform rounded-lg bg-normalButton px-5 py-1 hover:bg-normalButton"
+                        onClick={() => handleDelete(item.id)}
+                      >
+                        DELETE
+                      </button>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
 
           {/* new address */}
-          <div className="row-span-3 ml-4 mt-2 grid grid-cols-6 gap-4">
+          <div className="row-span-3 grid grid-cols-6 gap-4 pl-4 pt-2">
             {/* full name */}
             <div className="col-span-4 mb-4">
               <label htmlFor="fullName" className=" block font-bold">

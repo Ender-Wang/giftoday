@@ -5,7 +5,7 @@ import { setSearchContent } from "../states/GlobalState";
 import { FaUser } from "react-icons/fa";
 import { AuthContext } from "./AuthContext";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { AiTwotoneCrown } from "react-icons/ai";
+import { AiTwotoneCrown, AiOutlineSearch } from "react-icons/ai";
 import { getUserID } from "../states/GlobalState";
 
 const Navbar = () => {
@@ -133,7 +133,7 @@ const Navbar = () => {
               className="hover:scale-102 boarder boarder-lightButton transform rounded-lg pl-1 pr-1 text-white  hover:bg-normalButton"
               onClick={() => setSearchContent(searchText)}
             >
-              Search
+              <AiOutlineSearch />
             </button>
           </div>
           {showDropdown && (

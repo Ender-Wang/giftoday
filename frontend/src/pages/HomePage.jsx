@@ -20,7 +20,7 @@ export default function HomePage() {
   return (
     <div className="ml-28 flex flex-col md:flex-row">
       <div className="fixed mt-14 w-full md:w-1/3">
-        <div className="mt-4 h-[350px] w-[300px]">
+        <div className="mt-10 h-[350px] w-[300px]">
           <Calendar selectedDay={selectedDay} onDayClick={handleDayClick} />
         </div>
         <div className="mt-8 h-[350px] w-[300px]">

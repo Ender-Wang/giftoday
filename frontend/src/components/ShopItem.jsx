@@ -196,29 +196,29 @@ export default function ShopItem({ selectedTag }) {
               <div className="line-clamp-1 pt-2 font-bold">{item.name}</div>
 
               {/* product description */}
-              <div className="text-lightFontColor line-clamp-2 pt-1 text-sm">
+              <div className="line-clamp-2 pt-1 text-sm text-lightFontColor">
                 {item.description}
               </div>
 
               {/* product price */}
               <div className="flex flex-row justify-around pt-2">
                 {!isPremium && (
-                  <span className="text-lightFontColor font-bold">
+                  <span className="font-bold text-lightFontColor">
                     € {item.price}
                   </span>
                 )}
                 {isPremium && (
                   <div className="flex flex-1 justify-between pr-12 font-bold">
                     <span className=" pt-0.5 line-through">€{item.price}</span>
-                    <span className=" text-xl text-red-600">-10%</span>
-                    <span className=" text-orangeFontColor  text-xl  font-bold ">
+                    <span className=" text-sm text-red-600">-10%</span>
+                    <span className=" text-xl  font-bold  text-orangeFontColor ">
                       €{item.price * 0.9}
                     </span>
                   </div>
                 )}
                 {isLoggedIn && (
                   <div
-                    className="bg-normalPlusButton flex h-6 w-6 cursor-pointer items-center justify-center rounded-full"
+                    className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-normalPlusButton"
                     onClick={() => {
                       handleCartButton(item);
                       // window.location.reload();

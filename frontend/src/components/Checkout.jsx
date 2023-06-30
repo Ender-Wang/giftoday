@@ -140,7 +140,7 @@ function Checkout() {
     }
   };
   return (
-    <div className="mx-64">
+    <div className="mx-16">
       <div className="flex-col-2 flex w-[500px]">
         {/* Order Summary */}
         <div className="pt-24">
