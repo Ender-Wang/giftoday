@@ -4,18 +4,14 @@ import { AuthContext } from "./AuthContext";
 import { AiOutlinePlus } from "react-icons/ai";
 import { getUserID } from "../states/GlobalState";
 
-export default function ShopItem({ selectedTag, searchContent }) {
+export default function ShopItem({ selectedTag, searchContent, showFilter }) {
   const { isLoggedIn } = useContext(AuthContext);
   const [shopItems, setShopItems] = useState([]);
   const [isPremium, setPremium] = useState(false);
   const userID = getUserID();
   let search = searchContent;
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
 
-  const toggleFilter = () => {
-    setIsOpen(!isOpen);
-  };
   const handleCategorySelect = (category) => {
     if (selectedCategories.includes(category)) {
       setSelectedCategories(selectedCategories.filter((c) => c !== category));
@@ -135,14 +131,8 @@ export default function ShopItem({ selectedTag, searchContent }) {
   return (
     <div>
       <div className="relative p-2">
-        <button
-          className="rounded bg-white px-4 py-2 focus:outline-none"
-          onClick={toggleFilter}
-        >
-          Filter
-        </button>
-        {isOpen && (
-          <div className="p-min-[20px] ">
+        {showFilter && (
+          <div className="pt-10 ">
             <table className="table-auto">
               <tbody>
                 <tr>
@@ -170,7 +160,7 @@ export default function ShopItem({ selectedTag, searchContent }) {
         )}
       </div>
 
-      <div className="grid grid-cols-4 gap-x-20 gap-y-8">
+      <div className="grid grid-cols-4 gap-x-20 gap-y-8 py-8">
         {/* {filterTag(shopItems, selectedTag).map((item) => ( */}
         {filterTag(filterOnSearch(shopItems, search), selectedTag).map(
           (item) => (

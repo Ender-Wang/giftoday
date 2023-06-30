@@ -12,16 +12,24 @@ import OrderConfirmation from "./pages/OrderConfirmationPage";
 
 function App() {
   const [searchContent, setSearchContent] = useState("");
+  const [showFilter, setShowFilter] = useState(false);
   const handleSearchContent = (content) => {
     setSearchContent(content);
   };
+  const handleFilter = () => {
+    setShowFilter(!showFilter);
+  };
+
   return (
     <AuthProvider>
-      <NavBar onSearchClick={handleSearchContent} />
+      <NavBar
+        onSearchClick={handleSearchContent}
+        onFilterClick={handleFilter}
+      />
       <Routes>
         <Route
           path="/giftoday.com"
-          element={<HomePage search={searchContent} />}
+          element={<HomePage search={searchContent} filter={showFilter} />}
         />
         <Route
           path="/giftoday.com/registration"
