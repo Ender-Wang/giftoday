@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { getUserID } from "../states/GlobalState";
+import { getUserID, getSelectedDate } from "../states/GlobalState";
 import { AiOutlineHome } from "react-icons/ai";
 export default function PostalAddress({ onSelectAddress }) {
   const [fullName, setFullName] = useState("");
@@ -9,7 +9,7 @@ export default function PostalAddress({ onSelectAddress }) {
   const [city, setCity] = useState("");
   const [country] = useState("Germany");
   const [phoneNumber, setPhoneNumber] = useState("");
-  // const [shippingDate] = useState("26/06/2023");
+  const selectedDate = getSelectedDate().substring(0, 15);
   const [preAddress, setPreAddress] = useState([]);
   const userID = getUserID();
 
@@ -199,7 +199,6 @@ export default function PostalAddress({ onSelectAddress }) {
           <div className="row-span-3 h-[200px] overflow-y-auto  pb-2 pt-4">
             {preAddress.map((item, index) => (
               <div
-                // eslint-disable-next-line no-template-curly-in-string
                 className={`${
                   selectedAddress === item.id ? "border-price" : ""
                 } hover:scale-102 mb-4 h-[90px]
@@ -269,7 +268,7 @@ export default function PostalAddress({ onSelectAddress }) {
                 type="text"
                 id="shippingDate"
                 name="shippingDate"
-                value="26/06/2023"
+                value={selectedDate}
                 className="border-themeColor w-full border-b-2 outline-none"
                 required
               />
