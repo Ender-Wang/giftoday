@@ -153,40 +153,40 @@ export default function OrderSummary({ onTotalPriceChange }) {
         </h1>
       </div>
 
-          <div className="h-[400px] w-[500px] overflow-y-auto rounded border border-white p-4">
-            {/* give some blank between the top */}
-            <div className="mt-0 ">
-              <div className="mx-auto max-w-lg ">
-                {carts !== null && carts.length === 0 ? (
-                  <div className="text-center">
-                    <h2 className="text-lg font-bold text-gray-500">
-                      Your Cart 🛒 is Empty 😥
-                    </h2>
-                  </div>
-                ) : (
-                  <div className="mx-auto max-w-md space-y-3  lg:px-0">
-                    {carts.map((cart) => (
-                      <div
-                        key={cart.id}
-                        className="border-radius: 30px border-gray-300 bg-white hover:shadow-md sm:rounded-lg sm:border"
-                      >
-                        {/* Products */}
-                        <div class="scrollbar-thumb-gray-500 scrollbar-track-gray-200 scrollbar-w-2 h-64 overflow-y-scroll">
-                          <ul className="divide-y divide-gray-200">
-                            <li key={cart.id} className="p-4 sm:p-6">
-                              <div className="flex items-center sm:items-start">
-                                <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-gray-200 sm:h-40 sm:w-40">
-                                  <img
-                                    src={
-                                      "https://github.com/Ender-Wang/giftoday/blob/master/frontend/src/images/shopItems/" +
-                                      cart.image +
-                                      "?raw=true"
-                                    }
-                                    alt={cart.name}
-                                    className="h-full w-full object-cover object-center"
-                                    style={{ aspectRatio: "1/1" }}
-                                  />
-                                </div>
+      <div className="h-[400px] w-[500px] overflow-y-auto rounded border border-white p-4">
+        {/* give some blank between the top */}
+        <div className="mt-0 ">
+          <div className="mx-auto max-w-lg ">
+            {carts !== null && carts.length === 0 ? (
+              <div className="text-center">
+                <h2 className="text-lg font-bold text-gray-500">
+                  Your Cart 🛒 is Empty 😥
+                </h2>
+              </div>
+            ) : (
+              <div className="mx-auto max-w-md space-y-3  lg:px-0">
+                {carts.map((cart) => (
+                  <div
+                    key={cart.id}
+                    className="border-radius: 30px border-gray-300 bg-white hover:shadow-md sm:rounded-lg sm:border"
+                  >
+                    {/* Products */}
+                    <div class="scrollbar-thumb-gray-500 scrollbar-track-gray-200 scrollbar-w-2 h-64 overflow-y-scroll">
+                      <ul className="divide-y divide-gray-200">
+                        <li key={cart.id} className="p-4 sm:p-6">
+                          <div className="flex items-center sm:items-start">
+                            <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-gray-200 sm:h-40 sm:w-40">
+                              <img
+                                src={
+                                  "https://github.com/Ender-Wang/giftoday/blob/master/frontend/src/images/shopItems/" +
+                                  cart.image +
+                                  "?raw=true"
+                                }
+                                alt={cart.name}
+                                className="h-full w-full object-cover object-center"
+                                style={{ aspectRatio: "1/1" }}
+                              />
+                            </div>
 
                             <div className="ml-6 flex-1 text-sm">
                               <div className="font-medium text-gray-900">
