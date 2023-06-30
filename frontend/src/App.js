@@ -8,6 +8,7 @@ import PremiumBenefitsPage from "./pages/PremiumBenefitsPage";
 import ProfilePage from "./pages/ProfilePage";
 import CheckoutPage from "./pages/CheckoutPage";
 import { AuthProvider } from "./components/AuthContext";
+import OrderConfirmation from "./pages/OrderConfirmationPage";
 
 function App() {
   return (
@@ -27,6 +28,10 @@ function App() {
         />
         <Route path="/giftoday.com/profile" element={<ProfilePage />} />
         <Route path="/giftoday.com/checkout" element={<CheckoutPage />} />
+        <Route
+          path="/giftoday.com/OrderConfirmation"
+          element={<OrderConfirmation />}
+        />
         <Route path="*" element={<p>There's nothing here!</p>} />
       </Routes>
     </AuthProvider>
