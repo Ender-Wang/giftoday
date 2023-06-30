@@ -6,6 +6,7 @@ const OrderConfirmationPage = () => {
   const [countdown, setCountdown] = useState(3);
 
   useEffect(() => {
+    document.title = "Giftoday - Order Confirmation";
     if (countdown > 0) {
       const timer = setTimeout(() => {
         setCountdown(countdown - 1);
