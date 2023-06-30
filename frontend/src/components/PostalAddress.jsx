@@ -196,19 +196,19 @@ export default function PostalAddress({ onSelectAddress }) {
         <h1 className=" font-sans text-xl">Choose address</h1>
         <div className=" grid h-full w-full grid-cols-2 grid-rows-3">
           {/* previous addresses */}
-          <div className="row-span-3 h-[200px] overflow-y-auto  pb-2 pt-4">
+          <div className="row-span-3  h-[200px] overflow-y-auto pb-2 pr-10 pt-4">
             {preAddress.map((item, index) => (
               <div
                 className={`${
                   selectedAddress === item.id ? "border-price" : ""
                 } hover:scale-102 mb-4 h-[90px]
-              transform rounded-lg border-2 px-2 duration-300`}
+              transform rounded-lg border-2 duration-300`}
                 key={index}
               >
                 <div className="grid grid-cols-4">
-                  <div>
+                  <div className="flex items-center justify-center">
                     <AiOutlineHome
-                      className="pl-4 text-6xl"
+                      className=" text-6xl "
                       onClick={() => handleSelectAddress(item)}
                     />
                   </div>
@@ -222,10 +222,10 @@ export default function PostalAddress({ onSelectAddress }) {
                     </div>
                   </div>
                   {item.id !== 0 ? (
-                    <div className="col-span-1 pr-4 pt-2">
+                    <div className="col-span-1 flex items-center justify-center pr-4 pt-2">
                       <button
                         type="button"
-                        className="hover:scale-102 transform rounded-lg bg-normalButton px-5 py-1 hover:bg-normalButton"
+                        className="hover:scale-102  transform rounded-lg bg-normalButton px-5 py-1 hover:bg-normalButton"
                         onClick={() => handleDelete(item.id)}
                       >
                         DELETE
@@ -270,7 +270,7 @@ export default function PostalAddress({ onSelectAddress }) {
                 name="shippingDate"
                 value={selectedDate}
                 className="border-themeColor w-full border-b-2 outline-none"
-                required
+                title="please select date in the calendar on the homepage"
               />
             </div>
             {/* Street */}
