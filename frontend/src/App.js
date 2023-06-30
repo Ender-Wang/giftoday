@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import React from "react";
+import React, { useState } from "react";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import NavBar from "./components/NavBar";
@@ -11,11 +11,18 @@ import { AuthProvider } from "./components/AuthContext";
 import OrderConfirmation from "./pages/OrderConfirmationPage";
 
 function App() {
+  const [searchContent, setSearchContent] = useState("");
+  const handleSearchContent = (content) => {
+    setSearchContent(content);
+  };
   return (
     <AuthProvider>
-      <NavBar />
+      <NavBar onSearchClick={handleSearchContent} />
       <Routes>
-        <Route path="/giftoday.com" element={<HomePage />} />
+        <Route
+          path="/giftoday.com"
+          element={<HomePage search={searchContent} />}
+        />
         <Route
           path="/giftoday.com/registration"
           element={<RegistrationPage />}

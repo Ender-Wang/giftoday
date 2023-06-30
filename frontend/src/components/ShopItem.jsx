@@ -2,14 +2,14 @@ import React from "react";
 import { useEffect, useContext, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { AiOutlinePlus } from "react-icons/ai";
-import { getSearchContent, getUserID } from "../states/GlobalState";
+import { getUserID } from "../states/GlobalState";
 
-export default function ShopItem({ selectedTag }) {
+export default function ShopItem({ selectedTag, searchContent }) {
   const { isLoggedIn } = useContext(AuthContext);
   const [shopItems, setShopItems] = useState([]);
   const [isPremium, setPremium] = useState(false);
   const userID = getUserID();
-  let searchContent = getSearchContent();
+  let search = searchContent;
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -172,7 +172,7 @@ export default function ShopItem({ selectedTag }) {
 
       <div className="grid grid-cols-4 gap-x-20 gap-y-8">
         {/* {filterTag(shopItems, selectedTag).map((item) => ( */}
-        {filterTag(filterOnSearch(shopItems, searchContent), selectedTag).map(
+        {filterTag(filterOnSearch(shopItems, search), selectedTag).map(
           (item) => (
             <div
               key={item.id}

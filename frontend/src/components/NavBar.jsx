@@ -8,7 +8,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { AiTwotoneCrown, AiOutlineSearch } from "react-icons/ai";
 import { getUserID } from "../states/GlobalState";
 
-const Navbar = () => {
+const Navbar = ({ onSearchClick }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const { isLoggedIn, logout } = useContext(AuthContext);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -103,7 +103,10 @@ const Navbar = () => {
     e.preventDefault();
     setShowProfileMenu(!showProfileMenu);
   };
-
+  const handleSearchClick = (s) => {
+    setSearchContent(s);
+    onSearchClick(s);
+  };
   return (
     <nav className="fixed z-50 h-[48px] w-full bg-themeColor-100 px-32 shadow-xl backdrop-blur-sm backdrop-invert backdrop-opacity-10">
       {/* Nav Bar */}
@@ -131,7 +134,7 @@ const Navbar = () => {
             <button
               type="button"
               className="hover:scale-102 boarder boarder-lightButton transform rounded-lg pl-1 pr-1 text-white  hover:bg-normalButton"
-              onClick={() => setSearchContent(searchText)}
+              onClick={() => handleSearchClick(searchText)}
             >
               <AiOutlineSearch />
             </button>
