@@ -3,7 +3,7 @@ import MessageBoard from "../components/MessageBoard";
 import Calendar from "../components/Calendar";
 import ShopItem from "../components/ShopItem";
 
-export default function HomePage() {
+export default function HomePage({ search, filter }) {
   //Default selected day is today
   const [selectedDay, setSelectedDay] = useState(new Date());
   const [selectedTag, setSelectedTag] = useState("general");
@@ -28,7 +28,11 @@ export default function HomePage() {
         </div>
       </div>
       <div className=" ml-[300px] mt-8 justify-center pl-10 md:w-2/3">
-        <ShopItem selectedTag={selectedTag} />
+        <ShopItem
+          selectedTag={selectedTag}
+          searchContent={search}
+          showFilter={filter}
+        />
       </div>
     </div>
   );

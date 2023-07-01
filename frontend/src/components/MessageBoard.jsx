@@ -78,7 +78,7 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
     if (isLoggedIn) {
       fetchData();
     }
-  }, [userID, isLoggedIn]);
+  }, [userID, isLoggedIn, preMessage]);
 
   //If newMessage is entered or tag is selected
   const handleInputChange = (event) => {

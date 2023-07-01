@@ -5,10 +5,14 @@ import { setSearchContent } from "../states/GlobalState";
 import { FaUser } from "react-icons/fa";
 import { AuthContext } from "./AuthContext";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { AiTwotoneCrown, AiOutlineSearch } from "react-icons/ai";
+import {
+  AiTwotoneCrown,
+  AiOutlineSearch,
+  AiOutlineFilter,
+} from "react-icons/ai";
 import { getUserID } from "../states/GlobalState";
 
-const Navbar = () => {
+const Navbar = ({ onSearchClick, onFilterClick }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const { isLoggedIn, logout } = useContext(AuthContext);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -103,7 +107,10 @@ const Navbar = () => {
     e.preventDefault();
     setShowProfileMenu(!showProfileMenu);
   };
-
+  const handleSearchClick = (s) => {
+    setSearchContent(s);
+    onSearchClick(s);
+  };
   return (
     <nav className="fixed z-50 h-[48px] w-full bg-themeColor-100 px-32 shadow-xl backdrop-blur-sm backdrop-invert backdrop-opacity-10">
       {/* Nav Bar */}
@@ -131,12 +138,24 @@ const Navbar = () => {
             <button
               type="button"
               className="hover:scale-102 boarder boarder-lightButton transform rounded-lg pl-1 pr-1 text-white  hover:bg-normalButton"
-              onClick={() => setSearchContent(searchText)}
+              onClick={() => handleSearchClick(searchText)}
             >
-              <AiOutlineSearch />
+              <AiOutlineSearch className="text-2xl" />
             </button>
           </div>
-          {showDropdown && (
+        </div>
+        {/* filter */}
+        <div className="flex">
+          <button
+            type="button"
+            className="hover:scale-102 boarder boarder-lightButton transform rounded-lg pl-1 pr-1 text-white  hover:bg-normalButton"
+            onClick={onFilterClick}
+          >
+            <AiOutlineFilter className="text-2xl" />
+          </button>
+        </div>
+
+        {/* {showDropdown && (
             <div className="left-90 absolute right-0 top-[110%] z-10">
               <div className="rounded-md bg-white p-2 shadow-lg">
                 <ul className="text-14px">
@@ -149,7 +168,7 @@ const Navbar = () => {
               </div>
             </div>
           )}
-        </div>
+        
 
         {/* Premium Status or Login/Registration, Cart, Profile*/}
         <div className="flex items-center justify-end">
