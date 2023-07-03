@@ -198,7 +198,7 @@ export default function UserInfo() {
       <div className="flex items-center justify-start">
         {/* <div className="flex w-2/5 items-center justify-center"></div> */}
 
-        <div className="justify-left flex w-3/5 flex-col items-center">
+        <div className="justify-left flex w-full flex-col items-center">
           <h1 className="mb-4 font-sans text-3xl">General Information</h1>
 
           <div className="w-full max-w-sm">
@@ -370,7 +370,7 @@ export default function UserInfo() {
               {/* cancel button */}
               <button
                 type="cancel"
-                className="col duration-600 hover:bg-themeColor-200 flex rounded bg-themeColor-100 px-4 py-2 font-medium text-white transition-colors ease-in-out"
+                className="col duration-600 hover:bg-themeColor-200 bg-themeColor-100 flex rounded px-4 py-2 font-medium text-white transition-colors ease-in-out"
                 onClick={handleCancel}
               >
                 cancel
@@ -379,7 +379,7 @@ export default function UserInfo() {
               {/* save button */}
               <button
                 type="submit"
-                className="col duration-600 hover:bg-themeColor-200 flex rounded bg-themeColor-100 px-4 py-2 font-medium text-white transition-colors ease-in-out"
+                className="col duration-600 hover:bg-themeColor-200 bg-themeColor-100 flex rounded px-4 py-2 font-medium text-white transition-colors ease-in-out"
                 onClick={handleSubmit}
               >
                 save
