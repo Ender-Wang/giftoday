@@ -173,6 +173,15 @@ export default function UserInfo() {
             {/* give some blank between the top */}
             <div className="mt-0 ">
               <div className="mx-auto max-w-lg ">
+                {orders == null && (
+                  // Display "Your card is empty" message
+                  <div>
+                    <h2 className="mt-16 text-lg font-bold text-gray-500">
+                      Your Order is Empty 😥
+                    </h2>
+                    <br />
+                  </div>
+                )}
                 {orders !== null && (
                   <div className="mx-auto max-w-md space-y-3  lg:px-0">
                     {orders.map((order) => (

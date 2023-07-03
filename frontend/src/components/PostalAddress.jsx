@@ -193,7 +193,11 @@ export default function PostalAddress({ onSelectAddress }) {
     <div>
       {/* "choose address" container */}
       <div className=" h-2/5 min-w-[300px] pb-10 pr-64">
-        <h1 className=" font-sans text-xl">Choose address</h1>
+        {/* <h1 className=" font-sans text-xl">Choose address</h1> */}
+
+        <h1 className="font-sans text-3xl tracking-tight text-gray-900 sm:text-3xl">
+          Choose address
+        </h1>
         <div className=" grid h-full w-full grid-cols-2 grid-rows-3">
           {/* previous addresses */}
           <div className="row-span-3  h-[200px] overflow-y-auto pb-2 pr-10 pt-4">
