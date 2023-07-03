@@ -11,6 +11,19 @@ export default function ShopItem({ selectedTag, searchContent, showFilter }) {
   const userID = getUserID();
   let search = searchContent;
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const categories = [
+    "home_decor",
+    "kitchen",
+    "stationery",
+    "beauty",
+    "accessories",
+    "books",
+    "food",
+    "electronics",
+    "tools",
+    "fitness",
+    "travel",
+  ];
 
   const handleCategorySelect = (category) => {
     if (selectedCategories.includes(category)) {
@@ -75,6 +88,14 @@ export default function ShopItem({ selectedTag, searchContent, showFilter }) {
     );
   };
 
+  // const applyFilter = (items, categories) => {
+  //   // Filtering the objects
+  //   if (categories === "" || categories === null) return items;
+  //   return items.filter((item) => {
+  //     return item.tag.toLowerCase().some((tag) => categories.includes(tag));
+  //   });
+  // };
+
   useEffect(() => {
     const fetchPremium = async () => {
       try {
@@ -128,34 +149,45 @@ export default function ShopItem({ selectedTag, searchContent, showFilter }) {
       console.log(error);
     }
   };
+
   return (
     <div>
-      <div className="relative p-2">
+      {/* category filter */}
+      <div className="relative p-2 ">
         {showFilter && (
-          <div className="pt-10 ">
+          <div className="pt-10">
             <table className="table-auto">
+              <thead>
+                <tr>
+                  {categories.map((item) => (
+                    <th className="px-2" key={item}>
+                      {item}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
               <tbody>
                 <tr>
-                  <td className="px-2">Electronics</td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      checked={selectedCategories.includes("Electronics")}
-                      onChange={() => handleCategorySelect("Electronics")}
-                    />
-                  </td>
-                  <td className="px-2">Home Appliances</td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      checked={selectedCategories.includes("Home Appliances")}
-                      onChange={() => handleCategorySelect("Home Appliances")}
-                    />
-                  </td>
+                  {categories.map((item) => (
+                    <td key={item} className="text-center">
+                      <input
+                        type="checkbox"
+                        checked={selectedCategories.includes(item)}
+                        onChange={() => handleCategorySelect(item)}
+                      />
+                    </td>
+                  ))}
                 </tr>
-                {/* Add more rows for other categories */}
               </tbody>
             </table>
+            <span>
+              <button
+                className="hover:scale-102 transform rounded-lg bg-lightButton px-5  py-1 hover:bg-normalButton"
+                // onClick={applyFilter}
+              >
+                Apply Filter
+              </button>
+            </span>
           </div>
         )}
       </div>
