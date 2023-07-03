@@ -344,7 +344,7 @@ const CreditCardForm = ({ onSelectCard }) => {
           <div className="mb-4 ">
             <button
               type="submit"
-              className="hover:scale-102 transform rounded-lg bg-lightButton px-5 py-1 hover:bg-normalButton"
+              className="hover:scale-102 bg-lightButton hover:bg-normalButton transform rounded-lg px-5 py-1"
             >
               Submit
             </button>

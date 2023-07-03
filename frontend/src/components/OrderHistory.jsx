@@ -157,7 +157,7 @@ export default function UserInfo() {
       <div className="flex items-center justify-start">
         {/* <div class=" scrollbar-thumb-gray-500 scrollbar-track-gray-200 scrollbar-w-2 h-120 overflow-y-scroll"> */}
         {/* <div className="bg-white"> */}
-        <div className="py-16 sm:py-24">
+        <div>
           <div className="mx-auto max-w-md sm:px-2 lg:px-8">
             <div className="mx-auto max-w-2xl px-4 lg:max-w-4xl lg:px-0">
               <h1 className="font-sans text-3xl tracking-tight text-gray-900 sm:text-3xl">
@@ -219,7 +219,7 @@ export default function UserInfo() {
                             <div className="flex justify-center">
                               <button
                                 type="submit"
-                                className="duration-600 hover:bg-themeColor-200 rounded bg-themeColor-100 px-4 py-2 font-medium text-white transition-colors ease-in-out"
+                                className="duration-600 hover:bg-themeColor-200 bg-themeColor-100 rounded px-4 py-2 font-medium text-white transition-colors ease-in-out"
                                 onClick={() => handleDelete(order.id)}
                               >
                                 Cancel

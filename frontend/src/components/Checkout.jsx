@@ -140,7 +140,7 @@ function Checkout() {
     }
   };
   return (
-    <div className="mx-16">
+    <div className="mx-16 ml-[15%] ">
       <div className="flex-col-2 flex w-[500px]">
         {/* Order Summary */}
         <div className="pt-24">
@@ -168,21 +168,21 @@ function Checkout() {
         style={{ zIndex: 9999 }}
       >
         {!isPremium && (
-          <span className="basis-5/6 font-bold text-lightFontColor">
+          <span className="text-lightFontColor basis-5/6 font-bold">
             Total Price: € {totalPrice}
           </span>
         )}
         {isPremium && (
-          <div className="basis-5/6 font-bold text-lightFontColor ">
+          <div className="text-lightFontColor basis-5/6 font-bold ">
             <span className="line-through">€ {totalPrice}</span>
-            <span className=" ml-4 basis-5/6 text-xl font-bold text-orangeFontColor ">
+            <span className=" text-orangeFontColor ml-4 basis-5/6 text-xl font-bold ">
               {/* toFixed Retain two decimal places */}
               Total Price: €{(totalPrice * 0.9).toFixed(2)}
             </span>
           </div>
         )}
         <button
-          className="mt-4 rounded bg-orangeFontColor px-4 py-2 font-bold text-white"
+          className="bg-orangeFontColor mt-4 rounded px-4 py-2 font-bold text-white"
           onClick={handleSubmit}
         >
           Check out
