@@ -9,8 +9,11 @@ export default function PostalAddress({ onSelectAddress }) {
   const [city, setCity] = useState("");
   const [country] = useState("Germany");
   const [phoneNumber, setPhoneNumber] = useState("");
+
   const selectedDate =
-    getSelectedDate() === null ? null : getSelectedDate().substring(0, 15);
+    getSelectedDate() === null
+      ? null
+      : new Date(getSelectedDate()).toLocaleDateString("en-GB");
 
   const [preAddress, setPreAddress] = useState([]);
   const userID = getUserID();
