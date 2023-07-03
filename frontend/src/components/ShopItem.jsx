@@ -10,8 +10,7 @@ export default function ShopItem({ selectedTag, searchContent, showFilter }) {
   const [isPremium, setPremium] = useState(false);
   const userID = getUserID();
   let search = searchContent;
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [filterCategories, setFilterCategories] = useState([]);
+
   const categories = [
     "home_decor",
     "kitchen",
@@ -25,6 +24,8 @@ export default function ShopItem({ selectedTag, searchContent, showFilter }) {
     "fitness",
     "travel",
   ];
+  const [selectedCategories, setSelectedCategories] = useState(categories);
+  const [filterCategories, setFilterCategories] = useState(categories);
 
   const handleCategorySelect = (category) => {
     if (selectedCategories.includes(category)) {
@@ -80,7 +81,6 @@ export default function ShopItem({ selectedTag, searchContent, showFilter }) {
   };
 
   const filterOnSearch = (items, text) => {
-    console.log(text);
     if (text === "" || text === null) return items;
     return items.filter(
       (item) =>
@@ -95,12 +95,7 @@ export default function ShopItem({ selectedTag, searchContent, showFilter }) {
   };
   const applyFilter = () => {
     setFilterCategories(selectedCategories);
-    // Filtering the objects
-    // item.tag.toLowerCase().some((tag) => categories.includes(tag));
   };
-  // const filteredObjects = objects.filter(obj =>
-  //   tagsToMatch.includes(obj.tag)
-  // );
 
   useEffect(() => {
     const fetchPremium = async () => {
@@ -156,12 +151,33 @@ export default function ShopItem({ selectedTag, searchContent, showFilter }) {
     }
   };
 
+  const deselectAll = () => {
+    setFilterCategories([]);
+    setSelectedCategories([]);
+  };
+
+  const selectAll = () => {
+    setFilterCategories(categories);
+    setSelectedCategories(categories);
+  };
   return (
     <div>
       {/* category filter */}
       <div className="relative p-2 ">
         {showFilter && (
           <div className="pt-10">
+            <button
+              className="hover:scale-102 text-gray-250 mr-2 transform rounded-lg   text-sm"
+              onClick={deselectAll}
+            >
+              Deselect all
+            </button>
+            <button
+              className="hover:scale-102 text-gray-250 ml-2 transform rounded-lg text-sm"
+              onClick={selectAll}
+            >
+              Select all
+            </button>
             <table className="table-auto">
               <thead>
                 <tr>
@@ -178,6 +194,7 @@ export default function ShopItem({ selectedTag, searchContent, showFilter }) {
                     <td key={item} className="text-center">
                       <input
                         type="checkbox"
+                        defaultChecked={true}
                         checked={selectedCategories.includes(item)}
                         onChange={() => handleCategorySelect(item)}
                       />
