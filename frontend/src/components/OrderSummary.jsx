@@ -159,8 +159,9 @@ export default function OrderSummary({ onTotalPriceChange }) {
           <div className="mx-auto max-w-lg ">
             {carts !== null && carts.length === 0 ? (
               <div className="text-center">
-                <h2 className="text-lg font-bold text-gray-500">
-                  Your Cart 🛒 is Empty 😥
+                <h2 className="mt-40 text-lg font-bold text-gray-500">
+                  {" "}
+                  Your Cart 🛒 is Empty 😥{" "}
                 </h2>
               </div>
             ) : (
