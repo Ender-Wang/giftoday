@@ -15,7 +15,7 @@ export default function PostalAddress({ onSelectAddress }) {
   const userID = getUserID();
 
   const [formErrors, setFormErrors] = useState({});
-  const [selectedAddress, setSelectedAddress] = useState(0);
+  const [selectedAddress, setSelectedAddress] = useState("");
   const germanyCities = [
     "Berlin",
     "Hamburg",

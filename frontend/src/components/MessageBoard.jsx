@@ -292,19 +292,18 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
           </div>
           <div className="mx-5 h-full rounded-md bg-themeColor-40 pb-6">
             {/* After pressing "Festivals" button */}
-            {activeButton === "Button 1" && (
-              <div className="min-w-[230px] overflow-y-auto pt-2">
-                {/* <div className="absolute inset-0 bg-white" /> */}
-                {holidays.map((item, index) => (
-                  <div
-                    className=" mx-5 my-1 transform border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:bg-themeColor-80 hover:font-bold"
-                    key={index}
-                  >
-                    {item}
-                  </div>
-                ))}
-              </div>
-            )}
+            <div className="max-h-[160px] overflow-y-auto pt-2">
+              {/* <div className="absolute inset-0 bg-white" /> */}
+              {holidays.map((item, index) => (
+                <div
+                  className=" mx-5 my-1 transform border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:bg-themeColor-80 hover:font-bold"
+                  key={index}
+                >
+                  {item}
+                </div>
+              ))}
+            </div>
+            {/* )} */}
           </div>
         </div>
       )}

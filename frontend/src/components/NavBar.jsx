@@ -112,7 +112,7 @@ const Navbar = ({ onSearchClick, onFilterClick }) => {
     onSearchClick(s);
   };
   return (
-    <nav className="fixed z-50 h-[48px] w-full bg-themeColor-100 px-32 shadow-xl backdrop-blur-sm backdrop-invert backdrop-opacity-10">
+    <nav className="bg-themeColor-100 fixed z-50 h-[48px] w-full px-32 shadow-xl backdrop-blur-sm backdrop-invert backdrop-opacity-10">
       {/* Nav Bar */}
       <div className="mb-8 flex items-center justify-between">
         {/* Logo */}
@@ -127,32 +127,32 @@ const Navbar = ({ onSearchClick, onFilterClick }) => {
           className="relative flex rounded-sm border-b-[1px]"
           onMouseLeave={handleMouseLeave}
         >
+          {/* filter */}
+          <div className="flex">
+            <button
+              type="button"
+              className="hover:scale-102 boarder boarder-lightButton hover:bg-normalButton transform rounded-lg pl-1 pr-1  text-white"
+              onClick={onFilterClick}
+            >
+              <AiOutlineFilter className="text-2xl" />
+            </button>
+          </div>
           <div className="flex w-64">
             <input
               type="text"
               placeholder="Which gift for today?"
-              className="w-full rounded bg-themeColor-100 px-2 py-1 italic text-white focus:not-italic focus:outline-none"
+              className="bg-themeColor-100 w-full rounded px-2 py-1 italic text-white focus:not-italic focus:outline-none"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
             />
             <button
               type="button"
-              className="hover:scale-102 boarder boarder-lightButton transform rounded-lg pl-1 pr-1 text-white  hover:bg-normalButton"
+              className="hover:scale-102 boarder boarder-lightButton hover:bg-normalButton transform rounded-lg pl-1 pr-1  text-white"
               onClick={() => handleSearchClick(searchText)}
             >
               <AiOutlineSearch className="text-2xl" />
             </button>
           </div>
-        </div>
-        {/* filter */}
-        <div className="flex">
-          <button
-            type="button"
-            className="hover:scale-102 boarder boarder-lightButton transform rounded-lg pl-1 pr-1 text-white  hover:bg-normalButton"
-            onClick={onFilterClick}
-          >
-            <AiOutlineFilter className="text-2xl" />
-          </button>
         </div>
 
         {/* {showDropdown && (
@@ -174,7 +174,7 @@ const Navbar = ({ onSearchClick, onFilterClick }) => {
         <div className="flex items-center justify-end">
           {!isLoggedIn && (
             <div className="flex pt-[8px]">
-              <div className="mr-4 rounded-md bg-themeColor-60 py-1 transition duration-300 ease-in-out hover:scale-125">
+              <div className="bg-themeColor-60 mr-4 rounded-md py-1 transition duration-300 ease-in-out hover:scale-125">
                 <Link
                   to="/giftoday.com/login"
                   className="ml-2 mr-2  rounded-md font-bold text-white transition duration-300 ease-in-out hover:text-black"
@@ -182,7 +182,7 @@ const Navbar = ({ onSearchClick, onFilterClick }) => {
                   Login
                 </Link>
               </div>
-              <div className="mr-4 rounded-md bg-themeColor-80 py-1 transition duration-300 ease-in-out hover:scale-125">
+              <div className="bg-themeColor-80 mr-4 rounded-md py-1 transition duration-300 ease-in-out hover:scale-125">
                 <Link
                   to="/giftoday.com/registration"
                   className="ml-2 mr-2  rounded-md font-bold text-white transition duration-300 ease-in-out hover:text-black"
@@ -248,7 +248,7 @@ const Navbar = ({ onSearchClick, onFilterClick }) => {
                 </Link>
                 {showProfileMenu && (
                   <div
-                    className="absolute top-5 z-10 mr-32 mt-[20px] flex flex-col rounded-md bg-themeColor-100 p-0.5 shadow-xl"
+                    className="bg-themeColor-100 absolute top-5 z-10 mr-32 mt-[20px] flex flex-col rounded-md p-0.5 shadow-xl"
                     onMouseLeave={handleMouseLeave}
                   >
                     <div className=" rounded-md py-0.5 text-center font-bold text-white transition duration-300 ease-in-out hover:cursor-pointer hover:text-black">
