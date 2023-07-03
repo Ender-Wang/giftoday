@@ -7,6 +7,7 @@ export default function PostalAddress({ onSelectAddress }) {
   const [postalCode, setPostalCode] = useState("");
   const [street, setStreet] = useState("");
   const [city, setCity] = useState("");
+  // const [shippingDate, setShippingDate] = useState("");
   const [country] = useState("Germany");
   const [phoneNumber, setPhoneNumber] = useState("");
   const selectedDate = getSelectedDate().substring(0, 15);
@@ -218,7 +219,8 @@ export default function PostalAddress({ onSelectAddress }) {
                       <span>{item.phoneNumber}, </span>
                       <span>{item.postalCode}, </span>
                       <span>{item.street}, </span>
-                      <span>{item.city}</span>
+                      <span>{item.city},</span>
+                      {/* <span>{item.shippingDate}</span> */}
                     </div>
                   </div>
                   {item.id !== 0 ? (
@@ -260,7 +262,7 @@ export default function PostalAddress({ onSelectAddress }) {
               />
             </div>
             {/* shipping date */}
-            <div className="col-span-2 mb-4">
+            {/* <div className="col-span-2 mb-4">
               <label htmlFor="shippingDate" className=" block font-bold">
                 Shipping Date
               </label>
@@ -272,7 +274,7 @@ export default function PostalAddress({ onSelectAddress }) {
                 className="border-themeColor w-full border-b-2 outline-none"
                 title="please select date in the calendar on the homepage"
               />
-            </div>
+            </div> */}
             {/* Street */}
             <div className="col-span-4 mb-4">
               <label htmlFor="street" className=" block font-bold">
