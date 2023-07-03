@@ -40,6 +40,7 @@ router.put("/user/:userID/card", async (req, res) => {
     }
     // console.log("User card:", user.card);
     const existingCard = await UserDB.findOne({
+      id: Number(userID),
       "card.cardNumber": cardNumber,
     });
     if (existingCard) {
