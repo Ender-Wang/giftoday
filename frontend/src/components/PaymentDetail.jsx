@@ -189,168 +189,172 @@ const CreditCardForm = ({ onSelectCard }) => {
   const today = new Date().toISOString().split("T")[0];
 
   return (
-    <div className="w-[400px]">
-      {/* <h1 className="font-sans text-xl">Payment Detail:</h1> */}
+    <div>
       <h1 className="font-sans text-3xl tracking-tight text-gray-900 sm:text-3xl">
-        Payment Detail
+        Payment Detail:
       </h1>
-      <br />
-      <div style={{ maxHeight: "730px", overflowY: "auto" }}>
-        {existingCardInfo && existingCardInfo.length > 0 ? (
-          // Display existing card information
-          <div>
-            {existingCardInfo.map((Card, index) => (
-              <div
-                key={index}
-                style={{
-                  border: `1px solid ${
-                    selectedCard === Card ? "blue" : "#ccc"
-                  }`,
-                  borderRadius: "10px",
-                  padding: "10px",
-                  marginBottom: "10px",
-                }}
-                onClick={() => selectCard(Card)}
-              >
-                <div className="mb-2 flex items-center">
-                  {Card.logo === "Visa" && (
-                    <img src={visalogo} alt="Visa Logo" className="mr-2 w-8" />
-                  )}
-                  {Card.logo === "Mastercard" && (
-                    <img
-                      src={mastercardlogo}
-                      alt="Mastercard Logo"
-                      className="mr-2 w-8"
-                    />
-                  )}
-                  {Card.logo === "UnionPay" && (
-                    <img
-                      src={unionpaylogo}
-                      alt="UnionPay Logo"
-                      className="mr-2 w-8"
-                    />
-                  )}
-                  <p>Card Number: {Card.cardNumber}</p>
-                </div>
-
-                <p>Expiry Date: {Card.expiryDate.substring(0, 7)}</p>
-                <p>CVV: {Card.cvv}</p>
-
-                <button
-                  onClick={() => deleteCard(Card.cardNumber)}
-                  className="mt-2 rounded-lg bg-red-500 px-3 py-1 text-white"
+      <div className="h-[200px] w-[500px] overflow-y-auto rounded border border-white p-4">
+        <div className="mx-auto max-w-lg ">
+          {existingCardInfo && existingCardInfo.length > 0 ? (
+            // Display existing card information
+            <div>
+              {existingCardInfo.map((Card, index) => (
+                <div
+                  key={index}
+                  style={{
+                    border: `1px solid ${
+                      selectedCard === Card ? "blue" : "#ccc"
+                    }`,
+                    borderRadius: "10px",
+                    padding: "10px",
+                    marginBottom: "10px",
+                  }}
+                  onClick={() => selectCard(Card)}
                 >
-                  Delete Card
-                </button>
-              </div>
-            ))}
-          </div>
-        ) : (
-          // Display "Your card is empty" message
-          <div>
-            <h2 className="text-lg font-bold text-gray-500">
-              Your Card 💳 is Empty 😥
-            </h2>
-            <br />
-          </div>
-        )}
+                  <div className="mb-2 flex items-center">
+                    {Card.logo === "Visa" && (
+                      <img
+                        src={visalogo}
+                        alt="Visa Logo"
+                        className="mr-2 w-8"
+                      />
+                    )}
+                    {Card.logo === "Mastercard" && (
+                      <img
+                        src={mastercardlogo}
+                        alt="Mastercard Logo"
+                        className="mr-2 w-8"
+                      />
+                    )}
+                    {Card.logo === "UnionPay" && (
+                      <img
+                        src={unionpaylogo}
+                        alt="UnionPay Logo"
+                        className="mr-2 w-8"
+                      />
+                    )}
+                    <p>Card Number: {Card.cardNumber}</p>
+                  </div>
 
-        {/* new card */}
-        {successMessage && <p>{successMessage}</p>}
-        <form onSubmit={handleSubmit}>
-          <div className="flex">
-            <img
-              src={visalogo}
-              alt="Visa Logo"
-              className={`mr-2 ${
-                selectedLogo === "Visa" ? "ring-2 ring-red-500" : ""
-              }`}
-              style={{ width: "50px", cursor: "pointer" }}
-              onClick={() => setSelectedLogo("Visa")}
-            />
-            <img
-              src={mastercardlogo}
-              alt="Mastercard Logo"
-              className={`mr-2 ${
-                selectedLogo === "Mastercard" ? "ring-2 ring-red-500" : ""
-              }`}
-              style={{ width: "50px", cursor: "pointer" }}
-              onClick={() => setSelectedLogo("Mastercard")}
-            />
-            <img
-              src={unionpaylogo}
-              alt="UnionPay Logo"
-              className={`mr-2 ${
-                selectedLogo === "UnionPay" ? "ring-2 ring-red-500" : ""
-              }`}
-              style={{ width: "50px", cursor: "pointer" }}
-              onClick={() => setSelectedLogo("UnionPay")}
-            />
-            {formErrors.selectedLogo && <p>{formErrors.selectedLogo}</p>}
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className=" mb-4">
-              <label htmlFor="cardNumber" className="block font-bold">
-                Card Number:
-              </label>
-              <input
-                type="text"
-                id="cardNumber"
-                placeholder="Enter card number"
-                pattern="\d{16}"
-                value={cardNumber}
-                onChange={(e) => setCardNumber(e.target.value)}
-                className="w-full rounded-md border border-gray-400 p-2"
-              />
-              {formErrors.cardNumber && <p>{formErrors.cardNumber}</p>}
-              {cardExistsError && <p>{cardExistsError}</p>}
+                  <p>Expiry Date: {Card.expiryDate.substring(0, 7)}</p>
+                  <p>CVV: {Card.cvv}</p>
+
+                  <button
+                    onClick={() => deleteCard(Card.cardNumber)}
+                    className="mt-2 rounded-lg bg-red-500 px-3 py-1 text-white"
+                  >
+                    Delete Card
+                  </button>
+                </div>
+              ))}
             </div>
-
-            <div className=" mb-4">
-              <label htmlFor="cvv" className="block font-bold">
-                CVV:
-              </label>
-              <input
-                type="text"
-                id="cvv"
-                name="cvv"
-                placeholder="Enter CVV"
-                pattern="\d{3}"
-                value={cvv}
-                onChange={(e) => setCvv(e.target.value)}
-                className="w-full rounded-md border border-gray-400 p-2"
-              />
-              {formErrors.cvv && <p>{formErrors.cvv}</p>}
+          ) : (
+            // Display "Your card is empty" message
+            <div>
+              <h2 className="text-lg font-bold text-gray-500">
+                Your Card 💳 is Empty 😥
+              </h2>
+              <br />
             </div>
-
-            <div className=" mb-4">
-              <label htmlFor="expiryDate" className="block font-bold">
-                Expiry Date:
-              </label>
-              <input
-                type="month"
-                id="expiryDate"
-                name="expiryDate"
-                placeholder="MM/YY"
-                min={today}
-                value={expiryDate}
-                onChange={(e) => setExpiryDate(e.target.value)}
-                className="w-full rounded-md border border-gray-400 p-2"
-              />
-              {formErrors.expiryDate && <p>{formErrors.expiryDate}</p>}
-            </div>
-          </div>
-
-          <div className="mb-4 ">
-            <button
-              type="submit"
-              className="hover:scale-102 transform rounded-lg bg-lightButton px-5 py-1 hover:bg-normalButton"
-            >
-              Submit
-            </button>
-          </div>
-        </form>
+          )}
+        </div>
       </div>
+      <br />
+      {/* new card */}
+      {successMessage && <p>{successMessage}</p>}
+      <form onSubmit={handleSubmit}>
+        <div className="flex">
+          <img
+            src={visalogo}
+            alt="Visa Logo"
+            className={`mr-2 ${
+              selectedLogo === "Visa" ? "ring-2 ring-red-500" : ""
+            }`}
+            style={{ width: "50px", cursor: "pointer" }}
+            onClick={() => setSelectedLogo("Visa")}
+          />
+          <img
+            src={mastercardlogo}
+            alt="Mastercard Logo"
+            className={`mr-2 ${
+              selectedLogo === "Mastercard" ? "ring-2 ring-red-500" : ""
+            }`}
+            style={{ width: "50px", cursor: "pointer" }}
+            onClick={() => setSelectedLogo("Mastercard")}
+          />
+          <img
+            src={unionpaylogo}
+            alt="UnionPay Logo"
+            className={`mr-2 ${
+              selectedLogo === "UnionPay" ? "ring-2 ring-red-500" : ""
+            }`}
+            style={{ width: "50px", cursor: "pointer" }}
+            onClick={() => setSelectedLogo("UnionPay")}
+          />
+          {formErrors.selectedLogo && <p>{formErrors.selectedLogo}</p>}
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div className=" mb-4">
+            <label htmlFor="cardNumber" className="block font-bold">
+              Card Number:
+            </label>
+            <input
+              type="text"
+              id="cardNumber"
+              placeholder="Enter card number"
+              pattern="\d{16}"
+              value={cardNumber}
+              onChange={(e) => setCardNumber(e.target.value)}
+              className="w-full rounded-md border border-gray-400 p-2"
+            />
+            {formErrors.cardNumber && <p>{formErrors.cardNumber}</p>}
+            {cardExistsError && <p>{cardExistsError}</p>}
+          </div>
+
+          <div className=" mb-4">
+            <label htmlFor="cvv" className="block font-bold">
+              CVV:
+            </label>
+            <input
+              type="text"
+              id="cvv"
+              name="cvv"
+              placeholder="Enter CVV"
+              pattern="\d{3}"
+              value={cvv}
+              onChange={(e) => setCvv(e.target.value)}
+              className="w-full rounded-md border border-gray-400 p-2"
+            />
+            {formErrors.cvv && <p>{formErrors.cvv}</p>}
+          </div>
+
+          <div className=" mb-4">
+            <label htmlFor="expiryDate" className="block font-bold">
+              Expiry Date:
+            </label>
+            <input
+              type="month"
+              id="expiryDate"
+              name="expiryDate"
+              placeholder="MM/YY"
+              min={today}
+              value={expiryDate}
+              onChange={(e) => setExpiryDate(e.target.value)}
+              className="w-full rounded-md border border-gray-400 p-2"
+            />
+            {formErrors.expiryDate && <p>{formErrors.expiryDate}</p>}
+          </div>
+        </div>
+
+        <div className="mb-4 ">
+          <button
+            type="submit"
+            className="hover:scale-102 transform rounded-lg bg-lightButton px-5 py-1 hover:bg-normalButton"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

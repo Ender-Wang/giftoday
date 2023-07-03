@@ -3,7 +3,8 @@ import { useState } from "react";
 import PostalAddress from "../components/PostalAddress";
 import PaymentDetail from "../components/PaymentDetail";
 import OrderSummary from "../components/OrderSummary";
-import { getUserID } from "../states/GlobalState";
+import { getUserID, getSelectedDate } from "../states/GlobalState";
+
 function Checkout() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -13,6 +14,7 @@ function Checkout() {
   const [carts, setCarts] = useState(null);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  const selectedDate = getSelectedDate().substring(0, 15);
 
   useEffect(() => {
     // Fetch user information from the backend
@@ -114,11 +116,15 @@ function Checkout() {
         calculatedTotalPrice *= 0.9;
       }
       calculatedTotalPrice = Number(calculatedTotalPrice.toFixed(2));
+
+    
+
       const orderData = {
         total: calculatedTotalPrice,
         address: selectedAddress,
         card: selectedCard,
         gift: carts,
+        shippingDate: selectedDate,
       };
 
       const response = await fetch(`http://localhost:4000/user/${id}/order`, {
