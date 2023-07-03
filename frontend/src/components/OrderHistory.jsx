@@ -188,7 +188,7 @@ export default function UserInfo() {
                         className="border-radius: 30px border-gray-300 bg-white hover:shadow-md sm:rounded-lg sm:border"
                       >
                         <div className="flex items-center border-b border-gray-300 p-4">
-                          <dl className="grid flex-1 grid-cols-2 gap-x-6 text-sm sm:col-span-3 sm:grid-cols-3 lg:col-span-2">
+                          <dl className="grid flex-1 grid-cols-2 gap-x-6 text-sm sm:col-span-2 sm:grid-cols-3 lg:col-span-2">
                             <div>
                               <dt className="font-bold text-gray-900">
                                 Order ID
@@ -217,11 +217,53 @@ export default function UserInfo() {
                             <div className="flex justify-center">
                               <button
                                 type="submit"
-                                className="duration-600 hover:bg-themeColor-200 bg-themeColor-100 rounded px-4 py-2 font-medium text-white transition-colors ease-in-out"
+                                className="duration-600 hover:bg-themeColor-200 rounded bg-themeColor-100 px-4 py-2 font-medium text-white transition-colors ease-in-out"
                                 onClick={() => handleDelete(order.id)}
                               >
                                 Cancel
                               </button>
+                            </div>
+
+                            {/* card */}
+                            <div>
+                              <dt className="font-bold text-gray-900">
+                                Card Number
+                              </dt>
+                              <dd
+                                className="mt-1 font-medium text-gray-900"
+                                style={{ textAlign: "left" }}
+                              >
+                                {order.card.cardNumber}
+                              </dd>
+                            </div>
+
+                            {/* placeholder to fix the grid */}
+                            <div>
+                              <dt></dt>
+                              <dd></dd>
+                            </div>
+                            <div>
+                              <dt></dt>
+                              <dd></dd>
+                            </div>
+                            {/* Address */}
+                            <div>
+                              <dt className="font-bold text-gray-900">
+                                Address
+                              </dt>
+                              <dd
+                                className="mt-1 font-medium text-gray-900"
+                                style={{ textAlign: "left" }}
+                              >
+                                {
+                                  <span>
+                                    {order.address.street},
+                                    {order.address.postalCode},
+                                    {order.address.city},
+                                    {order.address.phoneNumber}
+                                  </span>
+                                }
+                              </dd>
                             </div>
                           </dl>
                         </div>
