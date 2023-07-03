@@ -140,7 +140,7 @@ function Checkout() {
     }
   };
   return (
-    <div className="mx-16 ml-[15%] ">
+    <div className="mx-16 ml-[10%] ">
       <div className="flex-col-2 flex w-[500px]">
         {/* Order Summary */}
         <div className="pt-24">
@@ -158,10 +158,10 @@ function Checkout() {
       </div>
 
       {/* Shipping Address */}
+      <hr className="border-themeColor-40 my-4 border-t" />
       <div className=" row-span-2 flex flex-row pt-4">
         <PostalAddress onSelectAddress={handleSelectAddress} />
       </div>
-
       {/* Check out button */}
       <div
         className="fixed bottom-4 right-4 rounded-lg bg-gray-100 p-4"
@@ -175,14 +175,14 @@ function Checkout() {
         {isPremium && (
           <div className="text-lightFontColor basis-5/6 font-bold ">
             <span className="line-through">€ {totalPrice}</span>
-            <span className=" text-orangeFontColor ml-4 basis-5/6 text-xl font-bold ">
+            <span className=" text-orangeFontColor basis-5/6 pl-4 text-xl font-bold ">
               {/* toFixed Retain two decimal places */}
               Total Price: €{(totalPrice * 0.9).toFixed(2)}
             </span>
           </div>
         )}
         <button
-          className="bg-orangeFontColor mt-4 rounded px-4 py-2 font-bold text-white"
+          className="bg-themeColor-40 ml-10 mt-4 rounded px-4 py-2 font-bold text-white"
           onClick={handleSubmit}
         >
           Check out
