@@ -18,7 +18,7 @@ router.put("/user/:userID/order", async (req, res) => {
   try {
     const { userID } = req.params;
 
-    const { total, card, gift, address } = req.body;
+    const { total, card, gift, address, shippingDate } = req.body;
 
     // if (!order) {
     //   throw new Error("There is no order");
@@ -41,7 +41,7 @@ router.put("/user/:userID/order", async (req, res) => {
       gift: gift,
       card: card,
       address: address,
-      // shippingDate: shippingDate,
+      shippingDate: shippingDate,
     };
 
     // Update the user data with the new message
