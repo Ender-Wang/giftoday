@@ -180,9 +180,9 @@ export default function ShopItem({ selectedTag, searchContent, showFilter }) {
                 </tr>
               </tbody>
             </table>
-            <span>
+            <span className="flex justify-center">
               <button
-                className="hover:scale-102 transform rounded-lg bg-lightButton px-5  py-1 hover:bg-normalButton"
+                className="hover:scale-102 transform rounded-lg bg-lightButton px-2  py-1 text-sm hover:bg-normalButton"
                 // onClick={applyFilter}
               >
                 Apply Filter
