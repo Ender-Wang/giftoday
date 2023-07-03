@@ -190,7 +190,10 @@ const CreditCardForm = ({ onSelectCard }) => {
 
   return (
     <div className="w-[400px]">
-      <h1 className="font-sans text-xl">Payment Detail:</h1>
+      {/* <h1 className="font-sans text-xl">Payment Detail:</h1> */}
+      <h1 className="font-sans text-3xl tracking-tight text-gray-900 sm:text-3xl">
+        Payment Detail
+      </h1>
       <br />
       <div style={{ maxHeight: "730px", overflowY: "auto" }}>
         {existingCardInfo && existingCardInfo.length > 0 ? (
@@ -341,7 +344,7 @@ const CreditCardForm = ({ onSelectCard }) => {
           <div className="mb-4 ">
             <button
               type="submit"
-              className="hover:scale-102 bg-lightButton hover:bg-normalButton transform rounded-lg px-5 py-1"
+              className="hover:scale-102 transform rounded-lg bg-lightButton px-5 py-1 hover:bg-normalButton"
             >
               Submit
             </button>
