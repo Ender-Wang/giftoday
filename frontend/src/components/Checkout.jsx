@@ -4,6 +4,8 @@ import PostalAddress from "../components/PostalAddress";
 import PaymentDetail from "../components/PaymentDetail";
 import OrderSummary from "../components/OrderSummary";
 import { getUserID } from "../states/GlobalState";
+import { setSelectedDate } from "../states/GlobalState";
+
 function Checkout() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -13,6 +15,7 @@ function Checkout() {
   const [carts, setCarts] = useState(null);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  const [selectedDate, setSelectedDate] = useState(null);
 
   useEffect(() => {
     // Fetch user information from the backend
@@ -107,6 +110,13 @@ function Checkout() {
       }, 1000);
       return;
     }
+    if (!selectedDate) {
+      setErrorMessage("Please select a date📅");
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 1000);
+      return;
+    }
     try {
       let calculatedTotalPrice = totalPrice;
 
@@ -114,11 +124,14 @@ function Checkout() {
         calculatedTotalPrice *= 0.9;
       }
       calculatedTotalPrice = Number(calculatedTotalPrice.toFixed(2));
+      const selectedDate = await localStorage.getItem("selectedDate");
+      setSelectedDate(selectedDate);
       const orderData = {
         total: calculatedTotalPrice,
         address: selectedAddress,
         card: selectedCard,
         gift: carts,
+        date: selectedDate,
       };
 
       const response = await fetch(`http://localhost:4000/user/${id}/order`, {

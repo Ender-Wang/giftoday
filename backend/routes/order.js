@@ -41,6 +41,7 @@ router.put("/user/:userID/order", async (req, res) => {
       gift: gift,
       card: card,
       address: address,
+      shippingDate: shippingDate,
     };
 
     // Update the user data with the new message
