@@ -12,12 +12,17 @@ export default function ShopItem({ selectedTag, searchContent, showFilter }) {
   let search = searchContent;
   const [selectedCategories, setSelectedCategories] = useState([]);
   const categories = [
-    "all",
-    "home",
+    "home_decor",
+    "kitchen",
+    "stationery",
     "beauty",
-    "lifestyle",
-    "technology",
-    "health",
+    "accessories",
+    "books",
+    "food",
+    "electronics",
+    "tools",
+    "fitness",
+    "travel",
   ];
 
   const handleCategorySelect = (category) => {
@@ -83,6 +88,14 @@ export default function ShopItem({ selectedTag, searchContent, showFilter }) {
     );
   };
 
+  // const applyFilter = (items, categories) => {
+  //   // Filtering the objects
+  //   if (categories === "" || categories === null) return items;
+  //   return items.filter((item) => {
+  //     return item.tag.toLowerCase().some((tag) => categories.includes(tag));
+  //   });
+  // };
+
   useEffect(() => {
     const fetchPremium = async () => {
       try {
@@ -136,9 +149,11 @@ export default function ShopItem({ selectedTag, searchContent, showFilter }) {
       console.log(error);
     }
   };
+
   return (
     <div>
-      <div className="relative p-2">
+      {/* category filter */}
+      <div className="relative p-2 ">
         {showFilter && (
           <div className="pt-10">
             <table className="table-auto">
@@ -165,6 +180,14 @@ export default function ShopItem({ selectedTag, searchContent, showFilter }) {
                 </tr>
               </tbody>
             </table>
+            <span>
+              <button
+                className="hover:scale-102 transform rounded-lg bg-lightButton px-5  py-1 hover:bg-normalButton"
+                // onClick={applyFilter}
+              >
+                Apply Filter
+              </button>
+            </span>
           </div>
         )}
       </div>
