@@ -107,17 +107,24 @@ const Navbar = ({ onSearchClick, onFilterClick }) => {
     e.preventDefault();
     setShowProfileMenu(!showProfileMenu);
   };
+
   const handleSearchClick = (s) => {
     setSearchContent(s);
     onSearchClick(s);
   };
+
+  // Reload the page when the logo is clicked
+  const homePageReload = () => {
+    window.location = "/giftoday.com";
+  };
+
   return (
     <nav className="bg-themeColor-100 fixed z-50 h-[48px] w-full px-32 shadow-xl backdrop-blur-sm backdrop-invert backdrop-opacity-10">
       {/* Nav Bar */}
       <div className="mb-8 flex items-center justify-between">
         {/* Logo */}
         <div className="flex">
-          <Link to="/giftoday.com">
+          <Link to="/giftoday.com" onClick={homePageReload}>
             <img src={logo} alt="Giftoday Logo" className="h-8" />
           </Link>
         </div>
