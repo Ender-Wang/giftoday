@@ -9,7 +9,12 @@ export default function PostalAddress({ onSelectAddress }) {
   const [city, setCity] = useState("");
   const [country] = useState("Germany");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const selectedDate = getSelectedDate().substring(0, 15);
+
+  const selectedDate =
+    getSelectedDate() === null
+      ? null
+      : new Date(getSelectedDate()).toLocaleDateString("en-GB");
+
   const [preAddress, setPreAddress] = useState([]);
   const userID = getUserID();
 
@@ -272,7 +277,7 @@ export default function PostalAddress({ onSelectAddress }) {
                 type="text"
                 id="shippingDate"
                 name="shippingDate"
-                value={selectedDate}
+                defaultValue={selectedDate}
                 className="border-themeColor w-full border-b-2 outline-none"
                 title="please select date in the calendar on the homepage"
               />

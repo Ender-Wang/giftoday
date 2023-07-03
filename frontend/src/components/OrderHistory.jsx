@@ -154,16 +154,14 @@ export default function UserInfo() {
   return (
     <div>
       {/* <div class=" scrollbar-thumb-gray-500 scrollbar-track-gray-200 scrollbar-w-2 h-120 overflow-y-scroll"> */}
-      <div className="flex items-center justify-start">
+      <div className="flex items-start justify-start">
         {/* <div class=" scrollbar-thumb-gray-500 scrollbar-track-gray-200 scrollbar-w-2 h-120 overflow-y-scroll"> */}
         {/* <div className="bg-white"> */}
-        <div className="py-16 sm:py-24">
-          <div className="mx-auto max-w-md sm:px-2 lg:px-8">
-            <div className="mx-auto max-w-2xl px-4 lg:max-w-4xl lg:px-0">
-              <h1 className="font-sans text-3xl tracking-tight text-gray-900 sm:text-3xl">
-                Order history
-              </h1>
-            </div>
+        <div>
+          <div className="mx-auto max-w-2xl px-4 lg:max-w-4xl lg:px-0">
+            <h1 className="font-sans text-3xl tracking-tight text-gray-900 sm:text-3xl">
+              Order History
+            </h1>
           </div>
 
           <div
@@ -192,24 +190,24 @@ export default function UserInfo() {
                         <div className="flex items-center border-b border-gray-300 p-4">
                           <dl className="grid flex-1 grid-cols-2 gap-x-6 text-sm sm:col-span-3 sm:grid-cols-3 lg:col-span-2">
                             <div>
-                              <dt className="font-medium text-gray-900">
+                              <dt className="font-bold text-gray-900">
                                 Order ID
                               </dt>
                               <dd
                                 className="mt-1 text-gray-900"
-                                style={{ textAlign: "center" }}
+                                style={{ textAlign: "left" }}
                               >
                                 {order.id}
                               </dd>
                             </div>
 
                             <div>
-                              <dt className="font-medium text-gray-900">
+                              <dt className="font-bold text-gray-900">
                                 Total Price
                               </dt>
                               <dd
                                 className="mt-1 font-medium text-gray-900"
-                                style={{ textAlign: "center" }}
+                                style={{ textAlign: "left" }}
                               >
                                 {order.total}
                               </dd>
@@ -219,7 +217,7 @@ export default function UserInfo() {
                             <div className="flex justify-center">
                               <button
                                 type="submit"
-                                className="duration-600 hover:bg-themeColor-200 rounded bg-themeColor-100 px-4 py-2 font-medium text-white transition-colors ease-in-out"
+                                className="duration-600 hover:bg-themeColor-200 bg-themeColor-100 rounded px-4 py-2 font-medium text-white transition-colors ease-in-out"
                                 onClick={() => handleDelete(order.id)}
                               >
                                 Cancel

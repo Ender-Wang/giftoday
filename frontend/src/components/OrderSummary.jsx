@@ -147,7 +147,7 @@ export default function OrderSummary({ onTotalPriceChange }) {
 
   return (
     <div>
-      <div className="mx-auto sm:px-2 lg:px-8">
+      <div className="mx-auto">
         <h1 className="font-sans text-3xl tracking-tight text-gray-900 sm:text-3xl">
           Cart
         </h1>

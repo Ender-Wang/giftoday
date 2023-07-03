@@ -7,11 +7,11 @@ export default function ProfilePage() {
     document.title = "Giftoday - Profile";
   }, []);
   return (
-    <div className="flex">
-      <div className="ml-12 mt-12 w-4/5">
+    <div className="ml-[10%] flex">
+      <div className="ml-12 mt-20 w-1/2">
         <UserInfo />
       </div>
-      <div className="w-1/2">
+      <div className="mt-20 w-1/2">
         <OrderHistory />
       </div>
     </div>
