@@ -128,13 +128,13 @@ export default function UserInfo() {
     if (data.password.trim() === "") {
       errors.password = "Password is required!";
     }
-    if (data.address.postalCode.trim() === "") {
+    if (data.postalCode.trim() === "") {
       errors.postalCode = "Postal Code is required!";
     }
-    if (data.address.street.trim() === "") {
+    if (data.street.trim() === "") {
       errors.street = "Street is required!";
     }
-    if (data.address.city.trim() === "") {
+    if (data.city.trim() === "") {
       errors.city = "City is required!";
     }
 
@@ -152,13 +152,12 @@ export default function UserInfo() {
       name: name,
       email: email,
       password: password,
-      address: {
-        phoneNumber: phoneNumber,
-        postalCode: postalCode,
-        street: street,
-        city: city,
-        country: country,
-      },
+
+      phoneNumber: phoneNumber,
+      postalCode: postalCode,
+      street: street,
+      city: city,
+      country: country,
     };
     const errors = validateForm(data);
     setFormErrors(errors);
@@ -363,7 +362,7 @@ export default function UserInfo() {
           {/* cancel button */}
           <button
             type="cancel"
-            className="col duration-600 hover:bg-themeColor-200 bg-themeColor-100 flex rounded px-4 py-2 font-medium text-white transition-colors ease-in-out"
+            className="col duration-600 hover:bg-themeColor-200 flex rounded bg-themeColor-100 px-4 py-2 font-medium text-white transition-colors ease-in-out"
             onClick={handleCancel}
           >
             Cancel
@@ -372,7 +371,7 @@ export default function UserInfo() {
           {/* save button */}
           <button
             type="submit"
-            className="col duration-600 hover:bg-themeColor-200 bg-themeColor-100 flex rounded px-4 py-2 font-medium text-white transition-colors ease-in-out"
+            className="col duration-600 hover:bg-themeColor-200 flex rounded bg-themeColor-100 px-4 py-2 font-medium text-white transition-colors ease-in-out"
             onClick={handleSubmit}
           >
             Save
