@@ -22,11 +22,31 @@ router.get("/user/:userID/info", (req, res) => {
 //Update the profile information of customer
 router.put("/user/userInfo", async (req, res) => {
   try {
-    const { id, name, email, password, address } = req.body;
+    const {
+      id,
+      name,
+      email,
+      password,
+      phoneNumber,
+      postalCode,
+      street,
+      city,
+      country,
+    } = req.body;
 
     const updatedUser = await UserDB.findOneAndUpdate(
       { id },
-      { name, email, password, address },
+      {
+        name,
+        email,
+        password,
+        "address.0.fullName": name,
+        "address.0.phoneNumer": phoneNumber,
+        "address.0.postalCode": postalCode,
+        "address.0.street": street,
+        "address.0.city": city,
+        "address.0.country": country,
+      },
       { new: true }
     );
 
