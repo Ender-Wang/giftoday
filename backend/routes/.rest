@@ -81,3 +81,6 @@ GET http://localhost:4000/user/1/message
 
 ### on this day API
 GET https://api.wikimedia.org/feed/v1/wikipedia/en/onthisday/holidays/06/26
+
+### Public Holiday by Country & Date from openholidaysapi.org
+GET https://openholidaysapi.org/PublicHolidays?countryIsoCode=DE&languageIsoCode=EN&validFrom=2023-01-01&validTo=2023-01-01
