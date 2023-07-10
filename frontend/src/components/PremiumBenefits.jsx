@@ -78,7 +78,7 @@ export default function PremiumBenefit() {
 
   return (
     <div className="relative isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
-      <div className="mx-auto mt-16 grid max-w-lg grid-cols-1 items-center gap-y-6 sm:mt-20 sm:gap-y-0 lg:max-w-4xl lg:grid-cols-2">
+      <div className=" mt-16 grid max-w-lg grid-cols-1 items-center gap-y-6 sm:mt-20 sm:gap-y-0 lg:max-w-4xl lg:grid-cols-2">
         {tiers.map((tier) => (
           <div
             key={tier.id}
@@ -148,7 +148,7 @@ export default function PremiumBenefit() {
           </div>
         ))}
       </div>
-      <div className="absolute right-0 top-0 mt-16 sm:mt-20 lg:mt-16 lg:max-w-sm lg:px-6">
+      <div className="absolute right-10 top-0 mt-16 sm:mt-20 lg:mt-16 ">
         <PaymentDetail onSelectCard={handleSelectCard} />
       </div>
     </div>
