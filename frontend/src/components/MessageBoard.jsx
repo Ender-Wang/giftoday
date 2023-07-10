@@ -5,7 +5,11 @@ import { AuthContext } from "./AuthContext";
 import { useContext } from "react";
 import { BsFillTrashFill } from "react-icons/bs";
 
-export default function MessageBoard({ selectedDay, onTagClick }) {
+export default function MessageBoard({
+  selectedDay,
+  onTagClick,
+  onHolidayClick,
+}) {
   const [activeButton, setActiveButton] = useState("Button 2");
   const { isLoggedIn } = useContext(AuthContext);
   const [holidays, setHolidays] = useState([]);
@@ -23,7 +27,13 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
       let year = String(selectedDay.getFullYear()).padStart(2, "0");
       let day = String(selectedDay.getDate()).padStart(2, "0");
       let url =
-        "https://openholidaysapi.org/PublicHolidaysByDate?date=" +
+        "https://openholidaysapi.org/PublicHolidays?countryIsoCode=DE&languageIsoCode=EN&validFrom=" +
+        year +
+        "-" +
+        month +
+        "-" +
+        day +
+        "&validTo=" +
         year +
         "-" +
         month +
@@ -141,7 +151,9 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
       console.log("An error occurred while processing the request.", error);
     }
   };
-
+  const handleFestivalClick = async (holiday) => {
+    onHolidayClick(holiday);
+  };
   return (
     <div className="h-4/5 rounded-md bg-themeColor-80 pb-5">
       {isLoggedIn ? (
@@ -182,6 +194,7 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
                   <div
                     className=" mx-5 my-1 transform border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:bg-themeColor-80 hover:font-bold"
                     key={index}
+                    onClick={() => handleFestivalClick(item)}
                   >
                     {item}
                   </div>

@@ -4,7 +4,12 @@ import { AuthContext } from "./AuthContext";
 import { AiOutlinePlus } from "react-icons/ai";
 import { getUserID } from "../states/GlobalState";
 
-export default function ShopItem({ selectedTag, searchContent, showFilter }) {
+export default function ShopItem({
+  selectedTag,
+  searchContent,
+  showFilter,
+  selectedHoliday,
+}) {
   const { isLoggedIn } = useContext(AuthContext);
   const [shopItems, setShopItems] = useState([]);
   const [isPremium, setPremium] = useState(false);
@@ -80,6 +85,17 @@ export default function ShopItem({ selectedTag, searchContent, showFilter }) {
     return items;
   };
 
+  const filterOnHoliday = (items, text) => {
+    if (text === "" || text === null) return items;
+    return items.filter(
+      (item) =>
+        item.tag.toLowerCase().includes("home_decor") ||
+        item.name.toLowerCase().includes("kitchen") ||
+        item.name.toLowerCase().includes("books") ||
+        item.name.toLowerCase().includes("travel") ||
+        item.name.toLowerCase().includes("accessories")
+    );
+  };
   const filterOnSearch = (items, text) => {
     if (text === "" || text === null) return items;
     return items.filter(
@@ -217,9 +233,12 @@ export default function ShopItem({ selectedTag, searchContent, showFilter }) {
 
       <div className="grid grid-cols-4 gap-x-20 gap-y-8 py-8">
         {/* {filterTag(shopItems, selectedTag).map((item) => ( */}
-        {filterOnCategories(
-          filterTag(filterOnSearch(shopItems, search), selectedTag),
-          filterCategories
+        {filterOnHoliday(
+          filterOnCategories(
+            filterTag(filterOnSearch(shopItems, search), selectedTag),
+            filterCategories
+          ),
+          selectedHoliday
         ).map((item) => (
           <div
             key={item.id}
