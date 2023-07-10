@@ -193,7 +193,7 @@ const CreditCardForm = ({ onSelectCard }) => {
       <h1 className="font-sans text-3xl tracking-tight text-gray-900 sm:text-3xl">
         Payment Detail:
       </h1>
-      <div className="h-[200px] w-[500px] overflow-y-auto rounded border border-white p-4">
+      <div className="h-[200px] w-[450px] overflow-y-auto rounded border border-white p-4">
         <div className="mx-auto max-w-lg ">
           {existingCardInfo && existingCardInfo.length > 0 ? (
             // Display existing card information
