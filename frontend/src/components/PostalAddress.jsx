@@ -195,9 +195,9 @@ export default function PostalAddress({ onSelectAddress }) {
     setSelectedAddress(address.id);
   };
   return (
-    <div>
+    <div className=" mb-8 mr-72 rounded-md border-2 border-lightButton">
       {/* "choose address" container */}
-      <div className=" h-2/5 min-w-[300px] pb-10 pr-64">
+      <div className=" h-2/5 min-w-[300px]  px-8 py-2">
         {/* <h1 className=" font-sans text-xl">Choose address</h1> */}
 
         <h1 className="font-sans text-3xl tracking-tight text-gray-900 sm:text-3xl">
@@ -205,7 +205,7 @@ export default function PostalAddress({ onSelectAddress }) {
         </h1>
         <div className=" grid h-full w-full grid-cols-2 grid-rows-3">
           {/* previous addresses */}
-          <div className="row-span-3  h-[200px] overflow-y-auto pb-2 pr-10 pt-4">
+          <div className="row-span-3  h-[200px] pb-2 pr-10 pt-4">
             {preAddress.map((item, index) => (
               <div
                 className={`${
