@@ -190,15 +190,26 @@ export default function MessageBoard({
             {activeButton === "Button 1" && (
               <div className="max-h-[160px] overflow-y-auto pt-1">
                 {/* <div className="absolute inset-0 bg-white" /> */}
-                {holidays.map((item, index) => (
-                  <div
-                    className=" mx-5 my-1 transform border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:bg-themeColor-80 hover:font-bold"
-                    key={index}
-                    onClick={() => handleFestivalClick(item)}
-                  >
-                    {item}
+                {holidays !== "" ? (
+                  <div>
+                    {holidays.map((item, index) => (
+                      <div
+                        className=" mx-5 my-1 transform border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:bg-themeColor-80 hover:font-bold"
+                        key={index}
+                        onClick={() => handleFestivalClick(item)}
+                      >
+                        {item}
+                      </div>
+                    ))}
                   </div>
-                ))}
+                ) : (
+                  <div>
+                    <p>
+                      Today is not a German public holiday, click on Records and
+                      record your own special days
+                    </p>
+                  </div>
+                )}
               </div>
             )}
 
