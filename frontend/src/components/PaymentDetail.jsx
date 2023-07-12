@@ -4,6 +4,8 @@ import visalogo from "../images/Visa_Logo.svg.png";
 import mastercardlogo from "../images/MasterCard_Logo.svg.png";
 import unionpaylogo from "../images/UnionPay_logo.svg.png";
 
+import { TrashIcon } from "@heroicons/react/20/solid";
+
 const CreditCardForm = ({ onSelectCard }) => {
   const [cardNumber, setCardNumber] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
@@ -201,14 +203,10 @@ const CreditCardForm = ({ onSelectCard }) => {
               {existingCardInfo.map((Card, index) => (
                 <div
                   key={index}
-                  style={{
-                    border: `1px solid ${
-                      selectedCard === Card ? "blue" : "#ccc"
-                    }`,
-                    borderRadius: "10px",
-                    padding: "10px",
-                    marginBottom: "10px",
-                  }}
+                  className={`${
+                    selectedCard === Card ? "border-price" : ""
+                  } hover:scale-102 mb-4
+                h-[120px] transform rounded-lg border-2 px-4 py-4 duration-300`}
                   onClick={() => selectCard(Card)}
                 >
                   <div className="mb-2 flex items-center">
@@ -237,14 +235,16 @@ const CreditCardForm = ({ onSelectCard }) => {
                   </div>
 
                   <p>Expiry Date: {Card.expiryDate.substring(0, 7)}</p>
-                  <p>CVV: {Card.cvv}</p>
-
-                  <button
-                    onClick={() => deleteCard(Card.cardNumber)}
-                    className="mt-2 rounded-lg bg-red-500 px-3 py-1 text-white"
-                  >
-                    Delete Card
-                  </button>
+                  <div className="flex justify-between  ">
+                    <div className="left-element">CVV: {Card.cvv}</div>
+                    <div className="right-element">
+                      <TrashIcon
+                        type="button"
+                        className="h-6 w-6  text-normalButton"
+                        onClick={() => deleteCard(Card.cardNumber)}
+                      />
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>

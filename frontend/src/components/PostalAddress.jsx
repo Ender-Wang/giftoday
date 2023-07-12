@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { getUserID, getSelectedDate } from "../states/GlobalState";
 import { AiOutlineHome } from "react-icons/ai";
+import { TrashIcon } from "@heroicons/react/20/solid";
 export default function PostalAddress({ onSelectAddress }) {
   const [fullName, setFullName] = useState("");
   const [postalCode, setPostalCode] = useState("");
@@ -81,10 +82,6 @@ export default function PostalAddress({ onSelectAddress }) {
         setFullName(value);
         setFormErrors((prevErrors) => ({ ...prevErrors, name: "" }));
         break;
-      // case "shippingDate":
-      //   setShippingDate(value);
-      //   setFormErrors((prevErrors) => ({ ...prevErrors, shippingDate: "" }));
-      //   break;
       case "street":
         setStreet(value);
         setFormErrors((prevErrors) => ({ ...prevErrors, street: "" }));
@@ -111,9 +108,6 @@ export default function PostalAddress({ onSelectAddress }) {
     if (data.fullName.trim() === "") {
       errors.name = "Full Name is required!";
     }
-    // if (data.shippingDate.trim() === "") {
-    //   errors.shippingDate = "Shipping Date is required!";
-    // }
     if (data.postalCode.trim() === "") {
       errors.postalCode = "Postal Code is required!";
     }
@@ -129,7 +123,6 @@ export default function PostalAddress({ onSelectAddress }) {
 
     return errors;
   };
-  //
   // Save new address and post it into mongoDB
   const handleSave = async () => {
     const data = {
@@ -139,7 +132,6 @@ export default function PostalAddress({ onSelectAddress }) {
       city: city,
       country: country,
       street: street,
-      // shippingDate: shippingDate,
     };
     const errors = validateForm(data);
     setFormErrors(errors);
@@ -195,9 +187,9 @@ export default function PostalAddress({ onSelectAddress }) {
     setSelectedAddress(address.id);
   };
   return (
-    <div>
+    <div className=" mb-8 mr-72 rounded-md border-2 border-lightButton">
       {/* "choose address" container */}
-      <div className=" h-2/5 min-w-[300px] pb-10 pr-64">
+      <div className=" h-2/5 min-w-[300px]  px-8 py-2">
         {/* <h1 className=" font-sans text-xl">Choose address</h1> */}
 
         <h1 className="font-sans text-3xl tracking-tight text-gray-900 sm:text-3xl">
@@ -205,7 +197,7 @@ export default function PostalAddress({ onSelectAddress }) {
         </h1>
         <div className=" grid h-full w-full grid-cols-2 grid-rows-3">
           {/* previous addresses */}
-          <div className="row-span-3  h-[200px] overflow-y-auto pb-2 pr-10 pt-4">
+          <div className="row-span-3 h-[200px] overflow-auto pb-2 pr-10 pt-4">
             {preAddress.map((item, index) => (
               <div
                 className={`${
@@ -213,13 +205,11 @@ export default function PostalAddress({ onSelectAddress }) {
                 } hover:scale-102 mb-4 h-[90px]
               transform rounded-lg border-2 duration-300`}
                 key={index}
+                onClick={() => handleSelectAddress(item)}
               >
                 <div className="grid grid-cols-4">
                   <div className="flex items-center justify-center">
-                    <AiOutlineHome
-                      className=" text-6xl "
-                      onClick={() => handleSelectAddress(item)}
-                    />
+                    <AiOutlineHome className=" text-6xl " />
                   </div>
                   <div className="col-span-2 pl-4 pt-2">
                     <div>{item.fullName}</div>
@@ -230,18 +220,21 @@ export default function PostalAddress({ onSelectAddress }) {
                       <span>{item.city}</span>
                     </div>
                   </div>
-                  {item.id !== 0 ? (
-                    <div className="col-span-1 flex items-center justify-center pr-4 pt-2">
-                      <button
-                        type="button"
-                        className="hover:scale-102  transform rounded-lg bg-normalButton px-5 py-1 hover:bg-normalButton"
-                        onClick={() => handleDelete(item.id)}
-                      >
-                        DELETE
-                      </button>
+                  {item.id === 0 ? (
+                    <div
+                      className="col-span-1 flex items-center justify-center pr-4 pt-2"
+                      title="Please correct the default address in the Profile"
+                    >
+                      <TrashIcon className="h-6 w-6 text-gray-400" />
                     </div>
                   ) : (
-                    <div></div>
+                    <div className="col-span-1 flex items-center justify-center pr-4 pt-2">
+                      <TrashIcon
+                        type="button"
+                        className="h-6 w-6 text-normalButton"
+                        onClick={() => handleDelete(item.id)}
+                      />
+                    </div>
                   )}
                 </div>
               </div>

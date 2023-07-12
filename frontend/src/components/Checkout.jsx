@@ -117,8 +117,6 @@ function Checkout() {
       }
       calculatedTotalPrice = Number(calculatedTotalPrice.toFixed(2));
 
-    
-
       const orderData = {
         total: calculatedTotalPrice,
         address: selectedAddress,
@@ -137,6 +135,7 @@ function Checkout() {
 
       if (response.ok) {
         await deleteAllCartItems();
+        handleStockReduce();
         window.location.href = "/giftoday.com/OrderConfirmation";
       } else {
         console.error("Failed to submit order");
@@ -145,11 +144,31 @@ function Checkout() {
       console.error("An error occurred while submitting the order", error);
     }
   };
+  const handleStockReduce = async () => {
+    const orderData = {
+      gift: carts,
+    };
+    try {
+      const response = await fetch(`http://localhost:4000/shopItems`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData),
+      });
+      if (response.ok) {
+      } else {
+        console.error("Failed to delete the stock");
+      }
+    } catch (error) {
+      console.error("An error occurred while deleting the stock", error);
+    }
+  };
   return (
     <div className="mx-16 ml-[10%] ">
       <div className="flex-col-2 flex w-[500px]">
         {/* Order Summary */}
-        <div className="pt-24">
+        <div className="pt-12">
           <OrderSummary
             onTotalPriceChange={(totalPrice) => {
               setTotalPrice(totalPrice);
@@ -158,14 +177,14 @@ function Checkout() {
         </div>
 
         {/* Payment Detail */}
-        <div className="pl-12 pt-24">
+        <div className="pl-12 pt-12">
           <PaymentDetail onSelectCard={handleSelectCard} />
         </div>
       </div>
 
       {/* Shipping Address */}
-      <hr className="border-themeColor-40 my-4 border-t" />
-      <div className=" row-span-2 flex flex-row pt-4">
+      {/* <hr className="my-4 border-t border-themeColor-40" /> */}
+      <div className=" row-span-2 flex flex-row  ">
         <PostalAddress onSelectAddress={handleSelectAddress} />
       </div>
       {/* Check out button */}
@@ -174,21 +193,21 @@ function Checkout() {
         style={{ zIndex: 9999 }}
       >
         {!isPremium && (
-          <span className="text-lightFontColor basis-5/6 font-bold">
+          <span className="basis-5/6 font-bold text-lightFontColor">
             Total Price: € {totalPrice}
           </span>
         )}
         {isPremium && (
-          <div className="text-lightFontColor basis-5/6 font-bold ">
+          <div className="basis-5/6 font-bold text-lightFontColor ">
             <span className="line-through">€ {totalPrice}</span>
-            <span className=" text-orangeFontColor basis-5/6 pl-4 text-xl font-bold ">
+            <span className=" basis-5/6 pl-4 text-xl font-bold text-orangeFontColor ">
               {/* toFixed Retain two decimal places */}
               Total Price: €{(totalPrice * 0.9).toFixed(2)}
             </span>
           </div>
         )}
         <button
-          className="bg-themeColor-40 ml-10 mt-4 rounded px-4 py-2 font-bold text-white"
+          className="ml-10 mt-4 rounded bg-themeColor-40 px-4 py-2 font-bold text-white"
           onClick={handleSubmit}
         >
           Check out

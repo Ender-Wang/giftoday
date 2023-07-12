@@ -5,13 +5,18 @@ import { AuthContext } from "./AuthContext";
 import { useContext } from "react";
 import { BsFillTrashFill } from "react-icons/bs";
 
-export default function MessageBoard({ selectedDay, onTagClick }) {
+export default function MessageBoard({
+  selectedDay,
+  onTagClick,
+  onHolidayClick,
+}) {
   const [activeButton, setActiveButton] = useState("Button 2");
   const { isLoggedIn } = useContext(AuthContext);
   const [holidays, setHolidays] = useState([]);
   const [preMessage, setPreMessage] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [newTag, setNewTag] = useState("");
+  // const [filteredRecords,setFilteredRecords]= useState([]);
   const userID = getUserID();
 
   const tags = ["all", "home", "beauty", "lifestyle", "technology", "health"];
@@ -23,7 +28,13 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
       let year = String(selectedDay.getFullYear()).padStart(2, "0");
       let day = String(selectedDay.getDate()).padStart(2, "0");
       let url =
-        "https://openholidaysapi.org/PublicHolidaysByDate?date=" +
+        "https://openholidaysapi.org/PublicHolidays?countryIsoCode=DE&languageIsoCode=EN&validFrom=" +
+        year +
+        "-" +
+        month +
+        "-" +
+        day +
+        "&validTo=" +
         year +
         "-" +
         month +
@@ -141,7 +152,19 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
       console.log("An error occurred while processing the request.", error);
     }
   };
-
+  const handleFestivalClick = async (holiday) => {
+    onHolidayClick(holiday);
+  };
+  const filterRecords = (messages) => {
+    return messages.filter((item) => {
+      const itemDate = new Date(item.date);
+      return (
+        itemDate.getFullYear() === selectedDay.getFullYear() &&
+        itemDate.getMonth() === selectedDay.getMonth() &&
+        itemDate.getDate() === selectedDay.getDate()
+      );
+    });
+  };
   return (
     <div className="h-4/5 rounded-md bg-themeColor-80 pb-5">
       {isLoggedIn ? (
@@ -178,14 +201,26 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
             {activeButton === "Button 1" && (
               <div className="max-h-[160px] overflow-y-auto pt-1">
                 {/* <div className="absolute inset-0 bg-white" /> */}
-                {holidays.map((item, index) => (
-                  <div
-                    className=" mx-5 my-1 transform border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:bg-themeColor-80 hover:font-bold"
-                    key={index}
-                  >
-                    {item}
+                {holidays.length !== 0 ? (
+                  <div>
+                    {holidays.map((item, index) => (
+                      <div
+                        className=" mx-5 my-1 transform border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:bg-themeColor-80 hover:font-bold"
+                        key={index}
+                        onClick={() => handleFestivalClick(item)}
+                      >
+                        {item}
+                      </div>
+                    ))}
                   </div>
-                ))}
+                ) : (
+                  <div className="flex justify-center px-2 py-4">
+                    <p className="text-center text-lg font-semibold italic tracking-wide text-white ">
+                      Today is not a German public holiday, click on Records and
+                      record your own special days
+                    </p>
+                  </div>
+                )}
               </div>
             )}
 
@@ -211,9 +246,6 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
                     onChange={handleInputChange}
                     className=" w-14 bg-transparent text-right text-sm text-lightFontColor hover:cursor-pointer focus:outline-none"
                   >
-                    {/* <option value="" disabled>
-                      #
-                    </option> */}
                     {tags.map((tag) => (
                       <option key={tag} value={tag}>
                         #{tag}
@@ -238,40 +270,40 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
                 <div className="max-h-[160px] overflow-y-auto">
                   <div>
                     <div className=" pr-5">
-                      {preMessage
-                        .filter((item) => {
-                          const itemDate = new Date(item.date);
-                          return (
-                            itemDate.getFullYear() ===
-                              selectedDay.getFullYear() &&
-                            itemDate.getMonth() === selectedDay.getMonth() &&
-                            itemDate.getDate() === selectedDay.getDate()
-                          );
-                        })
-                        .map((item, index) => (
-                          <div className="" key={index}>
-                            <div className="flex items-center justify-between">
-                              <div
-                                className="mx-5 my-1 w-full transform truncate whitespace-nowrap border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:bg-themeColor-80 hover:font-bold"
-                                onClick={() => onTagClick(item.tag.name)}
-                              >
-                                {item.message}
-                              </div>
-                              <div className="flex">
-                                <div className=" mr-2 flex text-right text-lightFontColor hover:cursor-default">
-                                  #{item.tag.name}
-                                </div>
+                      {filterRecords(preMessage).length !== 0 ? (
+                        <div>
+                          {filterRecords(preMessage).map((item, index) => (
+                            <div className="" key={index}>
+                              <div className="flex items-center justify-between">
                                 <div
-                                  className="flex items-center"
-                                  onClick={() => handleDeleteMessage(item.id)}
+                                  className="mx-5 my-1 w-full transform truncate whitespace-nowrap border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:bg-themeColor-80 hover:font-bold"
+                                  onClick={() => onTagClick(item.tag.name)}
                                 >
-                                  {/* "False" icon */}
-                                  <BsFillTrashFill className="bg-transparent text-lg text-lightFontColor transition duration-300 ease-in-out hover:scale-125 hover:cursor-pointer hover:text-red-600" />
+                                  {item.message}
+                                </div>
+                                <div className="flex">
+                                  <div className=" mr-2 flex text-right text-lightFontColor hover:cursor-default">
+                                    #{item.tag.name}
+                                  </div>
+                                  <div
+                                    className="flex items-center"
+                                    onClick={() => handleDeleteMessage(item.id)}
+                                  >
+                                    {/* "False" icon */}
+                                    <BsFillTrashFill className="bg-transparent text-lg text-lightFontColor transition duration-300 ease-in-out hover:scale-125 hover:cursor-pointer hover:text-red-600" />
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        ))}
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="flex justify-center px-2 py-4">
+                          <p className="text-center text-lg font-semibold italic tracking-wide text-white">
+                            Record your own special days
+                          </p>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -294,14 +326,26 @@ export default function MessageBoard({ selectedDay, onTagClick }) {
             {/* After pressing "Festivals" button */}
             <div className="max-h-[160px] overflow-y-auto pt-2">
               {/* <div className="absolute inset-0 bg-white" /> */}
-              {holidays.map((item, index) => (
-                <div
-                  className=" mx-5 my-1 transform border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:bg-themeColor-80 hover:font-bold"
-                  key={index}
-                >
-                  {item}
+              {holidays.length !== 0 ? (
+                <div>
+                  {holidays.map((item, index) => (
+                    <div
+                      className=" mx-5 my-1 transform border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:bg-themeColor-80 hover:font-bold"
+                      key={index}
+                      onClick={() => handleFestivalClick(item)}
+                    >
+                      {item}
+                    </div>
+                  ))}
                 </div>
-              ))}
+              ) : (
+                <div className="flex justify-center px-2 py-4">
+                  <p className="text-center text-lg font-semibold italic tracking-wide text-white">
+                    Today is not a German public holiday, login and record your
+                    own special days
+                  </p>
+                </div>
+              )}
             </div>
             {/* )} */}
           </div>

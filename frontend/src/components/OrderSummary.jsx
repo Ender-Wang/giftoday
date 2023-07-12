@@ -58,7 +58,7 @@ export default function OrderSummary({ onTotalPriceChange }) {
         setError(error);
         setLoading(false);
       });
-  }, [id]);
+  }, [id, carts]);
 
   // Calculate total price based on cart items
   const calculateTotalPrice = (cartItems) => {
@@ -92,7 +92,7 @@ export default function OrderSummary({ onTotalPriceChange }) {
       if (response.ok) {
         setCarts(carts.filter((cart) => cart.id !== OID));
         // Refresh the page
-        window.location.reload();
+        // window.location.reload();
       } else {
         console.log("Deleting data failed.");
       }
@@ -113,7 +113,7 @@ export default function OrderSummary({ onTotalPriceChange }) {
         }
       );
       if (response.ok) {
-        window.location.reload(); // reload current page
+        // window.location.reload(); // reload current page
       } else {
         console.log("Failed to add gift to cart");
       }
@@ -136,7 +136,7 @@ export default function OrderSummary({ onTotalPriceChange }) {
       if (response.ok) {
         console.log("Gift added successfully to cart");
 
-        window.location.reload(); // reload current page
+        // window.location.reload(); // reload current page
       } else {
         console.log("Failed to add gift to cart");
       }
@@ -169,10 +169,10 @@ export default function OrderSummary({ onTotalPriceChange }) {
                 {carts.map((cart) => (
                   <div
                     key={cart.id}
-                    className="border-radius: 30px border-gray-300 bg-white hover:shadow-md sm:rounded-lg sm:border"
+                    className="rounded-lg border-2   sm:rounded-lg sm:border"
                   >
                     {/* Products */}
-                    <div class="scrollbar-thumb-gray-500 scrollbar-track-gray-200 scrollbar-w-2 h-64 overflow-y-scroll">
+                    <div class="scrollbar-thumb-gray-500 scrollbar-track-gray-200 scrollbar-w-2 h-50 overflow-y-scroll">
                       <ul className="divide-y divide-gray-200">
                         <li key={cart.id} className="p-4 sm:p-6">
                           <div className="flex items-center sm:items-start">
@@ -195,7 +195,9 @@ export default function OrderSummary({ onTotalPriceChange }) {
                                 <h5 className="mt-1">Name: {cart.name}</h5>
 
                                 <p className="mt-4">Price: €{cart.price}</p>
-
+                                <p className="mt-4">
+                                  Description: {cart.description}
+                                </p>
                                 <p className="mt-4">
                                   <div
                                     style={{
@@ -225,9 +227,8 @@ export default function OrderSummary({ onTotalPriceChange }) {
 
                                 <h5 className="mt-1 flex justify-end">
                                   <TrashIcon
-                                    className="h-5 w-5"
+                                    className="text-normalButton h-6 w-6"
                                     aria-hidden="true"
-                                    style={{ color: "#DD7E9A" }}
                                     onClick={() => handleDelete(cart.id)}
                                   />
                                 </h5>
