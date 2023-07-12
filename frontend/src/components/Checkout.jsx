@@ -135,12 +135,33 @@ function Checkout() {
 
       if (response.ok) {
         await deleteAllCartItems();
+        handleStockReduce();
         window.location.href = "/giftoday.com/OrderConfirmation";
       } else {
         console.error("Failed to submit order");
       }
     } catch (error) {
       console.error("An error occurred while submitting the order", error);
+    }
+  };
+  const handleStockReduce = async () => {
+    const orderData = {
+      gift: carts,
+    };
+    try {
+      const response = await fetch(`http://localhost:4000/shopItems`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData),
+      });
+      if (response.ok) {
+      } else {
+        console.error("Failed to delete the stock");
+      }
+    } catch (error) {
+      console.error("An error occurred while deleting the stock", error);
     }
   };
   return (

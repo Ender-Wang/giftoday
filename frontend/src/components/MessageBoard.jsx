@@ -270,7 +270,7 @@ export default function MessageBoard({
                 <div className="max-h-[160px] overflow-y-auto">
                   <div>
                     <div className=" pr-5">
-                      {filterRecords(preMessage).length === 0 ? (
+                      {filterRecords(preMessage).length !== 0 ? (
                         <div>
                           {filterRecords(preMessage).map((item, index) => (
                             <div className="" key={index}>

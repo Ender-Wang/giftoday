@@ -205,8 +205,8 @@ const CreditCardForm = ({ onSelectCard }) => {
                   key={index}
                   className={`${
                     selectedCard === Card ? "border-price" : ""
-                  } hover:scale-102 h-[120px]
-                transform rounded-lg border-2 px-4 py-4 duration-300`}
+                  } hover:scale-102 mb-4
+                h-[120px] transform rounded-lg border-2 px-4 py-4 duration-300`}
                   onClick={() => selectCard(Card)}
                 >
                   <div className="mb-2 flex items-center">

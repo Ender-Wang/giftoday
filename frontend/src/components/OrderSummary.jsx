@@ -169,7 +169,7 @@ export default function OrderSummary({ onTotalPriceChange }) {
                 {carts.map((cart) => (
                   <div
                     key={cart.id}
-                    className="border-radius: 30px border-gray-300 bg-white hover:shadow-md sm:rounded-lg sm:border"
+                    className="rounded-lg border-2   sm:rounded-lg sm:border"
                   >
                     {/* Products */}
                     <div class="scrollbar-thumb-gray-500 scrollbar-track-gray-200 scrollbar-w-2 h-50 overflow-y-scroll">

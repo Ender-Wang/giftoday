@@ -159,6 +159,7 @@ export default function ShopItem({
       );
       if (response.ok) {
         console.log("Adding to cart succeeded!");
+        window.location.reload();
       } else {
         console.log("Putting into cart failed!");
       }
