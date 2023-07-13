@@ -25,7 +25,7 @@ router.get("/user/:userID/card", async (req, res) => {
   }
 });
 
-//TODO: Post user Card info with user id: [id, number, cvv, expMonth, expYear]
+// Add new card
 router.put("/user/:userID/card", async (req, res) => {
   try {
     const { userID } = req.params;

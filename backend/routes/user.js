@@ -1,6 +1,6 @@
 const { router, UserDB } = require("./DB.js");
 
-//Demo: get all info from all users
+// Get all users' data
 router.get("/users", (req, res) => {
   UserDB.find()
     .then((users) => {

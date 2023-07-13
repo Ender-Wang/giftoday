@@ -1,6 +1,6 @@
 const { router, UserDB } = require("./DB.js");
 
-//Get user Message info with user id: [id, message, date]
+// Get user messages
 router.get("/user/:userID/message", async (req, res) => {
   try {
     const { userID } = req.params;
@@ -19,7 +19,7 @@ router.get("/user/:userID/message", async (req, res) => {
   }
 });
 
-//Add user Message info with user id: [id, message, date]
+//Add user message
 router.put("/user/:userID/message", async (req, res) => {
   try {
     const { userID } = req.params;

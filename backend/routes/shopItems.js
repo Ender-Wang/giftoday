@@ -27,6 +27,7 @@ router.get("/shopItem/:id", async (req, res) => {
   }
 });
 
+//Update shopItem stock by corresponding gift id
 router.put("/shopItems", async (req, res) => {
   try {
     const { gift } = req.body;
