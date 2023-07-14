@@ -165,10 +165,10 @@ function Checkout() {
     }
   };
   return (
-    <div className="mx-16 ml-[10%] ">
-      <div className="flex-col-2 flex w-[500px]">
+    <div className="px-20">
+      <div className="flex justify-between pt-16 ">
         {/* Order Summary */}
-        <div className="pt-12">
+        <div className="pl-20">
           <OrderSummary
             onTotalPriceChange={(totalPrice) => {
               setTotalPrice(totalPrice);
@@ -177,14 +177,14 @@ function Checkout() {
         </div>
 
         {/* Payment Detail */}
-        <div className="pl-12 pt-12">
+        <div className="pr-32">
           <PaymentDetail onSelectCard={handleSelectCard} />
         </div>
       </div>
 
       {/* Shipping Address */}
       {/* <hr className="my-4 border-t border-themeColor-40" /> */}
-      <div className=" row-span-2 flex flex-row  ">
+      <div className=" flex flex-row  ">
         <PostalAddress onSelectAddress={handleSelectAddress} />
       </div>
       {/* Check out button */}

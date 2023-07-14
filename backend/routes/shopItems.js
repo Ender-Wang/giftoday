@@ -4,6 +4,17 @@ const { router, ShopItemDB } = require("./DB.js");
 router.get("/shopItems", async (req, res) => {
   try {
     const shopItems = await ShopItemDB.find();
+
+    res.json(shopItems.filter((item) => item.stock > 0));
+  } catch (error) {
+    console.error(error);
+    // res.status(500).json({ error: "Internal server error" });
+  }
+});
+router.get("/allShopItems", async (req, res) => {
+  try {
+    const shopItems = await ShopItemDB.find();
+
     res.json(shopItems);
   } catch (error) {
     console.error(error);
