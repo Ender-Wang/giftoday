@@ -1,6 +1,6 @@
 const { router, UserDB } = require("./DB.js");
 
-// Get user General info: [id, name, email, password, premium]
+// Get user premium status
 router.get("/user/:userID/premium", (req, res) => {
   const { userID } = req.params;
   let id = Number(userID);

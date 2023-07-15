@@ -1,6 +1,6 @@
 const { router, UserDB } = require("./DB.js");
 
-//TODO: Get user Address info with user id: [id, fullName, postalCode, street, city, country, phoneNumber]
+// Get user address info with user id
 router.get("/user/:userID/address", async (req, res) => {
   try {
     const { userID } = req.params;
@@ -13,7 +13,7 @@ router.get("/user/:userID/address", async (req, res) => {
   }
 });
 
-//TODO: Post user Address info with user id: [id, fullName, postalCode, street, city, country]
+// Add new address
 router.put("/user/:userID/address", async (req, res) => {
   try {
     const { userID } = req.params;
@@ -58,7 +58,7 @@ router.put("/user/:userID/address", async (req, res) => {
   }
 });
 
-//delete address
+// Delete address with address id
 router.delete("/user/:userID/address/:addressID", async (req, res) => {
   const { userID, addressID } = req.params;
   let userId = Number(userID);
@@ -79,7 +79,7 @@ router.delete("/user/:userID/address/:addressID", async (req, res) => {
   }
 });
 
-//delete address
+// Delete all addresses
 router.delete("/user/:userID/address", async (req, res) => {
   const { userID } = req.params;
   let userId = Number(userID);
