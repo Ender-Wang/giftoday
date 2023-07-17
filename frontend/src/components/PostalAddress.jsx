@@ -187,7 +187,7 @@ export default function PostalAddress({ onSelectAddress }) {
     setSelectedAddress(address.id);
   };
   return (
-    <div className=" mb-8 mr-72 rounded-md ">
+    <div className="  mr-72 rounded-md ">
       {/* "choose address" container */}
       <div className=" h-2/5 min-w-[300px]  py-2 pl-20">
         {/* <h1 className=" font-sans text-xl">Choose address</h1> */}

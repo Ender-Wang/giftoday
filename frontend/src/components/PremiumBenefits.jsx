@@ -148,7 +148,7 @@ export default function PremiumBenefit() {
           </div>
         ))}
       </div>
-      <div className="absolute right-10 top-0 mt-16 sm:mt-20 lg:mt-16 ">
+      <div className="absolute right-10 top-20 mt-16 sm:mt-20 lg:mt-16 ">
         <PaymentDetail onSelectCard={handleSelectCard} />
       </div>
     </div>
