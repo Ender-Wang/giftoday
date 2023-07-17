@@ -177,6 +177,13 @@ export default function ShopItem({
     setFilterCategories(categories);
     setSelectedCategories(categories);
   };
+  const [showHolidays, setShowHolidays] = useState(true);
+  useEffect(() => {
+    setShowHolidays(true);
+  }, [selectedHoliday]);
+  useEffect(() => {
+    setShowHolidays(false);
+  }, [selectedTag]);
   return (
     <div>
       {/* category filter */}
@@ -234,69 +241,137 @@ export default function ShopItem({
 
       <div className="grid grid-cols-4 gap-x-20 gap-y-8 py-8">
         {/* {filterTag(shopItems, selectedTag).map((item) => ( */}
-        {filterOnHoliday(
-          filterOnCategories(
-            filterTag(filterOnSearch(shopItems, search), selectedTag),
-            filterCategories
-          ),
-          selectedHoliday
-        ).map((item) => (
-          <div
-            key={item.id}
-            className="h-auto max-h-[350px] min-h-[320px] w-auto min-w-[220px] max-w-[250px] transform rounded-xl px-3 py-1 shadow-md duration-300 hover:scale-105 hover:border-2 hover:shadow-none"
-          >
-            {/* product picture */}
-            <div className="">
-              <img
-                src={
-                  "https://github.com/Ender-Wang/giftoday/blob/master/frontend/src/images/shopItems/" +
-                  item.image +
-                  "?raw=true"
-                }
-                className="aspect-square h-full w-full rounded-md object-cover"
-                alt={item.name}
-                title={item.description}
-              />
-            </div>
-
-            {/* product name */}
-            <div className="line-clamp-1 pt-2 font-bold">{item.name}</div>
-
-            {/* product description */}
-            <div className="line-clamp-2 pt-1 text-sm text-lightFontColor">
-              {item.description}
-            </div>
-
-            {/* product price */}
-            <div className="flex flex-row justify-around pt-2">
-              {!isPremium && (
-                <span className="font-bold text-lightFontColor">
-                  € {item.price}
-                </span>
-              )}
-              {isPremium && (
-                <div className="flex flex-1 justify-between pr-12 font-bold">
-                  <span className=" pt-0.5 line-through">€{item.price}</span>
-                  <span className=" text-sm text-red-600">-10%</span>
-                  <span className=" text-xl  font-bold  text-orangeFontColor ">
-                    €{item.price * 0.9}
-                  </span>
+        {showHolidays
+          ? filterOnHoliday(
+              filterOnCategories(
+                filterOnSearch(shopItems, search),
+                filterCategories
+              ),
+              selectedHoliday
+            ).map((item) => (
+              <div
+                key={item.id}
+                className="h-auto max-h-[350px] min-h-[320px] w-auto min-w-[220px] max-w-[250px] transform rounded-xl px-3 py-1 shadow-md duration-300 hover:scale-105 hover:border-2 hover:shadow-none"
+              >
+                {/* product picture */}
+                <div className="">
+                  <img
+                    src={
+                      "https://github.com/Ender-Wang/giftoday/blob/master/frontend/src/images/shopItems/" +
+                      item.image +
+                      "?raw=true"
+                    }
+                    className="aspect-square h-full w-full rounded-md object-cover"
+                    alt={item.name}
+                    title={item.description}
+                  />
                 </div>
-              )}
-              {isLoggedIn && (
-                <div
-                  className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-normalPlusButton"
-                  onClick={() => {
-                    handleCartButton(item);
-                    // window.location.reload();
-                  }}
-                >
-                  <AiOutlinePlus className="text-2xl text-white" />
+
+                {/* product name */}
+                <div className="line-clamp-1 pt-2 font-bold">{item.name}</div>
+
+                {/* product description */}
+                <div className="line-clamp-2 pt-1 text-sm text-lightFontColor">
+                  {item.description}
                 </div>
-              )}
-            </div>
-          </div>
-        ))}
+
+                {/* product price */}
+                <div className="flex flex-row justify-around pt-2">
+                  {!isPremium && (
+                    <span className="font-bold text-lightFontColor">
+                      € {item.price}
+                    </span>
+                  )}
+                  {isPremium && (
+                    <div className="flex flex-1 justify-between pr-12 font-bold">
+                      <span className=" pt-0.5 line-through">
+                        €{item.price}
+                      </span>
+                      <span className=" text-sm text-red-600">-10%</span>
+                      <span className=" text-xl  font-bold  text-orangeFontColor ">
+                        €{item.price * 0.9}
+                      </span>
+                    </div>
+                  )}
+                  {isLoggedIn && (
+                    <div
+                      className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-normalPlusButton"
+                      onClick={() => {
+                        handleCartButton(item);
+                        // window.location.reload();
+                      }}
+                    >
+                      <AiOutlinePlus className="text-2xl text-white" />
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))
+          : filterTag(
+              filterOnCategories(
+                filterOnSearch(shopItems, search),
+                filterCategories
+              ),
+              selectedTag
+            ).map((item) => (
+              <div
+                key={item.id}
+                className="h-auto max-h-[350px] min-h-[320px] w-auto min-w-[220px] max-w-[250px] transform rounded-xl px-3 py-1 shadow-md duration-300 hover:scale-105 hover:border-2 hover:shadow-none"
+              >
+                {/* product picture */}
+                <div className="">
+                  <img
+                    src={
+                      "https://github.com/Ender-Wang/giftoday/blob/master/frontend/src/images/shopItems/" +
+                      item.image +
+                      "?raw=true"
+                    }
+                    className="aspect-square h-full w-full rounded-md object-cover"
+                    alt={item.name}
+                    title={item.description}
+                  />
+                </div>
+
+                {/* product name */}
+                <div className="line-clamp-1 pt-2 font-bold">{item.name}</div>
+
+                {/* product description */}
+                <div className="line-clamp-2 pt-1 text-sm text-lightFontColor">
+                  {item.description}
+                </div>
+
+                {/* product price */}
+                <div className="flex flex-row justify-around pt-2">
+                  {!isPremium && (
+                    <span className="font-bold text-lightFontColor">
+                      € {item.price}
+                    </span>
+                  )}
+                  {isPremium && (
+                    <div className="flex flex-1 justify-between pr-12 font-bold">
+                      <span className=" pt-0.5 line-through">
+                        €{item.price}
+                      </span>
+                      <span className=" text-sm text-red-600">-10%</span>
+                      <span className=" text-xl  font-bold  text-orangeFontColor ">
+                        €{item.price * 0.9}
+                      </span>
+                    </div>
+                  )}
+                  {isLoggedIn && (
+                    <div
+                      className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-normalPlusButton"
+                      onClick={() => {
+                        handleCartButton(item);
+                        // window.location.reload();
+                      }}
+                    >
+                      <AiOutlinePlus className="text-2xl text-white" />
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
       </div>
     </div>
   );
