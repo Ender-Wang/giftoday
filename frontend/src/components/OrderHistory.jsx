@@ -122,7 +122,7 @@ export default function UserInfo() {
                                 className="mt-1 font-medium text-gray-900"
                                 style={{ textAlign: "left" }}
                               >
-                                {order.total}
+                                €{order.total}
                               </dd>
                             </div>
 
@@ -130,7 +130,7 @@ export default function UserInfo() {
                             <div className="flex justify-center">
                               <button
                                 type="submit"
-                                className="duration-600 hover:bg-themeColor-200 rounded bg-themeColor-100 px-4 py-2 font-medium text-white transition-colors ease-in-out"
+                                className="duration-600 hover:bg-themeColor-200 bg-themeColor-100 rounded px-4 py-2 font-medium text-white transition-colors ease-in-out"
                                 onClick={() => handleDelete(order.id)}
                               >
                                 Cancel
@@ -162,7 +162,7 @@ export default function UserInfo() {
                             {/* Address */}
                             <div>
                               <dt className="font-bold text-gray-900">
-                                Address
+                                Shipping Address
                               </dt>
                               <dd
                                 className="mt-1 font-medium text-gray-900"
@@ -205,10 +205,10 @@ export default function UserInfo() {
                                         Name: {gift.name}
                                       </h5>
                                       <h5 className="mt-4">
-                                        Amount: {gift.quantity}
+                                        Quantity: {gift.quantity}
                                       </h5>
                                       <p className="mt-4">
-                                        Price: {gift.price}
+                                        Price: €{gift.price}
                                       </p>
                                     </div>
                                   </div>
