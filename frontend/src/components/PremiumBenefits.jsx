@@ -14,7 +14,7 @@ const tiers = [
       "Record the important date",
       "Recommend related products for records",
     ],
-    button: "it is enough",
+    button: "Unsubscribe",
     featured: false,
   },
   {
@@ -27,7 +27,7 @@ const tiers = [
       "Recommend related products for records",
       "Get 10% discount for every product",
     ],
-    button: "let us try",
+    button: "Subscribe",
     featured: true,
   },
 ];

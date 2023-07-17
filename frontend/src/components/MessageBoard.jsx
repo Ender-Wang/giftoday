@@ -334,7 +334,10 @@ export default function MessageBoard({
                     <div
                       className=" mx-5 my-1 transform border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:bg-themeColor-80 hover:font-bold"
                       key={index}
-                      onClick={() => handleFestivalClick(item)}
+                      onClick={() => {
+                        handleFestivalClick(item);
+                        onButtonClick("Button 1");
+                      }}
                     >
                       {item}
                     </div>
