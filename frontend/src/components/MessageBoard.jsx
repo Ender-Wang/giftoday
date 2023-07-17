@@ -9,8 +9,10 @@ export default function MessageBoard({
   selectedDay,
   onTagClick,
   onHolidayClick,
+  onButtonClick,
+  selectedButton,
 }) {
-  const [activeButton, setActiveButton] = useState("Button 2");
+  // const [activeButton, setActiveButton] = useState("Button 2");
   const { isLoggedIn } = useContext(AuthContext);
   const [holidays, setHolidays] = useState([]);
   const [preMessage, setPreMessage] = useState([]);
@@ -62,7 +64,7 @@ export default function MessageBoard({
 
   //Show messages or festivals
   const handleButtonClick = (content) => {
-    setActiveButton(content);
+    onButtonClick(content);
   };
 
   useEffect(() => {
@@ -174,7 +176,7 @@ export default function MessageBoard({
             <button
               type="button"
               className={`mt-5 w-1/2 rounded-t-lg pb-2 pt-2 font-bold ${
-                activeButton === "Button 1" ? "bg-themeColor-40" : ""
+                selectedButton === "Button 1" ? "bg-themeColor-40" : ""
               }`}
               onClick={() => handleButtonClick("Button 1")}
             >
@@ -183,7 +185,7 @@ export default function MessageBoard({
             <button
               type="button"
               className={`mt-5 w-1/2 rounded-t-lg pb-2 pt-2 font-bold ${
-                activeButton === "Button 2" ? "bg-themeColor-40" : ""
+                selectedButton === "Button 2" ? "bg-themeColor-40" : ""
               }`}
               onClick={() => handleButtonClick("Button 2")}
             >
@@ -194,11 +196,11 @@ export default function MessageBoard({
           {/* Message of Festivals */}
           <div
             className={` mx-5 h-4/5 bg-themeColor-40 ${
-              activeButton === "Button 1" ? "rounded-tr-md" : "rounded-tl-md"
+              selectedButton === "Button 1" ? "rounded-tr-md" : "rounded-tl-md"
             } rounded-b-md pb-6`}
           >
             {/* After pressing "Festivals" button */}
-            {activeButton === "Button 1" && (
+            {selectedButton === "Button 1" && (
               <div className="max-h-[160px] overflow-y-auto pt-1">
                 {/* <div className="absolute inset-0 bg-white" /> */}
                 {holidays.length !== 0 ? (
@@ -225,7 +227,7 @@ export default function MessageBoard({
             )}
 
             {/* Message of Records */}
-            {activeButton === "Button 2" && (
+            {selectedButton === "Button 2" && (
               <div className="">
                 {/* Add a new record */}
                 <div className="mb-1 flex justify-center px-5 pt-3">
@@ -332,7 +334,10 @@ export default function MessageBoard({
                     <div
                       className=" mx-5 my-1 transform border-b-2 px-1 py-1 align-middle transition duration-300 ease-in-out hover:scale-105 hover:cursor-default hover:rounded-md hover:border-transparent hover:bg-themeColor-80 hover:font-bold"
                       key={index}
-                      onClick={() => handleFestivalClick(item)}
+                      onClick={() => {
+                        handleFestivalClick(item);
+                        onButtonClick("Button 1");
+                      }}
                     >
                       {item}
                     </div>
