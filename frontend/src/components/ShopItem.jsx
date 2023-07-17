@@ -9,6 +9,7 @@ export default function ShopItem({
   searchContent,
   showFilter,
   selectedHoliday,
+  selectedButton,
 }) {
   const { isLoggedIn } = useContext(AuthContext);
   const [shopItems, setShopItems] = useState([]);
@@ -177,13 +178,7 @@ export default function ShopItem({
     setFilterCategories(categories);
     setSelectedCategories(categories);
   };
-  const [showHolidays, setShowHolidays] = useState(true);
-  useEffect(() => {
-    setShowHolidays(true);
-  }, [selectedHoliday]);
-  useEffect(() => {
-    setShowHolidays(false);
-  }, [selectedTag]);
+
   return (
     <div>
       {/* category filter */}
@@ -241,7 +236,7 @@ export default function ShopItem({
 
       <div className="grid grid-cols-4 gap-x-20 gap-y-8 py-8">
         {/* {filterTag(shopItems, selectedTag).map((item) => ( */}
-        {showHolidays
+        {selectedButton === "Button 1"
           ? filterOnHoliday(
               filterOnCategories(
                 filterOnSearch(shopItems, search),
