@@ -187,7 +187,7 @@ export default function PostalAddress({ onSelectAddress }) {
     setSelectedAddress(address.id);
   };
   return (
-    <div className=" mb-8 mr-72 rounded-md ">
+    <div className="  mr-72 rounded-md ">
       {/* "choose address" container */}
       <div className=" h-2/5 min-w-[300px]  py-2 pl-20">
         {/* <h1 className=" font-sans text-xl">Choose address</h1> */}
@@ -202,8 +202,8 @@ export default function PostalAddress({ onSelectAddress }) {
               <div
                 className={`${
                   selectedAddress === item.id ? "border-price" : ""
-                } hover:scale-102 mb-4 h-[90px]
-              transform rounded-lg border-2 duration-300`}
+                } hover:scale-102 mb-4 h-[90px] transform 
+                rounded-lg border-2 duration-300 `}
                 key={index}
                 onClick={() => handleSelectAddress(item)}
               >
@@ -213,7 +213,18 @@ export default function PostalAddress({ onSelectAddress }) {
                   </div>
                   <div className="col-span-2 pl-4 pt-2">
                     <div>{item.fullName}</div>
-                    <div>
+                    <div
+                      className="line-clamp-2"
+                      title={
+                        item.phoneNumber +
+                        ", " +
+                        item.postalCode +
+                        ", " +
+                        item.street +
+                        ", " +
+                        item.city
+                      }
+                    >
                       <span>{item.phoneNumber}, </span>
                       <span>{item.postalCode}, </span>
                       <span>{item.street}, </span>

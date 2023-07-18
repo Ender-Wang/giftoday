@@ -14,7 +14,7 @@ const tiers = [
       "Record the important date",
       "Recommend related products for records",
     ],
-    button: "it is enough",
+    button: "Unsubscribe",
     featured: false,
   },
   {
@@ -27,7 +27,7 @@ const tiers = [
       "Recommend related products for records",
       "Get 10% discount for every product",
     ],
-    button: "let us try",
+    button: "Subscribe",
     featured: true,
   },
 ];
@@ -148,7 +148,7 @@ export default function PremiumBenefit() {
           </div>
         ))}
       </div>
-      <div className="absolute right-10 top-0 mt-16 sm:mt-20 lg:mt-16 ">
+      <div className="absolute right-10 top-20 mt-16 sm:mt-20 lg:mt-16 ">
         <PaymentDetail onSelectCard={handleSelectCard} />
       </div>
     </div>

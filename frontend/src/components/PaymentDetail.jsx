@@ -195,7 +195,7 @@ const CreditCardForm = ({ onSelectCard }) => {
       <h1 className="font-sans text-3xl tracking-tight text-gray-900 sm:text-3xl">
         Payment Detail
       </h1>
-      <div className="h-[200px] w-[450px] overflow-y-auto rounded border border-white p-4">
+      <div className="h-[220px] w-[450px] overflow-y-auto rounded border border-white p-4">
         <div className="mx-auto max-w-lg ">
           {existingCardInfo && existingCardInfo.length > 0 ? (
             // Display existing card information
@@ -210,7 +210,7 @@ const CreditCardForm = ({ onSelectCard }) => {
                   onClick={() => selectCard(Card)}
                 >
                   <div className="mb-2 flex items-center">
-                    {Card.logo === "Visa" && (
+                    {Card.logo === "VisaCard" && (
                       <img
                         src={visalogo}
                         alt="Visa Logo"
@@ -236,7 +236,7 @@ const CreditCardForm = ({ onSelectCard }) => {
 
                   <p>Expiry Date: {Card.expiryDate.substring(0, 7)}</p>
                   <div className="flex justify-between  ">
-                    <div className="left-element">CVV: {Card.cvv}</div>
+                    <div className="left-element">Card type: {Card.logo}</div>
                     <div className="right-element">
                       <TrashIcon
                         type="button"

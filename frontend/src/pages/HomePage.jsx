@@ -8,6 +8,8 @@ export default function HomePage({ search, filter }) {
   const [selectedDay, setSelectedDay] = useState(new Date());
   const [selectedTag, setSelectedTag] = useState("general");
   const [selectedHoliday, setSelectedHoliday] = useState("");
+
+  const [selectedButton, setSelectedButton] = useState("Button 2");
   const handleDayClick = (day) => {
     setSelectedDay(new Date(day));
   };
@@ -16,6 +18,9 @@ export default function HomePage({ search, filter }) {
   };
   const handleHolidayClick = (holiday) => {
     setSelectedHoliday(holiday);
+  };
+  const handleButtonClick = (button) => {
+    setSelectedButton(button);
   };
   useEffect(() => {
     document.title = "Giftoday - Home";
@@ -32,6 +37,8 @@ export default function HomePage({ search, filter }) {
             selectedDay={selectedDay}
             onTagClick={handleTagClick}
             onHolidayClick={handleHolidayClick}
+            onButtonClick={handleButtonClick}
+            selectedButton={selectedButton}
           />
         </div>
       </div>
@@ -41,6 +48,7 @@ export default function HomePage({ search, filter }) {
           searchContent={search}
           showFilter={filter}
           selectedHoliday={selectedHoliday}
+          selectedButton={selectedButton}
         />
       </div>
     </div>
