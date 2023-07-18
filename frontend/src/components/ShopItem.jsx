@@ -88,15 +88,45 @@ export default function ShopItem({
 
   const filterOnHoliday = (items, text) => {
     if (text === "" || text === null) return items;
+    if (text === "World Children's Day") {
+      return items.filter(
+        (item) =>
+          item.tag.toLowerCase().includes("stationery") ||
+          item.tag.toLowerCase().includes("electronics") ||
+          item.tag.toLowerCase().includes("books")
+      );
+    }
+    if (text === "Christmas Day" || text === "2nd Day of Christmas") {
+      return items.filter(
+        (item) =>
+          item.tag.toLowerCase().includes("home_decor") ||
+          item.tag.toLowerCase().includes("kitchen") ||
+          item.tag.toLowerCase().includes("books") ||
+          item.tag.toLowerCase().includes("food") ||
+          item.tag.toLowerCase().includes("fitness")
+      );
+    }
+
+    if (text === "Labour Day") {
+      return items.filter(
+        (item) =>
+          item.tag.toLowerCase().includes("home_decor") ||
+          item.tag.toLowerCase().includes("kitchen") ||
+          item.tag.toLowerCase().includes("books") ||
+          item.tag.toLowerCase().includes("food") ||
+          item.tag.toLowerCase().includes("fitness") ||
+          item.tag.toLowerCase().includes("tools")
+      );
+    }
     return items.filter(
       (item) =>
         item.tag.toLowerCase().includes("home_decor") ||
-        item.name.toLowerCase().includes("kitchen") ||
-        item.name.toLowerCase().includes("books") ||
-        item.name.toLowerCase().includes("travel") ||
-        item.name.toLowerCase().includes("accessories")
+        item.tag.toLowerCase().includes("kitchen") ||
+        item.tag.toLowerCase().includes("books") ||
+        item.tag.toLowerCase().includes("travel")
     );
   };
+
   const filterOnSearch = (items, text) => {
     if (text === "" || text === null) return items;
     return items.filter(
