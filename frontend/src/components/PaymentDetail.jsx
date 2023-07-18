@@ -210,7 +210,7 @@ const CreditCardForm = ({ onSelectCard }) => {
                   onClick={() => selectCard(Card)}
                 >
                   <div className="mb-2 flex items-center">
-                    {Card.logo === "Visa" && (
+                    {Card.logo === "VisaCard" && (
                       <img
                         src={visalogo}
                         alt="Visa Logo"
@@ -236,7 +236,7 @@ const CreditCardForm = ({ onSelectCard }) => {
 
                   <p>Expiry Date: {Card.expiryDate.substring(0, 7)}</p>
                   <div className="flex justify-between  ">
-                    <div className="left-element">CVV: {Card.cvv}</div>
+                    <div className="left-element">Card type: {Card.logo}</div>
                     <div className="right-element">
                       <TrashIcon
                         type="button"
