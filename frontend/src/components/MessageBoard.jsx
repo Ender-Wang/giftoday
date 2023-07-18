@@ -18,7 +18,6 @@ export default function MessageBoard({
   const [preMessage, setPreMessage] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [newTag, setNewTag] = useState("");
-  // const [filteredRecords,setFilteredRecords]= useState([]);
   const userID = getUserID();
 
   const tags = ["all", "home", "beauty", "lifestyle", "technology", "health"];
