@@ -13,6 +13,7 @@ function Checkout() {
   const [isPremium, setPremium] = useState(false);
   const [carts, setCarts] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [item, setItem] = useState();
   const [errorMessage, setErrorMessage] = useState("");
   const selectedDate = getSelectedDate().substring(0, 15);
 
@@ -125,6 +126,37 @@ function Checkout() {
         shippingDate: selectedDate,
       };
 
+      for (let i = 0; i < carts.length; i++) {
+        const id = carts[i].id;
+        consle.log(id);
+        const quantity = carts[i].quantity;
+
+        // Fetch user information from the backend
+
+        fetch(`http://localhost:4000/user/shopItem/` + id)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data && data.length > 0) {
+              const gift = data;
+              setItem(gift);
+            }
+            setLoading(false);
+          })
+          .catch((error) => {
+            console.log("Error fetching user info:", error);
+            setLoading(false);
+          });
+
+        const leftStock = item.stock - quantity;
+        if (leftStock < 0) {
+          setErrorMessage("Insufficient stock of" + item.name);
+          setTimeout(() => {
+            setErrorMessage("");
+          }, 1000);
+          return;
+        }
+      }
+
       const response = await fetch(`http://localhost:4000/user/${id}/order`, {
         method: "PUT",
         headers: {
@@ -164,6 +196,7 @@ function Checkout() {
       console.error("An error occurred while deleting the stock", error);
     }
   };
+
   return (
     <div className="px-20">
       <div className="flex justify-between pt-16 ">
