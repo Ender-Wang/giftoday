@@ -92,7 +92,7 @@ export default function OrderSummary({ onTotalPriceChange }) {
       if (response.ok) {
         setCarts(carts.filter((cart) => cart.id !== OID));
         // Refresh the page
-        // window.location.reload();
+        window.location.reload();
       } else {
         console.log("Deleting data failed.");
       }
@@ -113,7 +113,7 @@ export default function OrderSummary({ onTotalPriceChange }) {
         }
       );
       if (response.ok) {
-        // window.location.reload(); // reload current page
+        window.location.reload(); // reload current page
       } else {
         console.log("Failed to add gift to cart");
       }
@@ -136,7 +136,7 @@ export default function OrderSummary({ onTotalPriceChange }) {
       if (response.ok) {
         console.log("Gift added successfully to cart");
 
-        // window.location.reload(); // reload current page
+        window.location.reload(); // reload current page
       } else {
         console.log("Failed to add gift to cart");
       }
@@ -227,7 +227,7 @@ export default function OrderSummary({ onTotalPriceChange }) {
 
                                 <h5 className="mt-1 flex justify-end">
                                   <TrashIcon
-                                    className="text-normalButton h-6 w-6"
+                                    className="h-6 w-6 text-normalButton"
                                     aria-hidden="true"
                                     onClick={() => handleDelete(cart.id)}
                                   />
