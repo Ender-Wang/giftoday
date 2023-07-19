@@ -268,7 +268,6 @@ export default function ShopItem({
       </div>
 
       <div className="grid grid-cols-4 gap-x-20 gap-y-8 py-8">
-        {/* {filterTag(shopItems, selectedTag).map((item) => ( */}
         {selectedButton === "Button 1"
           ? filterOnHoliday(
               filterOnCategories(
@@ -305,6 +304,7 @@ export default function ShopItem({
 
                 {/* product price */}
                 <div className="flex flex-row justify-around pt-2">
+                  {/* if is premium then the reduced price will be shown */}
                   {!isPremium && (
                     <span className="font-bold text-lightFontColor">
                       € {item.price}
@@ -321,12 +321,13 @@ export default function ShopItem({
                       </span>
                     </div>
                   )}
+                  {/* if the user is logged in, then the items can be put to cart */}
                   {isLoggedIn && (
                     <div
                       className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-normalPlusButton"
                       onClick={() => {
                         handleCartButton(item);
-                        // window.location.reload();
+                        window.location.reload();
                       }}
                     >
                       <AiOutlinePlus className="text-2xl text-white" />
@@ -391,7 +392,7 @@ export default function ShopItem({
                       className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-normalPlusButton"
                       onClick={() => {
                         handleCartButton(item);
-                        // window.location.reload();
+                        window.location.reload();
                       }}
                     >
                       <AiOutlinePlus className="text-2xl text-white" />

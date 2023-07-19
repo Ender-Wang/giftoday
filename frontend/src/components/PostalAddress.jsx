@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { getUserID, getSelectedDate } from "../states/GlobalState";
 import { AiOutlineHome } from "react-icons/ai";
 import { TrashIcon } from "@heroicons/react/20/solid";
@@ -190,8 +189,6 @@ export default function PostalAddress({ onSelectAddress }) {
     <div className="  mr-72 rounded-md ">
       {/* "choose address" container */}
       <div className=" h-2/5 min-w-[300px]  py-2 pl-20">
-        {/* <h1 className=" font-sans text-xl">Choose address</h1> */}
-
         <h1 className="font-sans text-3xl tracking-tight text-gray-900 sm:text-3xl">
           Choose address
         </h1>

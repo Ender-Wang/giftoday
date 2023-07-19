@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { getUserID } from "../states/GlobalState";
 import { AuthContext } from "./AuthContext";
-import { useContext } from "react";
 import { BsFillTrashFill } from "react-icons/bs";
 
 export default function MessageBoard({
@@ -200,7 +198,6 @@ export default function MessageBoard({
             {/* After pressing "Festivals" button */}
             {selectedButton === "Button 1" && (
               <div className="max-h-[160px] overflow-y-auto pt-1">
-                {/* <div className="absolute inset-0 bg-white" /> */}
                 {holidays.length !== 0 ? (
                   <div>
                     {holidays.map((item, index) => (
@@ -289,7 +286,6 @@ export default function MessageBoard({
                                     className="flex items-center"
                                     onClick={() => handleDeleteMessage(item.id)}
                                   >
-                                    {/* "False" icon */}
                                     <BsFillTrashFill className="bg-transparent text-lg text-lightFontColor transition duration-300 ease-in-out hover:scale-125 hover:cursor-pointer hover:text-red-600" />
                                   </div>
                                 </div>
