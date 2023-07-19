@@ -171,12 +171,13 @@ export default function ShopItem({
 
   // put items into Cart API
   const handleCartButton = async (item) => {
+    const reducedPrice = isPremium ? item.price * 0.9 : item.price;
     const data = {
       id: item.id,
       name: item.name,
       image: item.image,
       description: item.description,
-      price: item.price,
+      price: reducedPrice,
       tag: {
         id: 1,
         name: item.tag,
@@ -192,7 +193,6 @@ export default function ShopItem({
         }
       );
       if (response.ok) {
-        console.log("Adding to cart succeeded!");
         window.location.reload();
       } else {
         console.log("Putting into cart failed!");
@@ -201,7 +201,7 @@ export default function ShopItem({
       console.log(error);
     }
   };
-  // disselect all categories
+  // deselect all categories
   const deselectAll = () => {
     setFilterCategories([]);
     setSelectedCategories([]);
@@ -327,7 +327,6 @@ export default function ShopItem({
                       className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-normalPlusButton"
                       onClick={() => {
                         handleCartButton(item);
-                        window.location.reload();
                       }}
                     >
                       <AiOutlinePlus className="text-2xl text-white" />
@@ -392,7 +391,6 @@ export default function ShopItem({
                       className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-normalPlusButton"
                       onClick={() => {
                         handleCartButton(item);
-                        window.location.reload();
                       }}
                     >
                       <AiOutlinePlus className="text-2xl text-white" />
