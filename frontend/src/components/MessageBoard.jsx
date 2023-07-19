@@ -12,7 +12,6 @@ export default function MessageBoard({
   onButtonClick,
   selectedButton,
 }) {
-  // const [activeButton, setActiveButton] = useState("Button 2");
   const { isLoggedIn } = useContext(AuthContext);
   const [holidays, setHolidays] = useState([]);
   const [preMessage, setPreMessage] = useState([]);
@@ -326,7 +325,6 @@ export default function MessageBoard({
           <div className="mx-5 h-full rounded-md bg-themeColor-40 pb-6">
             {/* After pressing "Festivals" button */}
             <div className="max-h-[160px] overflow-y-auto pt-2">
-              {/* <div className="absolute inset-0 bg-white" /> */}
               {holidays.length !== 0 ? (
                 <div>
                   {holidays.map((item, index) => (
@@ -351,7 +349,6 @@ export default function MessageBoard({
                 </div>
               )}
             </div>
-            {/* )} */}
           </div>
         </div>
       )}

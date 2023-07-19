@@ -40,6 +40,7 @@ export default function ShopItem({
       setSelectedCategories([...selectedCategories, category]);
     }
   };
+  // get ShopItems from API
   useEffect(() => {
     const fetchShopItems = async () => {
       try {
@@ -61,6 +62,7 @@ export default function ShopItem({
     fetchShopItems();
   }, []);
 
+  // filter based on tag
   const filterTag = (items, tag) => {
     if (tag === "home")
       return items.filter(
@@ -85,7 +87,7 @@ export default function ShopItem({
       );
     return items;
   };
-
+  // filter based on festival
   const filterOnHoliday = (items, text) => {
     if (text === "" || text === null) return items;
     if (text === "World Children's Day") {
@@ -126,7 +128,7 @@ export default function ShopItem({
         item.tag.toLowerCase().includes("travel")
     );
   };
-
+  // filter based on Search
   const filterOnSearch = (items, text) => {
     if (text === "" || text === null) return items;
     return items.filter(
@@ -135,7 +137,7 @@ export default function ShopItem({
         item.name.toLowerCase().includes(text.toLowerCase())
     );
   };
-
+  // filter based on categories
   const filterOnCategories = (items, categories) => {
     if (categories === "" || categories === null) return items;
     return items.filter((item) => categories.includes(item.tag.toLowerCase()));
@@ -143,7 +145,7 @@ export default function ShopItem({
   const applyFilter = () => {
     setFilterCategories(selectedCategories);
   };
-
+  // get Premium State
   useEffect(() => {
     const fetchPremium = async () => {
       try {
@@ -167,6 +169,7 @@ export default function ShopItem({
     if (isLoggedIn) fetchPremium();
   }, [userID, isPremium, isLoggedIn]);
 
+  // put items into Cart API
   const handleCartButton = async (item) => {
     const data = {
       id: item.id,
@@ -198,12 +201,12 @@ export default function ShopItem({
       console.log(error);
     }
   };
-
+  // disselect all categories
   const deselectAll = () => {
     setFilterCategories([]);
     setSelectedCategories([]);
   };
-
+  // select all categories
   const selectAll = () => {
     setFilterCategories(categories);
     setSelectedCategories(categories);
