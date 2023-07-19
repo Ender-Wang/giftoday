@@ -162,7 +162,7 @@ export default function UserInfo() {
                             {/* Address */}
                             <div>
                               <dt className="font-bold text-gray-900">
-                                Shipping Address
+                                Delivery Address
                               </dt>
                               <dd
                                 className="mt-1 font-medium text-gray-900"
@@ -221,7 +221,7 @@ export default function UserInfo() {
                                       aria-hidden="true"
                                     />
                                     <p className="ml-2 text-sm font-medium text-gray-500">
-                                      Shipping Date:{" "}
+                                      Delivery Date:{" "}
                                       {new Date(
                                         order.shippingDate
                                       ).toLocaleDateString("en-GB")}
