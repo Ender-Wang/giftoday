@@ -113,10 +113,10 @@ function Checkout() {
 
     let calculatedTotalPrice = totalPrice;
 
-    if (isPremium) {
-      calculatedTotalPrice *= 0.9;
+    if (!isPremium) {
+      calculatedTotalPrice = Math.ceil(totalPrice / 0.9);
     }
-    calculatedTotalPrice = Number(calculatedTotalPrice.toFixed(2));
+    calculatedTotalPrice = Number(calculatedTotalPrice);
 
     // check if any item is out of stock
     for (let i = 0; i < carts.length; i++) {
@@ -211,21 +211,23 @@ function Checkout() {
         style={{ zIndex: 9999 }}
       >
         {!isPremium && (
-          <span className="text-lightFontColor basis-5/6 font-bold">
+          <span className="basis-5/6 font-bold text-lightFontColor">
             Total Price: € {totalPrice}
           </span>
         )}
         {isPremium && (
-          <div className="text-lightFontColor basis-5/6 font-bold ">
-            <span className="line-through">€ {totalPrice}</span>
-            <span className=" text-orangeFontColor basis-5/6 pl-4 text-xl font-bold ">
+          <div className="basis-5/6 font-bold text-lightFontColor ">
+            <span className="line-through">
+              € {Math.ceil(totalPrice / 0.9)}
+            </span>
+            <span className=" basis-5/6 pl-4 text-xl font-bold text-orangeFontColor ">
               {/* toFixed Retain two decimal places */}
-              Total Price: €{(totalPrice * 0.9).toFixed(2)}
+              Total Price: €{totalPrice.toFixed(2)}
             </span>
           </div>
         )}
         <button
-          className="bg-themeColor-40 ml-10 mt-4 rounded px-4 py-2 font-bold text-white"
+          className="ml-10 mt-4 rounded bg-themeColor-40 px-4 py-2 font-bold text-white"
           onClick={handleSubmit}
         >
           Check out

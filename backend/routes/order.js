@@ -20,10 +20,6 @@ router.put("/user/:userID/order", async (req, res) => {
 
     const { total, card, gift, address, shippingDate } = req.body;
 
-    // if (!order) {
-    //   throw new Error("There is no order");
-    // }
-    // Retrieve the existing user data from the database
     const user = await UserDB.findOne({ id: userID });
 
     if (!user) {
