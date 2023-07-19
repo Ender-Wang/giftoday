@@ -23,10 +23,6 @@ export default function UserInfo() {
         if (data && data.length > 0) {
           const orders = data;
           setOrders(orders);
-
-          // if (order.gift && order.gift.length > 0) {
-          //   setGift(order.gift);
-          // }
         }
 
         setLoading(false);
@@ -130,7 +126,7 @@ export default function UserInfo() {
                             <div className="flex justify-center">
                               <button
                                 type="submit"
-                                className="duration-600 hover:bg-themeColor-200 bg-themeColor-100 rounded px-4 py-2 font-medium text-white transition-colors ease-in-out"
+                                className="duration-600 hover:bg-themeColor-200 rounded bg-themeColor-100 px-4 py-2 font-medium text-white transition-colors ease-in-out"
                                 onClick={() => handleDelete(order.id)}
                               >
                                 Cancel

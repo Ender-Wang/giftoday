@@ -91,10 +91,6 @@ export default function UserInfo() {
         setName(value);
         setFormErrors((prevErrors) => ({ ...prevErrors, name: "" }));
         break;
-      // case "email":
-      //   setEmail(value);
-      //   setFormErrors((prevErrors) => ({ ...prevErrors, email: "" }));
-      //   break;
       case "password":
         setPassword(value);
         setFormErrors((prevErrors) => ({ ...prevErrors, password: "" }));
@@ -122,9 +118,6 @@ export default function UserInfo() {
     if (data.name.trim() === "") {
       errors.name = "Full Name is required!";
     }
-    // if (data.email.trim() === "") {
-    //   errors.email = "Email Address is required!";
-    // }
     if (data.password.trim() === "") {
       errors.password = "Password is required!";
     }
