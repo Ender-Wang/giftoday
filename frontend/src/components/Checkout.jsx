@@ -93,89 +93,74 @@ function Checkout() {
       setErrorMessage("You don't have any order😣");
       setTimeout(() => {
         setErrorMessage("");
-      }, 1000);
+      }, 2000);
       return;
     }
     if (!selectedCard) {
       setErrorMessage("Please select a card 💳");
       setTimeout(() => {
         setErrorMessage("");
-      }, 1000);
+      }, 2000);
       return;
     }
     if (!selectedAddress) {
       setErrorMessage("Please select a address📍");
       setTimeout(() => {
         setErrorMessage("");
-      }, 1000);
+      }, 2000);
       return;
     }
-    try {
-      let calculatedTotalPrice = totalPrice;
 
-      if (isPremium) {
-        calculatedTotalPrice *= 0.9;
+    let calculatedTotalPrice = totalPrice;
+
+    if (isPremium) {
+      calculatedTotalPrice *= 0.9;
+    }
+    calculatedTotalPrice = Number(calculatedTotalPrice.toFixed(2));
+
+    // check if any item is out of stock
+    for (let i = 0; i < carts.length; i++) {
+      let id = Number(carts[i].id);
+      let quantity = Number(carts[i].quantity);
+
+      //fetch each item with id from shopItem API to check the stock of each item
+      const response = await fetch(`http://localhost:4000/shopItem/` + id);
+      const itemData = await response.json();
+      const leftStock = itemData.stock - quantity;
+      if (leftStock < 0) {
+        setErrorMessage("Insufficient stock: " + itemData.name);
+        setTimeout(() => {
+          setErrorMessage("");
+        }, 3000);
+        return;
       }
-      calculatedTotalPrice = Number(calculatedTotalPrice.toFixed(2));
+    }
 
-      const orderData = {
-        total: calculatedTotalPrice,
-        address: selectedAddress,
-        card: selectedCard,
-        gift: carts,
-        shippingDate: selectedDate,
-      };
+    const orderData = {
+      total: calculatedTotalPrice,
+      address: selectedAddress,
+      card: selectedCard,
+      gift: carts,
+      shippingDate: selectedDate,
+    };
 
-      for (let i = 0; i < carts.length; i++) {
-        const id = carts[i].id;
-        consle.log(id);
-        const quantity = carts[i].quantity;
+    const response = await fetch(`http://localhost:4000/user/${id}/order`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(orderData),
+    });
 
-        // Fetch user information from the backend
-
-        fetch(`http://localhost:4000/user/shopItem/` + id)
-          .then((response) => response.json())
-          .then((data) => {
-            if (data && data.length > 0) {
-              const gift = data;
-              setItem(gift);
-            }
-            setLoading(false);
-          })
-          .catch((error) => {
-            console.log("Error fetching user info:", error);
-            setLoading(false);
-          });
-
-        const leftStock = item.stock - quantity;
-        if (leftStock < 0) {
-          setErrorMessage("Insufficient stock of" + item.name);
-          setTimeout(() => {
-            setErrorMessage("");
-          }, 1000);
-          return;
-        }
-      }
-
-      const response = await fetch(`http://localhost:4000/user/${id}/order`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(orderData),
-      });
-
-      if (response.ok) {
-        await deleteAllCartItems();
-        handleStockReduce();
-        window.location.href = "/giftoday.com/OrderConfirmation";
-      } else {
-        console.error("Failed to submit order");
-      }
-    } catch (error) {
-      console.error("An error occurred while submitting the order", error);
+    if (response.ok) {
+      await deleteAllCartItems();
+      await handleStockReduce();
+      window.location.href = "/giftoday.com/OrderConfirmation";
+    } else {
+      console.error("Failed to submit order");
     }
   };
+
   const handleStockReduce = async () => {
     const orderData = {
       gift: carts,
@@ -226,21 +211,21 @@ function Checkout() {
         style={{ zIndex: 9999 }}
       >
         {!isPremium && (
-          <span className="basis-5/6 font-bold text-lightFontColor">
+          <span className="text-lightFontColor basis-5/6 font-bold">
             Total Price: € {totalPrice}
           </span>
         )}
         {isPremium && (
-          <div className="basis-5/6 font-bold text-lightFontColor ">
+          <div className="text-lightFontColor basis-5/6 font-bold ">
             <span className="line-through">€ {totalPrice}</span>
-            <span className=" basis-5/6 pl-4 text-xl font-bold text-orangeFontColor ">
+            <span className=" text-orangeFontColor basis-5/6 pl-4 text-xl font-bold ">
               {/* toFixed Retain two decimal places */}
               Total Price: €{(totalPrice * 0.9).toFixed(2)}
             </span>
           </div>
         )}
         <button
-          className="ml-10 mt-4 rounded bg-themeColor-40 px-4 py-2 font-bold text-white"
+          className="bg-themeColor-40 ml-10 mt-4 rounded px-4 py-2 font-bold text-white"
           onClick={handleSubmit}
         >
           Check out
