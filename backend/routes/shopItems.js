@@ -46,7 +46,7 @@ router.put("/shopItems", async (req, res) => {
       const id = gift[i].id;
       const quantity = gift[i].quantity;
       const item = await ShopItemDB.findOne({ id });
-      const leftStock = item.stock > quantity ? item.stock - quantity : 0;
+      const leftStock = item.stock - quantity;
       const updatedShopItems = await ShopItemDB.findOneAndUpdate(
         { id },
         {
