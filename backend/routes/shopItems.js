@@ -8,9 +8,9 @@ router.get("/shopItems", async (req, res) => {
     res.json(shopItems.filter((item) => item.stock > 0));
   } catch (error) {
     console.error(error);
-    // res.status(500).json({ error: "Internal server error" });
   }
 });
+// Get shopItems that are still available
 router.get("/allShopItems", async (req, res) => {
   try {
     const shopItems = await ShopItemDB.find();
@@ -18,7 +18,6 @@ router.get("/allShopItems", async (req, res) => {
     res.json(shopItems);
   } catch (error) {
     console.error(error);
-    // res.status(500).json({ error: "Internal server error" });
   }
 });
 

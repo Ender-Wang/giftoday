@@ -40,6 +40,7 @@ export default function ShopItem({
       setSelectedCategories([...selectedCategories, category]);
     }
   };
+  // get ShopItems from API
   useEffect(() => {
     const fetchShopItems = async () => {
       try {
@@ -61,6 +62,7 @@ export default function ShopItem({
     fetchShopItems();
   }, []);
 
+  // filter based on tag
   const filterTag = (items, tag) => {
     if (tag === "home")
       return items.filter(
@@ -85,7 +87,7 @@ export default function ShopItem({
       );
     return items;
   };
-
+  // filter based on festival
   const filterOnHoliday = (items, text) => {
     if (text === "" || text === null) return items;
     if (text === "World Children's Day") {
@@ -126,7 +128,7 @@ export default function ShopItem({
         item.tag.toLowerCase().includes("travel")
     );
   };
-
+  // filter based on Search
   const filterOnSearch = (items, text) => {
     if (text === "" || text === null) return items;
     return items.filter(
@@ -135,7 +137,7 @@ export default function ShopItem({
         item.name.toLowerCase().includes(text.toLowerCase())
     );
   };
-
+  // filter based on categories
   const filterOnCategories = (items, categories) => {
     if (categories === "" || categories === null) return items;
     return items.filter((item) => categories.includes(item.tag.toLowerCase()));
@@ -143,7 +145,7 @@ export default function ShopItem({
   const applyFilter = () => {
     setFilterCategories(selectedCategories);
   };
-
+  // get Premium State
   useEffect(() => {
     const fetchPremium = async () => {
       try {
@@ -167,13 +169,15 @@ export default function ShopItem({
     if (isLoggedIn) fetchPremium();
   }, [userID, isPremium, isLoggedIn]);
 
+  // put items into Cart API
   const handleCartButton = async (item) => {
+    const reducedPrice = isPremium ? item.price * 0.9 : item.price;
     const data = {
       id: item.id,
       name: item.name,
       image: item.image,
       description: item.description,
-      price: item.price,
+      price: reducedPrice,
       tag: {
         id: 1,
         name: item.tag,
@@ -189,7 +193,6 @@ export default function ShopItem({
         }
       );
       if (response.ok) {
-        console.log("Adding to cart succeeded!");
         window.location.reload();
       } else {
         console.log("Putting into cart failed!");
@@ -198,12 +201,12 @@ export default function ShopItem({
       console.log(error);
     }
   };
-
+  // deselect all categories
   const deselectAll = () => {
     setFilterCategories([]);
     setSelectedCategories([]);
   };
-
+  // select all categories
   const selectAll = () => {
     setFilterCategories(categories);
     setSelectedCategories(categories);
@@ -265,7 +268,6 @@ export default function ShopItem({
       </div>
 
       <div className="grid grid-cols-4 gap-x-20 gap-y-8 py-8">
-        {/* {filterTag(shopItems, selectedTag).map((item) => ( */}
         {selectedButton === "Button 1"
           ? filterOnHoliday(
               filterOnCategories(
@@ -302,6 +304,7 @@ export default function ShopItem({
 
                 {/* product price */}
                 <div className="flex flex-row justify-around pt-2">
+                  {/* if is premium then the reduced price will be shown */}
                   {!isPremium && (
                     <span className="font-bold text-lightFontColor">
                       € {item.price}
@@ -318,12 +321,12 @@ export default function ShopItem({
                       </span>
                     </div>
                   )}
+                  {/* if the user is logged in, then the items can be put to cart */}
                   {isLoggedIn && (
                     <div
                       className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-normalPlusButton"
                       onClick={() => {
                         handleCartButton(item);
-                        // window.location.reload();
                       }}
                     >
                       <AiOutlinePlus className="text-2xl text-white" />
@@ -388,7 +391,6 @@ export default function ShopItem({
                       className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-normalPlusButton"
                       onClick={() => {
                         handleCartButton(item);
-                        // window.location.reload();
                       }}
                     >
                       <AiOutlinePlus className="text-2xl text-white" />
