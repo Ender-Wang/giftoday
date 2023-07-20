@@ -172,7 +172,7 @@ export default function OrderSummary({ onTotalPriceChange }) {
                     className="rounded-lg border-2   sm:rounded-lg sm:border"
                   >
                     {/* Products */}
-                    <div class="scrollbar-thumb-gray-500 scrollbar-track-gray-200 scrollbar-w-2 h-50 overflow-y-scroll">
+                    <div className="scrollbar-thumb-gray-500 scrollbar-track-gray-200 scrollbar-w-2 h-50 overflow-y-scroll">
                       <ul className="divide-y divide-gray-200">
                         <li key={cart.id} className="p-4 sm:p-6">
                           <div className="flex items-center sm:items-start">
