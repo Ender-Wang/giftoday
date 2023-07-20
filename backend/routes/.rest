@@ -41,7 +41,7 @@ Content-Type: application/json
 GET http://localhost:4000/users
 
 ### Get user info by id
-GET http://localhost:4000/user/1/info
+GET http://localhost:4000/user/13/info
 
 ### add to message
 PUT http://localhost:4000/user/1/message
@@ -70,6 +70,28 @@ Content-Type: application/json
 ### cart items
 GET http://localhost:4000/user/1/cart
 
+### Update cart item
+PUT http://localhost:4000/user/13/cart/update
+Content-Type: application/json
+
+{
+  "cart": [
+    {
+      "id": 2,
+      "name": "Coffee Mug",
+      "image": "Coffee-Mug.jpg",
+      "description": "A ceramic coffee mug with a unique design.",
+      "price": 10,
+      "quantity": 1,
+      "tag": {
+        "id": 1,
+        "name": "kitchen",
+        "_id": "64b8d81b712de6bc4abd6875"
+      },
+      "_id": "64b8d81b712de6bc4abd6874"
+    }
+  ]
+}
 ### premium status by id
 GET http://localhost:4000/user/1/premium
 

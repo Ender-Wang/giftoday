@@ -1,87 +1,3 @@
-// const orders = [
-//   {
-//     number: "WU88191111",
-//     deliveredDate: "July 12, 2021",
-//     deliveredDatetime: "2021-07-12",
-//     total: "$160.00",
-//     products: [
-//       {
-//         id: 1,
-//         name: "Micro Backpack",
-//         amount: 1,
-//         href: "#",
-//         price: "$70.00",
-//         imageSrc:
-//           "https://tailwindui.com/img/ecommerce-images/order-history-page-03-product-01.jpg",
-//         imageAlt:
-//           "Moss green canvas compact backpack with double top zipper, zipper front pouch, and matching carry handle and backpack straps.",
-//       },
-//       // More products...
-//       {
-//         id: 2,
-//         name: "Micro Backpack",
-//         amount: 1,
-//         href: "#",
-//         price: "$70.00",
-//         imageSrc:
-//           "https://tailwindui.com/img/ecommerce-images/order-history-page-03-product-01.jpg",
-//         imageAlt:
-//           "Moss green canvas compact backpack with double top zipper, zipper front pouch, and matching carry handle and backpack straps.",
-//       },
-//     ],
-//   },
-//   {
-//     number: "WU88191111",
-//     href: "#",
-//     invoiceHref: "#",
-//     createdDate: "Jul 6, 2021",
-//     createdDatetime: "2021-07-06",
-//     deliveredDate: "July 12, 2021",
-//     deliveredDatetime: "2021-07-12",
-//     total: "$160.00",
-//     products: [
-//       {
-//         id: 1,
-//         name: "Micro Backpack",
-//         amount: 1,
-//         href: "#",
-//         price: "$70.00",
-//         imageSrc:
-//           "https://tailwindui.com/img/ecommerce-images/order-history-page-03-product-01.jpg",
-//         imageAlt:
-//           "Moss green canvas compact backpack with double top zipper, zipper front pouch, and matching carry handle and backpack straps.",
-//       },
-//       // More products...
-//     ],
-//   },
-
-//   // More orders...
-//   {
-//     number: "WU88191111",
-//     href: "#",
-//     invoiceHref: "#",
-//     createdDate: "Jul 6, 2021",
-//     createdDatetime: "2021-07-06",
-//     deliveredDate: "July 12, 2021",
-//     deliveredDatetime: "2021-07-12",
-//     total: "$160.00",
-//     products: [
-//       {
-//         id: 1,
-//         name: "Micro Backpack",
-//         amount: 1,
-//         href: "#",
-//         price: "$70.00",
-//         imageSrc:
-//           "https://tailwindui.com/img/ecommerce-images/order-history-page-03-product-01.jpg",
-//         imageAlt:
-//           "Moss green canvas compact backpack with double top zipper, zipper front pouch, and matching carry handle and backpack straps.",
-//       },
-//       // More products...
-//     ],
-//   },
-// ];
-
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
@@ -153,10 +69,7 @@ export default function UserInfo() {
 
   return (
     <div>
-      {/* <div class=" scrollbar-thumb-gray-500 scrollbar-track-gray-200 scrollbar-w-2 h-120 overflow-y-scroll"> */}
       <div className="flex items-start justify-start">
-        {/* <div class=" scrollbar-thumb-gray-500 scrollbar-track-gray-200 scrollbar-w-2 h-120 overflow-y-scroll"> */}
-        {/* <div className="bg-white"> */}
         <div>
           <div className="mx-auto max-w-2xl px-4 lg:max-w-4xl lg:px-0">
             <h1 className="font-sans text-3xl tracking-tight text-gray-900 sm:text-3xl">
@@ -209,7 +122,7 @@ export default function UserInfo() {
                                 className="mt-1 font-medium text-gray-900"
                                 style={{ textAlign: "left" }}
                               >
-                                {order.total}
+                                €{order.total}
                               </dd>
                             </div>
 
@@ -217,7 +130,7 @@ export default function UserInfo() {
                             <div className="flex justify-center">
                               <button
                                 type="submit"
-                                className="duration-600 hover:bg-themeColor-200 rounded bg-themeColor-100 px-4 py-2 font-medium text-white transition-colors ease-in-out"
+                                className="duration-600 hover:bg-themeColor-200 bg-themeColor-100 rounded px-4 py-2 font-medium text-white transition-colors ease-in-out"
                                 onClick={() => handleDelete(order.id)}
                               >
                                 Cancel
@@ -249,7 +162,7 @@ export default function UserInfo() {
                             {/* Address */}
                             <div>
                               <dt className="font-bold text-gray-900">
-                                Address
+                                Delivery Address
                               </dt>
                               <dd
                                 className="mt-1 font-medium text-gray-900"
@@ -292,10 +205,10 @@ export default function UserInfo() {
                                         Name: {gift.name}
                                       </h5>
                                       <h5 className="mt-4">
-                                        Amount: {gift.quantity}
+                                        Quantity: {gift.quantity}
                                       </h5>
                                       <p className="mt-4">
-                                        Price: {gift.price}
+                                        Price: €{gift.price}
                                       </p>
                                     </div>
                                   </div>
@@ -308,10 +221,10 @@ export default function UserInfo() {
                                       aria-hidden="true"
                                     />
                                     <p className="ml-2 text-sm font-medium text-gray-500">
-                                      Delivered Date:{" "}
-                                      <time dateTime={order.shippingDate}>
-                                        {order.shippingDate}
-                                      </time>
+                                      Delivery Date:{" "}
+                                      {new Date(
+                                        order.shippingDate
+                                      ).toLocaleDateString("en-GB")}
                                     </p>
                                   </div>
                                 </div>

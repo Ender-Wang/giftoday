@@ -64,9 +64,6 @@ router.put("/user/:userID/cart", async (req, res) => {
       };
       user.cart.push(newGift);
     }
-
-    // TODO: Reduce Gift stock by 1 if the gift is added to the cart
-
     // Update the user data with the modified cart
     await user.save();
     return res.status(200).json({
@@ -152,9 +149,9 @@ router.delete("/user/:userID/cart/:cartID", async (req, res) => {
       throw new Error("Order not found");
     }
 
-    user.cart.splice(cartIndex, 1); // 从购物车删除gift
+    user.cart.splice(cartIndex, 1);
 
-    await user.save(); // 将更改保存回数据库
+    await user.save();
 
     res.status(200).json({ message: "Order deleted successfully" });
   } catch (error) {
@@ -185,4 +182,26 @@ router.delete("/user/:userID/cart", async (req, res) => {
   }
 });
 
+// Update cart item price
+router.put("/user/:userID/cart/update", async (req, res) => {
+  try {
+    const { userID } = req.params;
+    const uid = Number(userID);
+
+    // Retrieve the existing user data from the database
+    const user = await UserDB.findOne({ id: uid });
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    user.cart = req.body.cart;
+    await user.save();
+    return res.status(200).json({
+      message: "Cart updated successfully",
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: error.message });
+  }
+});
 module.exports = router;

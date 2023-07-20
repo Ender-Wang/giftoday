@@ -1,6 +1,6 @@
 const { router, UserDB } = require("./DB.js");
 
-//TODO: Get user Order info with user id: id, gift: [id, name, description, price, tag: [id, name]], card: [id, number, cvv, expMonth, expYear], address: [id, fullName, postalCode, street, city, country], shippingDate
+// Get user Order info by user id
 router.get("/user/:userID/order", async (req, res) => {
   try {
     const { userID } = req.params;
@@ -13,17 +13,13 @@ router.get("/user/:userID/order", async (req, res) => {
   }
 });
 
-//TODO: Post user Order info with user id: id, gift: [id, name, description, price, tag: [id, name]], card: [id, number, cvv, expMonth, expYear], address: [id, fullName, postalCode, street, city, country], shippingDate
+// Add new order
 router.put("/user/:userID/order", async (req, res) => {
   try {
     const { userID } = req.params;
 
     const { total, card, gift, address, shippingDate } = req.body;
 
-    // if (!order) {
-    //   throw new Error("There is no order");
-    // }
-    // Retrieve the existing user data from the database
     const user = await UserDB.findOne({ id: userID });
 
     if (!user) {
@@ -57,7 +53,7 @@ router.put("/user/:userID/order", async (req, res) => {
   }
 });
 
-//delete the order
+//delete the order by order id
 router.delete("/user/:userID/order/:orderID", async (req, res) => {
   try {
     const { userID, orderID } = req.params;

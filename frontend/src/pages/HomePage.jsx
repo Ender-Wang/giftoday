@@ -7,11 +7,20 @@ export default function HomePage({ search, filter }) {
   //Default selected day is today
   const [selectedDay, setSelectedDay] = useState(new Date());
   const [selectedTag, setSelectedTag] = useState("general");
+  const [selectedHoliday, setSelectedHoliday] = useState("");
+
+  const [selectedButton, setSelectedButton] = useState("Button 2");
   const handleDayClick = (day) => {
     setSelectedDay(new Date(day));
   };
   const handleTagClick = (tag) => {
     setSelectedTag(tag);
+  };
+  const handleHolidayClick = (holiday) => {
+    setSelectedHoliday(holiday);
+  };
+  const handleButtonClick = (button) => {
+    setSelectedButton(button);
   };
   useEffect(() => {
     document.title = "Giftoday - Home";
@@ -24,7 +33,13 @@ export default function HomePage({ search, filter }) {
           <Calendar selectedDay={selectedDay} onDayClick={handleDayClick} />
         </div>
         <div className="mt-8 h-[350px] w-[300px]">
-          <MessageBoard selectedDay={selectedDay} onTagClick={handleTagClick} />
+          <MessageBoard
+            selectedDay={selectedDay}
+            onTagClick={handleTagClick}
+            onHolidayClick={handleHolidayClick}
+            onButtonClick={handleButtonClick}
+            selectedButton={selectedButton}
+          />
         </div>
       </div>
       <div className=" ml-[300px] mt-8 justify-center pl-10 md:w-2/3">
@@ -32,6 +47,8 @@ export default function HomePage({ search, filter }) {
           selectedTag={selectedTag}
           searchContent={search}
           showFilter={filter}
+          selectedHoliday={selectedHoliday}
+          selectedButton={selectedButton}
         />
       </div>
     </div>

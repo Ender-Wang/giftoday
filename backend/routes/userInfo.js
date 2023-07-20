@@ -1,7 +1,6 @@
-// User info: [id, name, email, password]
 const { router, UserDB } = require("./DB.js");
 
-// Get user General info: [id, name, email, password, premium]
+// get user info by user id
 router.get("/user/:userID/info", (req, res) => {
   const { userID } = req.params;
 

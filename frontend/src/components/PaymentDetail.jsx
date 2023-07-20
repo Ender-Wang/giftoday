@@ -4,6 +4,8 @@ import visalogo from "../images/Visa_Logo.svg.png";
 import mastercardlogo from "../images/MasterCard_Logo.svg.png";
 import unionpaylogo from "../images/UnionPay_logo.svg.png";
 
+import { TrashIcon } from "@heroicons/react/20/solid";
+
 const CreditCardForm = ({ onSelectCard }) => {
   const [cardNumber, setCardNumber] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
@@ -191,9 +193,9 @@ const CreditCardForm = ({ onSelectCard }) => {
   return (
     <div>
       <h1 className="font-sans text-3xl tracking-tight text-gray-900 sm:text-3xl">
-        Payment Detail:
+        Payment Detail
       </h1>
-      <div className="h-[200px] w-[450px] overflow-y-auto rounded border border-white p-4">
+      <div className="h-[220px] w-[450px] overflow-y-auto rounded border border-white p-4">
         <div className="mx-auto max-w-lg ">
           {existingCardInfo && existingCardInfo.length > 0 ? (
             // Display existing card information
@@ -201,18 +203,14 @@ const CreditCardForm = ({ onSelectCard }) => {
               {existingCardInfo.map((Card, index) => (
                 <div
                   key={index}
-                  style={{
-                    border: `1px solid ${
-                      selectedCard === Card ? "blue" : "#ccc"
-                    }`,
-                    borderRadius: "10px",
-                    padding: "10px",
-                    marginBottom: "10px",
-                  }}
+                  className={`${
+                    selectedCard === Card ? "border-price" : ""
+                  } hover:scale-102 mb-4
+                h-[120px] transform rounded-lg border-2 px-4 py-4 duration-300`}
                   onClick={() => selectCard(Card)}
                 >
                   <div className="mb-2 flex items-center">
-                    {Card.logo === "Visa" && (
+                    {Card.logo === "VisaCard" && (
                       <img
                         src={visalogo}
                         alt="Visa Logo"
@@ -237,14 +235,16 @@ const CreditCardForm = ({ onSelectCard }) => {
                   </div>
 
                   <p>Expiry Date: {Card.expiryDate.substring(0, 7)}</p>
-                  <p>CVV: {Card.cvv}</p>
-
-                  <button
-                    onClick={() => deleteCard(Card.cardNumber)}
-                    className="mt-2 rounded-lg bg-red-500 px-3 py-1 text-white"
-                  >
-                    Delete Card
-                  </button>
+                  <div className="flex justify-between  ">
+                    <div className="left-element">Card type: {Card.logo}</div>
+                    <div className="right-element">
+                      <TrashIcon
+                        type="button"
+                        className="h-6 w-6  text-normalButton"
+                        onClick={() => deleteCard(Card.cardNumber)}
+                      />
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -294,9 +294,9 @@ const CreditCardForm = ({ onSelectCard }) => {
           {formErrors.selectedLogo && <p>{formErrors.selectedLogo}</p>}
         </div>
         <div className="grid grid-cols-2 gap-4">
-          <div className=" mb-4">
+          <div className=" mb-2">
             <label htmlFor="cardNumber" className="block font-bold">
-              Card Number:
+              Card Number
             </label>
             <input
               type="text"
@@ -305,15 +305,15 @@ const CreditCardForm = ({ onSelectCard }) => {
               pattern="\d{16}"
               value={cardNumber}
               onChange={(e) => setCardNumber(e.target.value)}
-              className="w-full rounded-md border border-gray-400 p-2"
+              className="border-themeColor w-full border-b-2 p-2"
             />
             {formErrors.cardNumber && <p>{formErrors.cardNumber}</p>}
             {cardExistsError && <p>{cardExistsError}</p>}
           </div>
 
-          <div className=" mb-4">
+          <div className=" mb-2">
             <label htmlFor="cvv" className="block font-bold">
-              CVV:
+              CVV
             </label>
             <input
               type="text"
@@ -323,14 +323,14 @@ const CreditCardForm = ({ onSelectCard }) => {
               pattern="\d{3}"
               value={cvv}
               onChange={(e) => setCvv(e.target.value)}
-              className="w-full rounded-md border border-gray-400 p-2"
+              className="border-themeColor w-full border-b-2 p-2"
             />
             {formErrors.cvv && <p>{formErrors.cvv}</p>}
           </div>
 
           <div className=" mb-4">
             <label htmlFor="expiryDate" className="block font-bold">
-              Expiry Date:
+              Expiry Date
             </label>
             <input
               type="month"
@@ -340,19 +340,18 @@ const CreditCardForm = ({ onSelectCard }) => {
               min={today}
               value={expiryDate}
               onChange={(e) => setExpiryDate(e.target.value)}
-              className="w-full rounded-md border border-gray-400 p-2"
+              className="border-themeColor w-full border-b-2 p-2"
             />
             {formErrors.expiryDate && <p>{formErrors.expiryDate}</p>}
           </div>
-        </div>
-
-        <div className="mb-4 ">
-          <button
-            type="submit"
-            className="hover:scale-102 transform rounded-lg bg-lightButton px-5 py-1 hover:bg-normalButton"
-          >
-            Submit
-          </button>
+          <div className="mb-4 mt-2">
+            <button
+              type="submit"
+              className="hover:scale-102 transform rounded-lg bg-lightButton px-5 py-1 hover:bg-normalButton"
+            >
+              Submit
+            </button>
+          </div>
         </div>
       </form>
     </div>

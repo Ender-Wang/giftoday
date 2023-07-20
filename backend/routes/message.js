@@ -1,13 +1,12 @@
 const { router, UserDB } = require("./DB.js");
 
-//Get user Message info with user id: [id, message, date]
+// Get user messages
 router.get("/user/:userID/message", async (req, res) => {
   try {
     const { userID } = req.params;
     let id = Number(userID);
     const user = await UserDB.findOne({ id });
     const message = user.message;
-    // console.log("message " + message);
     return res.status(200).json(message);
   } catch (error) {
     if (error.status === 404) {
@@ -19,7 +18,7 @@ router.get("/user/:userID/message", async (req, res) => {
   }
 });
 
-//Add user Message info with user id: [id, message, date]
+//Add user message
 router.put("/user/:userID/message", async (req, res) => {
   try {
     const { userID } = req.params;

@@ -4,7 +4,13 @@ import { AuthContext } from "./AuthContext";
 import { AiOutlinePlus } from "react-icons/ai";
 import { getUserID } from "../states/GlobalState";
 
-export default function ShopItem({ selectedTag, searchContent, showFilter }) {
+export default function ShopItem({
+  selectedTag,
+  searchContent,
+  showFilter,
+  selectedHoliday,
+  selectedButton,
+}) {
   const { isLoggedIn } = useContext(AuthContext);
   const [shopItems, setShopItems] = useState([]);
   const [isPremium, setPremium] = useState(false);
@@ -34,6 +40,7 @@ export default function ShopItem({ selectedTag, searchContent, showFilter }) {
       setSelectedCategories([...selectedCategories, category]);
     }
   };
+  // get ShopItems from API
   useEffect(() => {
     const fetchShopItems = async () => {
       try {
@@ -55,6 +62,7 @@ export default function ShopItem({ selectedTag, searchContent, showFilter }) {
     fetchShopItems();
   }, []);
 
+  // filter based on tag
   const filterTag = (items, tag) => {
     if (tag === "home")
       return items.filter(
@@ -79,7 +87,48 @@ export default function ShopItem({ selectedTag, searchContent, showFilter }) {
       );
     return items;
   };
+  // filter based on festival
+  const filterOnHoliday = (items, text) => {
+    if (text === "" || text === null) return items;
+    if (text === "World Children's Day") {
+      return items.filter(
+        (item) =>
+          item.tag.toLowerCase().includes("stationery") ||
+          item.tag.toLowerCase().includes("electronics") ||
+          item.tag.toLowerCase().includes("books")
+      );
+    }
+    if (text === "Christmas Day" || text === "2nd Day of Christmas") {
+      return items.filter(
+        (item) =>
+          item.tag.toLowerCase().includes("home_decor") ||
+          item.tag.toLowerCase().includes("kitchen") ||
+          item.tag.toLowerCase().includes("books") ||
+          item.tag.toLowerCase().includes("food") ||
+          item.tag.toLowerCase().includes("fitness")
+      );
+    }
 
+    if (text === "Labour Day") {
+      return items.filter(
+        (item) =>
+          item.tag.toLowerCase().includes("home_decor") ||
+          item.tag.toLowerCase().includes("kitchen") ||
+          item.tag.toLowerCase().includes("books") ||
+          item.tag.toLowerCase().includes("food") ||
+          item.tag.toLowerCase().includes("fitness") ||
+          item.tag.toLowerCase().includes("tools")
+      );
+    }
+    return items.filter(
+      (item) =>
+        item.tag.toLowerCase().includes("home_decor") ||
+        item.tag.toLowerCase().includes("kitchen") ||
+        item.tag.toLowerCase().includes("books") ||
+        item.tag.toLowerCase().includes("travel")
+    );
+  };
+  // filter based on Search
   const filterOnSearch = (items, text) => {
     if (text === "" || text === null) return items;
     return items.filter(
@@ -88,7 +137,7 @@ export default function ShopItem({ selectedTag, searchContent, showFilter }) {
         item.name.toLowerCase().includes(text.toLowerCase())
     );
   };
-
+  // filter based on categories
   const filterOnCategories = (items, categories) => {
     if (categories === "" || categories === null) return items;
     return items.filter((item) => categories.includes(item.tag.toLowerCase()));
@@ -96,7 +145,7 @@ export default function ShopItem({ selectedTag, searchContent, showFilter }) {
   const applyFilter = () => {
     setFilterCategories(selectedCategories);
   };
-
+  // get Premium State
   useEffect(() => {
     const fetchPremium = async () => {
       try {
@@ -120,13 +169,15 @@ export default function ShopItem({ selectedTag, searchContent, showFilter }) {
     if (isLoggedIn) fetchPremium();
   }, [userID, isPremium, isLoggedIn]);
 
+  // put items into Cart API
   const handleCartButton = async (item) => {
+    const reducedPrice = isPremium ? item.price * 0.9 : item.price;
     const data = {
       id: item.id,
       name: item.name,
       image: item.image,
       description: item.description,
-      price: item.price,
+      price: reducedPrice,
       tag: {
         id: 1,
         name: item.tag,
@@ -142,7 +193,7 @@ export default function ShopItem({ selectedTag, searchContent, showFilter }) {
         }
       );
       if (response.ok) {
-        console.log("Adding to cart succeeded!");
+        window.location.reload();
       } else {
         console.log("Putting into cart failed!");
       }
@@ -150,16 +201,17 @@ export default function ShopItem({ selectedTag, searchContent, showFilter }) {
       console.log(error);
     }
   };
-
+  // deselect all categories
   const deselectAll = () => {
     setFilterCategories([]);
     setSelectedCategories([]);
   };
-
+  // select all categories
   const selectAll = () => {
     setFilterCategories(categories);
     setSelectedCategories(categories);
   };
+
   return (
     <div>
       {/* category filter */}
@@ -216,67 +268,137 @@ export default function ShopItem({ selectedTag, searchContent, showFilter }) {
       </div>
 
       <div className="grid grid-cols-4 gap-x-20 gap-y-8 py-8">
-        {/* {filterTag(shopItems, selectedTag).map((item) => ( */}
-        {filterOnCategories(
-          filterTag(filterOnSearch(shopItems, search), selectedTag),
-          filterCategories
-        ).map((item) => (
-          <div
-            key={item.id}
-            className="h-auto max-h-[350px] min-h-[320px] w-auto min-w-[220px] max-w-[250px] transform rounded-xl px-3 py-1 shadow-md duration-300 hover:scale-105 hover:border-2 hover:shadow-none"
-          >
-            {/* product picture */}
-            <div className="">
-              <img
-                src={
-                  "https://github.com/Ender-Wang/giftoday/blob/master/frontend/src/images/shopItems/" +
-                  item.image +
-                  "?raw=true"
-                }
-                className="aspect-square h-full w-full rounded-md object-cover"
-                alt={item.name}
-                title={item.description}
-              />
-            </div>
-
-            {/* product name */}
-            <div className="line-clamp-1 pt-2 font-bold">{item.name}</div>
-
-            {/* product description */}
-            <div className="line-clamp-2 pt-1 text-sm text-lightFontColor">
-              {item.description}
-            </div>
-
-            {/* product price */}
-            <div className="flex flex-row justify-around pt-2">
-              {!isPremium && (
-                <span className="font-bold text-lightFontColor">
-                  € {item.price}
-                </span>
-              )}
-              {isPremium && (
-                <div className="flex flex-1 justify-between pr-12 font-bold">
-                  <span className=" pt-0.5 line-through">€{item.price}</span>
-                  <span className=" text-sm text-red-600">-10%</span>
-                  <span className=" text-xl  font-bold  text-orangeFontColor ">
-                    €{item.price * 0.9}
-                  </span>
+        {selectedButton === "Button 1"
+          ? filterOnHoliday(
+              filterOnCategories(
+                filterOnSearch(shopItems, search),
+                filterCategories
+              ),
+              selectedHoliday
+            ).map((item) => (
+              <div
+                key={item.id}
+                className="h-auto max-h-[350px] min-h-[320px] w-auto min-w-[220px] max-w-[250px] transform rounded-xl px-3 py-1 shadow-md duration-300 hover:scale-105 hover:border-2 hover:shadow-none"
+              >
+                {/* product picture */}
+                <div className="">
+                  <img
+                    src={
+                      "https://github.com/Ender-Wang/giftoday/blob/master/frontend/src/images/shopItems/" +
+                      item.image +
+                      "?raw=true"
+                    }
+                    className="aspect-square h-full w-full rounded-md object-cover"
+                    alt={item.name}
+                    title={item.description}
+                  />
                 </div>
-              )}
-              {isLoggedIn && (
-                <div
-                  className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-normalPlusButton"
-                  onClick={() => {
-                    handleCartButton(item);
-                    // window.location.reload();
-                  }}
-                >
-                  <AiOutlinePlus className="text-2xl text-white" />
+
+                {/* product name */}
+                <div className="line-clamp-1 pt-2 font-bold">{item.name}</div>
+
+                {/* product description */}
+                <div className="line-clamp-2 pt-1 text-sm text-lightFontColor">
+                  {item.description}
                 </div>
-              )}
-            </div>
-          </div>
-        ))}
+
+                {/* product price */}
+                <div className="flex flex-row justify-around pt-2">
+                  {/* if is premium then the reduced price will be shown */}
+                  {!isPremium && (
+                    <span className="font-bold text-lightFontColor">
+                      € {item.price}
+                    </span>
+                  )}
+                  {isPremium && (
+                    <div className="flex flex-1 justify-between pr-12 font-bold">
+                      <span className=" pt-0.5 line-through">
+                        €{item.price}
+                      </span>
+                      <span className=" text-sm text-red-600">-10%</span>
+                      <span className=" text-xl  font-bold  text-orangeFontColor ">
+                        €{item.price * 0.9}
+                      </span>
+                    </div>
+                  )}
+                  {/* if the user is logged in, then the items can be put to cart */}
+                  {isLoggedIn && (
+                    <div
+                      className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-normalPlusButton"
+                      onClick={() => {
+                        handleCartButton(item);
+                      }}
+                    >
+                      <AiOutlinePlus className="text-2xl text-white" />
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))
+          : filterTag(
+              filterOnCategories(
+                filterOnSearch(shopItems, search),
+                filterCategories
+              ),
+              selectedTag
+            ).map((item) => (
+              <div
+                key={item.id}
+                className="h-auto max-h-[350px] min-h-[320px] w-auto min-w-[220px] max-w-[250px] transform rounded-xl px-3 py-1 shadow-md duration-300 hover:scale-105 hover:border-2 hover:shadow-none"
+              >
+                {/* product picture */}
+                <div className="">
+                  <img
+                    src={
+                      "https://github.com/Ender-Wang/giftoday/blob/master/frontend/src/images/shopItems/" +
+                      item.image +
+                      "?raw=true"
+                    }
+                    className="aspect-square h-full w-full rounded-md object-cover"
+                    alt={item.name}
+                    title={item.description}
+                  />
+                </div>
+
+                {/* product name */}
+                <div className="line-clamp-1 pt-2 font-bold">{item.name}</div>
+
+                {/* product description */}
+                <div className="line-clamp-2 pt-1 text-sm text-lightFontColor">
+                  {item.description}
+                </div>
+
+                {/* product price */}
+                <div className="flex flex-row justify-around pt-2">
+                  {!isPremium && (
+                    <span className="font-bold text-lightFontColor">
+                      € {item.price}
+                    </span>
+                  )}
+                  {isPremium && (
+                    <div className="flex flex-1 justify-between pr-12 font-bold">
+                      <span className=" pt-0.5 line-through">
+                        €{item.price}
+                      </span>
+                      <span className=" text-sm text-red-600">-10%</span>
+                      <span className=" text-xl  font-bold  text-orangeFontColor ">
+                        €{item.price * 0.9}
+                      </span>
+                    </div>
+                  )}
+                  {isLoggedIn && (
+                    <div
+                      className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-normalPlusButton"
+                      onClick={() => {
+                        handleCartButton(item);
+                      }}
+                    >
+                      <AiOutlinePlus className="text-2xl text-white" />
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
       </div>
     </div>
   );
