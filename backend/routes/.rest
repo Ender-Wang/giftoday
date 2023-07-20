@@ -68,7 +68,7 @@ Content-Type: application/json
 }
 
 ### cart items
-GET http://localhost:4000/user/13/cart
+GET http://localhost:4000/user/1/cart
 
 ### Update cart item
 PUT http://localhost:4000/user/13/cart/update

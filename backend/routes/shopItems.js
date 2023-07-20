@@ -53,8 +53,8 @@ router.put("/shopItems", async (req, res) => {
         },
         { new: true }
       );
-      res.json(updatedShopItems);
     }
+    res.json(updatedShopItems);
   } catch (error) {
     if (error.status === 404) {
       return res.status(404).json({ error: "ShopItem not found" });
