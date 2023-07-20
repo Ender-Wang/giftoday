@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { CheckIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -41,38 +42,153 @@ export default function PremiumBenefit() {
   const [loading, setLoading] = useState(false);
   const userID = getUserID();
   const [selectedCard, setSelectedCard] = useState(null);
+
+  const [isPremium, setPremium] = useState(false);
+  useEffect(() => {
+    const fetchPremium = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:4000/user/" + userID + "/premium",
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        if (response.ok) {
+          const responseData = await response.json();
+          setPremium(responseData);
+        } else {
+          console.log("Fetching data failed.");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchPremium();
+  }, [userID, isPremium]);
+
   const handleSelectCard = (card) => {
     setSelectedCard(card);
   };
 
+  const updateCart = async (updatedCart) => {
+    // Store updated cart back to the user
+    try {
+      const response = await fetch(
+        //"/user/:userID/cart/update"
+        "http://localhost:4000/user/" + userID + "/cart/update",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ cart: updatedCart }),
+        }
+      );
+      if (response.ok) {
+        navigate("/giftoday.com");
+        window.location.reload(); // reload current page
+      } else {
+        alert("Updating data failed.");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handlePremiumUpgrade = (premium) => {
     setLoading(true);
+    // if user is not premium, then upgrade to premium when click subscribe, click unsubscribe will go back to home page
+    // if user is premium, click unsubscribe button to unsubscribe, click subscribe will go back to home page
+    if (!isPremium) {
+      if (premium === false) {
+        navigate("/giftoday.com");
+      } else {
+        if (premium === true && selectedCard !== null) {
+          fetch(`http://localhost:4000/user/${userID}/premium`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ premium }),
+          })
+            // update the cart item price to premium price => 10% off
+            .then((response) => {
+              if (response.ok) {
+                fetch("http://localhost:4000/user/" + userID + "/cart")
+                  .then((response) => response.json())
+                  .then((data) => {
+                    // alert("Here data is: " + data.cart[0].price);
+                    const updatedCart = data.cart.map((item) => ({
+                      ...item,
+                      price: item.price * 0.9,
+                    }));
+                    // setTimeout(async () => {
+                    // }, 1000);
+                    updateCart(updatedCart);
 
-    if (premium === false || selectedCard !== null) {
-      fetch(`http://localhost:4000/user/${userID}/premium`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ premium }),
-      })
-        .then((response) => {
-          if (response.ok) {
-            navigate("/giftoday.com");
-            window.location.reload(); // reload current page
-          } else {
-            console.log("Premium upgrade failed");
-          }
-        })
-        .catch((error) => {
-          console.error("Error upgrading to premium:", error);
-        })
-        .finally(() => {
+                    alert(
+                      "Premium subscription successful! You will get 10% off for every product in your cart."
+                    );
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
+              }
+            })
+            .catch((error) => {
+              console.error("Error upgrading to premium:", error);
+            })
+            .finally(() => {
+              setLoading(false);
+            });
+        } else {
+          alert("Please select your payment method first");
           setLoading(false);
-        });
+        }
+      }
     } else {
-      alert("Please select your payment method first");
-      setLoading(false);
+      // if user is premium, click unsubscribe button to unsubscribe, click subscribe will go back to home page
+      if (premium === true) {
+        navigate("/giftoday.com");
+      } else {
+        fetch(`http://localhost:4000/user/${userID}/premium`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ premium }),
+        })
+          // update the cart item price to premium price => 10% off
+          .then((response) => {
+            if (response.ok) {
+              fetch("http://localhost:4000/user/" + userID + "/cart")
+                .then((response) => response.json())
+                .then((data) => {
+                  // alert("Here data is: " + data.cart[0].price);
+                  const updatedCart = data.cart.map((item) => ({
+                    ...item,
+                    price: item.price / 0.9,
+                  }));
+                  // setTimeout(async () => {
+                  // }, 1000);
+                  updateCart(updatedCart);
+                  alert(
+                    "You have successfully unsubscribed from premium subscription. You will no longer get 10% off for every product in your cart."
+                  );
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            }
+          })
+          .catch((error) => {
+            console.error("Error upgrading to premium:", error);
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      }
     }
   };
 
